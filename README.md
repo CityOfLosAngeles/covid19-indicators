@@ -9,34 +9,26 @@ Project Organization
     ├── LICENSE
     ├── Makefile                 <- Makefile with commands like `make data` or `make train`
     ├── README.md                <- The top-level README for developers using this project.
-    ├── data                     <- A directory for local data.
-    ├── models                   <- Trained and serialized models, model predictions, or model summaries
-    │
+    ├── Dockerfile               <- Docker image for this project.
     ├── notebooks                <- Jupyter notebooks.
-    │
     ├── references               <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports                  <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures              <- Generated graphics and figures to be used in reporting
-    │
-    │
     ├── conda-requirements.txt   <- The requirements file for conda installs.
-    ├── requirements.txt         <- The requirements file for reproducing the analysis environment, e.g.
-    │                               generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py                 <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                      <- Source code for use in this project.
-    │   ├── __init__.py          <- Makes src a Python module
-    │   │
-    │   ├── data                 <- Scripts to download or generate data
-    │   ├── features             <- Scripts to turn raw data into features for modeling
-    │   ├── models               <- Scripts to train models and then use trained models to make
-    │   └── visualization        <- Scripts to create exploratory and results oriented visualizations
+    ├── requirements.txt         <- The requirements file for reproducing the analysis environment,
+    │                               e.g generated with `pip freeze > requirements.txt`
+    ├── setup.py                 <- makes project pip installable (pip install -e .) 
+
 
 
 --------
 
-### Setting up a Conda Environment 
+## Starting with Docker
+
+1. Start with Steps 1-2 above
+2. Build Docker container: `docker-compose.exe build`
+3. Start Docker container `docker-compose.exe up`
+4. Open Jupyter Lab notebook by typing `localhost:8888/lab/` in the browser.
+
+## Setting up a Conda Environment 
 
 1. `conda create --name my_project_name` 
 
