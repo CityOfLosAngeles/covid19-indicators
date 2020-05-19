@@ -422,7 +422,7 @@ def positive_tests_lacity(start_date):
             new_cases = df.new_cases.astype(int),
             new_tests = df.new_tests.astype(int),
             tests = df.tests.astype(int),
-            week = pd.to_datetime(df.date).dt.week,
+            week = pd.to_datetime(df.date).dt.strftime("%U"),
     ) 
     
     # Aggregate to the week
