@@ -1,17 +1,21 @@
 """
 Functions to create county or state-specific indicators.
 Use JHU county data.
+Specific City of LA data also used to generate LA-specific charts. 
 """
 import altair as alt
 import numpy as np
 import pandas as pd
-import state_abbrev_dict
+import pytz
+import useful_dict
 
-from IPython.display import display
+from datetime import date, datetime, timedelta
+from IPython.display import display, Markdown
+
 
 US_COUNTY_URL = (
     "http://lahub.maps.arcgis.com/sharing/rest/content/items/"
-    "8aba663239fc428f8bcdc48e213e3172/data"
+    "782ca660304a4bdda1cc9757a2504647/data"
 )
 
 LA_CITY_URL = (
@@ -34,12 +38,19 @@ CROSSWALK_URL = (
     "public-health/covid19/msa_county_pop_crosswalk.csv"
 )
 
-# Define chart parameters
+
+#---------------------------------------------------------------#
+# Chart parameters
+#---------------------------------------------------------------#
 navy = "#0A4C6A"
 maroon = "#A30F23"
+acute_color = "#04E679"
+icu_color = navy
+ventilator_color = "#e76f51"
+
 title_font_size = 10
 font_name = "Roboto"
-grid_opacity = 0
+grid_opacity = 0.4
 domain_opacity = 0.4
 stroke_opacity = 0
 time_unit = "monthdate"
@@ -47,17 +58,19 @@ chart_width = 250
 chart_height = 200
 
 
-# Prep county-level dataset
+#---------------------------------------------------------------#
+# Case Data (County, State, MSA)
+#---------------------------------------------------------------#
 def prep_us_county_time_series():
     df = pd.read_csv(US_COUNTY_URL, dtype={"fips": "str"})
     df = df.assign(
         date=pd.to_datetime(df.date),
-        state_abbrev=df.state.map(state_abbrev_dict.us_state_abbrev),
+        state_abbrev=df.state.map(useful_dict.us_state_abbrev),
     )
     return df
 
 
-# County-level case data
+# County Case Data
 def case_indicators_county(county_state_name, start_date):
     df = prep_us_county_time_series()
 
@@ -67,7 +80,7 @@ def case_indicators_county(county_state_name, start_date):
         county_name = county_state_name.split(",")[0].strip()
 
         if len(state_name) > 2:
-            state_name = state_abbrev_dict.us_state_abbrev[state_name]
+            state_name = useful_dict.us_state_abbrev[state_name]
 
         # County names don't have " County" at the end. There is a TriCounty, UT though.
         if " County" in county_name:
@@ -107,7 +120,7 @@ def case_indicators_county(county_state_name, start_date):
     return df
 
 
-# State-level case data
+# State Case Data
 def case_indicators_state(state_name, start_date):
     df = prep_us_county_time_series()
 
@@ -145,7 +158,7 @@ def case_indicators_state(state_name, start_date):
     return df
 
 
-# MSA-level case data
+# MSA Case Data
 def case_indicators_msa(msa_name, start_date):
     group_cols = ["msa", "msa_pop", "date"]
     msa_group_cols = ["msa", "msa_pop"]
@@ -183,50 +196,6 @@ def case_indicators_msa(msa_name, start_date):
 
     name = df.msa.iloc[0]
     df = make_cases_deaths_chart(df, "msa", name)
-
-    return df
-
-
-# City of LA case data
-def case_indicators_lacity(start_date):
-    city_df = pd.read_csv(LA_CITY_URL)
-    city_df["date"] = pd.to_datetime(city_df.Date)
-
-    df = (
-        city_df[city_df.date >= start_date]
-        .rename(
-            columns={"City of LA Cases": "cases", "City of LA New Cases": "new_cases"}
-        )
-        .sort_values("date")
-        .reset_index(drop=True)
-    )
-
-    # Derive new columns
-    df = df.assign(
-        # 7-day rolling average for new cases
-        cases_avg7=df.new_cases.rolling(window=7).mean(),
-    )
-
-    # Make cases charts
-    cases_chart = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X("date", timeUnit=time_unit, title="date"),
-            y=alt.Y("cases_avg7", title="7-day avg"),
-            color=alt.value(navy),
-        )
-        .properties(
-            title="City of LA: New Cases", width=chart_width, height=chart_height
-        )
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
-
-    display(cases_chart)
 
     return df
 
@@ -290,7 +259,55 @@ def make_cases_deaths_chart(df, geog, name):
     return df
 
 
-# Make daily testing chart for City of LA
+#---------------------------------------------------------------#
+# Case Data (City of LA)
+#---------------------------------------------------------------#
+def case_indicators_lacity(start_date):
+    city_df = pd.read_csv(LA_CITY_URL)
+    city_df["date"] = pd.to_datetime(city_df.Date)
+
+    df = (
+        city_df[city_df.date >= start_date]
+        .rename(
+            columns={"City of LA Cases": "cases", "City of LA New Cases": "new_cases"}
+        )
+        .sort_values("date")
+        .reset_index(drop=True)
+    )
+
+    # Derive new columns
+    df = df.assign(
+        # 7-day rolling average for new cases
+        cases_avg7=df.new_cases.rolling(window=7).mean(),
+    )
+
+    # Make cases charts
+    cases_chart = (
+        alt.Chart(df)
+        .mark_line()
+        .encode(
+            x=alt.X("date", timeUnit=time_unit, title="date"),
+            y=alt.Y("cases_avg7", title="7-day avg"),
+            color=alt.value(navy),
+        )
+        .properties(
+            title="City of LA: New Cases", width=chart_width, height=chart_height
+        )
+        .configure_title(
+            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
+        )
+        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
+        .configure_view(strokeOpacity=stroke_opacity)
+    )
+
+    display(cases_chart)
+
+    return df
+
+
+#---------------------------------------------------------------#
+# Testing Data (City of LA)
+#---------------------------------------------------------------#
 def testing_lacity(start_date, daily_or_monthly, lower_bound, upper_bound):
     df = pd.read_csv(TESTING_URL)
     df = df.assign(
@@ -365,8 +382,10 @@ def make_testing_chart(
 
     display(testing_chart)
 
-
-# Hospital Equipment Availability
+    
+#---------------------------------------------------------------#
+# Hospital Equipment Availability (City of LA)
+#---------------------------------------------------------------#
 def hospital_capacity_lacity(start_date):
     df = pd.read_csv(HOSPITAL_URL)
 
@@ -399,12 +418,8 @@ def hospital_capacity_lacity(start_date):
 
     return df
 
-
 # Sub-function to make hospital equipment availability bar chart
 def make_hospital_chart(df):
-    acute_color = "#04E679"
-    icu_color = navy
-    ventilator_color = "#e76f51"
     chart_width = 500
 
     base = (
