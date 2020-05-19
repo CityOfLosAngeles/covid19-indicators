@@ -384,6 +384,123 @@ def make_testing_chart(
 
     
 #---------------------------------------------------------------#
+# Share of Positive Tests by Week (City of LA)
+#---------------------------------------------------------------#
+def positive_tests_lacity(start_date):
+    tests_df = pd.read_csv(TESTING_URL)
+    cases_df = pd.read_csv(LA_CITY_URL)
+    
+    #  Merge and rename columns
+    df = pd.merge(cases_df, tests_df, on = "Date", how = "left")
+    
+    keep_cols = [
+        "Date",
+        "City of LA Cases",
+        "City of LA New Cases",
+        "Performed", 
+        "Cumulative",
+    ]
+
+    df = (df[keep_cols].assign(
+            Date = pd.to_datetime(df.Date),
+        )
+          .rename(columns = 
+                  {"City of LA Cases": "cases",
+                   "City of LA New Cases": "new_cases",
+                   "Performed": "new_tests",
+                   "Cumulative": "tests",
+                   "Date": "date"}) 
+    )
+    
+    # Subset to particular start and end date
+    df = (df[(df.date >= start_date) & (df.date <= yesterday_date)]
+          .sort_values("date")
+         )
+
+    df = df.assign(
+            cases = df.cases.astype(int),
+            new_cases = df.new_cases.astype(int),
+            new_tests = df.new_tests.astype(int),
+            tests = df.tests.astype(int),
+            week = pd.to_datetime(df.date).dt.week,
+    ) 
+    
+    # Aggregate to the week
+    weekly_total = (df.groupby("week")
+                .agg({"new_cases":"sum", 
+                      "new_tests":"sum",
+                      "date": "min",
+                      "cases":"count",
+                     })
+                .reset_index()
+                .rename(columns = {"new_cases":"weekly_cases", 
+                                   "new_tests":"weekly_tests", 
+                                   "date": "start_of_week", 
+                                   "cases":"days_counted"})
+               )
+
+    df = pd.merge(df, weekly_total, on = "week", how = "inner")
+    
+    keep_col = [
+        "week", 
+        "start_of_week",
+        "weekly_cases",
+        "weekly_tests",
+    ]
+    
+    # Calculate share of positive results for full weeks
+    df = (df[df.days_counted==7][keep_col]
+          .drop_duplicates()
+          .assign(
+            pct_positive = df.weekly_cases / df.weekly_tests,
+        )
+    )
+    
+    make_positive_test_chart(df)
+    
+    return df
+    
+# Sub-function to make share of positive tests chart
+def make_positive_test_chart(df):
+    chart_width = 500
+    bar = (
+        alt.Chart(df)
+        .mark_bar(color="navy", )
+        .encode(
+            x=alt.X(
+                "yearmonthdate(start_of_week)",
+                title="date",
+                axis=alt.Axis(format="%-m/%-d/%y"),
+            ),
+            y=alt.Y(
+                "pct_positive", 
+                title="Share of Positive COVID-19 Results",
+            ),
+        )
+    )
+
+    line = (
+        alt.Chart(df)
+        .mark_line(color="red", strokeDash=[5, 2])
+        .encode(
+            x=alt.X("yearmonthdate(start_of_week)"),
+            y=alt.Y("weekly_tests", title="# Weekly Tests")
+        )
+    )
+
+    positive_tests = (
+        alt.concat(
+            alt.layer(bar, line, 
+                      title="Weekly Test Volume and Share of Positive Results")
+                .resolve_scale(y='independent',x='shared')
+            )
+    )
+
+    display(positive_tests)
+
+
+    
+#---------------------------------------------------------------#
 # Hospital Equipment Availability (City of LA)
 #---------------------------------------------------------------#
 def hospital_capacity_lacity(start_date):
@@ -418,7 +535,7 @@ def hospital_capacity_lacity(start_date):
 
     return df
 
-# Sub-function to make hospital equipment availability bar chart
+# Sub-function to make hospital equipment availability line chart
 def make_hospital_chart(df):
     chart_width = 500
 
