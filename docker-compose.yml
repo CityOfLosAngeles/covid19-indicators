@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  lab:
+    build: ./
+    image: covid19_indicators
+    container_name: covid19_indicators
+    volumes:
+     - ./:/home/jovyan
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=1
+    command: start-notebook.sh --NotebookApp.notebook_dir=/home/jovyan --LabApp.token='' --allow-root
