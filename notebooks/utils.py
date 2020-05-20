@@ -61,6 +61,14 @@ today_date = (
              .strftime("%-m/%-d/%y")
 )
 
+two_weeks_ago = (
+    (datetime.today()
+                .astimezone(pytz.timezone(f'{time_zone}'))
+                .date()
+        - timedelta(days=15)
+    ).strftime("%-m/%-d/%y")
+)
+
 #---------------------------------------------------------------#
 # Chart parameters
 #---------------------------------------------------------------#
@@ -280,12 +288,16 @@ Sub-functions for City of LA case data.
 """
 def prep_lacity_cases(start_date):
     city_df = pd.read_csv(LA_CITY_URL)
-    city_df["date"] = pd.to_datetime(city_df.Date)
+    city_df["Date"] = (pd.to_datetime(city_df.Date).dt.tz_localize("US/Pacific")
+                       .dt.normalize()
+                       .dt.tz_convert("UTC")
+                      )
 
     df = (
         city_df.rename(
             columns={"City of LA Cases": "cases", 
-                     "City of LA New Cases": "new_cases"}
+                     "City of LA New Cases": "new_cases",
+                    "Date": "date"}
         )
         .sort_values("date")
         .reset_index(drop=True)
@@ -305,33 +317,35 @@ def prep_lacity_cases(start_date):
 #---------------------------------------------------------------#
 # Testing Data (City of LA)
 #---------------------------------------------------------------#
-def lacity_testing_charts(start_date, daily_or_monthly, lower_bound, upper_bound):
-    df = prep_lacity_testing(start_date, daily_or_monthly, lower_bound, upper_bound)
-    make_charts.make_lacity_testing_chart(df, daily_or_monthly, lower_bound, upper_bound)
+def lacity_testing_charts(start_date, lower_bound, upper_bound):
+    df = prep_lacity_testing(start_date, lower_bound, upper_bound)
+    make_charts.make_lacity_testing_chart(df, lower_bound, upper_bound)
     return df
 
-def lacity_testing_indicators(start_date, daily_or_monthly, lower_bound, upper_bound):
-    df = prep_lacity_testing(start_date, "daily", lower_bound, upper_bound)
+def lacity_testing_indicators(start_date, lower_bound, upper_bound):
+    df = prep_lacity_testing(start_date, lower_bound, upper_bound)
     return df
 
 
 """
 Sub-functions for City of LA testing data.
 """
-def prep_lacity_testing(start_date, daily_or_monthly, lower_bound, upper_bound):
+def prep_lacity_testing(start_date, lower_bound, upper_bound):
     df = pd.read_csv(TESTING_URL)
     df = df.assign(
-        Date=pd.to_datetime(df.Date).dt.strftime(fulldate_format),
-        month=pd.to_datetime(df.Date).dt.month,
+        date=(pd.to_datetime(df.Date)
+              .dt.tz_localize("US/Pacific")
+              .dt.normalize()
+              .dt.tz_convert("UTC")
+             ),
     )
-    df = df[df.Date >= start_date]
+    df = (df[df.date >= start_date]
+            .drop(columns = "Date")
+         )
 
-    # Aggregate tests by month
-    df = df.assign(Performed_Monthly=df.groupby("month")["Performed"].transform("sum"))
+    return df 
 
-    return df
-    
-    
+
 #---------------------------------------------------------------#
 # Share of Positive Tests by Week (City of LA)
 #---------------------------------------------------------------#
@@ -366,7 +380,11 @@ def prep_lacity_positive_test(start_date):
     ]
 
     df = (df[keep_cols].assign(
-            Date = pd.to_datetime(df.Date),
+            Date = (pd.to_datetime(df.Date)
+                    .dt.tz_localize("US/Pacific")
+                    .dt.normalize()
+                    .dt.tz_convert("UTC")
+                   ),
         )
           .rename(columns = 
                   {"City of LA Cases": "cases",
@@ -441,7 +459,11 @@ def prep_lacity_hospital(start_date):
 
     # Get a total count of equipment for each date-type
     df = df.assign(
-        Date=pd.to_datetime(df.Date).dt.strftime(fulldate_format),
+        date=(pd.to_datetime(df.Date)
+            .dt.tz_localize("US/Pacific")
+            .dt.normalize()
+            .dt.tz_convert("UTC")
+             ),
         type_total=df.groupby(["Date", "Type"])["Count"].transform("sum"),
     )
 
@@ -456,11 +478,12 @@ def prep_lacity_hospital(start_date):
             else np.nan,
             axis=1,
         ),
+        equipment = df['Type'],
     )
 
-    keep_col = ["Date", "Type", "type_total", "n_available", "pct_available"]
+    keep_col = ["date", "equipment", "type_total", "n_available", "pct_available"]
 
-    df = df[(df.n_available.notna()) & (df.Date >= start_date)][
+    df = df[(df.n_available.notna()) & (df.date >= start_date)][
         keep_col
     ].drop_duplicates()
 

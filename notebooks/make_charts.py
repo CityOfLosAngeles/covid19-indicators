@@ -119,31 +119,21 @@ def make_lacity_cases_chart(df):
 #---------------------------------------------------------------#
 # Testing Data (City of LA)
 #---------------------------------------------------------------#
-def make_lacity_testing_chart(df, daily_or_monthly, lower_bound, upper_bound):
-    if daily_or_monthly == "monthly":
-        format_date = "%b"
-        plot_col = "Performed_Monthly:Q"
-        chart_title = "Monthly Tests Performed"
-        df = df.drop_duplicates(subset=["month", "Performed_Monthly"])
-        chart_width = 150
-
-    if daily_or_monthly == "daily":
-        format_date = monthdate_format
-        plot_col = "Performed:Q"
-        chart_title = "Daily Tests Performed"
-        chart_width = 500
+def make_lacity_testing_chart(df, lower_bound, upper_bound):
+    chart_title = "Daily Tests Performed"
+    chart_width = 500
         
     bar = (
         alt.Chart(df)
         .mark_bar(color=navy)
         .encode(
             x=alt.X(
-                "Date",
+                "date",
                 timeUnit=time_unit,
                 title="date",
-                axis=alt.Axis(format=format_date),
+                axis=alt.Axis(format=monthdate_format),
             ),
-            y=alt.Y(plot_col, title="Tests Performed"),
+            y=alt.Y("Performed:Q", title="Tests Performed"),
         )
     )
 
@@ -245,7 +235,7 @@ def make_lacity_hospital_chart(df):
         .mark_line()
         .encode(
             x=alt.X(
-                "Date",
+                "date",
                 timeUnit=time_unit,
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
@@ -254,7 +244,7 @@ def make_lacity_hospital_chart(df):
                     axis=alt.Axis(format="%")
             ),
             color=alt.Color(
-                "Type",
+                "equipment",
                 scale=alt.Scale(
                     domain=["Acute Care Beds", "ICU Beds", "Ventilators"],
                     range=[acute_color, icu_color, ventilator_color],
@@ -289,14 +279,14 @@ def make_lacity_hospital_chart(df):
         .mark_line()
         .encode(
             x=alt.X(
-                "Date",
+                "date",
                 timeUnit=time_unit,
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
             ),
             y=alt.Y("n_available", title="# available"),
             color=alt.Color(
-                "Type",
+                "equipment",
                 scale=alt.Scale(
                     domain=["Acute Care Beds", "ICU Beds", "Ventilators"],
                     range=[acute_color, icu_color, ventilator_color],
