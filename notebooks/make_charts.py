@@ -4,6 +4,8 @@ Use JHU county data.
 Specific City of LA data also used to generate LA-specific charts. 
 """
 import altair as alt
+import pandas as pd
+import utils
 
 from IPython.display import display
 
@@ -31,7 +33,6 @@ monthdate_format = "%-m/%-d"
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA)
 #---------------------------------------------------------------#
-# Sub-function to make cases and deaths chart
 def make_cases_deaths_chart(df, geog, name):
     # Define chart titles
     if geog == "county":
@@ -90,7 +91,7 @@ def make_cases_deaths_chart(df, geog, name):
 #---------------------------------------------------------------#
 # Case Data (City of LA)
 #---------------------------------------------------------------#
-def make_cases_chart_lacity(start_date):
+def make_lacity_cases_chart(df):
     # Make cases charts
     cases_chart = (
         alt.Chart(df)
@@ -118,10 +119,20 @@ def make_cases_chart_lacity(start_date):
 #---------------------------------------------------------------#
 # Testing Data (City of LA)
 #---------------------------------------------------------------#
-# Sub-function to make testing bar chart
-def make_testing_chart(
-    df, plot_col, format_date, lower_bound, upper_bound, chart_title, chart_width
-):
+def make_lacity_testing_chart(df, daily_or_monthly, lower_bound, upper_bound):
+    if daily_or_monthly == "monthly":
+        format_date = "%b"
+        plot_col = "Performed_Monthly:Q"
+        chart_title = "Monthly Tests Performed"
+        df = df.drop_duplicates(subset=["month", "Performed_Monthly"])
+        chart_width = 150
+
+    if daily_or_monthly == "daily":
+        format_date = monthdate_format
+        plot_col = "Performed:Q"
+        chart_title = "Daily Tests Performed"
+        chart_width = 500
+        
     bar = (
         alt.Chart(df)
         .mark_bar(color=navy)
@@ -165,8 +176,7 @@ def make_testing_chart(
 #---------------------------------------------------------------#
 # Share of Positive Tests by Week (City of LA)
 #---------------------------------------------------------------#
-# Sub-function to make share of positive tests chart
-def make_positive_test_chart(df):
+def make_lacity_positive_test_chart(df):
     chart_title1 = "Weekly Share of Positive Results"
     chart_title2 = "Weekly Tests Conducted"
     
@@ -224,8 +234,7 @@ def make_positive_test_chart(df):
 #---------------------------------------------------------------#
 # Hospital Equipment Availability (City of LA)
 #---------------------------------------------------------------#
-# Sub-function to make hospital equipment availability line chart
-def make_hospital_chart(df):
+def make_lacity_hospital_chart(df):
     chart_width = 500
     acute_color = green
     icu_color = navy
