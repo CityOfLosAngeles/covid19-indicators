@@ -3,10 +3,11 @@ Functions to create county or state-specific indicators.
 Use JHU county data.
 Specific City of LA data also used to generate LA-specific charts. 
 """
-import altair as alt
 import numpy as np
 import pandas as pd
 import pytz
+
+import make_charts
 import useful_dict
 
 from datetime import date, datetime, timedelta
@@ -82,18 +83,62 @@ monthdate_format = "%-m/%-d"
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA)
 #---------------------------------------------------------------#
+"""
+Make cases and deaths chart for county / state / MSA.
+Some data cleaning for by geographic level (listed in 1, 2a, 2b, 2c)
+Call functions to make charts.
+"""
+# County Case Data
+def county_case_charts(county_state_name, start_date):
+    df = prep_county(county_state_name, start_date)
+    name = df.county.iloc[0]
+    df = make_charts.make_cases_deaths_chart(df, "county", name)
+    return df
+
+def county_case_indicators(county_state_name, start_date):
+    df = prep_county(county_state_name, start_date)
+    return df
+
+    
+# State Case Data
+def state_case_charts(state_name, start_date):
+    df = prep_state(state_name, start_date)
+    name = df.state.iloc[0]
+    df = make_charts.make_cases_deaths_chart(df, "state", name)
+    return df
+
+def state_case_indicators(state_name, start_date):
+    df = prep_state(state_name, start_date)
+    return df
+
+
+# MSA Case Data
+def msa_case_charts(msa_name, start_date):
+    df = prep_msa(msa_name, start_date)
+    name = df.msa.iloc[0]
+    df = make_charts.make_cases_deaths_chart(df, "msa", name)
+    return df
+
+def msa_case_indicators(msa_name, start_date):
+    df = prep_msa(msa_name, start_date)
+    return df
+
+
+"""
+Sub-functions for case, deaths data.
+"""
+# (1) Sub-function to prep all US time-series data
 def prep_us_county_time_series():
     df = pd.read_csv(US_COUNTY_URL, dtype={"fips": "str"})
     df = df.assign(
         date=pd.to_datetime(df.date),
         state_abbrev=df.state.map(useful_dict.us_state_abbrev),
     )
-
     return df
 
 
-# County Case Data
-def case_indicators_county(county_state_name, start_date):
+# (2a) Sub-function to prep county data
+def prep_county(county_state_name, start_date):
     df = prep_us_county_time_series()
 
     # Parse the county_state_name into county_name and state_name (abbrev)
@@ -136,14 +181,13 @@ def case_indicators_county(county_state_name, start_date):
         .reset_index(drop=True)
     )
 
-    name = df.county.iloc[0]
-    df = make_cases_deaths_chart(df, "county", name)
+    df = calculate_rolling_average(df)
 
     return df
 
 
-# State Case Data
-def case_indicators_state(state_name, start_date):
+# (2b) Sub-function to prep state data
+def prep_state(state_name, start_date):
     df = prep_us_county_time_series()
 
     keep_cols = [
@@ -173,15 +217,14 @@ def case_indicators_state(state_name, start_date):
         )
         .reset_index(drop=True)
     )
-
-    name = df.state.iloc[0]
-    df = make_cases_deaths_chart(df, "state", name)
+    
+    df = calculate_rolling_average(df)
 
     return df
 
 
-# MSA Case Data
-def case_indicators_msa(msa_name, start_date):
+# (2c) Sub-function to prep MSA data
+def prep_msa(msa_name, start_date):
     group_cols = ["msa", "msa_pop", "date"]
     msa_group_cols = ["msa", "msa_pop"]
 
@@ -215,73 +258,19 @@ def case_indicators_msa(msa_name, start_date):
             df.sort_values(group_cols).groupby(msa_group_cols)["deaths"].diff(periods=1)
         ),
     )
-
-    name = df.msa.iloc[0]
-    df = make_cases_deaths_chart(df, "msa", name)
+    
+    df = calculate_rolling_average(df)
 
     return df
 
 
-# Sub-function to make cases and deaths chart
-def make_cases_deaths_chart(df, geog, name):
-    # Define chart titles
-    if geog == "county":
-        chart_title = f"{name} County"
-    if geog == "state":
-        chart_title = f"{name}"
-    if geog == "msa":
-        chart_title = f"{name} MSA"
-
+def calculate_rolling_average(df):
     # Derive new columns
     df = df.assign(
         cases_avg7=df.new_cases.rolling(window=7).mean(),
         deaths_avg3=df.new_deaths.rolling(window=3).mean(),
         deaths_avg7=df.new_deaths.rolling(window=7).mean(),
     )
-
-    # Make cases charts
-    cases_chart = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X("date", timeUnit=time_unit, 
-                    title="date", axis=alt.Axis(format=monthdate_format)
-                   ),
-            y=alt.Y("cases_avg7", title="7-day avg"),
-            color=alt.value(navy),
-        )
-        .properties(
-            title=f"{chart_title}: New Cases", width=chart_width, height=chart_height
-        )
-    )
-
-    # Make deaths chart
-    deaths_chart = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X("date", timeUnit=time_unit, 
-                    title="date", axis=alt.Axis(format=monthdate_format)
-                   ),
-            y=alt.Y("deaths_avg3", title="3-day avg"),
-            color=alt.value(maroon),
-        )
-        .properties(
-            title=f"{chart_title}: New Deaths", width=chart_width, height=chart_height
-        )
-    )
-
-    combined_chart = (
-        alt.hconcat(cases_chart, deaths_chart)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
-
-    display(combined_chart)
-
     return df
 
 
