@@ -1,8 +1,10 @@
-# United States of America Python Dictionary to translate States,
-# Districts & Territories to Two-Letter codes and vice versa.
-#
-# https://gist.github.com/rogerallen/1583593
+# Useful dictionaries to select other values instead of the default.
 
+"""
+United States of America Python Dictionary to translate States,
+Districts & Territories to Two-Letter codes and vice versa.
+https://gist.github.com/rogerallen/1583593
+"""
 us_state_abbrev = {
     "Alabama": "AL",
     "Alaska": "AK",
@@ -63,3 +65,28 @@ us_state_abbrev = {
 }
 
 abbrev_us_state = dict(map(reversed, us_state_abbrev.items()))
+
+
+"""
+Time Zone options for the US
+https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+
+US/Alaska
+US/Aleutian
+US/Arizona
+US/Central
+US/East-Indiana
+US/Eastern
+US/Hawaii
+US/Indiana-Starke
+US/Michigan
+US/Mountain
+US/Pacific
+US/Pacific-New
+US/Samoa
+"""
+
+"""
+List of MSAs/CBSAs
+https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/references/msa_county_pop_crosswalk.csv
+"""
