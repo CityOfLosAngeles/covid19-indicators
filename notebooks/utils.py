@@ -46,7 +46,7 @@ county_state_name = "Los Angeles, CA"
 state_name = "California"
 msa_name = "Los Angeles-Long Beach-Anaheim, CA"
 time_zone = "US/Pacific"
-start_date = "4/1/20"
+start_date = pd.to_datetime("4/1/20", utc=True)
 yesterday_date = (
     (datetime.today()
                 .astimezone(pytz.timezone(f'{time_zone}'))
@@ -163,13 +163,13 @@ def prep_county(county_state_name, start_date):
         df[
             (df.county == county_name)
             & (df.state_abbrev == state_name)
-            & (df.date >= start_date)
         ][keep_cols]
         .sort_values(["county", "state", "fips", "date"])
         .reset_index(drop=True)
     )
 
     df = calculate_rolling_average(df)
+    df = df[df.date >= start_date]
 
     return df
 
@@ -189,9 +189,8 @@ def prep_state(state_name, start_date):
     ]
 
     df = (
-        df[
-            ((df.state == state_name) | (df.state_abbrev == state_name))
-            & (df.date >= start_date)
+        df[(df.state == state_name) | 
+           (df.state_abbrev == state_name)
         ][keep_cols]
         .sort_values(["state", "date"])
         .drop_duplicates()
@@ -207,6 +206,7 @@ def prep_state(state_name, start_date):
     )
     
     df = calculate_rolling_average(df)
+    df = df[df.date >= start_date]
 
     return df
 
@@ -231,8 +231,7 @@ def prep_msa(msa_name, start_date):
     )
 
     df = (
-        final_df[final_df.date >= start_date]
-        .groupby(group_cols)
+        final_df.groupby(group_cols)
         .agg({"cases": "sum", "deaths": "sum"})
         .reset_index()
     )
@@ -248,7 +247,8 @@ def prep_msa(msa_name, start_date):
     )
     
     df = calculate_rolling_average(df)
-
+    df = df[df.date >= start_date]
+    
     return df
 
 
@@ -283,8 +283,7 @@ def prep_lacity_cases(start_date):
     city_df["date"] = pd.to_datetime(city_df.Date)
 
     df = (
-        city_df[city_df.date >= start_date]
-        .rename(
+        city_df.rename(
             columns={"City of LA Cases": "cases", 
                      "City of LA New Cases": "new_cases"}
         )
@@ -297,6 +296,8 @@ def prep_lacity_cases(start_date):
         # 7-day rolling average for new cases
         cases_avg7=df.new_cases.rolling(window=7).mean(),
     )
+    
+    df = df[df.date >= start_date]
 
     return df
 
