@@ -38,15 +38,33 @@ CROSSWALK_URL = (
     "public-health/covid19/msa_county_pop_crosswalk.csv"
 )
 
+#---------------------------------------------------------------#
+# Default parameters
+#---------------------------------------------------------------#
+county_state_name = "Los Angeles, CA"
+state_name = "California"
+msa_name = "Los Angeles-Long Beach-Anaheim, CA"
+time_zone = "US/Pacific"
+start_date = "4/1/20"
+yesterday_date = (
+    datetime.today()
+                .astimezone(pytz.timezone(f'{time_zone}'))
+                .date()
+        - timedelta(days=1)   
+)
+today_date = (
+    datetime.today()
+             .astimezone(pytz.timezone(f'{time_zone}'))
+             .date()
+)
 
 #---------------------------------------------------------------#
 # Chart parameters
 #---------------------------------------------------------------#
 navy = "#0A4C6A"
 maroon = "#A30F23"
-acute_color = "#04E679"
-icu_color = navy
-ventilator_color = "#e76f51"
+green = "#10DE7A"
+orange = "#FCA800"
 
 title_font_size = 10
 font_name = "Roboto"
@@ -56,6 +74,9 @@ stroke_opacity = 0
 time_unit = "monthdate"
 chart_width = 250
 chart_height = 200
+bin_spacing = 20
+fulldate_format = "%-m/%-d/%y"
+monthdate_format = "%-m/%-d"
 
 
 #---------------------------------------------------------------#
@@ -67,6 +88,7 @@ def prep_us_county_time_series():
         date=pd.to_datetime(df.date),
         state_abbrev=df.state.map(useful_dict.us_state_abbrev),
     )
+
     return df
 
 
@@ -222,7 +244,9 @@ def make_cases_deaths_chart(df, geog, name):
         alt.Chart(df)
         .mark_line()
         .encode(
-            x=alt.X("date", timeUnit=time_unit, title="date"),
+            x=alt.X("date", timeUnit=time_unit, 
+                    title="date", axis=alt.Axis(format=monthdate_format)
+                   ),
             y=alt.Y("cases_avg7", title="7-day avg"),
             color=alt.value(navy),
         )
@@ -236,7 +260,9 @@ def make_cases_deaths_chart(df, geog, name):
         alt.Chart(df)
         .mark_line()
         .encode(
-            x=alt.X("date", timeUnit=time_unit, title="date"),
+            x=alt.X("date", timeUnit=time_unit, 
+                    title="date", axis=alt.Axis(format=monthdate_format)
+                   ),
             y=alt.Y("deaths_avg3", title="3-day avg"),
             color=alt.value(maroon),
         )
@@ -286,7 +312,9 @@ def case_indicators_lacity(start_date):
         alt.Chart(df)
         .mark_line()
         .encode(
-            x=alt.X("date", timeUnit=time_unit, title="date"),
+            x=alt.X("date", timeUnit=time_unit, 
+                    title="date", axis=alt.Axis(format=monthdate_format)
+                   ),
             y=alt.Y("cases_avg7", title="7-day avg"),
             color=alt.value(navy),
         )
@@ -311,7 +339,7 @@ def case_indicators_lacity(start_date):
 def testing_lacity(start_date, daily_or_monthly, lower_bound, upper_bound):
     df = pd.read_csv(TESTING_URL)
     df = df.assign(
-        Date=pd.to_datetime(df.Date).dt.strftime("%-m/%-d/%y"),
+        Date=pd.to_datetime(df.Date).dt.strftime(fulldate_format),
         month=pd.to_datetime(df.Date).dt.month,
     )
     df = df[df.Date >= start_date]
@@ -327,7 +355,7 @@ def testing_lacity(start_date, daily_or_monthly, lower_bound, upper_bound):
         chart_width = 150
 
     if daily_or_monthly == "daily":
-        format_date = "%-m/%-d"
+        format_date = monthdate_format
         plot_col = "Performed:Q"
         chart_title = "Daily Tests Performed"
         chart_width = 500
@@ -414,16 +442,10 @@ def positive_tests_lacity(start_date):
     
     # Subset to particular start and end date
     df = (df[(df.date >= start_date) & (df.date <= yesterday_date)]
-          .sort_values("date")
-         )
-
-    df = df.assign(
-            cases = df.cases.astype(int),
-            new_cases = df.new_cases.astype(int),
-            new_tests = df.new_tests.astype(int),
-            tests = df.tests.astype(int),
+        .assign(
             week = pd.to_datetime(df.date).dt.strftime("%U"),
-    ) 
+        ).sort_values("date")
+    )
     
     # Aggregate to the week
     weekly_total = (df.groupby("week")
@@ -452,52 +474,72 @@ def positive_tests_lacity(start_date):
     df = (df[df.days_counted==7][keep_col]
           .drop_duplicates()
           .assign(
+            weekly_cases = df.weekly_cases.astype(int),
+            weekly_tests = df.weekly_tests.astype(int),
             pct_positive = df.weekly_cases / df.weekly_tests,
+            week2 = df.start_of_week.dt.strftime(monthdate_format).astype(str),
         )
     )
-    
+
     make_positive_test_chart(df)
     
     return df
     
+    
 # Sub-function to make share of positive tests chart
 def make_positive_test_chart(df):
-    chart_width = 500
-    bar = (
+    chart_title1 = "Weekly Share of Positive Results"
+    chart_title2 = "Weekly Tests Conducted"
+    
+    positive_bar = (
         alt.Chart(df)
-        .mark_bar(color="navy", )
+        .mark_bar(color = navy, binSpacing = bin_spacing)
         .encode(
             x=alt.X(
-                "yearmonthdate(start_of_week)",
+                "week2",
                 title="date",
-                axis=alt.Axis(format="%-m/%-d/%y"),
             ),
             y=alt.Y(
                 "pct_positive", 
                 title="Share of Positive COVID-19 Results",
+                axis=alt.Axis(format="%")
             ),
         )
-    )
-
-    line = (
-        alt.Chart(df)
-        .mark_line(color="red", strokeDash=[5, 2])
-        .encode(
-            x=alt.X("yearmonthdate(start_of_week)"),
-            y=alt.Y("weekly_tests", title="# Weekly Tests")
+        .properties(title=chart_title1, width = chart_width)
+        .configure_title(
+            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
         )
+        .configure_axis(
+            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
+        )
+        .configure_view(strokeOpacity=stroke_opacity)
     )
 
-    positive_tests = (
-        alt.concat(
-            alt.layer(bar, line, 
-                      title="Weekly Test Volume and Share of Positive Results")
-                .resolve_scale(y='independent',x='shared')
-            )
+    test_bar = (
+        alt.Chart(df)
+        .mark_bar(color = orange, binSpacing = bin_spacing)
+        .encode(
+            x=alt.X(
+                "week2",
+                title="start of week date",
+            ),
+            y=alt.Y(
+                "weekly_tests", 
+                title="# Weekly Tests",
+            ),
+        )
+        .properties(title=chart_title2, width = chart_width)
+        .configure_title(
+            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
+        )
+        .configure_axis(
+            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
+        )
+        .configure_view(strokeOpacity=stroke_opacity)
     )
 
-    display(positive_tests)
-
+    display(positive_bar)
+    display(test_bar)
 
     
 #---------------------------------------------------------------#
@@ -508,7 +550,7 @@ def hospital_capacity_lacity(start_date):
 
     # Get a total count of equipment for each date-type
     df = df.assign(
-        Date=pd.to_datetime(df.Date).dt.strftime("%-m/%-d/%y"),
+        Date=pd.to_datetime(df.Date).dt.strftime(fulldate_format),
         type_total=df.groupby(["Date", "Type"])["Count"].transform("sum"),
     )
 
@@ -538,6 +580,9 @@ def hospital_capacity_lacity(start_date):
 # Sub-function to make hospital equipment availability line chart
 def make_hospital_chart(df):
     chart_width = 500
+    acute_color = green
+    icu_color = navy
+    ventilator_color = orange
 
     base = (
         alt.Chart(df)
@@ -547,9 +592,11 @@ def make_hospital_chart(df):
                 "Date",
                 timeUnit=time_unit,
                 title="date",
-                axis=alt.Axis(format="%-m/%-d"),
+                axis=alt.Axis(format=monthdate_format),
             ),
-            y=alt.Y("pct_available", title="proportion available"),
+            y=alt.Y("pct_available", title="% available", 
+                    axis=alt.Axis(format="%")
+            ),
             color=alt.Color(
                 "Type",
                 scale=alt.Scale(
@@ -569,7 +616,7 @@ def make_hospital_chart(df):
     hospital_pct_chart = (
         (base + line1)
         .properties(
-            title="Proportion of Available Hospital Equipment by Type",
+            title="Percent of Available Hospital Equipment by Type",
             width=chart_width,
         )
         .configure_title(
@@ -589,9 +636,9 @@ def make_hospital_chart(df):
                 "Date",
                 timeUnit=time_unit,
                 title="date",
-                axis=alt.Axis(format="%-m/%-d"),
+                axis=alt.Axis(format=monthdate_format),
             ),
-            y=alt.Y("n_available", title="number available"),
+            y=alt.Y("n_available", title="# available"),
             color=alt.Color(
                 "Type",
                 scale=alt.Scale(
