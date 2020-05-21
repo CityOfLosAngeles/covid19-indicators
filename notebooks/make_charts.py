@@ -117,10 +117,10 @@ def make_lacity_cases_chart(df):
 
 
 #---------------------------------------------------------------#
-# Testing Data (City of LA)
+# Testing Data (LA County)
 #---------------------------------------------------------------#
-def make_lacity_testing_chart(df, lower_bound, upper_bound):
-    chart_title = "Daily Tests Performed"
+def make_lacounty_testing_chart(df, lower_bound, upper_bound):
+    chart_title = "LA County: Daily Tests Performed"
     chart_width = 500
         
     bar = (
@@ -166,7 +166,7 @@ def make_lacity_testing_chart(df, lower_bound, upper_bound):
 #---------------------------------------------------------------#
 # Share of Positive Tests by Week (City of LA)
 #---------------------------------------------------------------#
-def make_lacity_positive_test_chart(df):
+def make_lacounty_positive_test_chart(df):
     chart_title1 = "Weekly Share of Positive Results"
     chart_title2 = "Weekly Tests Conducted"
     
@@ -200,7 +200,7 @@ def make_lacity_positive_test_chart(df):
         .encode(
             x=alt.X(
                 "week2",
-                title="start of week date",
+                title="date",
             ),
             y=alt.Y(
                 "weekly_tests", 

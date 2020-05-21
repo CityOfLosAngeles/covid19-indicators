@@ -129,7 +129,7 @@ def meet_daily_testing(yesterday_date, lower_bound, upper_bound):
     """
     Returns red/green/blue depending on how well benchmark is met
     """
-    df = utils.prep_lacity_testing(start_date, lower_bound, upper_bound)
+    df = utils.prep_lacounty_testing(start_date)
 
     df = df.assign(
         date = pd.to_datetime(df.date).dt.strftime(fulldate_format)
@@ -156,7 +156,7 @@ def meet_positive_share(yesterday_date, bound):
     """
     Returns red/green depending on if benchmark was met last week
     """
-    df = utils.prep_lacity_positive_test(start_date)
+    df = utils.prep_lacounty_positive_test(start_date)
     
     extract_col = "pct_positive"
     indicator = df[df.week == df.week.max()].iloc[0][extract_col]

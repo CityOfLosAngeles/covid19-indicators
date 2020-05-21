@@ -297,18 +297,18 @@ def prep_lacity_cases(start_date):
 
 
 #---------------------------------------------------------------#
-# Testing Data (City of LA)
+# Testing Data (LA County)
 #---------------------------------------------------------------#
-def lacity_testing_charts(start_date, lower_bound, upper_bound):
-    df = prep_lacity_testing(start_date, lower_bound, upper_bound)
-    make_charts.make_lacity_testing_chart(df, lower_bound, upper_bound)
+def lacounty_testing_charts(start_date, lower_bound, upper_bound):
+    df = prep_lacounty_testing(start_date)
+    make_charts.make_lacounty_testing_chart(df, lower_bound, upper_bound)
     return df
 
 
 """
 Sub-functions for City of LA testing data.
 """
-def prep_lacity_testing(start_date, lower_bound, upper_bound):
+def prep_lacounty_testing(start_date):
     df = pd.read_csv(TESTING_URL)
     df = df.assign(
         date=(pd.to_datetime(df.Date)
@@ -325,47 +325,37 @@ def prep_lacity_testing(start_date, lower_bound, upper_bound):
 
 
 #---------------------------------------------------------------#
-# Share of Positive Tests by Week (City of LA)
+# Share of Positive Tests by Week (LA County)
 #---------------------------------------------------------------#
-def lacity_positive_test_charts(start_date):
-    df = prep_lacity_positive_test(start_date)
-    make_charts.make_lacity_positive_test_chart(df)
+def lacounty_positive_test_charts(start_date):
+    df = prep_lacounty_positive_test(start_date)
+    make_charts.make_lacounty_positive_test_chart(df)
     return df
 
 
 """
-Sub-functions for City of LA share of positive test results data.
+Sub-functions for LA County share of positive test results data.
 Combine testing data and case data, aggregated to the week.
 We lack results for positive/negative results for each test batch (ideal).
 """
-def prep_lacity_positive_test(start_date):
-    tests_df = pd.read_csv(TESTING_URL)
-    cases_df = pd.read_csv(LA_CITY_URL)
+def prep_lacounty_positive_test(start_date):
+    tests_df = prep_lacounty_testing(start_date)
+    cases_df = prep_county("Los Angeles, CA", start_date)
     
     #  Merge and rename columns
-    df = pd.merge(cases_df, tests_df, on = "Date", how = "left")
+    df = pd.merge(cases_df, tests_df, on = "date", how = "left")
     
     keep_cols = [
-        "Date",
-        "City of LA Cases",
-        "City of LA New Cases",
+        "county", 
+        "state", 
+        "date",
+        "cases",
+        "new_cases",
         "Performed", 
-        "Cumulative",
     ]
 
-    df = (df[keep_cols].assign(
-            Date = (pd.to_datetime(df.Date)
-                    .dt.tz_localize("US/Pacific")
-                    .dt.normalize()
-                    .dt.tz_convert("UTC")
-                   ),
-        )
-          .rename(columns = 
-                  {"City of LA Cases": "cases",
-                   "City of LA New Cases": "new_cases",
-                   "Performed": "new_tests",
-                   "Cumulative": "tests",
-                   "Date": "date"}) 
+    df = (df[keep_cols]
+          .rename(columns = {"Performed": "new_tests"}) 
     )
     
     # Subset to particular start and end date
