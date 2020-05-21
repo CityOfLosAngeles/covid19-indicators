@@ -118,3 +118,9 @@ gdf = gpd.read_file(CORRECT_URL)
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
 
+
+## Deploying 
+
+To run locally, run `docker-compose build` and `docker-compose run job`. 
+
+To run on civis, setup a Container script to run "python main.py" 

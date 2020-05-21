@@ -5,3 +5,5 @@ FROM irose/citywide-jupyterlab:8896e05986fc
 
 COPY requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
+
+ENTRYPOINT [ "python", "main.py" ]

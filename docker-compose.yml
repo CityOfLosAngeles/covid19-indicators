@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  lab:
+  job:
     build: ./
     image: covid19_indicators
     container_name: covid19_indicators
