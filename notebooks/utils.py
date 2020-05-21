@@ -49,7 +49,7 @@ msa_name = "Los Angeles-Long Beach-Anaheim, CA"
 fulldate_format = "%-m/%-d/%y"
 monthdate_format = "%-m/%-d"
 time_zone = "US/Pacific"
-start_date = pd.to_datetime("4/1/20").strftime(fulldate_format)
+start_date = pd.to_datetime("4/15/20").strftime(fulldate_format)
 
 yesterday_date = (
     (datetime.today()
