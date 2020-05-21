@@ -45,8 +45,12 @@ CROSSWALK_URL = (
 county_state_name = "Los Angeles, CA"
 state_name = "California"
 msa_name = "Los Angeles-Long Beach-Anaheim, CA"
+
+fulldate_format = "%-m/%-d/%y"
+monthdate_format = "%-m/%-d"
 time_zone = "US/Pacific"
-start_date = pd.to_datetime("4/1/20", utc=True)
+start_date = pd.to_datetime("4/1/20").strftime(fulldate_format)
+
 yesterday_date = (
     (datetime.today()
                 .astimezone(pytz.timezone(f'{time_zone}'))
@@ -58,7 +62,7 @@ today_date = (
     datetime.today()
              .astimezone(pytz.timezone(f'{time_zone}'))
              .date()
-             .strftime("%-m/%-d/%y")
+             .strftime(fulldate_format)
 )
 
 two_weeks_ago = (
@@ -66,14 +70,8 @@ two_weeks_ago = (
                 .astimezone(pytz.timezone(f'{time_zone}'))
                 .date()
         - timedelta(days=15)
-    ).strftime("%-m/%-d/%y")
+    ).strftime(fulldate_format)
 )
-
-#---------------------------------------------------------------#
-# Chart parameters
-#---------------------------------------------------------------#
-fulldate_format = make_charts.fulldate_format
-monthdate_format = make_charts.monthdate_format
 
 
 #---------------------------------------------------------------#
@@ -91,10 +89,6 @@ def county_case_charts(county_state_name, start_date):
     make_charts.make_cases_deaths_chart(df, "county", name)
     return df
 
-def county_case_indicators(county_state_name, start_date):
-    df = prep_county(county_state_name, start_date)
-    return df
-
     
 # State Case Data
 def state_case_charts(state_name, start_date):
@@ -103,20 +97,12 @@ def state_case_charts(state_name, start_date):
     make_charts.make_cases_deaths_chart(df, "state", name)
     return df
 
-def state_case_indicators(state_name, start_date):
-    df = prep_state(state_name, start_date)
-    return df
-
 
 # MSA Case Data
 def msa_case_charts(msa_name, start_date):
     df = prep_msa(msa_name, start_date)
     name = df.msa.iloc[0]
     make_charts.make_cases_deaths_chart(df, "msa", name)
-    return df
-
-def msa_case_indicators(msa_name, start_date):
-    df = prep_msa(msa_name, start_date)
     return df
 
 
@@ -278,10 +264,6 @@ def lacity_case_charts(start_date):
     make_charts.make_lacity_cases_chart(df)
     return df
 
-def lacity_case_indicators(start_date):
-    df = prep_lacity_cases(start_date)
-    return df
-
 
 """
 Sub-functions for City of LA case data.
@@ -322,10 +304,6 @@ def lacity_testing_charts(start_date, lower_bound, upper_bound):
     make_charts.make_lacity_testing_chart(df, lower_bound, upper_bound)
     return df
 
-def lacity_testing_indicators(start_date, lower_bound, upper_bound):
-    df = prep_lacity_testing(start_date, lower_bound, upper_bound)
-    return df
-
 
 """
 Sub-functions for City of LA testing data.
@@ -352,10 +330,6 @@ def prep_lacity_testing(start_date, lower_bound, upper_bound):
 def lacity_positive_test_charts(start_date):
     df = prep_lacity_positive_test(start_date)
     make_charts.make_lacity_positive_test_chart(df)
-    return df
-
-def lacity_positive_test_indicators(start_date):
-    df = prep_lacity_positive_test(start_date)
     return df
 
 
@@ -444,10 +418,6 @@ def prep_lacity_positive_test(start_date):
 def lacity_hospital_charts(start_date):
     df = prep_lacity_hospital(start_date)
     make_charts.make_lacity_hospital_chart(df)
-    return df
-
-def lacity_hospital_indicators(start_date):
-    df = prep_lacity_hospital(start_date)
     return df
 
 

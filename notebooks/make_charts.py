@@ -66,7 +66,7 @@ def make_cases_deaths_chart(df, geog, name):
             x=alt.X("date", timeUnit=time_unit, 
                     title="date", axis=alt.Axis(format=monthdate_format)
                    ),
-            y=alt.Y("deaths_avg3", title="3-day avg"),
+            y=alt.Y("deaths_avg7", title="7-day avg"),
             color=alt.value(maroon),
         )
         .properties(

@@ -1,3 +1,4 @@
+import pandas as pd
 import utils
 
 time_zone = utils.time_zone
@@ -5,96 +6,68 @@ start_date = utils.start_date
 yesterday_date = utils.yesterday_date
 today_date = utils.today_date
 two_weeks_ago = utils.two_weeks_ago
+fulldate_format = utils.fulldate_format
 
 
-def meet_county_case(county_state_name, start_date):
-    df = utils.county_case_indicators(county_state_name, start_date)
-    df = df[(df.date < today_date) & (df.date >= two_weeks_ago)]
-    df = county_past_two_weeks(df)
+#---------------------------------------------------------------#
+# Case Indicators (County, State, MSA, City of LA)
+#---------------------------------------------------------------#    
+def meet_case(geog, name, start_date):
+    df = meet_case_death_prep(geog, name, start_date)
+    extract_col = "days_fewer_cases"
+    indicator = df.iloc[0][extract_col]
     
-    county_case_indicator = df.iloc[0]["days_fewer_cases"]
-    
-    return county_case_indicator
+    return indicator
 
-
-def meet_county_death(county_state_name, start_date):
-    df = utils.county_case_indicators(county_state_name, start_date)
-    df = df[(df.date < today_date) & (df.date >= two_weeks_ago)]
-    df = county_past_two_weeks(df)
+def meet_death(geog, name, start_date):
+    df = meet_case_death_prep(geog, name, start_date)
     
-    county_death_indicator = df.iloc[0]["days_fewer_deaths"]
+    extract_col = "days_fewer_deaths"
+    indicator = df.iloc[0][extract_col]
     
-    return county_death_indicator
-
+    return indicator 
 
 def meet_lacity_case(start_date):
-    df = utils.lacity_case_indicators(start_date)
+    df = utils.prep_lacity_cases(start_date)
     df = df[(df.date < today_date) & (df.date >= two_weeks_ago)]
     df = lacity_past_two_weeks(df)
     
-    lacity_case_indicator = df.iloc[0]["days_fewer_cases"]
+    extract_col = "days_fewer_cases"
+    indicator = df.iloc[0][extract_col]
     
-    return lacity_case_indicator
+    return indicator
 
 
-# Daily Testing
-def meet_daily_testing(yesterday_date, test_lower_bound, test_upper_bound):
-    """
-    Returns red/green/blue depending on how well benchmark is met
-    """
-    df = utils.lacity_testing_indicators(start_date, test_lower_bound, test_upper_bound)
-    
-    test_indicator = df[df.date==yesterday_date].iloc[0]["Performed"]
-    print(test_indicator)
-    if test_indicator < test_lower_bound:
-        return "red"
-
-    elif (test_indicator >= test_lower_bound) and (test_indicator < test_upper_bound):
-        return "green"
-
-    elif test_indicator >= test_upper_bound:
-        return "blue"
-    
-    else:
-        return "white"
-
-    
-# Share of Positive Results
-def meet_positive_share(yesterday_date, positive_bound):
-    """
-    Returns red/green depending on if benchmark was met last week
-    """
-    df = utils.lacity_positive_test_indicators(start_date)
-    
-    positive_indicator = df[df.week == df.week.max()].iloc[0]["pct_positive"]
-    
-    if positive_indicator < positive_bound:
-        return "green"
-    
-    elif positive_indicator >= positive_bound:
-        return "red"
-
-    
-# Hospital Equipment
-def meet_hospital(yesterday_date, hospital_bound):
-    """
-    Returns red/green depending on if benchmark was net yesterday
-    """
-    df = utils.lacity_hospital_indicators(start_date)
-    
-    positive_indicator = df[df.week == df.week.max()].iloc[0]["pct_positive"]
-    
-    if positive_indicator < positive_bound:
-        return "green"
-    
-    elif positive_indicator >= positive_bound:
-        return "red"    
-    
-   
 """
-Sub-functions
+Sub-functions for cases / deaths
 """
-def county_past_two_weeks(df):
+def meet_case_death_prep(geog, name, start_date):
+    if geog == "county":
+        county_state_name = name
+        df = utils.prep_county(county_state_name, start_date)
+        name = df.county.iloc[0]
+        group_cols = ["county", "state"]
+        
+    if geog == "state":
+        state_name = name
+        df = utils.prep_state(state_name, start_date)
+        name = df.state.iloc[0]
+        group_cols = ["state"]
+        
+    if geog == "msa":
+        msa_name = name
+        df = utils.prep_msa(msa_name, start_date)
+        name = df.msa.iloc[0]
+        group_cols = ["msa"]
+
+        
+    df = df[(df.date < today_date) & (df.date >= two_weeks_ago)]
+    df = past_two_weeks(df, group_cols)  
+    
+    return df
+
+
+def past_two_weeks(df, group_cols):
     """
     Count number of times in past 14 days where
     we had drop in cases / deaths from prior day.
@@ -102,17 +75,15 @@ def county_past_two_weeks(df):
     Date two weeks ago is 15 days ago because
     we need 14 change-from-prior-day observations.
     """
-    sort_cols = ["date"]
-    group_cols = ["county", "state"]
     
     df = df.assign(
         delta_cases_avg7=(
-            df.sort_values(sort_cols)
+            df.sort_values("date")
             .groupby(group_cols)["cases_avg7"]
             .diff(periods=1)
         ),
         delta_deaths_avg7=(
-            df.sort_values(sort_cols)
+            df.sort_values("date")
             .groupby(group_cols)["deaths_avg7"]
             .diff(periods=1)
         )
@@ -123,7 +94,7 @@ def county_past_two_weeks(df):
         days_fewer_deaths = df.apply(lambda row: 1 if row.delta_deaths_avg7 < 0 else 0, axis=1),
     )
 
-    two_week_totals = (df.groupby(["county", "fips"])
+    two_week_totals = (df.groupby(group_cols)
                         .agg({"days_fewer_cases": "sum", 
                             "days_fewer_deaths": "sum"})
                         .reset_index()
@@ -133,21 +104,101 @@ def county_past_two_weeks(df):
     
 
 def lacity_past_two_weeks(df):
-    sort_cols = ["date"]
     
     df = df.assign(
         delta_cases_avg7=(
-            df.sort_values(sort_cols)["cases_avg7"]
+            df.sort_values("date")["cases_avg7"]
             .diff(periods=1)
         ),
     )
 
     df = df.assign(
         days_fewer_cases = df.apply(lambda row: 1 if row.delta_cases_avg7 < 0 else 0, axis=1),
+        city = "LA"
     )
 
-    two_week_totals = (df.agg({"days_fewer_cases": "sum"})
-                        .reset_index()
-                    )
-
+    two_week_totals = df.groupby("city").agg({"days_fewer_cases": "sum"}).reset_index()
+                    
     return two_week_totals
+
+
+#---------------------------------------------------------------#
+# Daily Testing (City of LA)
+#---------------------------------------------------------------#  
+def meet_daily_testing(yesterday_date, lower_bound, upper_bound):
+    """
+    Returns red/green/blue depending on how well benchmark is met
+    """
+    df = utils.prep_lacity_testing(start_date, lower_bound, upper_bound)
+
+    df = df.assign(
+        date = pd.to_datetime(df.date).dt.strftime(fulldate_format)
+    )
+
+    extract_col = "Performed"
+    indicator = df[df.date==yesterday_date].iloc[0][extract_col]
+
+    if indicator < lower_bound:
+        return "red"
+
+    elif (indicator >= lower_bound) and (indicator < upper_bound):
+        return "green"
+
+    elif indicator >= upper_bound:
+        return "blue"
+
+    else:
+        return "white"
+
+    
+# Share of Positive Results
+def meet_positive_share(yesterday_date, bound):
+    """
+    Returns red/green depending on if benchmark was met last week
+    """
+    df = utils.prep_lacity_positive_test(start_date)
+    
+    extract_col = "pct_positive"
+    indicator = df[df.week == df.week.max()].iloc[0][extract_col]
+
+    if indicator < bound:
+        return "green"
+    
+    elif indicator >= bound:
+        return "red"
+
+    
+#---------------------------------------------------------------#
+# Hospital Equipment (City of LA)
+#---------------------------------------------------------------#  
+def meet_acute(yesterday_date):
+    df = meet_hospital(yesterday_date)
+    extract_col = "pct_available"
+    indicator = df[df.equipment.str.contains("Acute")].iloc[0][extract_col].round(2)
+    return indicator
+
+
+def meet_icu(yesterday_date):
+    df = meet_hospital(yesterday_date)
+    extract_col = "pct_available"
+    indicator = df[df.equipment.str.contains("ICU")].iloc[0][extract_col].round(2)
+    return indicator   
+    
+    
+def meet_ventilator(yesterday_date):
+    df = meet_hospital(yesterday_date)
+    extract_col = "pct_available"
+    indicator = df[df.equipment.str.contains("Ventilator")].iloc[0][extract_col].round(2)
+    return indicator       
+    
+    
+"""
+Sub-functions for hospital data.
+"""    
+def meet_hospital(yesterday_date):
+    df = utils.prep_lacity_hospital(start_date)
+    df = df.assign(
+        date = pd.to_datetime(df.date).dt.strftime(fulldate_format)
+    )
+    df = df[df.date == yesterday_date]
+    return df 
