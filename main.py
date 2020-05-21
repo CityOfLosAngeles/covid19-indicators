@@ -15,7 +15,7 @@ output_path = f'./outputs/{str(datetime.datetime.now().date())}-corona.ipynb'
 pm.execute_notebook(
    './notebooks/coronavirus-indicators.ipynb',
    output_path,
-   parameters=dict(alpha=0.6, ratio=0.1)
+   parameters=dict(start_date="4/15/2020")
 )
 
 # shell out, run NB Convert 
