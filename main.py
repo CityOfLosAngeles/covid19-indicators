@@ -33,29 +33,72 @@ os.system(cmd)
 # send an email with the HTML 
 html = open(output_file, 'r').read().splitlines()
 
-html = "".join(html)
-#Create function that defines the "source script" of the new script that get generated (sends to emails)
-def create_source_script():
-    source_str = f"""import os \n
-import civis \n
-from datetime import date \n
-client = civis.APIClient()
-client.scripts.patch_python3(os.environ['CIVIS_JOB_ID'], notifications = {{
-        'success_email_subject' : 'Coronavirus Indicators, {datetime.date.today().strftime("%m/%d/%Y")}',
-        'success_email_body' : '{html}',
-        'success_email_addresses' : ['itadata@lacity.org']}})
-        """
-    return source_str
+import boto3
+from botocore.exceptions import ClientError
 
+# Replace sender@example.com with your "From" address.
+# This address must be verified with Amazon SES.
+SENDER = "ITAData@lacity.org"
 
-#Define function that creates new script
-def create_new_email_script(client):
-    new_script = client.scripts.post_python3(name = 'tmp coronavirus',
-                                             source = create_source_script())
-    return new_script
+# Replace recipient@example.com with a "To" address. If your account 
+# is still in the sandbox, this address must be verified.
+RECIPIENT = "itadata@lacity.org"
 
-client = civis.APIClient()
+# If necessary, replace us-west-2 with the AWS Region you're using for Amazon SES.
+AWS_REGION = "us-west-2"
 
-temp_job_id = create_new_email_script(client)
-print(temp_job_id)
+# The subject line for the email.
+SUBJECT = "Amazon SES Test (SDK for Python)"
 
+# The email body for recipients with non-HTML email clients.
+BODY_TEXT = ("Amazon SES Test (Python)\r\n"
+             "This email was sent with Amazon SES using the "
+             "AWS SDK for Python (Boto)."
+            )
+
+BODY_HTML = "<p>test</p>"
+
+                  
+
+# The character encoding for the email.
+CHARSET = "UTF-8"
+
+# Create a new SES resource and specify a region.
+client = boto3.client('ses',region_name=AWS_REGION)
+
+# Try to send the email.
+try:
+    #Provide the contents of the email.
+    response = client.send_email(
+        Destination={
+            'ToAddresses': [
+                RECIPIENT,
+            ],
+        },
+        Message={
+            'Body': {
+                'Html': {
+                    'Charset': CHARSET,
+                    'Data': BODY_HTML,
+                },
+                'Text': {
+                    'Charset': CHARSET,
+                    'Data': BODY_TEXT,
+                },
+            },
+            'Subject': {
+                'Charset': CHARSET,
+                'Data': SUBJECT,
+            },
+        },
+        Source=SENDER,
+        # If you are not using a configuration set, comment or delete the
+        # following line
+    )
+# Display an error if something goes wrong.	
+except ClientError as e:
+    print(e.response['Error']['Message'])
+else:
+    print("Email sent! Message ID:"),
+    print(response['MessageId'])
+            
