@@ -1,12 +1,18 @@
+"""
+Functions to see if indicators are met for yesterday.
+"""
 import pandas as pd
+
+import default_parameters
 import utils
 
-time_zone = utils.time_zone
-start_date = utils.start_date
-yesterday_date = utils.yesterday_date
-today_date = utils.today_date
-two_weeks_ago = utils.two_weeks_ago
-fulldate_format = utils.fulldate_format
+fulldate_format = default_parameters.fulldate_format
+time_zone = default_parameters.time_zone
+start_date = default_parameters.start_date
+yesterday_date = default_parameters.yesterday_date
+today_date = default_parameters.today_date
+two_weeks_ago = default_parameters.two_weeks_ago
+two_days_ago = default_parameters.two_days_ago
 
 
 #---------------------------------------------------------------#
@@ -90,8 +96,10 @@ def past_two_weeks(df, group_cols):
     )
 
     df = df.assign(
-        days_fewer_cases = df.apply(lambda row: 1 if row.delta_cases_avg7 < 0 else 0, axis=1),
-        days_fewer_deaths = df.apply(lambda row: 1 if row.delta_deaths_avg7 < 0 else 0, axis=1),
+        days_fewer_cases = df.apply(lambda row: 1 if row.delta_cases_avg7 < 0 
+                                    else 0, axis=1),
+        days_fewer_deaths = df.apply(lambda row: 1 if row.delta_deaths_avg7 < 0 
+                                     else 0, axis=1),
     )
 
     two_week_totals = (df.groupby(group_cols)
@@ -104,7 +112,6 @@ def past_two_weeks(df, group_cols):
     
 
 def lacity_past_two_weeks(df):
-    
     df = df.assign(
         delta_cases_avg7=(
             df.sort_values("date")["cases_avg7"]
@@ -113,7 +120,8 @@ def lacity_past_two_weeks(df):
     )
 
     df = df.assign(
-        days_fewer_cases = df.apply(lambda row: 1 if row.delta_cases_avg7 < 0 else 0, axis=1),
+        days_fewer_cases = df.apply(lambda row: 1 if row.delta_cases_avg7 < 0 
+                                    else 0, axis=1),
         city = "LA"
     )
 
@@ -123,49 +131,41 @@ def lacity_past_two_weeks(df):
 
 
 #---------------------------------------------------------------#
-# Daily Testing (City of LA)
+# Daily Testing (LA County and City of LA)
 #---------------------------------------------------------------#  
-def meet_daily_testing(yesterday_date, lower_bound, upper_bound):
-    """
-    Returns red/green/blue depending on how well benchmark is met
-    """
-    df = utils.prep_lacounty_testing(start_date)
-
+def meet_daily_testing(yesterday_date, city_or_county, lower_bound, upper_bound):
+    df = utils.prep_testing(start_date)
     df = df.assign(
         date = pd.to_datetime(df.date).dt.strftime(fulldate_format)
     )
-
-    extract_col = "Performed"
+    
+    if city_or_county == "county":
+        extract_col = "Performed"
+        
+    if city_or_county == "city":
+        extract_col = "City_Performed"
+    
     indicator = df[df.date==yesterday_date].iloc[0][extract_col]
-
-    if indicator < lower_bound:
-        return "red"
-
-    elif (indicator >= lower_bound) and (indicator < upper_bound):
-        return "green"
-
-    elif indicator >= upper_bound:
-        return "blue"
-
-    else:
-        return "white"
+    
+    return indicator
 
     
 # Share of Positive Results
-def meet_positive_share(yesterday_date, bound):
+def meet_positive_share(yesterday_date, city_or_county, bound):
     """
     Returns red/green depending on if benchmark was met last week
     """
-    df = utils.prep_lacounty_positive_test(start_date)
+    if city_or_county == "county":
+        df = utils.prep_la_positive_test(start_date, "county")
+        
+    if city_or_county == "city":
+        df = utils.prep_la_positive_test(start_date, "city")
     
     extract_col = "pct_positive"
-    indicator = df[df.week == df.week.max()].iloc[0][extract_col]
-
-    if indicator < bound:
-        return "green"
+    indicator = df[df.week == df.week.max()].iloc[0][extract_col].round(2)
     
-    elif indicator >= bound:
-        return "red"
+
+    return indicator
 
     
 #---------------------------------------------------------------#
@@ -196,6 +196,9 @@ def meet_ventilator(yesterday_date):
 Sub-functions for hospital data.
 """    
 def meet_hospital(yesterday_date):
+    # Noting that yesterday's date always seems to surpass benchmark
+    # only to be revised downward again tomorrow. Use 2 days ago for now.
+    yesterday_date = two_days_ago
     df = utils.prep_lacity_hospital(start_date)
     df = df.assign(
         date = pd.to_datetime(df.date).dt.strftime(fulldate_format)

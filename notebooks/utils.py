@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import pytz
 
+import default_parameters
 import make_charts
 import useful_dict
 
@@ -26,7 +27,7 @@ LA_CITY_URL = (
 
 TESTING_URL = (
     "http://lahub.maps.arcgis.com/sharing/rest/content/items/"
-    "158dab4a07b04ecb8d47fea1746303ac/data"
+    "3cfd003985b447c994a7252e8eb97b92/data"
 )
 
 HOSPITAL_URL = (
@@ -42,36 +43,9 @@ CROSSWALK_URL = (
 #---------------------------------------------------------------#
 # Default parameters
 #---------------------------------------------------------------#
-county_state_name = "Los Angeles, CA"
-state_name = "California"
-msa_name = "Los Angeles-Long Beach-Anaheim, CA"
-
-fulldate_format = "%-m/%-d/%y"
-monthdate_format = "%-m/%-d"
-time_zone = "US/Pacific"
-start_date = pd.to_datetime("4/15/20").strftime(fulldate_format)
-
-yesterday_date = (
-    (datetime.today()
-                .astimezone(pytz.timezone(f'{time_zone}'))
-                .date()
-        - timedelta(days=1)
-    ).strftime("%-m/%-d/%y")
-)
-today_date = (
-    datetime.today()
-             .astimezone(pytz.timezone(f'{time_zone}'))
-             .date()
-             .strftime(fulldate_format)
-)
-
-two_weeks_ago = (
-    (datetime.today()
-                .astimezone(pytz.timezone(f'{time_zone}'))
-                .date()
-        - timedelta(days=15)
-    ).strftime(fulldate_format)
-)
+start_date = default_parameters.start_date
+yesterday_date = default_parameters.yesterday_date
+monthdate_format = default_parameters.monthdate_format
 
 
 #---------------------------------------------------------------#
@@ -297,18 +271,28 @@ def prep_lacity_cases(start_date):
 
 
 #---------------------------------------------------------------#
-# Testing Data (LA County)
+# Testing Data (LA County and City of LA)
 #---------------------------------------------------------------#
 def lacounty_testing_charts(start_date, lower_bound, upper_bound):
-    df = prep_lacounty_testing(start_date)
-    make_charts.make_lacounty_testing_chart(df, lower_bound, upper_bound)
+    df = prep_testing(start_date)
+    plot_col = "Performed"
+    chart_title = "LA County: Daily Testing"
+    make_charts.make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound)
+    return df
+
+
+def lacity_testing_charts(start_date, lower_bound, upper_bound):
+    df = prep_testing(start_date)
+    plot_col = "City_Performed"
+    chart_title = "City of LA: Daily Testing"
+    make_charts.make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound)
     return df
 
 
 """
-Sub-functions for City of LA testing data.
+Sub-functions for testing data.
 """
-def prep_lacounty_testing(start_date):
+def prep_testing(start_date):
     df = pd.read_csv(TESTING_URL)
     df = df.assign(
         date=(pd.to_datetime(df.Date)
@@ -320,44 +304,55 @@ def prep_lacounty_testing(start_date):
     df = (df[df.date >= start_date]
             .drop(columns = "Date")
          )
-
+    
     return df 
 
 
 #---------------------------------------------------------------#
 # Share of Positive Tests by Week (LA County)
 #---------------------------------------------------------------#
-def lacounty_positive_test_charts(start_date):
-    df = prep_lacounty_positive_test(start_date)
-    make_charts.make_lacounty_positive_test_chart(df)
+def lacounty_positive_test_charts(start_date, positive_bound):
+    df = prep_la_positive_test(start_date, "county")
+    chart_title1 = "LA County: Weekly Share of Positive Results"
+    chart_title2 = "LA County: Weekly Tests Conducted"
+    make_charts.make_la_positive_test_chart(df, positive_bound, chart_title1, chart_title2)
+    return df
+
+
+def lacity_positive_test_charts(start_date, positive_bound):
+    df = prep_la_positive_test(start_date, "city")
+    chart_title1 = "City of LA: Weekly Share of Positive Results"
+    chart_title2 = "City of LA: Weekly Tests Conducted"    
+    make_charts.make_la_positive_test_chart(df, positive_bound, chart_title1, chart_title2)
     return df
 
 
 """
-Sub-functions for LA County share of positive test results data.
+Sub-functions for share of positive test results data.
 Combine testing data and case data, aggregated to the week.
 We lack results for positive/negative results for each test batch (ideal).
 """
-def prep_lacounty_positive_test(start_date):
-    tests_df = prep_lacounty_testing(start_date)
-    cases_df = prep_county("Los Angeles, CA", start_date)
+def prep_la_positive_test(start_date, city_or_county):
+    tests_df = prep_testing(start_date)
+
+    if city_or_county == "county":
+        cases_df = prep_county("Los Angeles, CA", start_date)
+        tests_col = "Performed"
+    
+    if city_or_county == "city":
+        cases_df = prep_lacity_cases(start_date)
+        tests_col = "City_Performed"
     
     #  Merge and rename columns
     df = pd.merge(cases_df, tests_df, on = "date", how = "left")
+    df = df.rename(columns = {tests_col: "new_tests"}) 
     
-    keep_cols = [
-        "county", 
-        "state", 
-        "date",
-        "cases",
-        "new_cases",
-        "Performed", 
-    ]
-
-    df = (df[keep_cols]
-          .rename(columns = {"Performed": "new_tests"}) 
-    )
+    df = aggregate_to_week(df)
     
+    return df   
+    
+    
+def aggregate_to_week(df): 
     # Subset to particular start and end date
     df = (df[(df.date >= start_date) & (df.date <= yesterday_date)]
         .assign(

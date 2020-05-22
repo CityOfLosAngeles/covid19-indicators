@@ -1,7 +1,5 @@
 """
-Functions to create county or state-specific indicators.
-Use JHU county data.
-Specific City of LA data also used to generate LA-specific charts. 
+Functions to create charts.
 """
 import altair as alt
 import pandas as pd
@@ -25,10 +23,9 @@ stroke_opacity = 0
 time_unit = "monthdate"
 chart_width = 250
 chart_height = 200
-bin_spacing = 20
+bin_spacing = 100
 fulldate_format = "%-m/%-d/%y"
 monthdate_format = "%-m/%-d"
-
 
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA)
@@ -117,10 +114,9 @@ def make_lacity_cases_chart(df):
 
 
 #---------------------------------------------------------------#
-# Testing Data (LA County)
+# Testing Data (LA County and City of LA)
 #---------------------------------------------------------------#
-def make_lacounty_testing_chart(df, lower_bound, upper_bound):
-    chart_title = "LA County: Daily Tests Performed"
+def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
     chart_width = 500
         
     bar = (
@@ -133,7 +129,7 @@ def make_lacounty_testing_chart(df, lower_bound, upper_bound):
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
             ),
-            y=alt.Y("Performed:Q", title="Tests Performed"),
+            y=alt.Y(plot_col, title="Tests Performed"),
         )
     )
 
@@ -164,12 +160,9 @@ def make_lacounty_testing_chart(df, lower_bound, upper_bound):
 
     
 #---------------------------------------------------------------#
-# Share of Positive Tests by Week (City of LA)
+# Share of Positive Tests by Week (LA County)
 #---------------------------------------------------------------#
-def make_lacounty_positive_test_chart(df):
-    chart_title1 = "Weekly Share of Positive Results"
-    chart_title2 = "Weekly Tests Conducted"
-    
+def make_la_positive_test_chart(df, positive_bound, chart_title1, chart_title2): 
     positive_bar = (
         alt.Chart(df)
         .mark_bar(color = navy, binSpacing = bin_spacing)
@@ -184,16 +177,28 @@ def make_lacounty_positive_test_chart(df):
                 axis=alt.Axis(format="%")
             ),
         )
-        .properties(title=chart_title1, width = chart_width)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
 
+    )
+    
+    positive_line = (
+        alt.Chart(pd.DataFrame({"y": [positive_bound]}))
+        .mark_rule(color=maroon, strokeDash=[5, 2])
+        .encode(y="y")
+    )    
+    
+    positive_chart = (
+        (positive_bar + positive_line)
+            .properties(title=chart_title1, width = chart_width)
+            .configure_title(
+                  fontSize=title_font_size, font=font_name, anchor="middle", color="black"
+               )
+            .configure_axis(
+                gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
+            )
+            .configure_view(strokeOpacity=stroke_opacity)
+         )
+
+    
     test_bar = (
         alt.Chart(df)
         .mark_bar(color = orange, binSpacing = bin_spacing)
@@ -216,9 +221,10 @@ def make_lacounty_positive_test_chart(df):
         )
         .configure_view(strokeOpacity=stroke_opacity)
     )
-
-    display(positive_bar)
+    
+    display(positive_chart)
     display(test_bar)
+    
 
     
 #---------------------------------------------------------------#
