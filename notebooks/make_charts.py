@@ -117,7 +117,7 @@ def make_lacity_cases_chart(df):
 # Testing Data (LA County and City of LA)
 #---------------------------------------------------------------#
 def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
-    chart_width = 500
+    chart_width = 400
         
     bar = (
         alt.Chart(df)
@@ -163,6 +163,7 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
 # Share of Positive Tests by Week (LA County)
 #---------------------------------------------------------------#
 def make_la_positive_test_chart(df, positive_bound, chart_title1, chart_title2): 
+    chart_width = 200
     positive_bar = (
         alt.Chart(df)
         .mark_bar(color = navy, binSpacing = bin_spacing)
@@ -231,7 +232,7 @@ def make_la_positive_test_chart(df, positive_bound, chart_title1, chart_title2):
 # Hospital Equipment Availability (City of LA)
 #---------------------------------------------------------------#
 def make_lacity_hospital_chart(df):
-    chart_width = 500
+    chart_width = 400
     acute_color = green
     icu_color = navy
     ventilator_color = orange

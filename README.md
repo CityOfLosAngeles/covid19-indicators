@@ -99,6 +99,8 @@ import geopandas as gpd
 gdf = gpd.read_file(CORRECT_URL)
 ```
 
+To convert to HTML: `jupyter nbconvert --to html --no-input --no-prompt my-notebook.ipynb`
+
 --------
 
 ## Starting with Docker
