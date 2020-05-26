@@ -1,6 +1,7 @@
 """
 Functions to see if indicators are met for yesterday.
 """
+import numpy as np
 import pandas as pd
 
 import default_parameters
@@ -145,13 +146,16 @@ def meet_daily_testing(yesterday_date, city_or_county, lower_bound, upper_bound)
     if city_or_county == "city":
         extract_col = "City_Performed"
     
-    indicator = df[df.date==yesterday_date].iloc[0][extract_col]
-    
-    return indicator
+    #indicator = df[df.date==yesterday_date].iloc[0][extract_col]
+    try:
+        indicator = df[df.date==yesterday_date].iloc[0][extract_col]
+        return indicator
+    except IndexError:
+        return np.nan
 
     
 # Share of Positive Results
-def meet_positive_share(yesterday_date, city_or_county, bound):
+def meet_positive_share(yesterday_date, city_or_county, lower_bound, upper_bound):
     """
     Returns red/green depending on if benchmark was met last week
     """
@@ -162,10 +166,12 @@ def meet_positive_share(yesterday_date, city_or_county, bound):
         df = utils.prep_la_positive_test(start_date, "city")
     
     extract_col = "pct_positive"
-    indicator = df[df.week == df.week.max()].iloc[0][extract_col].round(2)
-    
-
-    return indicator
+    #indicator = df[df.week == df.week.max()].iloc[0][extract_col].round(2)
+    try:
+        indicator = df[df.week == df.week.max()].iloc[0][extract_col].round(2)
+        return indicator
+    except IndexError:
+        return np.nan
 
     
 #---------------------------------------------------------------#
@@ -174,22 +180,34 @@ def meet_positive_share(yesterday_date, city_or_county, bound):
 def meet_acute(yesterday_date):
     df = meet_hospital(yesterday_date)
     extract_col = "pct_available"
-    indicator = df[df.equipment.str.contains("Acute")].iloc[0][extract_col].round(2)
-    return indicator
+    #indicator = df[df.equipment.str.contains("Acute")].iloc[0][extract_col].round(2)
+    try:
+        indicator = df[df.equipment.str.contains("Acute")].iloc[0][extract_col].round(2)
+        return indicator
+    except IndexError:
+        return np.nan
 
 
 def meet_icu(yesterday_date):
     df = meet_hospital(yesterday_date)
     extract_col = "pct_available"
-    indicator = df[df.equipment.str.contains("ICU")].iloc[0][extract_col].round(2)
-    return indicator   
+    #indicator = df[df.equipment.str.contains("ICU")].iloc[0][extract_col].round(2)
+    try:
+        indicator = df[df.equipment.str.contains("ICU")].iloc[0][extract_col].round(2)
+        return indicator
+    except IndexError:
+        return np.nan
     
     
 def meet_ventilator(yesterday_date):
     df = meet_hospital(yesterday_date)
     extract_col = "pct_available"
-    indicator = df[df.equipment.str.contains("Ventilator")].iloc[0][extract_col].round(2)
-    return indicator       
+    #indicator = df[df.equipment.str.contains("Ventilator")].iloc[0][extract_col].round(2)
+    try:
+        indicator = df[df.equipment.str.contains("Ventilator")].iloc[0][extract_col].round(2)
+        return indicator
+    except IndexError:
+        return np.nan  
     
     
 """

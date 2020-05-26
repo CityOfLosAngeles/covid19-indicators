@@ -16,6 +16,9 @@ Collection of articles to guide the reopening strategy. Provides context for wha
     * More cases in US states that reopened: [Georgia](https://www.nytimes.com/interactive/2020/04/24/opinion/coronavirus-covid-19-georgia-reopen.html), [Texas](https://www.texastribune.org/2020/05/14/coronavirus-updates-texas/), and on average, seems to be true for [places outside NYC](https://www.nytimes.com/2020/05/16/us/coronavirus-united-states.html)
     * More cases in countries that reopened: [Japan, South Korea](https://www.healthline.com/health-news/covid-19-countries-that-have-already-reopened-lessons#How-Germany-is-reopening), Singapore, [Lebanon](https://healthpolicy-watch.org/countries-that-reopen-early-may-have-waves-of-lockdowns/) and [Iran](https://www.nytimes.com/2020/05/18/world/middleeast/iran-coronavirus-surge.html)
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
+* [What experts say is necessary for a national testing strategy](https://www.nytimes.com/2020/05/25/health/coronavirus-testing-trump.html).
+    * 10% positive share is enough for mitigation
+    * 4% positive share needed to halt the spread of virus
 
 
 ## Are We Past the Peak?
@@ -28,6 +31,7 @@ Collection of articles to guide the reopening strategy. Provides context for wha
 ## Building Public Health Capacity
  * We aren't [testing enough](https://www.vox.com/2020/5/8/21249880/coronavirus-testing-covid-reopening-economy-lockdowns-social-distancing) nor have [enough contact tracers](https://www.nytimes.com/2020/05/11/health/coronavirus-second-wave-infections.html) to manage the current caseloads.
  * [Open, transparent, and public data](https://amp.floridatoday.com/amp/5212398002) is crucial for agencies and researchers to simultaneously learn about the virus and tackle the outbreaks from multiple fronts. 
+ * [Reporting all-cause mortality and testing the high risk](https://www.vox.com/2020/5/26/21270703/coronavirus-deaths-us-world-covid-19-nursing-homes) are ways to move forward.
 
 
 ## Antibodies and Immunity Research
@@ -49,3 +53,4 @@ Collection of articles to guide the reopening strategy. Provides context for wha
 * White House [Opening Up America Again gating criteria](https://www.whitehouse.gov/wp-content/uploads/2020/04/Guidelines-for-Opening-Up-America-Again.pdf) 
     * [NY State's](https://www.nytimes.com/2020/05/04/nyregion/coronavirus-reopen-cuomo-ny.html) and [Chicago's](https://www.chicagotribune.com/coronavirus/ct-coronavirus-chicago-reopening-lightfoot-20200508-ztpnouwexrcvfdfcr2yccbc53a-story.html) reopening indicators.
     * Arguably, [LA is more similar to NYC and Chicago](https://www.nytimes.com/2020/05/09/us/coronavirus-chicago.html) than other regions due to persistent caseloads that are flattening, but not dropping. As Chicago's benchmarks are tougher than the rest of IL, and it should be so for LA than the rest of CA.
+    * [LA, DC, and Chicago remain hotspots in the US](https://www.latimes.com/california/story/2020-05-22/white-house-concerned-with-coronavirus-spread-in-l-a-area-asks-cdc-to-investigate)

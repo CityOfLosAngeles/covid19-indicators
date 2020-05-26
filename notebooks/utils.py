@@ -311,19 +311,19 @@ def prep_testing(start_date):
 #---------------------------------------------------------------#
 # Share of Positive Tests by Week (LA County)
 #---------------------------------------------------------------#
-def lacounty_positive_test_charts(start_date, positive_bound):
+def lacounty_positive_test_charts(start_date, positive_lower_bound, positive_upper_bound):
     df = prep_la_positive_test(start_date, "county")
     chart_title1 = "LA County: Weekly Share of Positive Results"
     chart_title2 = "LA County: Weekly Tests Conducted"
-    make_charts.make_la_positive_test_chart(df, positive_bound, chart_title1, chart_title2)
+    make_charts.make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, chart_title1, chart_title2)
     return df
 
 
-def lacity_positive_test_charts(start_date, positive_bound):
+def lacity_positive_test_charts(start_date, positive_lower_bound, positive_upper_bound):
     df = prep_la_positive_test(start_date, "city")
     chart_title1 = "City of LA: Weekly Share of Positive Results"
     chart_title2 = "City of LA: Weekly Tests Conducted"    
-    make_charts.make_la_positive_test_chart(df, positive_bound, chart_title1, chart_title2)
+    make_charts.make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, chart_title1, chart_title2)
     return df
 
 

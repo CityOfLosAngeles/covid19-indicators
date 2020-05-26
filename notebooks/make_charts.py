@@ -162,7 +162,7 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
 #---------------------------------------------------------------#
 # Share of Positive Tests by Week (LA County)
 #---------------------------------------------------------------#
-def make_la_positive_test_chart(df, positive_bound, chart_title1, chart_title2): 
+def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, chart_title1, chart_title2): 
     chart_width = 200
     positive_bar = (
         alt.Chart(df)
@@ -181,14 +181,20 @@ def make_la_positive_test_chart(df, positive_bound, chart_title1, chart_title2):
 
     )
     
-    positive_line = (
-        alt.Chart(pd.DataFrame({"y": [positive_bound]}))
+    positive_lower_line = (
+        alt.Chart(pd.DataFrame({"y": [positive_lower_bound]}))
         .mark_rule(color=maroon, strokeDash=[5, 2])
         .encode(y="y")
-    )    
+    )  
+    
+    positive_upper_line = (
+        alt.Chart(pd.DataFrame({"y": [positive_upper_bound]}))
+        .mark_rule(color=maroon, strokeDash=[5, 2])
+        .encode(y="y")
+    ) 
     
     positive_chart = (
-        (positive_bar + positive_line)
+        (positive_bar + positive_lower_line + positive_upper_line)
             .properties(title=chart_title1, width = chart_width)
             .configure_title(
                   fontSize=title_font_size, font=font_name, anchor="middle", color="black"
