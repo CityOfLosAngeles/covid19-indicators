@@ -46,16 +46,20 @@ Our ESRI data sources are public and listed below. The full documentation of the
 
 * Comparison of metropolitan infection rates [feature table](http://lahub.maps.arcgis.com/home/item.html?id=b37e229b71dc4c65a479e4b5912ded66) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=27efb06ce2954b90ae833dabb570b1cf). The [MSA to county crosswalk](https://github.com/CityOfLosAngeles/aqueduct/blob/master/dags/public-health/covid19/msa_county_pop_crosswalk.csv) was derived from the [National Bureau of Economic Research crosswalk](https://data.nber.org/data/cbsa-msa-fips-ssa-county-crosswalk.html) using `make-crosswalk.py`.
 
-* LA County Dept of Public Health (DPH) neighborhood-level current date's [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=ca30397902484e9c911e8092788a0233)
+* LA County Dept of Public Health (DPH) neighborhood-level current date's [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=ca30397902484e9c911e8092788a0233), and the City's GeoHub [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=9681f6a5269f4b6997b398bca057b62c) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=f553fa74cbfe4e49b3a334947298fa34)
 
 * City of LA case count time-series [feature table](https://lahub.maps.arcgis.com/home/item.html?id=1d1e4679a94e43e884b97a0488fc04cf) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=7175fba373f541a7a19df56b6a0617f4)
 
 
 #### Hospital Bed and Equipment Availability
-* Hospital bed and equipment availability [feature layer](http://lahub.maps.arcgis.com/home/item.html?id=956e105f422a4c1ba9ce5d215b835951) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=3da1eb3e13a14743973c96b945bd1117)
+* LA County hospital bed and equipment availability [feature layer](http://lahub.maps.arcgis.com/home/item.html?id=956e105f422a4c1ba9ce5d215b835951) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=3da1eb3e13a14743973c96b945bd1117). Data is available for the 70 largest hospitals in the county.
 
 #### COVID-19 Testing
-* City of LA COVID-19 tests administered [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=64b91665fef4471dafb6b2ff98daee6c) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=158dab4a07b04ecb8d47fea1746303ac)
+* LA County COVID-19 tests administered [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=64b91665fef4471dafb6b2ff98daee6c) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=158dab4a07b04ecb8d47fea1746303ac)
+
+* LA County and LA City COVID-19 tests administered [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=996a863e59f04efdbe33206a6c717afb) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=3cfd003985b447c994a7252e8eb97b92)
+
+* The City of LA tests are a subset of LA County tests. Tests done in other parts of LA County (excluding the City of LA) would be derived by taking the difference of `Performed` - `City_Performed`.
 
 
 ## Helpful Hints
@@ -99,6 +103,8 @@ import geopandas as gpd
 gdf = gpd.read_file(CORRECT_URL)
 ```
 
+To convert to HTML: `jupyter nbconvert --to html --no-input --no-prompt my-notebook.ipynb`
+
 --------
 
 ## Starting with Docker
@@ -111,8 +117,7 @@ gdf = gpd.read_file(CORRECT_URL)
 ## Setting up a Conda Environment 
 
 1. `conda create --name my_project_name` 
-
-2. `source activate my_project_name
+2. `source activate my_project_name`
 3. `conda install --file conda-requirements.txt -c conda-forge` 
 4. `pip install requirements.txt`
 

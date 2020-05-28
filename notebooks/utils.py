@@ -3,10 +3,12 @@ Functions to create county or state-specific indicators.
 Use JHU county data.
 Specific City of LA data also used to generate LA-specific charts. 
 """
-import altair as alt
 import numpy as np
 import pandas as pd
 import pytz
+
+import default_parameters
+import make_charts
 import useful_dict
 
 from datetime import date, datetime, timedelta
@@ -25,7 +27,7 @@ LA_CITY_URL = (
 
 TESTING_URL = (
     "http://lahub.maps.arcgis.com/sharing/rest/content/items/"
-    "158dab4a07b04ecb8d47fea1746303ac/data"
+    "3cfd003985b447c994a7252e8eb97b92/data"
 )
 
 HOSPITAL_URL = (
@@ -38,29 +40,50 @@ CROSSWALK_URL = (
     "public-health/covid19/msa_county_pop_crosswalk.csv"
 )
 
-
 #---------------------------------------------------------------#
-# Chart parameters
+# Default parameters
 #---------------------------------------------------------------#
-navy = "#0A4C6A"
-maroon = "#A30F23"
-acute_color = "#04E679"
-icu_color = navy
-ventilator_color = "#e76f51"
-
-title_font_size = 10
-font_name = "Roboto"
-grid_opacity = 0.4
-domain_opacity = 0.4
-stroke_opacity = 0
-time_unit = "monthdate"
-chart_width = 250
-chart_height = 200
+start_date = default_parameters.start_date
+yesterday_date = default_parameters.yesterday_date
+monthdate_format = default_parameters.monthdate_format
 
 
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA)
 #---------------------------------------------------------------#
+"""
+Make cases and deaths chart for county / state / MSA.
+Some data cleaning for by geographic level (listed in 1, 2a, 2b, 2c)
+Call functions to make charts.
+"""
+# County Case Data
+def county_case_charts(county_state_name, start_date):
+    df = prep_county(county_state_name, start_date)
+    name = df.county.iloc[0]
+    make_charts.make_cases_deaths_chart(df, "county", name)
+    return df
+
+    
+# State Case Data
+def state_case_charts(state_name, start_date):
+    df = prep_state(state_name, start_date)
+    name = df.state.iloc[0]
+    make_charts.make_cases_deaths_chart(df, "state", name)
+    return df
+
+
+# MSA Case Data
+def msa_case_charts(msa_name, start_date):
+    df = prep_msa(msa_name, start_date)
+    name = df.msa.iloc[0]
+    make_charts.make_cases_deaths_chart(df, "msa", name)
+    return df
+
+
+"""
+Sub-functions for case, deaths data.
+"""
+# (1) Sub-function to prep all US time-series data
 def prep_us_county_time_series():
     df = pd.read_csv(US_COUNTY_URL, dtype={"fips": "str"})
     df = df.assign(
@@ -70,8 +93,8 @@ def prep_us_county_time_series():
     return df
 
 
-# County Case Data
-def case_indicators_county(county_state_name, start_date):
+# (2a) Sub-function to prep county data
+def prep_county(county_state_name, start_date):
     df = prep_us_county_time_series()
 
     # Parse the county_state_name into county_name and state_name (abbrev)
@@ -108,20 +131,19 @@ def case_indicators_county(county_state_name, start_date):
         df[
             (df.county == county_name)
             & (df.state_abbrev == state_name)
-            & (df.date >= start_date)
         ][keep_cols]
         .sort_values(["county", "state", "fips", "date"])
         .reset_index(drop=True)
     )
 
-    name = df.county.iloc[0]
-    df = make_cases_deaths_chart(df, "county", name)
+    df = calculate_rolling_average(df)
+    df = df[df.date >= start_date]
 
     return df
 
 
-# State Case Data
-def case_indicators_state(state_name, start_date):
+# (2b) Sub-function to prep state data
+def prep_state(state_name, start_date):
     df = prep_us_county_time_series()
 
     keep_cols = [
@@ -135,9 +157,8 @@ def case_indicators_state(state_name, start_date):
     ]
 
     df = (
-        df[
-            ((df.state == state_name) | (df.state_abbrev == state_name))
-            & (df.date >= start_date)
+        df[(df.state == state_name) | 
+           (df.state_abbrev == state_name)
         ][keep_cols]
         .sort_values(["state", "date"])
         .drop_duplicates()
@@ -151,15 +172,15 @@ def case_indicators_state(state_name, start_date):
         )
         .reset_index(drop=True)
     )
-
-    name = df.state.iloc[0]
-    df = make_cases_deaths_chart(df, "state", name)
+    
+    df = calculate_rolling_average(df)
+    df = df[df.date >= start_date]
 
     return df
 
 
-# MSA Case Data
-def case_indicators_msa(msa_name, start_date):
+# (2c) Sub-function to prep MSA data
+def prep_msa(msa_name, start_date):
     group_cols = ["msa", "msa_pop", "date"]
     msa_group_cols = ["msa", "msa_pop"]
 
@@ -178,8 +199,7 @@ def case_indicators_msa(msa_name, start_date):
     )
 
     df = (
-        final_df[final_df.date >= start_date]
-        .groupby(group_cols)
+        final_df.groupby(group_cols)
         .agg({"cases": "sum", "deaths": "sum"})
         .reset_index()
     )
@@ -193,83 +213,47 @@ def case_indicators_msa(msa_name, start_date):
             df.sort_values(group_cols).groupby(msa_group_cols)["deaths"].diff(periods=1)
         ),
     )
-
-    name = df.msa.iloc[0]
-    df = make_cases_deaths_chart(df, "msa", name)
-
+    
+    df = calculate_rolling_average(df)
+    df = df[df.date >= start_date]
+    
     return df
 
 
-# Sub-function to make cases and deaths chart
-def make_cases_deaths_chart(df, geog, name):
-    # Define chart titles
-    if geog == "county":
-        chart_title = f"{name} County"
-    if geog == "state":
-        chart_title = f"{name}"
-    if geog == "msa":
-        chart_title = f"{name} MSA"
-
+def calculate_rolling_average(df):
     # Derive new columns
     df = df.assign(
         cases_avg7=df.new_cases.rolling(window=7).mean(),
         deaths_avg3=df.new_deaths.rolling(window=3).mean(),
         deaths_avg7=df.new_deaths.rolling(window=7).mean(),
     )
-
-    # Make cases charts
-    cases_chart = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X("date", timeUnit=time_unit, title="date"),
-            y=alt.Y("cases_avg7", title="7-day avg"),
-            color=alt.value(navy),
-        )
-        .properties(
-            title=f"{chart_title}: New Cases", width=chart_width, height=chart_height
-        )
-    )
-
-    # Make deaths chart
-    deaths_chart = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X("date", timeUnit=time_unit, title="date"),
-            y=alt.Y("deaths_avg3", title="3-day avg"),
-            color=alt.value(maroon),
-        )
-        .properties(
-            title=f"{chart_title}: New Deaths", width=chart_width, height=chart_height
-        )
-    )
-
-    combined_chart = (
-        alt.hconcat(cases_chart, deaths_chart)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
-
-    display(combined_chart)
-
     return df
 
 
 #---------------------------------------------------------------#
 # Case Data (City of LA)
 #---------------------------------------------------------------#
-def case_indicators_lacity(start_date):
+def lacity_case_charts(start_date):
+    df = prep_lacity_cases(start_date)
+    make_charts.make_lacity_cases_chart(df)
+    return df
+
+
+"""
+Sub-functions for City of LA case data.
+"""
+def prep_lacity_cases(start_date):
     city_df = pd.read_csv(LA_CITY_URL)
-    city_df["date"] = pd.to_datetime(city_df.Date)
+    city_df["Date"] = (pd.to_datetime(city_df.Date).dt.tz_localize("US/Pacific")
+                       .dt.normalize()
+                       .dt.tz_convert("UTC")
+                      )
 
     df = (
-        city_df[city_df.date >= start_date]
-        .rename(
-            columns={"City of LA Cases": "cases", "City of LA New Cases": "new_cases"}
+        city_df.rename(
+            columns={"City of LA Cases": "cases", 
+                     "City of LA New Cases": "new_cases",
+                    "Date": "date"}
         )
         .sort_values("date")
         .reset_index(drop=True)
@@ -280,150 +264,101 @@ def case_indicators_lacity(start_date):
         # 7-day rolling average for new cases
         cases_avg7=df.new_cases.rolling(window=7).mean(),
     )
-
-    # Make cases charts
-    cases_chart = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X("date", timeUnit=time_unit, title="date"),
-            y=alt.Y("cases_avg7", title="7-day avg"),
-            color=alt.value(navy),
-        )
-        .properties(
-            title="City of LA: New Cases", width=chart_width, height=chart_height
-        )
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
-
-    display(cases_chart)
+    
+    df = df[df.date >= start_date]
 
     return df
 
 
 #---------------------------------------------------------------#
-# Testing Data (City of LA)
+# Testing Data (LA County and City of LA)
 #---------------------------------------------------------------#
-def testing_lacity(start_date, daily_or_monthly, lower_bound, upper_bound):
+def lacounty_testing_charts(start_date, lower_bound, upper_bound):
+    df = prep_testing(start_date)
+    plot_col = "Performed"
+    chart_title = "LA County: Daily Testing"
+    make_charts.make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound)
+    return df
+
+
+def lacity_testing_charts(start_date, lower_bound, upper_bound):
+    df = prep_testing(start_date)
+    plot_col = "City_Performed"
+    chart_title = "City of LA: Daily Testing"
+    make_charts.make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound)
+    return df
+
+
+"""
+Sub-functions for testing data.
+"""
+def prep_testing(start_date):
     df = pd.read_csv(TESTING_URL)
     df = df.assign(
-        Date=pd.to_datetime(df.Date).dt.strftime("%-m/%-d/%y"),
-        month=pd.to_datetime(df.Date).dt.month,
+        date=(pd.to_datetime(df.Date)
+              .dt.tz_localize("US/Pacific")
+              .dt.normalize()
+              .dt.tz_convert("UTC")
+             ),
     )
-    df = df[df.Date >= start_date]
+    df = (df[df.date >= start_date]
+            .drop(columns = "Date")
+         )
+    
+    return df 
 
-    # Aggregate tests by month
-    df = df.assign(Performed_Monthly=df.groupby("month")["Performed"].transform("sum"))
 
-    if daily_or_monthly == "monthly":
-        format_date = "%b"
-        plot_col = "Performed_Monthly:Q"
-        chart_title = "Monthly Tests Performed"
-        df = df.drop_duplicates(subset=["month", "Performed_Monthly"])
-        chart_width = 150
-
-    if daily_or_monthly == "daily":
-        format_date = "%-m/%-d"
-        plot_col = "Performed:Q"
-        chart_title = "Daily Tests Performed"
-        chart_width = 500
-
-    make_testing_chart(
-        df, plot_col, format_date, lower_bound, upper_bound, chart_title, chart_width
-    )
-
+#---------------------------------------------------------------#
+# Share of Positive Tests by Week (LA County)
+#---------------------------------------------------------------#
+def lacounty_positive_test_charts(start_date, positive_lower_bound, positive_upper_bound):
+    df = prep_la_positive_test(start_date, "county")
+    chart_title1 = "LA County: Weekly Share of Positive Results"
+    chart_title2 = "LA County: Weekly Tests Conducted"
+    make_charts.make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, chart_title1, chart_title2)
     return df
 
 
-# Sub-function to make testing bar chart
-def make_testing_chart(
-    df, plot_col, format_date, lower_bound, upper_bound, chart_title, chart_width
-):
-    bar = (
-        alt.Chart(df)
-        .mark_bar(color=navy)
-        .encode(
-            x=alt.X(
-                "Date",
-                timeUnit=time_unit,
-                title="date",
-                axis=alt.Axis(format=format_date),
-            ),
-            y=alt.Y(plot_col, title="Tests Performed"),
-        )
-    )
+def lacity_positive_test_charts(start_date, positive_lower_bound, positive_upper_bound):
+    df = prep_la_positive_test(start_date, "city")
+    chart_title1 = "City of LA: Weekly Share of Positive Results"
+    chart_title2 = "City of LA: Weekly Tests Conducted"    
+    make_charts.make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, chart_title1, chart_title2)
+    return df
 
-    line1 = (
-        alt.Chart(pd.DataFrame({"y": [lower_bound]}))
-        .mark_rule(color=maroon, strokeDash=[5, 2])
-        .encode(y="y")
-    )
-    line2 = (
-        alt.Chart(pd.DataFrame({"y": [upper_bound]}))
-        .mark_rule(color=maroon, strokeDash=[5, 2])
-        .encode(y="y")
-    )
 
-    testing_chart = (
-        (bar + line1 + line2)
-        .properties(title=chart_title, width=chart_width)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
+"""
+Sub-functions for share of positive test results data.
+Combine testing data and case data, aggregated to the week.
+We lack results for positive/negative results for each test batch (ideal).
+"""
+def prep_la_positive_test(start_date, city_or_county):
+    tests_df = prep_testing(start_date)
 
-    display(testing_chart)
-
+    if city_or_county == "county":
+        cases_df = prep_county("Los Angeles, CA", start_date)
+        tests_col = "Performed"
     
-#---------------------------------------------------------------#
-# Share of Positive Tests by Week (City of LA)
-#---------------------------------------------------------------#
-def positive_tests_lacity(start_date):
-    tests_df = pd.read_csv(TESTING_URL)
-    cases_df = pd.read_csv(LA_CITY_URL)
+    if city_or_county == "city":
+        cases_df = prep_lacity_cases(start_date)
+        tests_col = "City_Performed"
     
     #  Merge and rename columns
-    df = pd.merge(cases_df, tests_df, on = "Date", how = "left")
+    df = pd.merge(cases_df, tests_df, on = "date", how = "left")
+    df = df.rename(columns = {tests_col: "new_tests"}) 
     
-    keep_cols = [
-        "Date",
-        "City of LA Cases",
-        "City of LA New Cases",
-        "Performed", 
-        "Cumulative",
-    ]
-
-    df = (df[keep_cols].assign(
-            Date = pd.to_datetime(df.Date),
-        )
-          .rename(columns = 
-                  {"City of LA Cases": "cases",
-                   "City of LA New Cases": "new_cases",
-                   "Performed": "new_tests",
-                   "Cumulative": "tests",
-                   "Date": "date"}) 
-    )
+    df = aggregate_to_week(df)
     
+    return df   
+    
+    
+def aggregate_to_week(df): 
     # Subset to particular start and end date
     df = (df[(df.date >= start_date) & (df.date <= yesterday_date)]
-          .sort_values("date")
-         )
-
-    df = df.assign(
-            cases = df.cases.astype(int),
-            new_cases = df.new_cases.astype(int),
-            new_tests = df.new_tests.astype(int),
-            tests = df.tests.astype(int),
+        .assign(
             week = pd.to_datetime(df.date).dt.strftime("%U"),
-    ) 
+        ).sort_values("date")
+    )
     
     # Aggregate to the week
     weekly_total = (df.groupby("week")
@@ -452,63 +387,38 @@ def positive_tests_lacity(start_date):
     df = (df[df.days_counted==7][keep_col]
           .drop_duplicates()
           .assign(
+            weekly_cases = df.weekly_cases.astype(int),
+            weekly_tests = df.weekly_tests.astype(int),
             pct_positive = df.weekly_cases / df.weekly_tests,
+            week2 = df.start_of_week.dt.strftime(monthdate_format).astype(str),
         )
     )
-    
-    make_positive_test_chart(df)
     
     return df
-    
-# Sub-function to make share of positive tests chart
-def make_positive_test_chart(df):
-    chart_width = 500
-    bar = (
-        alt.Chart(df)
-        .mark_bar(color="navy", )
-        .encode(
-            x=alt.X(
-                "yearmonthdate(start_of_week)",
-                title="date",
-                axis=alt.Axis(format="%-m/%-d/%y"),
-            ),
-            y=alt.Y(
-                "pct_positive", 
-                title="Share of Positive COVID-19 Results",
-            ),
-        )
-    )
 
-    line = (
-        alt.Chart(df)
-        .mark_line(color="red", strokeDash=[5, 2])
-        .encode(
-            x=alt.X("yearmonthdate(start_of_week)"),
-            y=alt.Y("weekly_tests", title="# Weekly Tests")
-        )
-    )
-
-    positive_tests = (
-        alt.concat(
-            alt.layer(bar, line, 
-                      title="Weekly Test Volume and Share of Positive Results")
-                .resolve_scale(y='independent',x='shared')
-            )
-    )
-
-    display(positive_tests)
-
-
-    
+ 
 #---------------------------------------------------------------#
 # Hospital Equipment Availability (City of LA)
 #---------------------------------------------------------------#
-def hospital_capacity_lacity(start_date):
+def lacity_hospital_charts(start_date):
+    df = prep_lacity_hospital(start_date)
+    make_charts.make_lacity_hospital_chart(df)
+    return df
+
+
+"""
+Sub-functions for City of LA hospital equipment data.
+"""
+def prep_lacity_hospital(start_date):
     df = pd.read_csv(HOSPITAL_URL)
 
     # Get a total count of equipment for each date-type
     df = df.assign(
-        Date=pd.to_datetime(df.Date).dt.strftime("%-m/%-d/%y"),
+        date=(pd.to_datetime(df.Date)
+            .dt.tz_localize("US/Pacific")
+            .dt.normalize()
+            .dt.tz_convert("UTC")
+             ),
         type_total=df.groupby(["Date", "Type"])["Count"].transform("sum"),
     )
 
@@ -523,97 +433,13 @@ def hospital_capacity_lacity(start_date):
             else np.nan,
             axis=1,
         ),
+        equipment = df['Type'],
     )
 
-    keep_col = ["Date", "Type", "type_total", "n_available", "pct_available"]
+    keep_col = ["date", "equipment", "type_total", "n_available", "pct_available"]
 
-    df = df[(df.n_available.notna()) & (df.Date >= start_date)][
+    df = df[(df.n_available.notna()) & (df.date >= start_date)][
         keep_col
     ].drop_duplicates()
 
-    make_hospital_chart(df)
-
     return df
-
-# Sub-function to make hospital equipment availability line chart
-def make_hospital_chart(df):
-    chart_width = 500
-
-    base = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X(
-                "Date",
-                timeUnit=time_unit,
-                title="date",
-                axis=alt.Axis(format="%-m/%-d"),
-            ),
-            y=alt.Y("pct_available", title="proportion available"),
-            color=alt.Color(
-                "Type",
-                scale=alt.Scale(
-                    domain=["Acute Care Beds", "ICU Beds", "Ventilators"],
-                    range=[acute_color, icu_color, ventilator_color],
-                ),
-            ),
-        )
-    )
-
-    line1 = (
-        alt.Chart(pd.DataFrame({"y": [0.3]}))
-        .mark_rule(color=maroon, strokeDash=[5, 2])
-        .encode(y="y")
-    )
-
-    hospital_pct_chart = (
-        (base + line1)
-        .properties(
-            title="Proportion of Available Hospital Equipment by Type",
-            width=chart_width,
-        )
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
-
-    base2 = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X(
-                "Date",
-                timeUnit=time_unit,
-                title="date",
-                axis=alt.Axis(format="%-m/%-d"),
-            ),
-            y=alt.Y("n_available", title="number available"),
-            color=alt.Color(
-                "Type",
-                scale=alt.Scale(
-                    domain=["Acute Care Beds", "ICU Beds", "Ventilators"],
-                    range=[acute_color, icu_color, ventilator_color],
-                ),
-            ),
-        )
-    )
-
-    hospital_num_chart = (
-        base2.properties(
-            title="Number of Available Hospital Equipment by Type", width=chart_width
-        )
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
-
-    display(hospital_pct_chart)
-    display(hospital_num_chart)
