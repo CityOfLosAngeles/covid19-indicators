@@ -19,6 +19,11 @@ Collection of articles to guide the reopening strategy. Provides context for wha
 * [What experts say is necessary for a national testing strategy](https://www.nytimes.com/2020/05/25/health/coronavirus-testing-trump.html).
     * 10% positive share is enough for mitigation
     * 4% positive share needed to halt the spread of virus
+* As of late May, [24 US states have uncontrolled virus spread](https://www.washingtonpost.com/health/study-estimates-24-states-still-have-uncontrolled-coronavirus-spread/2020/05/22/d3032470-9c43-11ea-ac72-3841fcc9b35f_story.html)
+    * By late July, CA is estimated to have 1,000 deaths per day without further mitigation
+    * The [R0, or reproduction number](https://www.nytimes.com/2020/04/23/world/europe/coronavirus-R0-explainer.html), which shows how fast the virus is spreading, is still above 1 in these 24 states.
+    * In CA, seeing a plateau of cases, but not decreases, suggests that [R0 is hovering close to 1](https://www.vox.com/future-perfect/2020/5/16/21254748/california-coronavirus-cases-lockdown), where virus spread is sustained, and each infected person infects 1 person, on average.
+    * [D public health estimates](https://rt.live/)
 
 
 ## Are We Past the Peak?
@@ -26,12 +31,15 @@ Collection of articles to guide the reopening strategy. Provides context for wha
     * Deaths in LA County by May 3 estimated to be 451 instead of 1,223 if we stayed at home 1 week earlier. 
 * University of Minnesota and Harvard studies on [possible trajectories of the pandemic into late 2020 and 2021](https://www.nytimes.com/2020/05/08/health/coronavirus-pandemic-curve-scenarios.html) shows that a one-time social distancing effort is not sufficient to control this in the long term. Experts recommend turning social distancing on and off depending on case levels. 
     * Germany says [regions must reinstate restrictions](https://www.nytimes.com/2020/05/18/opinion/germany-coronavirus-reopening.html) if cases pass a certain threshold.
+* [Are any countries close to herd immunity? Not even close.](https://www.nytimes.com/interactive/2020/05/28/upshot/coronavirus-herd-immunity.html)
 
 
 ## Building Public Health Capacity
  * We aren't [testing enough](https://www.vox.com/2020/5/8/21249880/coronavirus-testing-covid-reopening-economy-lockdowns-social-distancing) nor have [enough contact tracers](https://www.nytimes.com/2020/05/11/health/coronavirus-second-wave-infections.html) to manage the current caseloads.
  * [Open, transparent, and public data](https://amp.floridatoday.com/amp/5212398002) is crucial for agencies and researchers to simultaneously learn about the virus and tackle the outbreaks from multiple fronts. 
  * [Reporting all-cause mortality and testing the high risk](https://www.vox.com/2020/5/26/21270703/coronavirus-deaths-us-world-covid-19-nursing-homes) are ways to move forward.
+ * [Philisophical differences](https://www.nytimes.com/2020/05/28/us/politics/biden-trump-coronavirus-testing.html) between state-led strategy vs federal strategy
+    * [Biden's national coronavirus plan](https://www.documentcloud.org/documents/6927667-COVID-National-Diagnostics-Strategy-05-24-2020-v.html#document/p2)
 
 
 ## Antibodies and Immunity Research
@@ -42,6 +50,7 @@ Collection of articles to guide the reopening strategy. Provides context for wha
 
 ## Known Unknowns 
 * [How indoor ventilation](https://www.nytimes.com/2020/04/20/health/airflow-coronavirus-restaurants.html) affects the path of virus infection], possibly spreading [through ducts](https://wwwnc.cdc.gov/eid/article/26/7/20-0764_article#tnF1)
+* How long does [virus linger through air](https://www.nytimes.com/2020/05/14/health/coronavirus-infections.html )
 * [11 things we still don't know](https://www.vox.com/2020/5/12/21248395/coronavirus-pandemic-covid-symptoms-testing-children-mysteries) from number of cases, scaled up testing, impact on children, and the types of social distancing that can work as we reopen
 * [Legionnaires' a potential health threat](https://www.nytimes.com/2020/05/20/health/coronavirus-legionnaires-offices.html) for dormant office buildings
 * [Reconfigured office space](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs
