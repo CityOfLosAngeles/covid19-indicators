@@ -7,10 +7,15 @@ import os
 import pandas as pd
 import utils
 
-from IPython.display import display
+from IPython.display import display, SVG
 
 alt.renderers.enable('altair_saver', fmts=['svg'])
 
+def show_svg(image_path):
+    display(SVG(image_path))
+    os.remove(image_path)
+
+    
 #---------------------------------------------------------------#
 # Chart parameters
 #---------------------------------------------------------------#
@@ -85,8 +90,8 @@ def make_cases_deaths_chart(df, geog, name):
         .configure_view(strokeOpacity=stroke_opacity)
     )
         
-    altair_saver.save(combined_chart, '../notebooks/combined_chart.svg')
-    display(combined_chart)
+    altair_saver.save(combined_chart, "../notebooks/combined_chart.svg")
+    show_svg("../notebooks/combined_chart.svg")
 
 
 #---------------------------------------------------------------#
@@ -114,9 +119,10 @@ def make_lacity_cases_chart(df):
         .configure_view(strokeOpacity=stroke_opacity)
     )
 
-    display(cases_chart)
-    
+    altair_saver.save(cases_chart, "../notebooks/cases_chart.svg")
+    show_svg("../notebooks/cases_chart.svg")   
 
+    
 #---------------------------------------------------------------#
 # Testing Data (LA County and City of LA)
 #---------------------------------------------------------------#
@@ -160,7 +166,8 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
         .configure_view(strokeOpacity=stroke_opacity)
     )
 
-    display(testing_chart)
+    altair_saver.save(testing_chart, "../notebooks/testing_chart.svg")
+    show_svg("../notebooks/testing_chart.svg")   
 
     
 #---------------------------------------------------------------#
@@ -233,8 +240,10 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
         .configure_view(strokeOpacity=stroke_opacity)
     )
     
-    display(positive_chart)
-    display(test_bar)
+    altair_saver.save(positive_chart, "../notebooks/positive_chart.svg")
+    show_svg("../notebooks/positive_chart.svg")  
+    altair_saver.save(test_bar, "../notebooks/test_bar.svg")
+    show_svg("../notebooks/test_bar.svg")   
     
     
 #---------------------------------------------------------------#
@@ -324,5 +333,7 @@ def make_lacity_hospital_chart(df):
         .configure_view(strokeOpacity=stroke_opacity)
     )
 
-    display(hospital_pct_chart)
-    display(hospital_num_chart)
+    altair_saver.save(hospital_pct_chart, "../notebooks/hospital_pct_chart.svg")
+    show_svg("../notebooks/hospital_pct_chart.svg") 
+    altair_saver.save(hospital_num_chart, "../notebooks/hospital_num_chart.svg")
+    show_svg("../notebooks/hospital_num_chart.svg")
