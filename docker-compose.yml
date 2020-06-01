@@ -6,9 +6,9 @@ services:
     image: covid19_indicators
     container_name: covid19_indicators
     volumes:
-     - ./:/home/jovyan
+     - ./:/app
     ports:
       - "8888:8888"
     environment:
       - JUPYTER_ENABLE_LAB=1
-    command: start-notebook.sh --NotebookApp.notebook_dir=/home/jovyan --LabApp.token='' --allow-root
+    command: "jupyter-lab --no-browser --ip=\"*\" --allow-root --port=8888 --NotebookApp.notebook_dir=/app --NotebookApp.terminado_settings='{\"shell_command\": [\"bash\"]}' --LabApp.token=\"\" --LabApp.password=\"\""

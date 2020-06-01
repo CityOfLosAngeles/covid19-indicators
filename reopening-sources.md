@@ -23,7 +23,6 @@ Collection of articles to guide the reopening strategy. Provides context for wha
     * By late July, CA is estimated to have 1,000 deaths per day without further mitigation
     * The [R0, or reproduction number](https://www.nytimes.com/2020/04/23/world/europe/coronavirus-R0-explainer.html), which shows how fast the virus is spreading, is still above 1 in these 24 states.
     * In CA, seeing a plateau of cases, but not decreases, suggests that [R0 is hovering close to 1](https://www.vox.com/future-perfect/2020/5/16/21254748/california-coronavirus-cases-lockdown), where virus spread is sustained, and each infected person infects 1 person, on average.
-    * [D public health estimates](https://rt.live/)
 
 
 ## Are We Past the Peak?
@@ -62,4 +61,4 @@ Collection of articles to guide the reopening strategy. Provides context for wha
 * White House [Opening Up America Again gating criteria](https://www.whitehouse.gov/wp-content/uploads/2020/04/Guidelines-for-Opening-Up-America-Again.pdf) 
     * [NY State's](https://www.nytimes.com/2020/05/04/nyregion/coronavirus-reopen-cuomo-ny.html) and [Chicago's](https://www.chicagotribune.com/coronavirus/ct-coronavirus-chicago-reopening-lightfoot-20200508-ztpnouwexrcvfdfcr2yccbc53a-story.html) reopening indicators.
     * Arguably, [LA is more similar to NYC and Chicago](https://www.nytimes.com/2020/05/09/us/coronavirus-chicago.html) than other regions due to persistent caseloads that are flattening, but not dropping. As Chicago's benchmarks are tougher than the rest of IL, and it should be so for LA than the rest of CA.
-    * [LA, DC, and Chicago remain hotspots in the US](https://www.latimes.com/california/story/2020-05-22/white-house-concerned-with-coronavirus-spread-in-l-a-area-asks-cdc-to-investigate)
+    * LA, DC, and Chicago remain [hotspots in the US](https://www.latimes.com/california/story/2020-05-22/white-house-concerned-with-coronavirus-spread-in-l-a-area-asks-cdc-to-investigate)

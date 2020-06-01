@@ -2,10 +2,14 @@
 Functions to create charts.
 """
 import altair as alt
+import altair_saver
+import os
 import pandas as pd
 import utils
 
 from IPython.display import display
+
+alt.renderers.enable('altair_saver', fmts=['svg'])
 
 #---------------------------------------------------------------#
 # Chart parameters
@@ -26,6 +30,7 @@ chart_height = 200
 bin_spacing = 100
 fulldate_format = "%-m/%-d/%y"
 monthdate_format = "%-m/%-d"
+
 
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA)
@@ -79,10 +84,9 @@ def make_cases_deaths_chart(df, geog, name):
         .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
         .configure_view(strokeOpacity=stroke_opacity)
     )
-
+        
+    altair_saver.save(combined_chart, '../notebooks/combined_chart.svg')
     display(combined_chart)
-
-    return df
 
 
 #---------------------------------------------------------------#
@@ -111,7 +115,7 @@ def make_lacity_cases_chart(df):
     )
 
     display(cases_chart)
-
+    
 
 #---------------------------------------------------------------#
 # Testing Data (LA County and City of LA)
@@ -232,10 +236,9 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
     display(positive_chart)
     display(test_bar)
     
-
     
 #---------------------------------------------------------------#
-# Hospital Equipment Availability (City of LA)
+# Hospital Equipment Availability (LA County)
 #---------------------------------------------------------------#
 def make_lacity_hospital_chart(df):
     chart_width = 400

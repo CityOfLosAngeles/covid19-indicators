@@ -3,6 +3,8 @@ Functions to create county or state-specific indicators.
 Use JHU county data.
 Specific City of LA data also used to generate LA-specific charts. 
 """
+#import altair as alt
+#import altair_saver
 import numpy as np
 import pandas as pd
 import pytz
@@ -14,6 +16,7 @@ import useful_dict
 from datetime import date, datetime, timedelta
 from IPython.display import display, Markdown
 
+#alt.renderers.enable('altair_saver', fmts=['svg'])
 
 US_COUNTY_URL = (
     "http://lahub.maps.arcgis.com/sharing/rest/content/items/"
@@ -62,7 +65,6 @@ def county_case_charts(county_state_name, start_date):
     name = df.county.iloc[0]
     make_charts.make_cases_deaths_chart(df, "county", name)
     return df
-
     
 # State Case Data
 def state_case_charts(state_name, start_date):
