@@ -11,8 +11,10 @@ from IPython.display import display, SVG
 
 alt.renderers.enable('altair_saver', fmts=['svg'])
 
-def show_svg(image_path):
-    display(SVG(image_path))
+def show_svg(image_name):
+    image_path = f"../notebooks/{image_name}.svg"
+    altair_saver.save(image_name, image_path)
+    display(SVG(filename = image_path))
     os.remove(image_path)
 
     
@@ -90,9 +92,7 @@ def make_cases_deaths_chart(df, geog, name):
         .configure_view(strokeOpacity=stroke_opacity)
     )
         
-    altair_saver.save(combined_chart, "../notebooks/combined_chart.svg")
-    show_svg("../notebooks/combined_chart.svg")
-
+    show_svg(combined_chart)
 
 #---------------------------------------------------------------#
 # Case Data (City of LA)
@@ -119,8 +119,7 @@ def make_lacity_cases_chart(df):
         .configure_view(strokeOpacity=stroke_opacity)
     )
 
-    altair_saver.save(cases_chart, "../notebooks/cases_chart.svg")
-    show_svg("../notebooks/cases_chart.svg")   
+    show_svg(cases_chart)   
 
     
 #---------------------------------------------------------------#
@@ -166,8 +165,8 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
         .configure_view(strokeOpacity=stroke_opacity)
     )
 
-    altair_saver.save(testing_chart, "../notebooks/testing_chart.svg")
-    show_svg("../notebooks/testing_chart.svg")   
+    show_svg(testing_chart)   
+ 
 
     
 #---------------------------------------------------------------#
@@ -182,6 +181,7 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
             x=alt.X(
                 "week2",
                 title="date",
+                sort=None
             ),
             y=alt.Y(
                 "pct_positive", 
@@ -223,7 +223,8 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
         .encode(
             x=alt.X(
                 "week2",
-                title="date",
+                title="date", 
+                sort=None
             ),
             y=alt.Y(
                 "weekly_tests", 
@@ -240,16 +241,14 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
         .configure_view(strokeOpacity=stroke_opacity)
     )
     
-    altair_saver.save(positive_chart, "../notebooks/positive_chart.svg")
-    show_svg("../notebooks/positive_chart.svg")  
-    altair_saver.save(test_bar, "../notebooks/test_bar.svg")
-    show_svg("../notebooks/test_bar.svg")   
+    show_svg(positive_chart)  
+    show_svg(test_bar)   
     
     
 #---------------------------------------------------------------#
 # Hospital Equipment Availability (LA County)
 #---------------------------------------------------------------#
-def make_lacity_hospital_chart(df):
+def make_lacounty_hospital_chart(df):
     chart_width = 400
     acute_color = green
     icu_color = navy
@@ -265,7 +264,7 @@ def make_lacity_hospital_chart(df):
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
             ),
-            y=alt.Y("pct_available", title="% available", 
+            y=alt.Y("pct_available_avg3", title="3-day avg", 
                     axis=alt.Axis(format="%")
             ),
             color=alt.Color(
@@ -309,7 +308,7 @@ def make_lacity_hospital_chart(df):
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
             ),
-            y=alt.Y("n_available", title="# available"),
+            y=alt.Y("n_available_avg3", title="3-day avg"),
             color=alt.Color(
                 "equipment",
                 scale=alt.Scale(
@@ -333,7 +332,5 @@ def make_lacity_hospital_chart(df):
         .configure_view(strokeOpacity=stroke_opacity)
     )
 
-    altair_saver.save(hospital_pct_chart, "../notebooks/hospital_pct_chart.svg")
-    show_svg("../notebooks/hospital_pct_chart.svg") 
-    altair_saver.save(hospital_num_chart, "../notebooks/hospital_num_chart.svg")
-    show_svg("../notebooks/hospital_num_chart.svg")
+    show_svg(hospital_pct_chart) 
+    show_svg(hospital_num_chart)
