@@ -27,7 +27,7 @@ green = "#10DE7A"
 orange = "#FCA800"
 
 title_font_size = 10
-font_name = "Roboto"
+font_name = "Arial"
 grid_opacity = 0.4
 domain_opacity = 0.4
 stroke_opacity = 0

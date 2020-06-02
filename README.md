@@ -15,7 +15,9 @@ Project Organization
     ├── conda-requirements.txt   <- The requirements file for conda installs.
     ├── requirements.txt         <- The requirements file for reproducing the analysis environment,
     │                               e.g generated with `pip freeze > requirements.txt`
-    ├── setup.py                 <- makes project pip installable (pip install -e .) 
+    ├── main.py                  <- Used to send our daily pdf reports by email. 
+    ├── setup.py                 <- Makes project pip installable (pip install -e .) 
+
 
 
 --------
@@ -29,11 +31,11 @@ Our ESRI data sources are public and listed below. The full documentation of the
 
 1. [Data Sources](#data-sources)
 1. [Helpful Hints for Jupyter Notebooks](#helpful-hints)
-1. [Starting with Docker](#starting-with-docker)
 1. [Setting up a Conda Environment](#setting-up-a-conda-environment)
+1. [Starting with Docker](#starting-with-docker)
+1. [Emailing the Report](#emailing-the-report)
 
 ## Data Sources
-
 * [City of LA's COVID-19 GitHub repo](https://github.com/CityOfLosAngeles/aqueduct/tree/master/dags/public-health/covid19/). We use Aqueduct, our shared pipeline for building ETLs and scheduling batch jobs. We welcome collaboration and pull requests on our work!
 
 
@@ -49,7 +51,6 @@ Our ESRI data sources are public and listed below. The full documentation of the
 * LA County Dept of Public Health (DPH) neighborhood-level current date's [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=ca30397902484e9c911e8092788a0233), and the City's GeoHub [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=9681f6a5269f4b6997b398bca057b62c) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=f553fa74cbfe4e49b3a334947298fa34)
 
 * City of LA case count time-series [feature table](https://lahub.maps.arcgis.com/home/item.html?id=1d1e4679a94e43e884b97a0488fc04cf) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=7175fba373f541a7a19df56b6a0617f4)
-
 
 #### Hospital Bed and Equipment Availability
 * LA County hospital bed and equipment availability [feature layer](http://lahub.maps.arcgis.com/home/item.html?id=956e105f422a4c1ba9ce5d215b835951) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=3da1eb3e13a14743973c96b945bd1117). Data is available for the 70 largest hospitals in the county.
@@ -105,26 +106,23 @@ gdf = gpd.read_file(CORRECT_URL)
 
 To convert to HTML: `jupyter nbconvert --to html --no-input --no-prompt my-notebook.ipynb`
 
---------
-
-## Starting with Docker
-
-1. Start with Steps 1-2 above
-2. Build Docker container: `docker-compose.exe build`
-3. Start Docker container `docker-compose.exe up`
-4. Open Jupyter Lab notebook by typing `localhost:8888/lab/` in the browser.
 
 ## Setting up a Conda Environment 
-
 1. `conda create --name my_project_name` 
-2. `source activate my_project_name`
-3. `conda install --file conda-requirements.txt -c conda-forge` 
-4. `pip install requirements.txt`
+1. `source activate my_project_name`
+1. `conda install --file conda-requirements.txt -c conda-forge` 
+1. `pip install requirements.txt`
+
+## Starting with Docker
+1. Start with Steps 1-2 above
+1. Build Docker container: `docker-compose.exe build`
+1. Start Docker container `docker-compose.exe up`
+1. Open Jupyter Lab notebook by typing `localhost:8888/lab/` in the browser.
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
 
-## Emailing the report 
 
+## Emailing the Report 
 To setup the report for daily emailing, you'll need to have AWS SES configured and setup on your account.
 
 1. `docker-compose build`
