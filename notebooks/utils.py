@@ -62,7 +62,6 @@ def county_case_charts(county_state_name, start_date):
     name = df.county.iloc[0]
     make_charts.make_cases_deaths_chart(df, "county", name)
     return df
-
     
 # State Case Data
 def state_case_charts(state_name, start_date):
@@ -398,18 +397,18 @@ def aggregate_to_week(df):
 
  
 #---------------------------------------------------------------#
-# Hospital Equipment Availability (City of LA)
+# Hospital Equipment Availability (LA County)
 #---------------------------------------------------------------#
-def lacity_hospital_charts(start_date):
-    df = prep_lacity_hospital(start_date)
-    make_charts.make_lacity_hospital_chart(df)
+def lacounty_hospital_charts(start_date):
+    df = prep_lacounty_hospital(start_date)
+    make_charts.make_lacounty_hospital_chart(df)
     return df
 
 
 """
-Sub-functions for City of LA hospital equipment data.
+Sub-functions for LA County hospital equipment data.
 """
-def prep_lacity_hospital(start_date):
+def prep_lacounty_hospital(start_date):
     df = pd.read_csv(HOSPITAL_URL)
 
     # Get a total count of equipment for each date-type
@@ -423,6 +422,9 @@ def prep_lacity_hospital(start_date):
     )
 
     # Calculate number and percent available
+    sort_col = ["equipment", "date"]
+    group_col = ["equipment"]
+    
     df = df.assign(
         n_available=df.apply(
             lambda row: row.Count if row.Status == "Available" else np.nan, axis=1
@@ -433,13 +435,40 @@ def prep_lacity_hospital(start_date):
             else np.nan,
             axis=1,
         ),
+        covid_investigation=df.apply(
+            lambda row: row.Count if "Under Investigation" in row.Status else np.nan, axis=1
+        ),
+        covid_occupied=df.apply(
+            lambda row: row.Count if "COVID Occupied" in row.Status else np.nan, axis=1
+        ),
         equipment = df['Type'],
     )
 
-    keep_col = ["date", "equipment", "type_total", "n_available", "pct_available"]
+    keep_col = ["date", "equipment", "type_total", "n_available", "pct_available", 
+                "covid_investigation", "covid_occupied"]
+    
+    for col in ["n_available", "pct_available", "covid_investigation", "covid_occupied"]:
+        df[col] = df.groupby(sort_col)[col].transform("max")
+    
+    df = (df[keep_col]
+          .drop_duplicates()
+          .sort_values(sort_col)
+          .reset_index(drop=True)
+         )
+    
+    # Calculate 3-day average 
+    df = df.assign(
+            n_available_avg3 = (df.groupby(group_col)['n_available']
+                                .rolling(window=3).mean()
+                                .reset_index(drop=True)),
+            pct_available_avg3 = (df.groupby(group_col)['pct_available']
+                                .rolling(window=3).mean()
+                                  .reset_index(drop=True)),
+        )
 
-    df = df[(df.n_available.notna()) & (df.date >= start_date)][
-        keep_col
-    ].drop_duplicates()
-
+    
+    df = (df[(df.n_available.notna()) & (df.date >= start_date)]
+          .sort_values(sort_col)
+          .reset_index(drop=True))
+    
     return df

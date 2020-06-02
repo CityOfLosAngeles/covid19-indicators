@@ -1,5 +1,7 @@
 # Public Health Research
-Collection of articles to guide the reopening strategy. Provides context for what we have learned and what we still don't know about the coronavirus, what the trajectory of the pandemic might be over the next year, and how we should build up our public health capacity. Examples of reopening indicators used by NY and Chicago are included for LA to benchmark its own progress.
+Collection of articles to guide the reopening strategy. Provides context for **what we have learned and what we still don't know** about the coronavirus, what the trajectory of the pandemic might be over the next year, and how we should build up our public health capacity. 
+
+Examples of reopening indicators used by NY and Chicago are included for LA to benchmark its own progress.
 
 1. [Dangers of Reopening Too Early](#dangers-of-reopening-too-early)
 1. [Are We Past the Peak?](#are-we-past-the-peak)
@@ -10,20 +12,19 @@ Collection of articles to guide the reopening strategy. Provides context for wha
 
 
 ## Dangers of Reopening Too Early
-* Rushed reopenings are [a global trial-and-error experiment](https://www.nytimes.com/2020/05/07/world/europe/coronavirus-reopening-costs.html) 
-* NYT analysis showing how US states reopening [fail to meet the WH guidelines](https://www.nytimes.com/interactive/2020/05/07/us/coronavirus-states-reopen-criteria.html)
-    * Track the state's status of reopening [here](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html).
-    * More cases in US states that reopened: [Georgia](https://www.nytimes.com/interactive/2020/04/24/opinion/coronavirus-covid-19-georgia-reopen.html), [Texas](https://www.texastribune.org/2020/05/14/coronavirus-updates-texas/), and on average, seems to be true for [places outside NYC](https://www.nytimes.com/2020/05/16/us/coronavirus-united-states.html)
-    * More cases in countries that reopened: [Japan, South Korea](https://www.healthline.com/health-news/covid-19-countries-that-have-already-reopened-lessons#How-Germany-is-reopening), Singapore, [Lebanon](https://healthpolicy-watch.org/countries-that-reopen-early-may-have-waves-of-lockdowns/) and [Iran](https://www.nytimes.com/2020/05/18/world/middleeast/iran-coronavirus-surge.html)
+* Rushed reopenings are [a global trial-and-error experiment](https://www.nytimes.com/2020/05/07/world/europe/coronavirus-reopening-costs.html). 
+    * NYT analysis showing how US states reopening [fail to meet the WH guidelines](https://www.nytimes.com/interacti.ve/2020/05/07/us/coronavirus-states-reopen-criteria.html).
+    * Track the state's status of reopening [here](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
+    * Virus spread [speeds up](https://www.nytimes.com/2020/05/28/world/coronavirus-live.html) in [Georgia](https://www.nytimes.com/interactive/2020/04/24/opinion/coronavirus-covid-19-georgia-reopen.html), [Texas](https://www.texastribune.org/2020/05/14/coronavirus-updates-texas/), and on average, everywhere [outside NYC](https://www.nytimes.com/2020/05/16/us/coronavirus-united-states.html); in [Japan](https://www.healthline.com/health-news/covid-19-countries-that-have-already-reopened-lessons#How-Germany-is-reopening), [South Korea](https://www.seattletimes.com/nation-world/south-korea-closes-schools-again-amid-coronavirus-spike-days-after-reopening/), Singapore, [France](https://www.washingtonpost.com/world/europe/virus-count-revised-new-clusters-emerge-as-france-reopens/2020/05/29/3223a472-a1d3-11ea-be06-af5514ee0385_story.html), [Lebanon](https://healthpolicy-watch.org/countries-that-reopen-early-may-have-waves-of-lockdowns/) and [Iran](https://www.nytimes.com/2020/05/18/world/middleeast/iran-coronavirus-surge.html).
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
-* [What experts say is necessary for a national testing strategy](https://www.nytimes.com/2020/05/25/health/coronavirus-testing-trump.html).
-    * 10% positive share is enough for mitigation
-    * 4% positive share needed to halt the spread of virus
+* [What experts say is necessary for a national testing strategy](https://www.nytimes.com/2020/05/25/health/coronavirus-testing-trump.html):
+    * 10% positive share for mitigation
+    * 4% positive share to halt virus spread
 * As of late May, [24 US states have uncontrolled virus spread](https://www.washingtonpost.com/health/study-estimates-24-states-still-have-uncontrolled-coronavirus-spread/2020/05/22/d3032470-9c43-11ea-ac72-3841fcc9b35f_story.html)
     * By late July, CA is estimated to have 1,000 deaths per day without further mitigation
     * The [R0, or reproduction number](https://www.nytimes.com/2020/04/23/world/europe/coronavirus-R0-explainer.html), which shows how fast the virus is spreading, is still above 1 in these 24 states.
     * In CA, seeing a plateau of cases, but not decreases, suggests that [R0 is hovering close to 1](https://www.vox.com/future-perfect/2020/5/16/21254748/california-coronavirus-cases-lockdown), where virus spread is sustained, and each infected person infects 1 person, on average.
-    * [D public health estimates](https://rt.live/)
+    * Leading CA health official [warns that CA is making modifications toward reopening too quickly](https://www.planetizen.com/news/2020/05/109462-reopening-california-respected-county-health-official-issues-warning)
 
 
 ## Are We Past the Peak?
@@ -44,16 +45,17 @@ Collection of articles to guide the reopening strategy. Provides context for wha
 
 ## Antibodies and Immunity Research
 * Germany's research on [who has antibodies, how long antibodies last after infection, and what levels of antibodies are needed to prevent re-infection](https://www.nytimes.com/2020/04/18/world/europe/with-broad-random-tests-for-antibodies-germany-seeks-path-out-of-lockdown.html)
-* [How long do antibodies last? Remains to be seen.](https://www.nytimes.com/2020/05/07/health/coronavirus-antibody-prevalence.html)
-* Spain, with one of the worst outbreaks in Europe, [only sees about 5% of its population with immunity](https://www.vox.com/2020/5/16/21259492/covid-antibodies-spain-serology-study-coronavirus-immunity)
+* [How long do antibodies last?](https://www.nytimes.com/2020/05/07/health/coronavirus-antibody-prevalence.html) Remains to be seen.
+    * Spain, with one of the worst outbreaks in Europe, [only sees about 5% of its population with immunity](https://www.vox.com/2020/5/16/21259492/covid-antibodies-spain-serology-study-coronavirus-immunity)
 
 
 ## Known Unknowns 
-* [How indoor ventilation](https://www.nytimes.com/2020/04/20/health/airflow-coronavirus-restaurants.html) affects the path of virus infection], possibly spreading [through ducts](https://wwwnc.cdc.gov/eid/article/26/7/20-0764_article#tnF1)
-* How long does [virus linger through air](https://www.nytimes.com/2020/05/14/health/coronavirus-infections.html )
-* [11 things we still don't know](https://www.vox.com/2020/5/12/21248395/coronavirus-pandemic-covid-symptoms-testing-children-mysteries) from number of cases, scaled up testing, impact on children, and the types of social distancing that can work as we reopen
-* [Legionnaires' a potential health threat](https://www.nytimes.com/2020/05/20/health/coronavirus-legionnaires-offices.html) for dormant office buildings
-* [Reconfigured office space](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs
+* [How indoor ventilation](https://www.nytimes.com/2020/04/20/health/airflow-coronavirus-restaurants.html) affects the path of virus infection, possibly spreading [through ducts](https://wwwnc.cdc.gov/eid/article/26/7/20-0764_article#tnF1).
+* How long does [virus linger through air?](https://www.nytimes.com/2020/05/14/health/coronavirus-infections.html)
+* How long does virus remain [on surfaces?](https://www.nytimes.com/2020/05/28/well/live/whats-the-risk-of-catching-coronavirus-from-a-surface.html)
+* [11 things we still don't know](https://www.vox.com/2020/5/12/21248395/coronavirus-pandemic-covid-symptoms-testing-children-mysteries) from number of cases, scaled up testing, impact on children, and the types of social distancing that can work as we reopen.
+* [Legionnaires' a potential health threat](https://www.nytimes.com/2020/05/20/health/coronavirus-legionnaires-offices.html) for dormant office buildings.
+* [Reconfigured office space](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs.
 
 
 ## The Path Toward Reopening
@@ -62,4 +64,4 @@ Collection of articles to guide the reopening strategy. Provides context for wha
 * White House [Opening Up America Again gating criteria](https://www.whitehouse.gov/wp-content/uploads/2020/04/Guidelines-for-Opening-Up-America-Again.pdf) 
     * [NY State's](https://www.nytimes.com/2020/05/04/nyregion/coronavirus-reopen-cuomo-ny.html) and [Chicago's](https://www.chicagotribune.com/coronavirus/ct-coronavirus-chicago-reopening-lightfoot-20200508-ztpnouwexrcvfdfcr2yccbc53a-story.html) reopening indicators.
     * Arguably, [LA is more similar to NYC and Chicago](https://www.nytimes.com/2020/05/09/us/coronavirus-chicago.html) than other regions due to persistent caseloads that are flattening, but not dropping. As Chicago's benchmarks are tougher than the rest of IL, and it should be so for LA than the rest of CA.
-    * [LA, DC, and Chicago remain hotspots in the US](https://www.latimes.com/california/story/2020-05-22/white-house-concerned-with-coronavirus-spread-in-l-a-area-asks-cdc-to-investigate)
+    * LA, DC, and Chicago remain [hotspots in the US](https://www.latimes.com/california/story/2020-05-22/white-house-concerned-with-coronavirus-spread-in-l-a-area-asks-cdc-to-investigate)

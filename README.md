@@ -123,3 +123,9 @@ To convert to HTML: `jupyter nbconvert --to html --no-input --no-prompt my-noteb
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
 
+## Emailing the report 
+
+To setup the report for daily emailing, you'll need to have AWS SES configured and setup on your account.
+
+1. `docker-compose build`
+1. `docker-compose run lab python /app/main.py` 
