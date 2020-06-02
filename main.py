@@ -34,7 +34,7 @@ pm.execute_notebook(
 output_format = 'PDFviaHTML'
 cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
 
-output_file = f'./outputs/{str(datetime.datetime.now().date())}-corona.{output_format}'
+output_file = f'./outputs/{str(datetime.datetime.now().date())}-corona.pdf'
 
 os.system(cmd)
 
