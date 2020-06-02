@@ -1,4 +1,4 @@
-FROM irose/citywide-civis-lab:b7568fa53888
+FROM irose/citywide-civis-lab:55c470372865
 
 COPY conda-requirements.txt /tmp/
 RUN conda install --yes -c conda-forge --file /tmp/conda-requirements.txt
