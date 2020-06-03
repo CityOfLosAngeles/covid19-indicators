@@ -21,7 +21,11 @@ sys.path.append(os.getcwd())
 if not os.path.exists('outputs'):
     os.makedirs('outputs') 
 
-output_path = f'./outputs/{str(datetime.datetime.now().date())}-corona.ipynb'
+output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.ipynb'
+
+# check if notebook is ready to run
+
+
 # execute notebook 
 pm.execute_notebook(
    '/app/notebooks/county-city-indicators.ipynb',
@@ -34,7 +38,7 @@ pm.execute_notebook(
 output_format = 'PDFviaHTML'
 cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
 
-output_file = f'./outputs/{str(datetime.datetime.now().date())}-corona.pdf'
+output_file = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.pdf'
 
 os.system(cmd)
 
@@ -57,14 +61,14 @@ SUBJECT = f"Coronavirus Stats for {str(datetime.datetime.now().date())}"
 ATTACHMENT = output_file
 
 # The email body for recipients with non-HTML email clients.
-BODY_TEXT = "Hello,\r\nPlease see the attached file for a status update on Coronavirus related indicators."
+BODY_TEXT = "Hello,\r\nPlease see the attached file for a status update on coronavirus-related indicators."
 
 # The HTML body of the email.
 BODY_HTML =  """\
 <html>
 <head></head>
 <body>
-<p>Please see the attached file for a status update on Coronavirus related indicators</p>
+<p>Please see the attached file for a status update on coronavirus-related indicators</p>
 </body>
 </html>
 """
