@@ -16,7 +16,7 @@ yesterday_date = (
                 .astimezone(pytz.timezone(f'{time_zone}'))
                 .date()
         - timedelta(days=1)
-    ).strftime("%-m/%-d/%y")
+    ).strftime(fulldate_format)
 )
 today_date = (
     datetime.today()

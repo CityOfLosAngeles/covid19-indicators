@@ -39,6 +39,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
  * We aren't [testing enough](https://www.vox.com/2020/5/8/21249880/coronavirus-testing-covid-reopening-economy-lockdowns-social-distancing) nor have [enough contact tracers](https://www.nytimes.com/2020/05/11/health/coronavirus-second-wave-infections.html) to manage the current caseloads.
  * [Open, transparent, and public data](https://amp.floridatoday.com/amp/5212398002) is crucial for agencies and researchers to simultaneously learn about the virus and tackle the outbreaks from multiple fronts. 
  * [Reporting all-cause mortality and testing the high risk](https://www.vox.com/2020/5/26/21270703/coronavirus-deaths-us-world-covid-19-nursing-homes) are ways to move forward.
+ * [Summary of what we've learned](https://www.nytimes.com/article/coronavirus-facts-history.html): always wear masks, we can't depend on herd immunity, and we can't count on warmer weather alone.
  * [Philisophical differences](https://www.nytimes.com/2020/05/28/us/politics/biden-trump-coronavirus-testing.html) between state-led strategy vs federal strategy
     * [Biden's national coronavirus plan](https://www.documentcloud.org/documents/6927667-COVID-National-Diagnostics-Strategy-05-24-2020-v.html#document/p2)
 
@@ -53,7 +54,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * [How indoor ventilation](https://www.nytimes.com/2020/04/20/health/airflow-coronavirus-restaurants.html) affects the path of virus infection, possibly spreading [through ducts](https://wwwnc.cdc.gov/eid/article/26/7/20-0764_article#tnF1).
 * How long does [virus linger through air?](https://www.nytimes.com/2020/05/14/health/coronavirus-infections.html)
 * How long does virus remain [on surfaces?](https://www.nytimes.com/2020/05/28/well/live/whats-the-risk-of-catching-coronavirus-from-a-surface.html)
-* [11 things we still don't know](https://www.vox.com/2020/5/12/21248395/coronavirus-pandemic-covid-symptoms-testing-children-mysteries) from number of cases, scaled up testing, impact on children, and the types of social distancing that can work as we reopen.
+* What we still don't know ([NY Times](https://www.nytimes.com/2020/06/01/health/coronavirus-mysteries.html), [Vox](https://www.vox.com/2020/5/12/21248395/coronavirus-pandemic-covid-symptoms-testing-children-mysteries)): from number of cases, impact on children, the types of social distancing that can work as we reopen, and role of immunity.
 * [Legionnaires' a potential health threat](https://www.nytimes.com/2020/05/20/health/coronavirus-legionnaires-offices.html) for dormant office buildings.
 * [Reconfigured office space](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs.
 
