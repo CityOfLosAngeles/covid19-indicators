@@ -25,9 +25,6 @@ if not os.path.exists('outputs'):
 
 output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.ipynb'
 
-# check if notebook is ready to run
-
-
 # Try executing the notebook. If it fails due to data being incomplete,
 # try again in an hour, for a maximum of ten hours.
 MAX_TRIES = 10
@@ -83,7 +80,7 @@ BODY_HTML =  """\
 <html>
 <head></head>
 <body>
-<p>Please see the attached file for a status update on coronavirus-related indicators</p>
+<p>Please see the attached file for a status update on coronavirus-related indicators.</p>
 </body>
 </html>
 """
