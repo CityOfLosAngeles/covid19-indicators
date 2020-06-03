@@ -4,37 +4,53 @@ and send email.
 
 Author: @hunterowens
 """
-
-import papermill as pm 
-import pandas as pd
 import datetime
-import civis
 import os
+import sys
+import time
+
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
-import boto3
 
-import os, sys
+import boto3
+import civis
+import pandas as pd
+import papermill as pm 
+
 sys.path.append(os.getcwd())
 # check dir
 if not os.path.exists('outputs'):
     os.makedirs('outputs') 
 
-output_path = f'./outputs/{str(datetime.datetime.now().date())}-corona.ipynb'
-# execute notebook 
-pm.execute_notebook(
-   '/app/notebooks/county-city-indicators.ipynb',
-   output_path,
-   parameters=dict(start_date="4/15/2020"),
-   cwd='/app/notebooks'
-)
+output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.ipynb'
+
+# Try executing the notebook. If it fails due to data being incomplete,
+# try again in an hour, for a maximum of ten hours.
+MAX_TRIES = 10
+RETRY = 60 * 60
+for i in range(MAX_TRIES):
+    try:
+        pm.execute_notebook(
+           '/app/notebooks/county-city-indicators.ipynb',
+           output_path,
+           cwd='/app/notebooks'
+        )
+        break
+    except pm.PapermillExecutionError as e:
+        if "Data incomplete" in e.evalue:
+            print(f"Data incomplete, trying again in {RETRY} seconds")
+            time.sleep(RETRY)
+        else:
+            raise e
+else:
+    raise RuntimeError(f"Unable to get fresh data after {MAX_TRIES} tries.")
 
 # shell out, run NB Convert 
 output_format = 'PDFviaHTML'
 cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
 
-output_file = f'./outputs/{str(datetime.datetime.now().date())}-corona.pdf'
+output_file = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.pdf'
 
 os.system(cmd)
 
@@ -57,14 +73,14 @@ SUBJECT = f"Coronavirus Stats for {str(datetime.datetime.now().date())}"
 ATTACHMENT = output_file
 
 # The email body for recipients with non-HTML email clients.
-BODY_TEXT = "Hello,\r\nPlease see the attached file for a status update on Coronavirus related indicators."
+BODY_TEXT = "Hello,\r\nPlease see the attached file for a status update on coronavirus-related indicators."
 
 # The HTML body of the email.
 BODY_HTML =  """\
 <html>
 <head></head>
 <body>
-<p>Please see the attached file for a status update on Coronavirus related indicators</p>
+<p>Please see the attached file for a status update on coronavirus-related indicators.</p>
 </body>
 </html>
 """

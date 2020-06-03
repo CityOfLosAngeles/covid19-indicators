@@ -138,7 +138,7 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
             ),
-            y=alt.Y(plot_col, title="Tests Performed"),
+            y=alt.Y(plot_col, title="# Tests"),
         )
     )
 
@@ -185,7 +185,7 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
             ),
             y=alt.Y(
                 "pct_positive", 
-                title="Share of Positive COVID-19 Results",
+                title="Percent",
                 axis=alt.Axis(format="%")
             ),
         )

@@ -45,6 +45,8 @@ CROSSWALK_URL = (
 #---------------------------------------------------------------#
 start_date = default_parameters.start_date
 yesterday_date = default_parameters.yesterday_date
+today_date = default_parameters.today_date
+fulldate_format = default_parameters.fulldate_format
 monthdate_format = default_parameters.monthdate_format
 
 
@@ -136,7 +138,6 @@ def prep_county(county_state_name, start_date):
     )
 
     df = calculate_rolling_average(df)
-    df = df[df.date >= start_date]
 
     return df
 
@@ -173,7 +174,6 @@ def prep_state(state_name, start_date):
     )
     
     df = calculate_rolling_average(df)
-    df = df[df.date >= start_date]
 
     return df
 
@@ -214,7 +214,6 @@ def prep_msa(msa_name, start_date):
     )
     
     df = calculate_rolling_average(df)
-    df = df[df.date >= start_date]
     
     return df
 
@@ -226,6 +225,15 @@ def calculate_rolling_average(df):
         deaths_avg3=df.new_deaths.rolling(window=3).mean(),
         deaths_avg7=df.new_deaths.rolling(window=7).mean(),
     )
+    
+    # Subset from start date up to yesterday's date
+    # Make sure date is in same format as yesterday_date and today_date
+    df = df.assign(
+        date2 = pd.to_datetime(df.date).dt.strftime(fulldate_format)
+    )
+    
+    df = df[(df.date >= start_date) & (df.date < today_date)]
+    
     return df
 
 
@@ -264,7 +272,12 @@ def prep_lacity_cases(start_date):
         cases_avg7=df.new_cases.rolling(window=7).mean(),
     )
     
-    df = df[df.date >= start_date]
+    # Subset by start date up to yesterday's date
+    df = df.assign(
+        date2 = pd.to_datetime(df.date).dt.strftime(fulldate_format)
+    )
+    
+    df = df[(df.date >= start_date) & (df.date < today_date)]
 
     return df
 
@@ -300,10 +313,16 @@ def prep_testing(start_date):
               .dt.tz_convert("UTC")
              ),
     )
-    df = (df[df.date >= start_date]
+    
+    df = df.assign(
+        date2 = pd.to_datetime(df.date).dt.strftime(fulldate_format),
+    )
+    
+    # Subset by start date up to yesterday's date    
+    df = (df[(df.date >= start_date) & (df.date < today_date)]
             .drop(columns = "Date")
          )
-    
+
     return df 
 
 
@@ -353,7 +372,7 @@ def prep_la_positive_test(start_date, city_or_county):
     
 def aggregate_to_week(df): 
     # Subset to particular start and end date
-    df = (df[(df.date >= start_date) & (df.date <= yesterday_date)]
+    df = (df[(df.date >= start_date) & (df.date < today_date)]
         .assign(
             week = pd.to_datetime(df.date).dt.strftime("%U"),
         ).sort_values("date")
@@ -420,6 +439,11 @@ def prep_lacounty_hospital(start_date):
              ),
         type_total=df.groupby(["Date", "Type"])["Count"].transform("sum"),
     )
+    
+    # Subset from start date to yesterday's date
+    df = df.assign(
+        date2 = pd.to_datetime(df.date).dt.strftime(fulldate_format)
+    )
 
     # Calculate number and percent available
     sort_col = ["equipment", "date"]
@@ -444,7 +468,8 @@ def prep_lacounty_hospital(start_date):
         equipment = df['Type'],
     )
 
-    keep_col = ["date", "equipment", "type_total", "n_available", "pct_available", 
+    keep_col = ["date", "date2", "equipment", "type_total", 
+                "n_available", "pct_available", 
                 "covid_investigation", "covid_occupied"]
     
     for col in ["n_available", "pct_available", "covid_investigation", "covid_occupied"]:
@@ -467,8 +492,8 @@ def prep_lacounty_hospital(start_date):
         )
 
     
-    df = (df[(df.n_available.notna()) & (df.date >= start_date)]
+    df = (df[(df.n_available.notna()) & (df.date >= start_date) & (df.date < today_date)]
           .sort_values(sort_col)
           .reset_index(drop=True))
-    
+
     return df

@@ -136,9 +136,6 @@ def lacity_past_two_weeks(df):
 #---------------------------------------------------------------#  
 def meet_daily_testing(yesterday_date, city_or_county, lower_bound, upper_bound):
     df = utils.prep_testing(start_date)
-    df = df.assign(
-        date = pd.to_datetime(df.date).dt.strftime(fulldate_format)
-    )
     
     if city_or_county == "county":
         extract_col = "Performed"
@@ -147,7 +144,7 @@ def meet_daily_testing(yesterday_date, city_or_county, lower_bound, upper_bound)
         extract_col = "City_Performed"
     
     try:
-        indicator = df[df.date==yesterday_date].iloc[0][extract_col]
+        indicator = df[df.date2==yesterday_date].iloc[0][extract_col]
         return indicator
     except IndexError:
         return np.nan
@@ -177,7 +174,7 @@ def meet_positive_share(yesterday_date, city_or_county, lower_bound, upper_bound
 #---------------------------------------------------------------#  
 def meet_acute(yesterday_date):
     df = meet_hospital(yesterday_date)
-    extract_col = "pct_available"
+    extract_col = "pct_available_avg3"
     try:
         indicator = df[df.equipment.str.contains("Acute")].iloc[0][extract_col].round(2)
         return indicator
@@ -187,7 +184,7 @@ def meet_acute(yesterday_date):
 
 def meet_icu(yesterday_date):
     df = meet_hospital(yesterday_date)
-    extract_col = "pct_available"
+    extract_col = "pct_available_avg3"
     try:
         indicator = df[df.equipment.str.contains("ICU")].iloc[0][extract_col].round(2)
         return indicator
@@ -197,7 +194,7 @@ def meet_icu(yesterday_date):
     
 def meet_ventilator(yesterday_date):
     df = meet_hospital(yesterday_date)
-    extract_col = "pct_available"
+    extract_col = "pct_available_avg3"
     try:
         indicator = df[df.equipment.str.contains("Ventilator")].iloc[0][extract_col].round(2)
         return indicator
@@ -212,8 +209,5 @@ def meet_hospital(yesterday_date):
     # Noting that yesterday's date always seems to surpass benchmark
     # only to be revised downward again tomorrow. Might be ok if we're using 3-day avg from yesterday.
     df = utils.prep_lacounty_hospital(start_date)
-    df = df.assign(
-        date = pd.to_datetime(df.date).dt.strftime(fulldate_format)
-    )
-    df = df[df.date == yesterday_date]
+    df = df[df.date2 == yesterday_date]
     return df 
