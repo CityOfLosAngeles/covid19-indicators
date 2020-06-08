@@ -26,6 +26,7 @@ maroon = "#F3324C"
 green = "#10DE7A"
 orange = "#FCA800"
 blue = "#1696D2"
+gray = "#797C7C"
 
 title_font_size = 10
 font_name = "Arial"
@@ -210,7 +211,6 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
             .properties(title=chart_title1, width = chart_width)
          )
 
-    
     test_bar = (
         alt.Chart(df)
         .mark_bar(color = blue, binSpacing = bin_spacing)
@@ -225,11 +225,33 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
                 title="# Weekly Tests",
             ),
         )
-        .properties(title=chart_title2, width = chart_width)
     )
     
+    
+    num_positive_bar  = (
+        alt.Chart(df)
+        .mark_bar(color = gray, binSpacing = bin_spacing)
+        .encode(
+            x=alt.X(
+                "week2",
+                title="date", 
+                sort=None
+            ),
+            y=alt.Y(
+                "weekly_cases", 
+                title="# Weekly Tests",
+            ),
+        )
+    )
+    
+    test_chart = (
+        (test_bar + num_positive_bar)
+            .properties(title=chart_title2, width = chart_width)
+         )
+    
+    
     combined_weekly_chart = (
-        alt.hconcat(positive_chart, test_bar)
+        alt.hconcat(positive_chart, test_chart)
         .configure_title(
             fontSize=title_font_size, font=font_name, anchor="middle", color="black"
         )

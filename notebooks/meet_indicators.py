@@ -22,17 +22,21 @@ two_days_ago = default_parameters.two_days_ago
 def meet_case(geog, name, start_date):
     df = meet_case_death_prep(geog, name, start_date)
     extract_col = "days_fewer_cases"
-    indicator = df.iloc[0][extract_col]
-    
-    return indicator
+    try:
+        indicator = df.iloc[0][extract_col]
+        return indicator
+    except IndexError:
+        return np.nan
 
 def meet_death(geog, name, start_date):
     df = meet_case_death_prep(geog, name, start_date)
     
     extract_col = "days_fewer_deaths"
-    indicator = df.iloc[0][extract_col]
-    
-    return indicator 
+    try:
+        indicator = df.iloc[0][extract_col]
+        return indicator
+    except IndexError:
+        return np.nan
 
 def meet_lacity_case(start_date):
     df = utils.prep_lacity_cases(start_date)
@@ -40,9 +44,11 @@ def meet_lacity_case(start_date):
     df = lacity_past_two_weeks(df)
     
     extract_col = "days_fewer_cases"
-    indicator = df.iloc[0][extract_col]
-    
-    return indicator
+    try:
+        indicator = df.iloc[0][extract_col]
+        return indicator
+    except IndexError:
+        return np.nan
 
 
 """
