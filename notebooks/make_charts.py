@@ -22,9 +22,11 @@ def show_svg(image_name):
 # Chart parameters
 #---------------------------------------------------------------#
 navy = "#0A4C6A"
-maroon = "#A30F23"
+maroon = "#F3324C"
 green = "#10DE7A"
 orange = "#FCA800"
+blue = "#1696D2"
+gray = "#797C7C"
 
 title_font_size = 10
 font_name = "Arial"
@@ -76,7 +78,7 @@ def make_cases_deaths_chart(df, geog, name):
                     title="date", axis=alt.Axis(format=monthdate_format)
                    ),
             y=alt.Y("deaths_avg7", title="7-day avg"),
-            color=alt.value(maroon),
+            color=alt.value(blue),
         )
         .properties(
             title=f"{chart_title}: New Deaths", width=chart_width, height=chart_height
@@ -144,12 +146,12 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
 
     line1 = (
         alt.Chart(pd.DataFrame({"y": [lower_bound]}))
-        .mark_rule(color=maroon, strokeDash=[5, 2])
+        .mark_rule(color=maroon, strokeDash=[6, 3])
         .encode(y="y")
     )
     line2 = (
         alt.Chart(pd.DataFrame({"y": [upper_bound]}))
-        .mark_rule(color=maroon, strokeDash=[5, 2])
+        .mark_rule(color=maroon, strokeDash=[6, 3])
         .encode(y="y")
     )
 
@@ -194,32 +196,24 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
     
     positive_lower_line = (
         alt.Chart(pd.DataFrame({"y": [positive_lower_bound]}))
-        .mark_rule(color=maroon, strokeDash=[5, 2])
+        .mark_rule(color=maroon, strokeDash=[6, 3])
         .encode(y="y")
     )  
     
     positive_upper_line = (
         alt.Chart(pd.DataFrame({"y": [positive_upper_bound]}))
-        .mark_rule(color=maroon, strokeDash=[5, 2])
+        .mark_rule(color=maroon, strokeDash=[6, 3])
         .encode(y="y")
     ) 
     
     positive_chart = (
         (positive_bar + positive_lower_line + positive_upper_line)
             .properties(title=chart_title1, width = chart_width)
-            .configure_title(
-                  fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-               )
-            .configure_axis(
-                gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-            )
-            .configure_view(strokeOpacity=stroke_opacity)
          )
 
-    
     test_bar = (
         alt.Chart(df)
-        .mark_bar(color = orange, binSpacing = bin_spacing)
+        .mark_bar(color = blue, binSpacing = bin_spacing)
         .encode(
             x=alt.X(
                 "week2",
@@ -231,25 +225,49 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
                 title="# Weekly Tests",
             ),
         )
-        .properties(title=chart_title2, width = chart_width)
+    )
+    
+    
+    num_positive_bar  = (
+        alt.Chart(df)
+        .mark_bar(color = gray, binSpacing = bin_spacing)
+        .encode(
+            x=alt.X(
+                "week2",
+                title="date", 
+                sort=None
+            ),
+            y=alt.Y(
+                "weekly_cases", 
+                title="# Weekly Tests",
+            ),
+        )
+    )
+    
+    test_chart = (
+        (test_bar + num_positive_bar)
+            .properties(title=chart_title2, width = chart_width)
+         )
+    
+    
+    combined_weekly_chart = (
+        alt.hconcat(positive_chart, test_chart)
         .configure_title(
             fontSize=title_font_size, font=font_name, anchor="middle", color="black"
         )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
+        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
         .configure_view(strokeOpacity=stroke_opacity)
     )
+        
+    show_svg(combined_weekly_chart)
     
-    show_svg(positive_chart)  
-    show_svg(test_bar)   
     
     
 #---------------------------------------------------------------#
 # Hospital Equipment Availability (LA County)
 #---------------------------------------------------------------#
 def make_lacounty_hospital_chart(df):
-    chart_width = 400
+    chart_width = 350
     acute_color = green
     icu_color = navy
     ventilator_color = orange
@@ -279,7 +297,7 @@ def make_lacounty_hospital_chart(df):
 
     line1 = (
         alt.Chart(pd.DataFrame({"y": [0.3]}))
-        .mark_rule(color=maroon, strokeDash=[5, 2])
+        .mark_rule(color=maroon, strokeDash=[6, 3])
         .encode(y="y")
     )
 
