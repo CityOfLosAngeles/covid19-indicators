@@ -12,19 +12,23 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 
 
 ## Dangers of Reopening Too Early
-* Rushed reopenings are [a global trial-and-error experiment](https://www.nytimes.com/2020/05/07/world/europe/coronavirus-reopening-costs.html). 
+* As of early May: Rushed reopenings are [a global trial-and-error experiment](https://www.nytimes.com/2020/05/07/world/europe/coronavirus-reopening-costs.html). 
     * NYT analysis showing how US states reopening [fail to meet the WH guidelines](https://www.nytimes.com/interacti.ve/2020/05/07/us/coronavirus-states-reopen-criteria.html).
-    * Track the state's status of reopening [here](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
+    * Track the state's status of reopening [here](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html).
     * Virus spread [speeds up](https://www.nytimes.com/2020/05/28/world/coronavirus-live.html) in [Georgia](https://www.nytimes.com/interactive/2020/04/24/opinion/coronavirus-covid-19-georgia-reopen.html), [Texas](https://www.texastribune.org/2020/05/14/coronavirus-updates-texas/), and on average, everywhere [outside NYC](https://www.nytimes.com/2020/05/16/us/coronavirus-united-states.html); in [Japan](https://www.healthline.com/health-news/covid-19-countries-that-have-already-reopened-lessons#How-Germany-is-reopening), [South Korea](https://www.seattletimes.com/nation-world/south-korea-closes-schools-again-amid-coronavirus-spike-days-after-reopening/), Singapore, [France](https://www.washingtonpost.com/world/europe/virus-count-revised-new-clusters-emerge-as-france-reopens/2020/05/29/3223a472-a1d3-11ea-be06-af5514ee0385_story.html), [Lebanon](https://healthpolicy-watch.org/countries-that-reopen-early-may-have-waves-of-lockdowns/) and [Iran](https://www.nytimes.com/2020/05/18/world/middleeast/iran-coronavirus-surge.html).
-* Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
-* [What experts say is necessary for a national testing strategy](https://www.nytimes.com/2020/05/25/health/coronavirus-testing-trump.html):
-    * 10% positive share for mitigation
-    * 4% positive share to halt virus spread
 * As of late May, [24 US states have uncontrolled virus spread](https://www.washingtonpost.com/health/study-estimates-24-states-still-have-uncontrolled-coronavirus-spread/2020/05/22/d3032470-9c43-11ea-ac72-3841fcc9b35f_story.html)
     * By late July, CA is estimated to have 1,000 deaths per day without further mitigation
     * The [R0, or reproduction number](https://www.nytimes.com/2020/04/23/world/europe/coronavirus-R0-explainer.html), which shows how fast the virus is spreading, is still above 1 in these 24 states.
     * In CA, seeing a plateau of cases, but not decreases, suggests that [R0 is hovering close to 1](https://www.vox.com/future-perfect/2020/5/16/21254748/california-coronavirus-cases-lockdown), where virus spread is sustained, and each infected person infects 1 person, on average.
     * Leading CA health official [warns that CA is making modifications toward reopening too quickly](https://www.planetizen.com/news/2020/05/109462-reopening-california-respected-county-health-official-issues-warning)
+* As of early June, the [world rushes to reopen](https://www.nytimes.com/2020/06/09/world/coronavirus-reopenings.html) even as caseloads are rising, including [21 US states](https://www.nytimes.com/2020/06/10/us/politics/coronavirus-washington-trump.html), and why reopening will [not make the virus go away](https://www.vox.com/science-and-health/2020/6/11/21285077/covid-19-arizona-texas-next-wave).
+    * How coronavirus compares to [100 years of deadly events](https://www.nytimes.com/interactive/2020/06/10/world/coronavirus-history.html) 
+    * [8 states](https://www.vox.com/2020/6/10/21286696/us-covid-19-coronavirus-cases-update-texas-arizona-north-carolina) that are the next hotspots
+    
+
+
+* Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
+
 
 
 ## Are We Past the Peak?
@@ -37,6 +41,9 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 
 ## Building Public Health Capacity
  * We aren't [testing enough](https://www.vox.com/2020/5/8/21249880/coronavirus-testing-covid-reopening-economy-lockdowns-social-distancing) nor have [enough contact tracers](https://www.nytimes.com/2020/05/11/health/coronavirus-second-wave-infections.html) to manage the current caseloads.
+ * [What experts say is necessary for a national testing strategy](https://www.nytimes.com/2020/05/25/health/coronavirus-testing-trump.html):
+    * 10% positive share for mitigation
+    * 4% positive share to halt virus spread
  * [Open, transparent, and public data](https://amp.floridatoday.com/amp/5212398002) is crucial for agencies and researchers to simultaneously learn about the virus and tackle the outbreaks from multiple fronts. 
  * [Reporting all-cause mortality and testing the high risk](https://www.vox.com/2020/5/26/21270703/coronavirus-deaths-us-world-covid-19-nursing-homes) are ways to move forward.
  * [Summary of what we've learned](https://www.nytimes.com/article/coronavirus-facts-history.html): always wear masks, we can't depend on herd immunity, and we can't count on warmer weather alone.
@@ -66,3 +73,6 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * [NY State's](https://www.nytimes.com/2020/05/04/nyregion/coronavirus-reopen-cuomo-ny.html) and [Chicago's](https://www.chicagotribune.com/coronavirus/ct-coronavirus-chicago-reopening-lightfoot-20200508-ztpnouwexrcvfdfcr2yccbc53a-story.html) reopening indicators.
     * Arguably, [LA is more similar to NYC and Chicago](https://www.nytimes.com/2020/05/09/us/coronavirus-chicago.html) than other regions due to persistent caseloads that are flattening, but not dropping. As Chicago's benchmarks are tougher than the rest of IL, and it should be so for LA than the rest of CA.
     * LA, DC, and Chicago remain [hotspots in the US](https://www.latimes.com/california/story/2020-05-22/white-house-concerned-with-coronavirus-spread-in-l-a-area-asks-cdc-to-investigate)
+* [Brookings Institution:](https://www.brookings.edu/wp-content/uploads/2020/05/Brookings-Reopening-America-FINAL.pdf) Reopening America Guide
+* [Urban Institute:](https://www.urban.org/features/where-low-income-jobs-are-being-lost-covid-19) Where Low Income Jobs Are Being Lost to COVID-19
+* [Urban Institute:](https://www.urban.org/policy-centers/health-policy-center/projects/covid-19-resource-tracker-guide-state-and-local-responses) COVID-19 Resource Tracker for State and Local Responses
