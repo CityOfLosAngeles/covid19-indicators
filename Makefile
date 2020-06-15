@@ -8,3 +8,9 @@ pip: requirements.txt
 	pip install -e .
 
 install: conda pip
+
+daily_report: 
+	python /app/report.py
+	git add "./coronavirus-stats.pdf"
+	git commit -m "Upload pdf"
+	git push origin master
