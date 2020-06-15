@@ -1,14 +1,18 @@
 """
 Create the daily report as HTML and upload to GitHub.
 """
+import base64
 import datetime
 import os
+import subprocess
 import sys
 import time
 
 import civis
 import pandas as pd
 import papermill as pm 
+import requests
+
 
 sys.path.append(os.getcwd())
 
@@ -37,6 +41,48 @@ else:
 
 # shell out, run NB Convert 
 output_format = 'html'
-cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
+subprocess.run([
+    "jupyter",
+    "nbconvert",
+    "--to",
+    output_format,
+    "--no-input",
+    "--no-prompt",
+    output_path,
+])
 
-output_file = './coronavirus-stats.html'
+# Constants for loading the file to GH Pages
+TOKEN = os.environ["GITHUB_TOKEN"]
+BASE = "https://api.github.com"
+REPO = "CityOfLosAngeles/covid19-indicators"
+BRANCH = "gh-pages"
+PATH = "coronavirus-stats.html"
+
+# Get the sha of the previous version
+r = requests.get(
+    f"{BASE}/repos/{REPO}/contents/{PATH}",
+    params={"ref": BRANCH},
+    headers={"Authorization": f"token {TOKEN}"},
+)
+r.raise_for_status()
+sha = r.json()["sha"]
+
+# Upload the new version
+with open(PATH, "rb") as f:
+    content = f.read()
+
+r = requests.put(
+    f"{BASE}/repos/{REPO}/contents/{PATH}",
+    headers={"Authorization": f"token {TOKEN}"},
+    json={
+        "message": "Update coronavirus-stats.html",
+        "committer": {
+            "name": "Los Angeles ITA data team",
+            "email": "ITAData@lacity.org",
+        },
+        "branch": "gh-pages",
+        "sha": sha,
+        "content": base64.b64encode(content).decode("utf-8"),
+    },
+)
+r.raise_for_status()
