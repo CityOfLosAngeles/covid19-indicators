@@ -52,7 +52,7 @@ subprocess.run([
 ])
 
 # Constants for loading the file to GH Pages
-TOKEN = os.environ["GITHUB_TOKEN"]
+TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 BASE = "https://api.github.com"
 REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "gh-pages"
