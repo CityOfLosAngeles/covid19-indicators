@@ -1,5 +1,5 @@
 """
-Create the daily pdf and upload to GitHub.
+Create the daily report as HTML and upload to GitHub.
 """
 import datetime
 import os
@@ -36,10 +36,7 @@ else:
     raise RuntimeError(f"Unable to get fresh data after {MAX_TRIES} tries.")
 
 # shell out, run NB Convert 
-output_format = 'PDFviaHTML'
+output_format = 'html'
 cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
 
-output_file = './coronavirus-stats.pdf'
-
-os.system(cmd)
-
+output_file = './coronavirus-stats.html'
