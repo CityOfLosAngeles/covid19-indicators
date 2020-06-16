@@ -320,22 +320,26 @@ def prep_testing(start_date):
 #---------------------------------------------------------------#
 # Share of Positive Tests by Week (LA County)
 #---------------------------------------------------------------#
-def lacounty_positive_test_charts(start_date, positive_lower_bound, positive_upper_bound):
+def lacounty_positive_test_charts(start_date, positive_lower_bound, positive_upper_bound, 
+                                  testing_lower_bound, testing_upper_bound):
     df = prep_la_positive_test(start_date, "county")
     chart_title1 = "LA County: Share of Positive Results by Week"
-    chart_title2 = "LA County: Tests & Positive Results by Week"
+    chart_title2 = "LA County: Number of Tests & Positive Results by Week"
     make_charts.make_la_positive_test_chart(df.drop(columns = "start_of_week"), 
-                                            positive_lower_bound, positive_upper_bound, 
+                                            positive_lower_bound, positive_upper_bound,
+                                            testing_lower_bound, testing_upper_bound,
                                             chart_title1, chart_title2)
     return df
 
 
-def lacity_positive_test_charts(start_date, positive_lower_bound, positive_upper_bound):
+def lacity_positive_test_charts(start_date, positive_lower_bound, positive_upper_bound,
+                               testing_lower_bound, testing_upper_bound):
     df = prep_la_positive_test(start_date, "city")
     chart_title1 = "City of LA: Share of Positive Results by Week"
-    chart_title2 = "City of LA: Tests & Positive Results by Week"    
+    chart_title2 = "City of LA: Number of Tests & Positive Results by Week"    
     make_charts.make_la_positive_test_chart(df.drop(columns = "start_of_week"), 
-                                            positive_lower_bound, positive_upper_bound, 
+                                            positive_lower_bound, positive_upper_bound,
+                                            testing_lower_bound, testing_upper_bound,
                                             chart_title1, chart_title2)
     return df
 
