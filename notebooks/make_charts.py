@@ -6,6 +6,7 @@ import altair_saver
 import os
 import pandas as pd
 import utils
+import default_parameters
 
 from IPython.display import display, SVG
 
@@ -28,6 +29,12 @@ orange = "#FCA800"
 blue = "#1696D2"
 gray = "#797C7C"
 
+# These colors are used for the shading on cases/deaths
+light_gray = "#EAEBEB"
+navy_outline = "#052838"
+blue_outline = "#1277A5"
+
+
 title_font_size = 10
 font_name = "Arial"
 grid_opacity = 0.4
@@ -41,6 +48,9 @@ fulldate_format = "%-m/%-d/%y"
 monthdate_format = "%-m/%-d"
 
 
+two_weeks_ago = default_parameters.two_weeks_ago
+
+
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA)
 #---------------------------------------------------------------#
@@ -52,10 +62,10 @@ def make_cases_deaths_chart(df, geog, name):
         chart_title = f"{name}"
     if geog == "msa":
         chart_title = f"{name} MSA"
-
+    
     # Make cases charts
-    cases_chart = (
-        alt.Chart(df)
+    cases_line = (
+        alt.Chart(df.drop(columns = "date"))
         .mark_line()
         .encode(
             x=alt.X("date2", timeUnit=time_unit, 
@@ -64,14 +74,43 @@ def make_cases_deaths_chart(df, geog, name):
             y=alt.Y("cases_avg7", title="7-day avg"),
             color=alt.value(navy),
         )
-        .properties(
-            title=f"{chart_title}: New Cases", width=chart_width, height=chart_height
+    )
+    
+    cases_shaded = (
+        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        .mark_area()
+        .encode(
+            x=alt.X("date2", timeUnit = time_unit,
+                   title = "date", axis=alt.Axis(format=monthdate_format)
+                   ),
+            y=alt.Y("cases_avg7", title="7-day avg"),
+            color=alt.value(light_gray)
         )
     )
+    
+    cases_extra_outline = (
+        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        .mark_line()
+        .encode(
+             x=alt.X("date2", timeUnit = time_unit,
+                   title = "date", axis=alt.Axis(format=monthdate_format)
+                   ),
+            y=alt.Y("cases_avg7", title="7-day avg"),
+            color=alt.value(navy_outline)
+        )
+    )
+    
+    cases_chart = (
+        (cases_line + cases_shaded + cases_extra_outline)
+              .properties(
+                  title=f"{chart_title}: New Cases", width=chart_width, height=chart_height
+                )
+        )
 
+    
     # Make deaths chart
-    deaths_chart = (
-        alt.Chart(df)
+    deaths_line = (
+        alt.Chart(df.drop(columns = "date"))
         .mark_line()
         .encode(
             x=alt.X("date2", timeUnit=time_unit, 
@@ -80,11 +119,42 @@ def make_cases_deaths_chart(df, geog, name):
             y=alt.Y("deaths_avg7", title="7-day avg"),
             color=alt.value(blue),
         )
-        .properties(
-            title=f"{chart_title}: New Deaths", width=chart_width, height=chart_height
-        )
     )
 
+    deaths_shaded = (
+        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        .mark_area()
+        .encode(
+            x=alt.X("date2", timeUnit = time_unit,
+                   title = "date", axis=alt.Axis(format=monthdate_format)
+                   ),
+            y=alt.Y("deaths_avg7", title="7-day avg"),
+            color=alt.value(light_gray)
+        )
+    )
+    
+    deaths_extra_outline = (
+        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        .mark_line()
+        .encode(
+             x=alt.X("date2", timeUnit = time_unit,
+                   title = "date", axis=alt.Axis(format=monthdate_format)
+                   ),
+            y=alt.Y("deaths_avg7", title="7-day avg"),
+            color=alt.value(blue_outline)
+        )
+    )    
+    
+
+    deaths_chart = (
+        (deaths_line + deaths_shaded + deaths_extra_outline)
+              .properties(
+                  title=f"{chart_title}: New Deaths", width=chart_width, height=chart_height
+                )
+        )    
+    
+    
+    # Cases and deaths chart to display side-by-side
     combined_chart = (
         alt.hconcat(cases_chart, deaths_chart)
         .configure_title(
@@ -96,13 +166,14 @@ def make_cases_deaths_chart(df, geog, name):
         
     show_svg(combined_chart)
 
+    
 #---------------------------------------------------------------#
 # Case Data (City of LA)
 #---------------------------------------------------------------#
 def make_lacity_cases_chart(df):
     # Make cases charts
-    cases_chart = (
-        alt.Chart(df)
+    cases_line = (
+        alt.Chart(df.drop(columns = "date"))
         .mark_line()
         .encode(
             x=alt.X("date2", timeUnit=time_unit, 
@@ -111,6 +182,35 @@ def make_lacity_cases_chart(df):
             y=alt.Y("cases_avg7", title="7-day avg"),
             color=alt.value(navy),
         )
+       
+    )
+    
+    cases_shaded = (
+        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        .mark_area()
+        .encode(
+            x=alt.X("date2", timeUnit = time_unit,
+                   title = "date", axis=alt.Axis(format=monthdate_format)
+                   ),
+            y=alt.Y("cases_avg7", title="7-day avg"),
+            color=alt.value(light_gray)
+        )
+    )
+    
+    cases_extra_outline = (
+        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        .mark_line()
+        .encode(
+             x=alt.X("date2", timeUnit = time_unit,
+                   title = "date", axis=alt.Axis(format=monthdate_format)
+                   ),
+            y=alt.Y("cases_avg7", title="7-day avg"),
+            color=alt.value(navy_outline)
+        )
+    )    
+    
+    cases_chart = (
+        (cases_line + cases_shaded + cases_extra_outline)
         .properties(
             title="City of LA: New Cases", width=chart_width, height=chart_height
         )
