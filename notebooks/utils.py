@@ -64,14 +64,14 @@ def county_case_charts(county_state_name, start_date):
     name = df.county.iloc[0]
     # 'date' column is not JSON serializable...
     # If we drop and use date2, chart will work (https://github.com/altair-viz/altair/issues/1355) 
-    make_charts.make_cases_deaths_chart(df.drop(columns="date"), "county", name)
+    make_charts.make_cases_deaths_chart(df, "county", name)
     return df
     
 # State Case Data
 def state_case_charts(state_name, start_date):
     df = prep_state(state_name, start_date)
     name = df.state.iloc[0]
-    make_charts.make_cases_deaths_chart(df.drop(columns="date"), "state", name)
+    make_charts.make_cases_deaths_chart(df, "state", name)
     return df
 
 
@@ -79,7 +79,7 @@ def state_case_charts(state_name, start_date):
 def msa_case_charts(msa_name, start_date):
     df = prep_msa(msa_name, start_date)
     name = df.msa.iloc[0]
-    make_charts.make_cases_deaths_chart(df.drop(columns="date"), "msa", name)
+    make_charts.make_cases_deaths_chart(df, "msa", name)
     return df
 
 
@@ -245,7 +245,7 @@ def calculate_rolling_average(df):
 #---------------------------------------------------------------#
 def lacity_case_charts(start_date):
     df = prep_lacity_cases(start_date)
-    make_charts.make_lacity_cases_chart(df.drop(columns="date"))
+    make_charts.make_lacity_cases_chart(df)
     return df
 
 
