@@ -150,7 +150,7 @@ def meet_daily_testing(yesterday_date, city_or_county, lower_bound, upper_bound)
         extract_col = "City_Performed"
     
     try:
-        indicator = df[df.date2==yesterday_date].iloc[0][extract_col]
+        indicator = df[df.date==yesterday_date].iloc[0][extract_col]
         return indicator
     except IndexError:
         return np.nan
@@ -215,5 +215,6 @@ def meet_hospital(yesterday_date):
     # Noting that yesterday's date always seems to surpass benchmark
     # only to be revised downward again tomorrow. Might be ok if we're using 3-day avg from yesterday.
     df = utils.prep_lacounty_hospital(start_date)
-    df = df[df.date2 == yesterday_date]
+    yesterday_date = two_days_ago
+    df = df[df.date == yesterday_date]
     return df 

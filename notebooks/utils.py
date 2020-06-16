@@ -62,14 +62,16 @@ Call functions to make charts.
 def county_case_charts(county_state_name, start_date):
     df = prep_county(county_state_name, start_date)
     name = df.county.iloc[0]
-    make_charts.make_cases_deaths_chart(df, "county", name)
+    # 'date' column is not JSON serializable...
+    # If we drop and use date2, chart will work (https://github.com/altair-viz/altair/issues/1355) 
+    make_charts.make_cases_deaths_chart(df.drop(columns="date"), "county", name)
     return df
     
 # State Case Data
 def state_case_charts(state_name, start_date):
     df = prep_state(state_name, start_date)
     name = df.state.iloc[0]
-    make_charts.make_cases_deaths_chart(df, "state", name)
+    make_charts.make_cases_deaths_chart(df.drop(columns="date"), "state", name)
     return df
 
 
@@ -77,7 +79,7 @@ def state_case_charts(state_name, start_date):
 def msa_case_charts(msa_name, start_date):
     df = prep_msa(msa_name, start_date)
     name = df.msa.iloc[0]
-    make_charts.make_cases_deaths_chart(df, "msa", name)
+    make_charts.make_cases_deaths_chart(df.drop(columns="date"), "msa", name)
     return df
 
 
@@ -88,9 +90,10 @@ Sub-functions for case, deaths data.
 def prep_us_county_time_series():
     df = pd.read_csv(US_COUNTY_URL, dtype={"fips": "str"})
     df = df.assign(
-        date=pd.to_datetime(df.date),
+        date=pd.to_datetime(df.date).dt.date,
         state_abbrev=df.state.map(useful_dict.us_state_abbrev),
     )
+    
     return df
 
 
@@ -224,13 +227,13 @@ def calculate_rolling_average(df):
         cases_avg7=df.new_cases.rolling(window=7).mean(),
         deaths_avg3=df.new_deaths.rolling(window=3).mean(),
         deaths_avg7=df.new_deaths.rolling(window=7).mean(),
-    )
+    )    
     
     # Subset from start date up to yesterday's date
-    # Make sure date is in same format as yesterday_date and today_date
+    # Have version of date that we can use in chart
     df = df.assign(
-        date2 = pd.to_datetime(df.date).dt.strftime(fulldate_format)
-    )
+        date2 = pd.to_datetime(df.date)
+    )   
     
     df = df[(df.date >= start_date) & (df.date < today_date)]
     
@@ -242,7 +245,7 @@ def calculate_rolling_average(df):
 #---------------------------------------------------------------#
 def lacity_case_charts(start_date):
     df = prep_lacity_cases(start_date)
-    make_charts.make_lacity_cases_chart(df)
+    make_charts.make_lacity_cases_chart(df.drop(columns="date"))
     return df
 
 
@@ -251,10 +254,7 @@ Sub-functions for City of LA case data.
 """
 def prep_lacity_cases(start_date):
     city_df = pd.read_csv(LA_CITY_URL)
-    city_df["Date"] = (pd.to_datetime(city_df.Date).dt.tz_localize("US/Pacific")
-                       .dt.normalize()
-                       .dt.tz_convert("UTC")
-                      )
+    city_df["Date"] = city_df['Date'].apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date())    
 
     df = (
         city_df.rename(
@@ -270,13 +270,10 @@ def prep_lacity_cases(start_date):
     df = df.assign(
         # 7-day rolling average for new cases
         cases_avg7=df.new_cases.rolling(window=7).mean(),
+        date2 = pd.to_datetime(df.date),
     )
     
-    # Subset by start date up to yesterday's date
-    df = df.assign(
-        date2 = pd.to_datetime(df.date).dt.strftime(fulldate_format)
-    )
-    
+    # Subset by start date up to yesterday's date    
     df = df[(df.date >= start_date) & (df.date < today_date)]
 
     return df
@@ -289,7 +286,7 @@ def lacounty_testing_charts(start_date, lower_bound, upper_bound):
     df = prep_testing(start_date)
     plot_col = "Performed"
     chart_title = "LA County: Daily Testing"
-    make_charts.make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound)
+    make_charts.make_la_testing_chart(df.drop(columns="date"), plot_col, chart_title, lower_bound, upper_bound)
     return df
 
 
@@ -297,7 +294,7 @@ def lacity_testing_charts(start_date, lower_bound, upper_bound):
     df = prep_testing(start_date)
     plot_col = "City_Performed"
     chart_title = "City of LA: Daily Testing"
-    make_charts.make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound)
+    make_charts.make_la_testing_chart(df.drop(columns="date"), plot_col, chart_title, lower_bound, upper_bound)
     return df
 
 
@@ -306,16 +303,10 @@ Sub-functions for testing data.
 """
 def prep_testing(start_date):
     df = pd.read_csv(TESTING_URL)
+
     df = df.assign(
-        date=(pd.to_datetime(df.Date)
-              .dt.tz_localize("US/Pacific")
-              .dt.normalize()
-              .dt.tz_convert("UTC")
-             ),
-    )
-    
-    df = df.assign(
-        date2 = pd.to_datetime(df.date).dt.strftime(fulldate_format),
+        date=df.Date.apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date()),
+        date2 = pd.to_datetime(df.Date),
     )
     
     # Subset by start date up to yesterday's date    
@@ -333,7 +324,9 @@ def lacounty_positive_test_charts(start_date, positive_lower_bound, positive_upp
     df = prep_la_positive_test(start_date, "county")
     chart_title1 = "LA County: Share of Positive Results by Week"
     chart_title2 = "LA County: Tests & Positive Results by Week"
-    make_charts.make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, chart_title1, chart_title2)
+    make_charts.make_la_positive_test_chart(df.drop(columns = "start_of_week"), 
+                                            positive_lower_bound, positive_upper_bound, 
+                                            chart_title1, chart_title2)
     return df
 
 
@@ -341,7 +334,9 @@ def lacity_positive_test_charts(start_date, positive_lower_bound, positive_upper
     df = prep_la_positive_test(start_date, "city")
     chart_title1 = "City of LA: Share of Positive Results by Week"
     chart_title2 = "City of LA: Tests & Positive Results by Week"    
-    make_charts.make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, chart_title1, chart_title2)
+    make_charts.make_la_positive_test_chart(df.drop(columns = "start_of_week"), 
+                                            positive_lower_bound, positive_upper_bound, 
+                                            chart_title1, chart_title2)
     return df
 
 
@@ -408,7 +403,7 @@ def aggregate_to_week(df):
             weekly_cases = df.weekly_cases.astype(int),
             weekly_tests = df.weekly_tests.astype(int),
             pct_positive = df.weekly_cases / df.weekly_tests,
-            week2 = df.start_of_week.dt.strftime(monthdate_format).astype(str),
+            week2 = pd.to_datetime(df.start_of_week).dt.strftime(monthdate_format),
         )
     )
     
@@ -420,7 +415,7 @@ def aggregate_to_week(df):
 #---------------------------------------------------------------#
 def lacounty_hospital_charts(start_date):
     df = prep_lacounty_hospital(start_date)
-    make_charts.make_lacounty_hospital_chart(df)
+    make_charts.make_lacounty_hospital_chart(df.drop(columns="date"))
     return df
 
 
@@ -432,19 +427,11 @@ def prep_lacounty_hospital(start_date):
 
     # Get a total count of equipment for each date-type
     df = df.assign(
-        date=(pd.to_datetime(df.Date)
-            .dt.tz_localize("US/Pacific")
-            .dt.normalize()
-            .dt.tz_convert("UTC")
-             ),
+        date=df.Date.apply(lambda x: datetime.strptime(x, "%m/%d/%Y").date()),
+        date2 = pd.to_datetime(df.Date),
         type_total=df.groupby(["Date", "Type"])["Count"].transform("sum"),
     )
     
-    # Subset from start date to yesterday's date
-    df = df.assign(
-        date2 = pd.to_datetime(df.date).dt.strftime(fulldate_format)
-    )
-
     # Calculate number and percent available
     sort_col = ["equipment", "date"]
     group_col = ["equipment"]

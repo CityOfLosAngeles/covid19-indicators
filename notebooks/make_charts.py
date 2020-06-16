@@ -58,7 +58,7 @@ def make_cases_deaths_chart(df, geog, name):
         alt.Chart(df)
         .mark_line()
         .encode(
-            x=alt.X("date", timeUnit=time_unit, 
+            x=alt.X("date2", timeUnit=time_unit, 
                     title="date", axis=alt.Axis(format=monthdate_format)
                    ),
             y=alt.Y("cases_avg7", title="7-day avg"),
@@ -74,7 +74,7 @@ def make_cases_deaths_chart(df, geog, name):
         alt.Chart(df)
         .mark_line()
         .encode(
-            x=alt.X("date", timeUnit=time_unit, 
+            x=alt.X("date2", timeUnit=time_unit, 
                     title="date", axis=alt.Axis(format=monthdate_format)
                    ),
             y=alt.Y("deaths_avg7", title="7-day avg"),
@@ -105,7 +105,7 @@ def make_lacity_cases_chart(df):
         alt.Chart(df)
         .mark_line()
         .encode(
-            x=alt.X("date", timeUnit=time_unit, 
+            x=alt.X("date2", timeUnit=time_unit, 
                     title="date", axis=alt.Axis(format=monthdate_format)
                    ),
             y=alt.Y("cases_avg7", title="7-day avg"),
@@ -135,7 +135,7 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
         .mark_bar(color=navy)
         .encode(
             x=alt.X(
-                "date",
+                "date2",
                 timeUnit=time_unit,
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
@@ -277,7 +277,7 @@ def make_lacounty_hospital_chart(df):
         .mark_line()
         .encode(
             x=alt.X(
-                "date",
+                "date2",
                 timeUnit=time_unit,
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
@@ -321,7 +321,7 @@ def make_lacounty_hospital_chart(df):
         .mark_line()
         .encode(
             x=alt.X(
-                "date",
+                "date2",
                 timeUnit=time_unit,
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
