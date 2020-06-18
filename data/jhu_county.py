@@ -2,18 +2,16 @@
 Grab the JHU US county CSV from GitHub
 and add JHU current feature layer to this.
 """
+import arcgis
 import os
 from datetime import datetime, timedelta
-
-import arcgis
 import numpy as np
 import pandas as pd
-from airflow import DAG
-from airflow.hooks.base_hook import BaseHook
-from airflow.operators.python_operator import PythonOperator
 from arcgis.gis import GIS
 
 bucket_name = "public-health-dashboard"
+arcuser = os.environ.get('ARC_SERVICE_USER_NAME') 
+arcpassword = os.environ.get('ARC_SERVICE_USER_PASSWORD') 
 
 # URL to JHU confirmed cases US county time series.
 CASES_URL = (
@@ -36,10 +34,7 @@ LOOKUP_TABLE_URL = (
 )
 
 # General function
-TIME_SERIES_FEATURE_ID = "8f13bb3abefe490f9edd47df89664b56"
 JHU_FEATURE_ID = "628578697fb24d8ea4c32fa0c5ae1843"
-MSA_FEATURE_ID = "b37e229b71dc4c65a479e4b5912ded66"
-max_record_count = 6_000_000
 
 
 def parse_columns(df):
@@ -187,11 +182,7 @@ def load_jhu_us_current(**kwargs):
     Loads the JHU US current data, transforms it so we are happy with it.
     """
     # Login to ArcGIS
-    arcconnection = BaseHook.get_connection("arcgis")
-    arcuser = arcconnection.login
-    arcpassword = arcconnection.password
     gis = GIS("http://lahub.maps.arcgis.com", username=arcuser, password=arcpassword)
-
     gis_item = gis.content.get(JHU_FEATURE_ID)
     layer = gis_item.layers[0]
     sdf = arcgis.features.GeoAccessor.from_layer(layer)
@@ -405,9 +396,6 @@ def append_county_time_series(**kwargs):
     Load JHU's CSV and append today's US county data.
     """
     # Login to ArcGIS
-    arcconnection = BaseHook.get_connection("arcgis")
-    arcuser = arcconnection.login
-    arcpassword = arcconnection.password
     gis = GIS("http://lahub.maps.arcgis.com", username=arcuser, password=arcpassword)
 
     # (1) Load historical time-series
@@ -430,156 +418,5 @@ def append_county_time_series(**kwargs):
     final = fix_column_dtypes(us_county)
 
     # (7) Write to CSV and overwrite the old feature layer.
-    time_series_filename = "/tmp/jhu-county-time-series.csv"
-    final.to_csv(time_series_filename)
-    # final.to_parquet(f"s3://{bucket_name}/jhu_covid19/us-county-time-series.parquet")
-    gis_item = gis.content.get(TIME_SERIES_FEATURE_ID)
-    gis_layer_collection = arcgis.features.FeatureLayerCollection.fromitem(gis_item)
-    gis_layer_collection.manager.overwrite(time_series_filename)
-    gis_layer_collection.manager.update_definition({"maxRecordCount": max_record_count})
-
-
-# T2 Sub-functions
-def subset_msa(df):
-    # 5 MSAs to plot: NYC, SF_SJ, SEA, DET, LA
-    df = df[
-        df.cbsatitle.str.contains("Los Angeles")
-        | df.cbsatitle.str.contains("New York")
-        | df.cbsatitle.str.contains("San Francisco")
-        | df.cbsatitle.str.contains("San Jose")
-        | df.cbsatitle.str.contains("Seattle")
-        | df.cbsatitle.str.contains("Detroit")
-    ]
-
-    def new_categories(row):
-        if ("San Francisco" in row.cbsatitle) or ("San Jose" in row.cbsatitle):
-            return "SF/SJ"
-        elif "Los Angeles" in row.cbsatitle:
-            return "LA/OC"
-        elif "New York" in row.cbsatitle:
-            return "NYC"
-        elif "Seattle" in row.cbsatitle:
-            return "SEA"
-        elif "Detroit" in row.cbsatitle:
-            return "DET"
-
-    df = df.assign(msa=df.apply(new_categories, axis=1))
-
-    return df
-
-
-def update_msa_dataset(**kwargs):
-    """
-    Update MSA dataset
-    ref gh/aqueduct#199
-    takes the previous step data, aggegrates by MSA
-    replaces feature layer.
-    """
-
-    def coerce_integer(df):
-        def integrify(x):
-            return int(float(x)) if not pd.isna(x) else None
-
-        cols = [
-            "population",
-            "cases",
-            "deaths",
-        ]
-        new_cols = {c: df[c].apply(integrify, convert_dtype=False) for c in cols}
-        return df.assign(**new_cols)
-
-    arcconnection = BaseHook.get_connection("arcgis")
-    arcuser = arcconnection.login
-    arcpassword = arcconnection.password
-    gis = GIS("http://lahub.maps.arcgis.com", username=arcuser, password=arcpassword)
-
-    # (1) Load time series data from ESRI
-    gis_item = gis.content.get(TIME_SERIES_FEATURE_ID)
-    layer = gis_item.layers[0]
-    sdf = arcgis.features.GeoAccessor.from_layer(layer)
-
-    county_df = sdf.drop("SHAPE", axis=1)
-
-    # MSA county - CBSA crosswalk with population crosswalk
-    CROSSWALK_URL = (
-        "https://raw.githubusercontent.com/CityOfLosAngeles/aqueduct/master/dags/"
-        "public-health/covid19/msa_county_pop_crosswalk.csv"
-    )
-
-    pop = pd.read_csv(CROSSWALK_URL, dtype={"county_fips": "str", "cbsacode": "str"},)
-
-    pop = pop.rename(columns={"msa_pop": "population"})[
-        ["cbsacode", "cbsatitle", "population", "county_fips"]
-    ]
-    pop = subset_msa(pop)
-
-    # merge
-    final_df = pd.merge(
-        county_df,
-        pop,
-        left_on="fips",
-        right_on="county_fips",
-        how="inner",
-        validate="m:1",
-    )
-
-    # Aggregate by MSA
-    group_cols = ["msa", "population", "date"]
-    msa = (
-        final_df.groupby(group_cols)
-        .agg({"cases": "sum", "deaths": "sum"})
-        .reset_index()
-    )
-
-    # Calculate rate per 1M
-    rate = 1_000_000
-    msa = msa.pipe(coerce_integer).assign(
-        cases_per_1M=msa.cases / msa.population * rate,
-        deaths_per_1M=msa.deaths / msa.population * rate,
-        # Can't keep CBSA code, since SF/SJ are technically 2 CBSAs.
-        # Keep column because feature layer already has it, set it to ""
-        cbsacode="",
-    )
-
-    MSA_FILENAME = "/tmp/msa_v1.csv"
-    msa.to_csv(MSA_FILENAME, index=False)
-    gis_item = gis.content.get(MSA_FEATURE_ID)
-    gis_layer_collection = arcgis.features.FeatureLayerCollection.fromitem(gis_item)
-    gis_layer_collection.manager.overwrite(MSA_FILENAME)
-    gis_layer_collection.manager.update_definition({"maxRecordCount": max_record_count})
-
-    os.remove(MSA_FILENAME)
-    return
-
-
-default_args = {
-    "owner": "airflow",
-    "depends_on_past": False,
-    "start_date": datetime(2020, 4, 1),
-    "email": ["ian.rose@lacity.org", "hunter.owens@lacity.org", "itadata@lacity.org"],
-    "email_on_failure": True,
-    "email_on_retry": False,
-    "retries": 1,
-    "retry_delay": timedelta(minutes=30),
-}
-
-dag = DAG("jhu-county-to-esri", default_args=default_args, schedule_interval="@hourly")
-
-
-t1 = PythonOperator(
-    task_id="append_county_time_series",
-    provide_context=True,
-    python_callable=append_county_time_series,
-    op_kwargs={},
-    dag=dag,
-)
-
-t2 = PythonOperator(
-    task_id="update-msa-data",
-    provide_context=True,
-    python_callable=update_msa_dataset,
-    op_kwargs={},
-    dag=dag,
-)
-
-t1 > t2
+    final.to_csv(f"s3://{bucket_name}/jhu_covid19/us-county-time-series.csv")
+    final.to_parquet(f"s3://{bucket_name}/jhu_covid19/us-county-time-series.parquet")

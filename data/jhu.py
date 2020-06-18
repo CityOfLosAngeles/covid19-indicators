@@ -2,18 +2,16 @@
 ETL for COVID-19 Data.
 Pulls from Johns-Hopkins CSSE data.
 """
-import logging
+import arcgis
 import os
 from datetime import datetime, timedelta
-
-import arcgis
+import numpy as np
 import pandas as pd
-from airflow import DAG
-from airflow.hooks.base_hook import BaseHook
-from airflow.operators.python_operator import PythonOperator
 from arcgis.gis import GIS
 
 bucket_name = "public-health-dashboard"
+arcuser = os.environ.get('ARC_SERVICE_USER_NAME') 
+arcpassword = os.environ.get('ARC_SERVICE_USER_PASSWORD') 
 
 # URL to JHU confirmed cases time series.
 CASES_URL = (
@@ -38,12 +36,6 @@ RECOVERED_URL = (
 
 # Feature ID for JHU global source data
 JHU_GLOBAL_SOURCE_ID = "c0b356e20b30490c8b8b4c7bb9554e7c"
-
-# Feature IDs for state/province level time series and current status
-jhu_time_series_featureid = "20271474d3c3404d9c79bed0dbd48580"
-jhu_current_featureid = "191df200230642099002039816dc8c59"
-
-max_record_count = 6_000_000
 
 # The date at the time of execution. We choose midnight in the US/Pacific timezone,
 # but then convert to UTC since that is what AGOL expects. When the feature layer
@@ -152,10 +144,6 @@ def load_jhu_global_current(**kwargs):
     """
     Loads the JHU global current data, transforms it so we are happy with it.
     """
-    # Login to ArcGIS
-    arcconnection = BaseHook.get_connection("arcgis")
-    arcuser = arcconnection.login
-    arcpassword = arcconnection.password
     gis = GIS("http://lahub.maps.arcgis.com", username=arcuser, password=arcpassword)
 
     # (1) Load current data from ESRI
@@ -217,10 +205,6 @@ def load_global_covid_data():
     """
     Load global COVID-19 data from JHU.
     """
-    # Login to ArcGIS
-    arcconnection = BaseHook.get_connection("arcgis")
-    arcuser = arcconnection.login
-    arcpassword = arcconnection.password
     gis = GIS("http://lahub.maps.arcgis.com", username=arcuser, password=arcpassword)
 
     historical_df = load_jhu_global_time_series()
@@ -257,58 +241,6 @@ def load_global_covid_data():
     )
 
     # Output to CSV
-    time_series_filename = "/tmp/jhu_covid19_time_series.csv"
-    df.to_csv(time_series_filename, index=False)
-    # df.to_parquet(f"s3://{bucket_name}/jhu_covid19/global-time-series.parquet")
-
-    # Also output the most current date as a separate CSV for convenience
-    most_recent_date_filename = "/tmp/jhu_covid19_current.csv"
-    df[df.date == df.date.max()].to_csv(most_recent_date_filename, index=False)
-
-    # Overwrite the existing layers
-    gis_item = gis.content.get(jhu_time_series_featureid)
-    gis_layer_collection = arcgis.features.FeatureLayerCollection.fromitem(gis_item)
-    gis_layer_collection.manager.overwrite(time_series_filename)
-    gis_layer_collection.manager.update_definition({"maxRecordCount": max_record_count})
-
-    gis_item = gis.content.get(jhu_current_featureid)
-    gis_layer_collection = arcgis.features.FeatureLayerCollection.fromitem(gis_item)
-    gis_layer_collection.manager.overwrite(most_recent_date_filename)
-    gis_layer_collection.manager.update_definition({"maxRecordCount": max_record_count})
-
-    # Clean up
-    os.remove(time_series_filename)
-    os.remove(most_recent_date_filename)
-
-
-def load_data(**kwargs):
-    """
-    Entry point for the DAG, loading state and county data to ESRI.
-    """
-    try:
-        load_global_covid_data()
-    except Exception as e:
-        logging.warning("Failed to load global data with error: " + str(e))
-
-
-default_args = {
-    "owner": "airflow",
-    "depends_on_past": False,
-    "start_date": datetime(2020, 3, 16),
-    "email": ["ian.rose@lacity.org", "hunter.owens@lacity.org", "itadata@lacity.org"],
-    "email_on_failure": True,
-    "email_on_retry": False,
-    "retries": 1,
-    "retry_delay": timedelta(hours=1),
-}
-
-dag = DAG("jhu-to-esri_v3", default_args=default_args, schedule_interval="@hourly")
-
-
-t1 = PythonOperator(
-    task_id="sync-jhu-to-esri",
-    provide_context=True,
-    python_callable=load_data,
-    op_kwargs={},
-    dag=dag,
-)
+    df.to_csv(f"s3://{bucket_name}/jhu_covid19/global-time-series.csv")
+    df.to_parquet(f"s3://{bucket_name}/jhu_covid19/global-time-series.parquet")
+    

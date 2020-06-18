@@ -10,6 +10,7 @@ Project Organization
     ├── Makefile                 <- Makefile with commands like `make data` or `make train`
     ├── README.md                <- The top-level README for developers using this project.
     ├── Dockerfile               <- Docker image for this project.
+    ├── data                     <- Scripts to create the data.
     ├── notebooks                <- Jupyter notebooks.
     ├── references               <- Data dictionaries, manuals, and all other explanatory materials.
     ├── conda-requirements.txt   <- The requirements file for conda installs.
