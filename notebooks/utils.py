@@ -14,26 +14,15 @@ import useful_dict
 from datetime import date, datetime, timedelta
 from IPython.display import display, Markdown
 
+s3_file_path = "s3://public-health-dashboard/jhu_covid19/"
 
-US_COUNTY_URL = (
-    "http://lahub.maps.arcgis.com/sharing/rest/content/items/"
-    "782ca660304a4bdda1cc9757a2504647/data"
-)
+US_COUNTY_URL = f"{s3_file_path}us-county-time-series.parquet"
 
-LA_CITY_URL = (
-    "http://lahub.maps.arcgis.com/sharing/rest/content/items/"
-    "7175fba373f541a7a19df56b6a0617f4/data"
-)
+LA_CITY_URL = f"{s3_file_path}city-of-la-cases.parquet"
 
-TESTING_URL = (
-    "http://lahub.maps.arcgis.com/sharing/rest/content/items/"
-    "3cfd003985b447c994a7252e8eb97b92/data"
-)
+TESTING_URL = f"{s3_file_path}county-city-cumulative.parquet"
 
-HOSPITAL_URL = (
-    "http://lahub.maps.arcgis.com/sharing/rest/content/items/"
-    "3da1eb3e13a14743973c96b945bd1117/data"
-)
+HOSPITAL_URL = f"{s3_file_path}hospital-availability.parquet"
 
 CROSSWALK_URL = (
     "https://raw.githubusercontent.com/CityOfLosAngeles/aqueduct/master/dags/"
@@ -88,7 +77,7 @@ Sub-functions for case, deaths data.
 """
 # (1) Sub-function to prep all US time-series data
 def prep_us_county_time_series():
-    df = pd.read_csv(US_COUNTY_URL, dtype={"fips": "str"})
+    df = pd.read_parquet(US_COUNTY_URL)
     df = df.assign(
         date=pd.to_datetime(df.date).dt.date,
         state_abbrev=df.state.map(useful_dict.us_state_abbrev),
@@ -253,8 +242,8 @@ def lacity_case_charts(start_date):
 Sub-functions for City of LA case data.
 """
 def prep_lacity_cases(start_date):
-    city_df = pd.read_csv(LA_CITY_URL)
-    city_df["Date"] = city_df['Date'].apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date())    
+    city_df = pd.read_parquet(LA_CITY_URL)
+    city_df["Date"] = city_df['Date'].astype(str).apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date())    
 
     df = (
         city_df.rename(
@@ -275,7 +264,7 @@ def prep_lacity_cases(start_date):
     
     # Subset by start date up to yesterday's date    
     df = df[(df.date >= start_date) & (df.date < today_date)]
-
+    
     return df
 
 
@@ -302,10 +291,10 @@ def lacity_testing_charts(start_date, lower_bound, upper_bound):
 Sub-functions for testing data.
 """
 def prep_testing(start_date):
-    df = pd.read_csv(TESTING_URL)
+    df = pd.read_parquet(TESTING_URL)
 
     df = df.assign(
-        date=df.Date.apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date()),
+        date=df.Date.astype(str).apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date()),
         date2 = pd.to_datetime(df.Date),
     )
     
@@ -427,7 +416,7 @@ def lacounty_hospital_charts(start_date):
 Sub-functions for LA County hospital equipment data.
 """
 def prep_lacounty_hospital(start_date):
-    df = pd.read_csv(HOSPITAL_URL)
+    df = pd.read_parquet(HOSPITAL_URL)
 
     # Get a total count of equipment for each date-type
     df = df.assign(

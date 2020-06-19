@@ -125,16 +125,17 @@ def load_jhu_global_time_series(branch="master"):
     m1 = pd.merge(cases_df, deaths_df, on=merge_cols, how="left")
     df = pd.merge(m1, recovered_df, on=merge_cols, how="left")
 
-    df = df.assign(
-        date=pd.to_datetime(df.date)
-        .dt.tz_localize("US/Pacific")
-        .dt.normalize()
-        .dt.tz_convert("UTC"),
-    ).rename(
-        columns={
-            "Country/Region": "Country_Region",
-            "Province/State": "Province_State",
-        }
+    df = (df.assign(
+            date=pd.to_datetime(df.date)
+            .dt.tz_localize("US/Pacific")
+            .dt.normalize()
+            .dt.tz_convert("UTC"),
+        ).rename(
+            columns={
+                "Country/Region": "Country_Region",
+                "Province/State": "Province_State",
+            }
+        )
     )
 
     return df.sort_values(sort_cols).reset_index(drop=True)
