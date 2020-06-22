@@ -175,6 +175,42 @@ def meet_positive_share(yesterday_date, city_or_county, lower_bound, upper_bound
         return np.nan
 
     
+# WHO recommendation of less than 5% positive for 2 weeks     
+def meet_positive_share_for_two_weeks(yesterday_date, city_or_county):
+    """
+    Returns red/green depending on if benchmark was met last week
+    """
+    if city_or_county == "county":
+        df = utils.prep_la_positive_test(start_date, "county")
+        
+    if city_or_county == "city":
+        df = utils.prep_la_positive_test(start_date, "city")
+    
+    df = df.assign(
+        week = df.week.astype(int),
+        group = 1,
+    )
+
+    df = (df[df.week >= df.week.max() - 1]
+          .groupby("group")
+          .agg({"weekly_cases": "sum", 
+                "weekly_tests": "sum"})
+          .reset_index()
+         )
+
+    df = df.assign(
+        pct_positive = df.weekly_cases / df.weekly_tests
+    )
+    
+    extract_col = "pct_positive"
+
+    try:        
+        indicator = df.iloc[0][extract_col].round(2)
+        return indicator
+    except IndexError:
+        return np.nan    
+    
+    
 #---------------------------------------------------------------#
 # Hospital Equipment (City of LA)
 #---------------------------------------------------------------#  
