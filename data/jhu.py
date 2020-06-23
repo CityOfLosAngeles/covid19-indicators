@@ -2,16 +2,14 @@
 ETL for COVID-19 Data.
 Pulls from Johns-Hopkins CSSE data.
 """
-import arcgis
-import os
-from datetime import datetime, timedelta
+import geopandas as gpd
 import numpy as np
+import os
 import pandas as pd
-from arcgis.gis import GIS
+
+from datetime import datetime, timedelta
 
 bucket_name = "public-health-dashboard"
-arcuser = os.environ.get('ARC_SERVICE_USER_NAME') 
-arcpassword = os.environ.get('ARC_SERVICE_USER_PASSWORD') 
 
 # URL to JHU confirmed cases time series.
 CASES_URL = (
@@ -35,7 +33,22 @@ RECOVERED_URL = (
 )
 
 # Feature ID for JHU global source data
-JHU_GLOBAL_SOURCE_ID = "c0b356e20b30490c8b8b4c7bb9554e7c"
+#JHU_GLOBAL_SOURCE_ID = "c0b356e20b30490c8b8b4c7bb9554e7c"
+JHU_GLOBAL_SOURCE_ID = (
+    "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/"
+    "ncov_cases/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&"
+    "geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&"
+    "resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&"
+    "outFields=OBJECTID%2C+Province_State%2C+Country_Region%2C+Last_Update%2C+Lat%2C+Long_%2C"
+    "+Confirmed%2C+Recovered%2C+Deaths%2C+Active%2C+Admin2%2C+FIPS%2C+Combined_Key&"
+    "returnGeometry=true&featureEncoding=esriDefault&multipatchOption=xyFootprint&"
+    "maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&"
+    "returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&"
+    "returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&"
+    "orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&"
+    "resultOffset=&resultRecordCount=&returnZ=false&returnM=false&"
+    "returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token="
+)
 
 # The date at the time of execution. We choose midnight in the US/Pacific timezone,
 # but then convert to UTC since that is what AGOL expects. When the feature layer
@@ -145,20 +158,16 @@ def load_jhu_global_current(**kwargs):
     """
     Loads the JHU global current data, transforms it so we are happy with it.
     """
-    gis = GIS("http://lahub.maps.arcgis.com", username=arcuser, password=arcpassword)
-
     # (1) Load current data from ESRI
-    gis_item = gis.content.get(JHU_GLOBAL_SOURCE_ID)
-    layer = gis_item.layers[1]
-    sdf = arcgis.features.GeoAccessor.from_layer(layer)
-    # ESRI dataframes seem to lose their localization.
+    sdf = gpd.read_file(JHU_GLOBAL_SOURCE_ID)
+
     sdf = sdf.assign(
-        date=sdf.Last_Update.dt.tz_localize("US/Pacific")
-        .dt.normalize()
-        .dt.tz_convert("UTC")
+        date = (pd.to_datetime(sdf.Last_Update, unit='ms')
+                .dt.tz_localize("US/Pacific")
+                .dt.normalize()
+                .dt.tz_convert("UTC")
+            ),
     )
-    # Drop some ESRI faf
-    sdf = sdf.drop(columns=["OBJECTID", "SHAPE"])
 
     # CSVs report province-level totals for every country except US.
     global_df = sdf[sdf.Country_Region != "US"]
@@ -206,8 +215,6 @@ def load_global_covid_data():
     """
     Load global COVID-19 data from JHU.
     """
-    gis = GIS("http://lahub.maps.arcgis.com", username=arcuser, password=arcpassword)
-
     historical_df = load_jhu_global_time_series()
 
     # Bring in the current date's JHU data
@@ -234,6 +241,7 @@ def load_global_covid_data():
             number_of_cases=pd.to_numeric(df.number_of_cases),
             number_of_deaths=pd.to_numeric(df.number_of_deaths),
             number_of_recovered=pd.to_numeric(df.number_of_recovered),
+            Province_State = df.Province_State.fillna(''),
         )
         .pipe(coerce_integer)
         .drop_duplicates(subset=sort_cols, keep="last")

@@ -1,19 +1,17 @@
 """
 Pull data from DAILY COVID TABLE for
-Mayor's Office Daily COVID-19 Report and upload to ESRI
+Mayor's Office Daily COVID-19 Report and upload to S3
 """
 import datetime
 import os
-import arcgis
 import pandas as pd
 
 bucket_name = "public-health-dashboard"
-arcuser = os.environ.get('ARC_SERVICE_USER_NAME') 
-arcpassword = os.environ.get('ARC_SERVICE_USER_PASSWORD') 
 
-workbook = ("https://docs.google.com/spreadsheets/d/"
-"1Vk7aGL7O0ZVQRySwh6X2aKlbhYlAR_ppSyMdMPqz_aI/"
-"export?format=xlsx&#gid=0"
+workbook = (
+    "https://docs.google.com/spreadsheets/d/"
+    "1Vk7aGL7O0ZVQRySwh6X2aKlbhYlAR_ppSyMdMPqz_aI/"
+    "export?format=xlsx&#gid=0"
 )
 sheet_name = "CASE_DATA"
 

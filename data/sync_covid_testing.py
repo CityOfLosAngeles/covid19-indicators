@@ -1,21 +1,19 @@
 """
-Pull data from MOPS COVID Dashboard and upload to ESRI.
+Pull data from MOPS COVID Dashboard and upload to S3
 """
 import datetime
 import os
-import pytz
-import arcgis
 import pandas as pd
-from arcgis.gis import GIS
+import pytz
 
 bucket_name = "public-health-dashboard"
-arcuser = os.environ.get('ARC_SERVICE_USER_NAME') 
-arcpassword = os.environ.get('ARC_SERVICE_USER_PASSWORD') 
 
 filename = "COVID_testing_data.csv"
-workbook = ("https://docs.google.com/spreadsheets/d/"
-"1agPpAJ5VNqpY50u9RhcPOu7P54AS0NUZhvA2Elmp2m4/"
-"export?format=xlsx&#gid=0")
+workbook = (
+    "https://docs.google.com/spreadsheets/d/"
+    "1agPpAJ5VNqpY50u9RhcPOu7P54AS0NUZhvA2Elmp2m4/"
+    "export?format=xlsx&#gid=0"
+)
 sheet_name = "DUPLICATE OF MOPS"
 
 

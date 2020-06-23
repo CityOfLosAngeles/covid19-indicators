@@ -2,16 +2,15 @@
 Grab the JHU US county CSV from GitHub
 and add JHU current feature layer to this.
 """
-import arcgis
-import os
-from datetime import datetime, timedelta
+import geopandas as gpd
 import numpy as np
+import os
 import pandas as pd
-from arcgis.gis import GIS
+
+from datetime import datetime, timedelta
+
 
 bucket_name = "public-health-dashboard"
-arcuser = os.environ.get('ARC_SERVICE_USER_NAME') 
-arcpassword = os.environ.get('ARC_SERVICE_USER_PASSWORD') 
 
 # URL to JHU confirmed cases US county time series.
 CASES_URL = (
@@ -34,8 +33,22 @@ LOOKUP_TABLE_URL = (
 )
 
 # General function
-JHU_FEATURE_ID = "628578697fb24d8ea4c32fa0c5ae1843"
-
+#JHU_FEATURE_ID = "628578697fb24d8ea4c32fa0c5ae1843"
+JHU_FEATURE_ID = (
+    "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/"
+    "ncov_cases_US/FeatureServer/0/query?where=1%3D1&objectIds=&time=&"
+    "geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&"
+    "resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=OBJECTID%2C+"
+    "Province_State%2C+Country_Region%2C+Last_Update%2C+Lat%2C+Long_%2C+Confirmed%2C+Recovered%2C+"
+    "Deaths%2C+Active%2C+Admin2%2C+FIPS%2C+Combined_Key%2C+Incident_Rate%2C+People_Tested%2C+"
+    "People_Hospitalized%2C+UID%2C+ISO3&returnGeometry=true&featureEncoding=esriDefault&"
+    "multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&"
+    "datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&"
+    "returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&"
+    "returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&"
+    "outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&"
+    "returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token="
+)
 
 def parse_columns(df):
     """
@@ -181,13 +194,8 @@ def load_jhu_us_current(**kwargs):
     """
     Loads the JHU US current data, transforms it so we are happy with it.
     """
-    # Login to ArcGIS
-    gis = GIS("http://lahub.maps.arcgis.com", username=arcuser, password=arcpassword)
-    gis_item = gis.content.get(JHU_FEATURE_ID)
-    layer = gis_item.layers[0]
-    sdf = arcgis.features.GeoAccessor.from_layer(layer)
-    # Drop some ESRI faf
-    jhu = sdf.drop(columns=["OBJECTID", "SHAPE"])
+    # Import data
+    jhu = gpd.read_file(JHU_FEATURE_ID)
 
     # Create localized then normalized date column
     jhu["date"] = pd.Timestamp.now(tz="US/Pacific").normalize().tz_convert("UTC")
@@ -395,9 +403,6 @@ def append_county_time_series(**kwargs):
     """
     Load JHU's CSV and append today's US county data.
     """
-    # Login to ArcGIS
-    gis = GIS("http://lahub.maps.arcgis.com", username=arcuser, password=arcpassword)
-
     # (1) Load historical time-series
     historical_df = load_jhu_us_time_series()
 
