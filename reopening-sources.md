@@ -23,11 +23,12 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * Leading CA health official [warns that CA is making modifications toward reopening too quickly](https://www.planetizen.com/news/2020/05/109462-reopening-california-respected-county-health-official-issues-warning)
 * As of early June, the [world rushes to reopen](https://www.nytimes.com/2020/06/09/world/coronavirus-reopenings.html) even as caseloads are rising, including [21 US states](https://www.nytimes.com/2020/06/10/us/politics/coronavirus-washington-trump.html), and we can't wish [the virus away by reopening](https://www.vox.com/science-and-health/2020/6/11/21285077/covid-19-arizona-texas-next-wave).
     * How coronavirus compares to [100 years of deadly events](https://www.nytimes.com/interactive/2020/06/10/world/coronavirus-history.html) 
-    * [8 states](https://www.vox.com/2020/6/10/21286696/us-covid-19-coronavirus-cases-update-texas-arizona-north-carolina) that are the next hotspots, and TX, FL, CA are the [states that saw the largest increases in cases in the past week](https://www.nytimes.com/2020/06/12/world/coronavirus-live-updates.html)
+    * [8 states](https://www.vox.com/2020/6/10/21286696/us-covid-19-coronavirus-cases-update-texas-arizona-north-carolina) that are the next hotspots, and TX, FL, CA are the [states that saw the largest increases in cases](https://www.nytimes.com/2020/06/12/world/coronavirus-live-updates.html) in the [past week](https://www.nytimes.com/2020/06/19/world/coronavirus-live-updates.html). As of mid-June, Florida is predicted to be [next US epicenter by mid-July](https://www.wtsp.com/article/news/health/coronavirus/upenn-chop-study-florida-could-be-next-epicenter-coronavirus/67-0f910e1a-fa6e-4e22-853e-3c3bdaf46880).
     * Rising caseloads are [predictable and avoidable](https://www.vox.com/science-and-health/2020/6/12/21288009/new-covid-spikes-arizona-florida-carolinas-texas)
-    
+    * Preventing [superspreader events will be key](https://www.vox.com/21296067/coronavirus-trump-tulsa-oklahoma-rally-superspreaders-superspreading-bars-restaurants)
 
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
+* Polls show that [whites are increasingly ready to reopen, but Blacks are not](https://fivethirtyeight.com/features/black-americans-were-hit-hard-by-state-shutdowns-but-are-worried-about-reopening-too/).
 
 
 
@@ -44,8 +45,9 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
  * [What experts say is necessary for a national testing strategy](https://www.nytimes.com/2020/05/25/health/coronavirus-testing-trump.html):
     * 10% positive share for mitigation
     * 4% positive share to halt virus spread
+    * JHU state-by-state analysis of who meets [WHO recommended guidelines for testing and positive rate](https://coronavirus.jhu.edu/testing/testing-positivity), where states should see less than 5% positive for 14 days prior to reopening.
  * [Open, transparent, and public data](https://amp.floridatoday.com/amp/5212398002) is crucial for agencies and researchers to simultaneously learn about the virus and tackle the outbreaks from multiple fronts. 
- * [Reporting all-cause mortality and testing the high risk](https://www.vox.com/2020/5/26/21270703/coronavirus-deaths-us-world-covid-19-nursing-homes) are ways to move forward.
+ * [Reporting all-cause mortality and testing the high risk](https://www.vox.com/2020/5/26/21270703/coronavirus-deaths-us-world-covid-19-nursing-homes) are ways to move forward, since deaths are [likely undercounted](https://www.nytimes.com/interactive/2020/06/19/us/us-coronavirus-covid-death-toll.html).
  * [Summary of what we've learned](https://www.nytimes.com/article/coronavirus-facts-history.html): always wear masks, we can't depend on herd immunity, and we can't count on warmer weather alone.
  * [Philisophical differences](https://www.nytimes.com/2020/05/28/us/politics/biden-trump-coronavirus-testing.html) between state-led strategy vs federal strategy
     * [Biden's national coronavirus plan](https://www.documentcloud.org/documents/6927667-COVID-National-Diagnostics-Strategy-05-24-2020-v.html#document/p2)
@@ -55,6 +57,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * Germany's research on [who has antibodies, how long antibodies last after infection, and what levels of antibodies are needed to prevent re-infection](https://www.nytimes.com/2020/04/18/world/europe/with-broad-random-tests-for-antibodies-germany-seeks-path-out-of-lockdown.html)
 * [How long do antibodies last?](https://www.nytimes.com/2020/05/07/health/coronavirus-antibody-prevalence.html) Remains to be seen.
     * Spain, with one of the worst outbreaks in Europe, [only sees about 5% of its population with immunity](https://www.vox.com/2020/5/16/21259492/covid-antibodies-spain-serology-study-coronavirus-immunity) and in [NYC, with the worst US outbreak](https://www.nytimes.com/interactive/2020/05/28/upshot/coronavirus-herd-immunity.html), about 20% of its population.
+    * Antibodies don't last longer [than a couple months](https://www.nytimes.com/2020/06/18/health/coronavirus-antibodies.html), and its role in preventing re-infection is not yet clear. But, studies show that asymptomatic people are shedding the virus for potentially longer periods of time than symptomatic people.
 
 
 ## Known Unknowns 
@@ -65,6 +68,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * [Legionnaires' a potential health threat](https://www.nytimes.com/2020/05/20/health/coronavirus-legionnaires-offices.html) for dormant office buildings.
 * [Reconfigured office space](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs.
 * Do virus mutations matter? [There's evidence at a biomolecular level, but unsure if this makes the mutation more infectious](https://www.nytimes.com/2020/06/12/science/coronavirus-mutation-genetics-spike.html).
+* [1 in 5 at risk for severe COVID-19 globally](https://www.nytimes.com/2020/06/15/health/coronavirus-underlying-conditions.html)
 
 
 ## The Path Toward Reopening
