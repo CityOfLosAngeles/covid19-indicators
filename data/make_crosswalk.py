@@ -5,9 +5,7 @@ Aggregate county population to get MSA population.
 import numpy as np
 import pandas as pd
 
-NBER_CROSSWALK_URL = (
-    "https://data.nber.org/cbsa-csa-fips-county-crosswalk/" "cbsa2fipsxw.csv"
-)
+NBER_CROSSWALK_URL = "https://data.nber.org/cbsa-csa-fips-county-crosswalk/cbsa2fipsxw.csv"
 
 LOOKUP_TABLE_URL = (
     "https://github.com/CSSEGISandData/COVID-19/raw/{}/"

@@ -67,43 +67,22 @@ def parse_columns(df):
     return id_vars, dates
 
 
-def coerce_integer(df):
-    """
-    Coerce nullable columns to integers for CSV export.
+def fix_fips(df):
+    def correct_county_fips(row):
+        if (len(row.fips) == 4) and (row.fips != "None"):
+            return "0" + row.fips
+        elif row.fips == "None":
+            return ""
+        else:
+            return row.fips
+    
+    df["fips"] = df.fips.astype(str)
+    df["fips"] = df.apply(correct_county_fips, axis=1)
 
-    TODO: recent versions of pandas (>=0.25) support nullable integers.
-    Once we can safely upgrade, we should use those and remove this function.
-    """
-
-    def integrify(x):
-        return int(float(x)) if not pd.isna(x) else None
-
-    cols = [
-        "number_of_cases",
-        "number_of_deaths",
-    ]
-    new_cols = {c: df[c].apply(integrify, convert_dtype=False) for c in cols}
-    return df.assign(**new_cols)
-
-
-def coerce_fips_integer(df):
-    def integrify(x):
-        return int(float(x)) if not pd.isna(x) else None
-
-    cols = ["fips"]
-
-    new_cols = {c: df[c].apply(integrify, convert_dtype=False) for c in cols}
-
-    return df.assign(**new_cols)
-
-
-def correct_county_fips(row):
-    if (len(row.fips) == 4) and (row.fips != "None"):
-        return "0" + row.fips
-    elif row.fips == "None":
-        return ""
-    else:
-        return row.fips
+    for col in ["state", "county", "fips"]:
+        df[col] = df[col].fillna("")
+    
+    return df
 
 
 sort_cols = ["state", "county", "fips", "date"]
@@ -181,11 +160,7 @@ def load_jhu_us_time_series(branch="master"):
     )
 
     # Fix fips
-    df = df.pipe(coerce_fips_integer)
-    df["fips"] = df.fips.astype(str)
-    df["fips"] = df.apply(correct_county_fips, axis=1)
-    for col in ["state", "county", "fips"]:
-        df[col] = df[col].fillna("")
+    df = fix_fips(df)
 
     return df.sort_values(sort_cols).reset_index(drop=True)
 
@@ -232,16 +207,8 @@ def clean_jhu_county(df):
         }
     )
 
-    # Use floats
-    for col in ["people_tested"]:
-        df[col] = df[col].astype(float)
-
     # Fix fips
-    df = df.pipe(coerce_fips_integer)
-    df["fips"] = df.fips.astype(str)
-    df["fips"] = df.apply(correct_county_fips, axis=1)
-    for col in ["state", "county", "fips"]:
-        df[col] = df[col].fillna("")
+    df = fix_fips(df)
 
     return df
 
@@ -350,25 +317,16 @@ def fix_column_dtypes(df):
     # Calculate incident rate, which is cases per 100k
     incident_rate_pop = 100_000
     df = df.assign(incident_rate=(df.cases / df.Population * incident_rate_pop))
-
-    def coerce_integer(df):
-        def integrify(x):
-            return int(float(x)) if not pd.isna(x) else None
-
-        cols = [
-            "cases",
-            "deaths",
-            "state_cases",
-            "state_deaths",
-            "new_cases",
-            "new_deaths",
-            "new_state_cases",
-            "new_state_deaths",
-        ]
-
-        new_cols = {c: df[c].apply(integrify, convert_dtype=False) for c in cols}
-
-        return df.assign(**new_cols)
+    
+    # Coerce as Int64 with upgraded pandas
+    integrify_me = ["cases", "deaths", 
+                    "state_cases", "state_deaths", 
+                    "new_cases", "new_deaths", 
+                    "new_state_cases", "new_state_deaths",
+                    "people_tested"]
+    
+    for col in integrify_me:
+        df[col] = df[col].astype("Int64")
 
     # Sort columns
     col_order = [
@@ -389,10 +347,8 @@ def fix_column_dtypes(df):
         "new_state_cases",
         "new_state_deaths",
     ]
-
-    df = (
-        df.pipe(coerce_integer)
-        .reindex(columns=col_order)
+    
+    df = (df.reindex(columns=col_order)
         .sort_values(["state", "county", "fips", "date", "cases"])
     )
 

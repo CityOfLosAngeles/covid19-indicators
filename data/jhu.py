@@ -34,6 +34,8 @@ RECOVERED_URL = (
 
 # Feature ID for JHU global source data
 #JHU_GLOBAL_SOURCE_ID = "c0b356e20b30490c8b8b4c7bb9554e7c"
+
+# Can use geojson query instead
 JHU_GLOBAL_SOURCE_ID = (
     "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/"
     "ncov_cases/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&"
@@ -50,12 +52,6 @@ JHU_GLOBAL_SOURCE_ID = (
     "returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token="
 )
 
-# The date at the time of execution. We choose midnight in the US/Pacific timezone,
-# but then convert to UTC since that is what AGOL expects. When the feature layer
-# is viewed in a dashboard it is converted back to local time.
-# date = pd.Timestamp.now(tz="US/Pacific").normalize().tz_convert("UTC")
-
-
 def parse_columns(df):
     """
     quick helper function to parse columns into values
@@ -71,26 +67,6 @@ def parse_columns(df):
         else:
             id_vars.append(c)
     return id_vars, dates
-
-
-def coerce_integer(df):
-    """
-    Coerce nullable columns to integers for CSV export.
-
-    TODO: recent versions of pandas (>=0.25) support nullable integers.
-    Once we can safely upgrade, we should use those and remove this function.
-    """
-
-    def integrify(x):
-        return int(float(x)) if not pd.isna(x) else None
-
-    cols = [
-        "number_of_cases",
-        "number_of_deaths",
-        "number_of_recovered",
-    ]
-    new_cols = {c: df[c].apply(integrify, convert_dtype=False) for c in cols}
-    return df.assign(**new_cols)
 
 
 sort_cols = ["Country_Region", "Province_State", "date"]
@@ -158,11 +134,11 @@ def load_jhu_global_current(**kwargs):
     """
     Loads the JHU global current data, transforms it so we are happy with it.
     """
-    # (1) Load current data from ESRI
+    # Load current data from ESRI
     sdf = gpd.read_file(JHU_GLOBAL_SOURCE_ID)
 
     sdf = sdf.assign(
-        date = (pd.to_datetime(sdf.Last_Update, unit='ms')
+        date = (pd.to_datetime(sdf.Last_Update, unit="ms")
                 .dt.tz_localize("US/Pacific")
                 .dt.normalize()
                 .dt.tz_convert("UTC")
@@ -235,15 +211,14 @@ def load_global_covid_data():
         how="left",
         validate="m:1",
     )
-
+    
     df = (
         df.assign(
-            number_of_cases=pd.to_numeric(df.number_of_cases),
-            number_of_deaths=pd.to_numeric(df.number_of_deaths),
-            number_of_recovered=pd.to_numeric(df.number_of_recovered),
-            Province_State = df.Province_State.fillna(''),
+            number_of_cases=df.number_of_cases.astype("Int64"),
+            number_of_deaths=df.number_of_deaths.astype("Int64"),
+            number_of_recovered=df.number_of_recovered.astype("Int64"),
+            Province_State = df.Province_State.fillna(""),
         )
-        .pipe(coerce_integer)
         .drop_duplicates(subset=sort_cols, keep="last")
         .sort_values(sort_cols)
         .reset_index(drop=True)
