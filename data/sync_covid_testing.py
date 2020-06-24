@@ -83,7 +83,8 @@ def get_county_data(filename, workbook, sheet_name):
         City_Cumulative=df.sort_values("Date")["City_Performed"].cumsum().astype(int),
     )[keep_cols].sort_values("Date")
 
-    return df
+    df.to_csv(f"s3://{bucket_name}/jhu_covid19/county-city-cumulative.csv", index=False)
+    df.to_parquet(f"s3://{bucket_name}/jhu_covid19/county-city-cumulative.parquet")
 
 
 def update_covid_testing_city_county_data(**kwargs):
@@ -91,5 +92,4 @@ def update_covid_testing_city_county_data(**kwargs):
     The actual python callable that Airflow schedules.
     """
     df = get_county_data(filename, workbook, sheet_name)
-    df.to_csv(f"s3://{bucket_name}/jhu_covid19/county-city-cumulative.csv", index=False)
-    df.to_parquet(f"s3://{bucket_name}/jhu_covid19/county-city-cumulative.parquet")
+    
