@@ -15,6 +15,18 @@ workbook = (
 
 def get_data(workbook):
     df = pd.read_csv(workbook)
+
+    keep = ["date", "equipment", "status", "num"]
+    df = (df.assign(
+        Count = df.Count.astype("Int64")
+        ).rename(columns = {
+            "Date": "date",
+            "Type":"equipment",
+            "Status":"status",
+            "Count":"num",
+            }
+        )[keep]
+    )   
     df.to_csv(f"s3://{bucket_name}/jhu_covid19/hospital-availability.csv")
     df.to_parquet(f"s3://{bucket_name}/jhu_covid19/hospital-availability.parquet")
 

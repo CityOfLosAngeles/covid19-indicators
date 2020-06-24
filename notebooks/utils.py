@@ -243,13 +243,13 @@ Sub-functions for City of LA case data.
 """
 def prep_lacity_cases(start_date):
     city_df = pd.read_parquet(LA_CITY_URL)
-    city_df["Date"] = city_df['Date'].astype(str).apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date())    
+    city_df["date"] = city_df["date"].astype(str).apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date())    
 
     df = (
         city_df.rename(
-            columns={"City of LA Cases": "cases", 
-                     "City of LA New Cases": "new_cases",
-                    "Date": "date"}
+            columns={"city_cases": "cases", 
+                     "city_new_cases": "new_cases",
+                     }
         )
         .sort_values("date")
         .reset_index(drop=True)
@@ -418,37 +418,44 @@ Sub-functions for LA County hospital equipment data.
 def prep_lacounty_hospital(start_date):
     df = pd.read_parquet(HOSPITAL_URL)
 
+    # Set the denominators for each type 
+    # Source: http://file.lacounty.gov/SDSInter/dhs/1070069_HavBedSummary.pdf
+    # 17,000 Acute Care beds; 2,500 ICU beds; 3,199 ventilators
+    def available(row):
+        if "Acute" in row.equipment: 
+            return 17_000
+        if "ICU" in row.equipment:
+            return 2_500
+        if "Ventilator" in row.equipment:
+            return 3_200
+
     # Get a total count of equipment for each date-type
     df = df.assign(
-        date=df.Date.apply(lambda x: datetime.strptime(x, "%m/%d/%Y").date()),
-        date2 = pd.to_datetime(df.Date),
-        type_total=df.groupby(["Date", "Type"])["Count"].transform("sum"),
+        date=df.date.apply(lambda x: datetime.strptime(x, "%m/%d/%Y").date()),
+        date2 = pd.to_datetime(df.date),
+        equipment_total=df.apply(available, axis=1),
     )
-    
+
     # Calculate number and percent available
     sort_col = ["equipment", "date"]
     group_col = ["equipment"]
     
     df = df.assign(
         n_available=df.apply(
-            lambda row: row.Count if row.Status == "Available" else np.nan, axis=1
+            lambda row: row.num if row.status == "Available" else np.nan, axis=1
         ),
         pct_available=df.apply(
-            lambda row: row.Count / row.type_total
-            if row.Status == "Available"
-            else np.nan,
-            axis=1,
+            lambda row: row.num / row.equipment_total if row.status == "Available" else np.nan, axis=1
         ),
         covid_investigation=df.apply(
-            lambda row: row.Count if "Under Investigation" in row.Status else np.nan, axis=1
+            lambda row: row.num if row.status == "COVID Person Under Investigation" else np.nan, axis=1
         ),
         covid_occupied=df.apply(
-            lambda row: row.Count if "COVID Occupied" in row.Status else np.nan, axis=1
+            lambda row: row.num if row.status == "COVID Occupied" else np.nan, axis=1
         ),
-        equipment = df['Type'],
     )
 
-    keep_col = ["date", "date2", "equipment", "type_total", 
+    keep_col = ["date", "date2", "equipment", "equipment_total", 
                 "n_available", "pct_available", 
                 "covid_investigation", "covid_occupied"]
     
@@ -456,11 +463,22 @@ def prep_lacounty_hospital(start_date):
         df[col] = df.groupby(sort_col)[col].transform("max")
     
     df = (df[keep_col]
-          .drop_duplicates()
-          .sort_values(sort_col)
-          .reset_index(drop=True)
-         )
-    
+        .drop_duplicates()
+        .sort_values(sort_col)
+        .reset_index(drop=True)
+    )
+
+    # Get COVID-occupied equipment investigation + occupied, or probable + confirmed
+    df = df.assign(
+        covid_investigation = df.covid_investigation.fillna(0).astype(int),
+        covid_occupied = df.covid_occupied.fillna(0).astype(int),
+    )
+
+    df['covid'] = df.covid_investigation + df.covid_occupied
+    df = df.assign(
+        pct_covid = df.covid / df.equipment_total
+    )
+
     # Calculate 3-day average 
     df = df.assign(
             n_available_avg3 = (df.groupby(group_col)['n_available']
@@ -469,9 +487,14 @@ def prep_lacounty_hospital(start_date):
             pct_available_avg3 = (df.groupby(group_col)['pct_available']
                                 .rolling(window=3).mean()
                                   .reset_index(drop=True)),
+            n_covid_avg7 = (df.groupby(group_col)['covid']
+                        .rolling(window=7).mean()
+                        .reset_index(drop=True)),
+            pct_covid_avg7 = (df.groupby(group_col)['pct_covid']
+                        .rolling(window=7).mean()
+                        .reset_index(drop=True)),                        
         )
 
-    
     df = (df[(df.n_available.notna()) & (df.date >= start_date) & (df.date < today_date)]
           .sort_values(sort_col)
           .reset_index(drop=True))

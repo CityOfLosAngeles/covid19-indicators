@@ -47,7 +47,6 @@ bin_spacing = 100
 fulldate_format = "%-m/%-d/%y"
 monthdate_format = "%-m/%-d"
 
-
 two_weeks_ago = default_parameters.two_weeks_ago
 
 
@@ -432,7 +431,7 @@ def make_lacounty_hospital_chart(df):
         .configure_view(strokeOpacity=stroke_opacity)
     )
 
-    base2 = (
+    hospital_num_chart = (
         alt.Chart(df)
         .mark_line()
         .encode(
@@ -450,12 +449,36 @@ def make_lacounty_hospital_chart(df):
                     range=[acute_color, icu_color, ventilator_color],
                 ),
             ),
-        )
+        ).properties(
+            title="Number of Available Hospital Equipment by Type", width=chart_width
+        ).configure_title(
+            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
+        ).configure_axis(
+            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
+        ).configure_view(strokeOpacity=stroke_opacity)
     )
 
-    hospital_num_chart = (
-        base2.properties(
-            title="Number of Available Hospital Equipment by Type", width=chart_width
+    hospital_covid_chart = (
+        alt.Chart(df)
+        .mark_line()
+        .encode(
+            x=alt.X(
+                "date2",
+                timeUnit=time_unit,
+                title="date",
+                axis=alt.Axis(format=monthdate_format),
+            ),
+            y=alt.Y("n_covid_avg7", title="7-day avg"),
+            color=alt.Color(
+                "equipment",
+                scale=alt.Scale(
+                    domain=["Acute Care Beds", "ICU Beds", "Ventilators"],
+                    range=[acute_color, icu_color, ventilator_color],
+                ),
+            ),
+        ).properties(
+            title="Number of COVID-Occupied / Under Investigation Equipment Use by Type",
+            width=chart_width,
         )
         .configure_title(
             fontSize=title_font_size, font=font_name, anchor="middle", color="black"
@@ -468,3 +491,4 @@ def make_lacounty_hospital_chart(df):
 
     show_svg(hospital_pct_chart) 
     show_svg(hospital_num_chart)
+    show_svg(hospital_covid_chart)

@@ -18,11 +18,20 @@ sheet_name = "CASE_DATA"
 def get_data(workbook, sheet_name):
     df = pd.read_excel(workbook, sheet_name=sheet_name)
     df = df.loc[:, ["Date", "City of LA Cases", "City of LA New Cases"]]
-    df.dropna(
-        subset=["City of LA Cases", "City of LA New Cases"], how="all", inplace=True
+
+    df = df.rename(columns = {
+            "City of LA Cases": "city_cases",
+            "City of LA New Cases": "city_new_cases",
+            "Date": "date"}
+        )
+            
+    df = (df.dropna(subset = ["city_cases"], how = "all")
+            .assign(
+                city_cases = df.city_cases.astype("Int64"),
+                city_new_cases = df.city_new_cases.astype("Int64"),
+            )
     )
-    df["City of LA Cases"] = df["City of LA Cases"].astype(int)
-    df["City of LA New Cases"] = df["City of LA New Cases"].astype(int)
+
     df.to_csv(f"s3://{bucket_name}/jhu_covid19/city-of-la-cases.csv", index=False)
     df.to_parquet(f"s3://{bucket_name}/jhu_covid19/city-of-la-cases.parquet")
 
