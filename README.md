@@ -17,6 +17,7 @@ Project Organization
     ├── requirements.txt         <- The requirements file for reproducing the analysis environment,
     │                               e.g generated with `pip freeze > requirements.txt`
     ├── main.py                  <- Used to send our daily pdf reports by email. 
+    ├── report.py                <- Used to automate writing the daily report on GitHub pages. 
     ├── setup.py                 <- Makes project pip installable (pip install -e .) 
 
 
@@ -25,11 +26,11 @@ Project Organization
 
 This repository will track COVID-19 indicators as LA considers its reopening strategy. We will also provide sample notebooks for how others can use the Johns Hopkins University COVID-19 data, which is available for all US counties, to look at trends in other counties or states. 
 
-Daily report: [https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html](https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html)
+**DAILY REPORT:** [https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html](https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html)
 
 The City of LA uses [US county data](https://www.arcgis.com/home/item.html?id=628578697fb24d8ea4c32fa0c5ae1843) published by [JHU](https://www.esri.com/arcgis-blog/products/product/public-safety/coronavirus-covid-19-data-available-by-county-from-johns-hopkins-university/). The historical time-series is pulled from JHU's CSV on GitHub and appended with the current date's data from the ESRI feature layer.
 
-Our ESRI data sources are public and listed below. The full documentation of the City of LA's COVID-19 data and scripts is available in our [Aqueduct COVID-19 ETL work's README](https://github.com/CityOfLosAngeles/aqueduct/tree/master/dags/public-health/covid19/README.md). 
+Our ESRI data sources are public and listed below. The full documentation of the City of LA's COVID-19 data and scripts is available in our [Aqueduct COVID-19 ETL work's README](https://github.com/CityOfLosAngeles/aqueduct/tree/master/dags/public-health/covid19/README.md). We are in progress of moving these data sources off of ESRI and moving to an S3 bucket. See our work in the `data` folder.
 
 
 1. [Data Sources](#data-sources)
@@ -39,9 +40,6 @@ Our ESRI data sources are public and listed below. The full documentation of the
 1. [Emailing the Report](#emailing-the-report)
 
 ## Data Sources
-* [City of LA's COVID-19 GitHub repo](https://github.com/CityOfLosAngeles/aqueduct/tree/master/dags/public-health/covid19/). We use Aqueduct, our shared pipeline for building ETLs and scheduling batch jobs. We welcome collaboration and pull requests on our work!
-
-
 #### COVID-19 Cases
 * Global province-level time-series [feature layer](http://lahub.maps.arcgis.com/home/item.html?id=20271474d3c3404d9c79bed0dbd48580) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=daeef8efe43941748cb98d7c1f716122)
 

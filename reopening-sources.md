@@ -3,6 +3,8 @@ Collection of articles to guide the reopening strategy. Provides context for **w
 
 Examples of reopening indicators used by NY and Chicago are included for LA to benchmark its own progress. References for CA and LA's own reopening indicators are also included.
 
+For context, the NYT has reported on how the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html) and [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html), and provided an [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html).
+
 1. [Dangers of Reopening Too Early](#dangers-of-reopening-too-early)
 1. [Are We Past the Peak?](#are-we-past-the-peak)
 1. [Building Public Health Capacity](#building-public-health-capacity)
