@@ -6,7 +6,9 @@ import intake_dcat
 import os
 import pandas as pd
 
-catalog = intake.open_catalog("../catalog.yml")
+# Civis container script clones the repo and we are in /app
+# Feed it the absolute path to our catalog.yml
+catalog = intake.open_catalog("/app/catalog.yml")
 bucket_name = "public-health-dashboard"
 
 def clean_data(df):
@@ -17,7 +19,8 @@ def clean_data(df):
         ).drop(columns = ["as_of_date", "shipping_zip_postal_code"])
     )
     
-    crosswalk = pd.read_csv('../data/msa_county_pop_crosswalk.csv', dtype = {"county_fips":"str"})
+    # Feed Civis the absolute path to our crosswalk, which must start with /app
+    crosswalk = pd.read_csv('/app/data/msa_county_pop_crosswalk.csv', dtype = {"county_fips":"str"})
     
     keep = ["county", "county_fips"]
     crosswalk = (crosswalk[crosswalk.state == "California"][keep]
@@ -80,8 +83,6 @@ def categorize_ppe(row):
     
     if any(word in ppe for word in n95_group):
         n95 = number
-    if any(word in ppe for word in surgical_masks_group):
-        surgical_masks = number
     if any(word in ppe for word in surgical_masks_group):
         surgical_masks = number
     if any(word in ppe for word in cloth_masks_group):

@@ -3,8 +3,7 @@ Collection of articles to guide the reopening strategy. Provides context for **w
 
 Examples of reopening indicators used by NY and Chicago are included for LA to benchmark its own progress. References for CA and LA's own reopening indicators are also included.
 
-For context, the NYT has reported on how the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html) and [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html), and provided an [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html).
-
+1. [Context](#context)
 1. [Dangers of Reopening Too Early](#dangers-of-reopening-too-early)
 1. [Are We Past the Peak?](#are-we-past-the-peak)
 1. [Building Public Health Capacity](#building-public-health-capacity)
@@ -13,10 +12,16 @@ For context, the NYT has reported on how the virus spread [out of China](https:/
 1. [The Path Toward Reopening](#the-path-toward-reopening)
 
 
+## Context
+* How the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html) and [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html)
+* New York Times [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html)
+* Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
+
+
+
 ## Dangers of Reopening Too Early
 * As of early May: Rushed reopenings are [a global trial-and-error experiment](https://www.nytimes.com/2020/05/07/world/europe/coronavirus-reopening-costs.html). 
-    * NYT analysis showing how US states reopening [fail to meet the WH guidelines](https://www.nytimes.com/interactive/2020/05/07/us/coronavirus-states-reopen-criteria.html).
-    * Track the state's status of reopening [here](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html).
+    * Most US states reopening [fail to meet the WH guidelines](https://www.nytimes.com/interactive/2020/05/07/us/coronavirus-states-reopen-criteria.html).
     * Virus spread [speeds up](https://www.nytimes.com/2020/05/28/world/coronavirus-live.html) in [Georgia](https://www.nytimes.com/interactive/2020/04/24/opinion/coronavirus-covid-19-georgia-reopen.html), [Texas](https://www.texastribune.org/2020/05/14/coronavirus-updates-texas/), and on average, everywhere [outside NYC](https://www.nytimes.com/2020/05/16/us/coronavirus-united-states.html); in [Japan](https://www.healthline.com/health-news/covid-19-countries-that-have-already-reopened-lessons#How-Germany-is-reopening), [South Korea](https://www.seattletimes.com/nation-world/south-korea-closes-schools-again-amid-coronavirus-spike-days-after-reopening/), Singapore, [France](https://www.washingtonpost.com/world/europe/virus-count-revised-new-clusters-emerge-as-france-reopens/2020/05/29/3223a472-a1d3-11ea-be06-af5514ee0385_story.html), [Lebanon](https://healthpolicy-watch.org/countries-that-reopen-early-may-have-waves-of-lockdowns/) and [Iran](https://www.nytimes.com/2020/05/18/world/middleeast/iran-coronavirus-surge.html).
 * As of late May, [24 US states have uncontrolled virus spread](https://www.washingtonpost.com/health/study-estimates-24-states-still-have-uncontrolled-coronavirus-spread/2020/05/22/d3032470-9c43-11ea-ac72-3841fcc9b35f_story.html)
     * By late July, CA is estimated to have 1,000 deaths per day without further mitigation
@@ -40,6 +45,13 @@ For context, the NYT has reported on how the virus spread [out of China](https:/
 * University of Minnesota and Harvard studies on [possible trajectories of the pandemic into late 2020 and 2021](https://www.nytimes.com/2020/05/08/health/coronavirus-pandemic-curve-scenarios.html) shows that a one-time social distancing effort is not sufficient to control this in the long term. Experts recommend turning social distancing on and off depending on case levels. 
     * Germany says [regions must reinstate restrictions](https://www.nytimes.com/2020/05/18/opinion/germany-coronavirus-reopening.html) if cases pass a certain threshold.
 * [Are any countries close to herd immunity? Not even close.](https://www.nytimes.com/interactive/2020/05/28/upshot/coronavirus-herd-immunity.html)
+* Our understanding of [asymptomatic transmission](https://www.nytimes.com/2020/06/27/world/europe/coronavirus-spread-asymptomatic.html) has evolved
+    * A study from [China, Hong Kong, and Singapore](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.17.2000257): 30-60% of spread from asymptomatic transmission
+    * [Hong Kong study](https://www.nature.com/articles/s41591-020-0869-5.pdf): estimated 44% transmission occurred prior to symptoms, infectious around 2 days prior to onset of symptoms
+    * [UK study](https://science.sciencemag.org/content/368/6491/eabb6936): estimated 50% of spread attributed to asymptomatic transmission
+    * [Study about spread on the Diamond Princess](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.10.2000180#html_fulltext): estimated 18% of spread on-board from asymptomatic transmission that occurred before the quarantine start
+    * [Study by US CDC](https://www.nytimes.com/2020/03/31/health/coronavirus-asymptomatic-transmission.html): 25% of patients might have no symptoms
+    * [Germany's Robert Koch Institute study](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30314-5/fulltext): infectiousness before or on day of symptom onset was substantial, which is when transmission was likely
 
 
 ## Building Public Health Capacity

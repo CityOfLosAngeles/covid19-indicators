@@ -7,7 +7,7 @@ import intake_dcat
 import os
 import pandas as pd
 
-catalog = intake.open_catalog("../catalog.yml")
+catalog = intake.open_catalog("/app/catalog.yml")
 bucket_name = "public-health-dashboard"
 
 def clean_surge_data(df):
@@ -56,15 +56,16 @@ def clean_hospital_data(df):
     
     df = df.assign(
         hospitalized_covid = df.hospitalized_confirmed + df.hospitalized_suspected,
-        icu_covid = df.icu_confirmed + df.icu_suspected
+        icu_covid = df.icu_confirmed + df.icu_suspected,
+        all_icu_beds = df.icu_confirmed + df.icu_suspected + df.icu_available,
     )
 
     col_order = [
-        "county", "county_fips", "date", 
+        "county", "date", 
         "prior_confirmed", "prior_suspected", "prior_conversion", 
         "hospitalized_confirmed", "hospitalized_suspected", 
         "hospitalized_covid", "all_hospital_beds", 
-        "icu_confirmed", "icu_suspected", "icu_covid", "icu_available"
+        "icu_confirmed", "icu_suspected", "icu_covid", "icu_available", "all_icu_beds"
     ]
 
     # There are some dates that are NaT...drop these
@@ -80,7 +81,7 @@ def clean_hospital_data(df):
 
 
 def grab_county_fips(df):
-    crosswalk = pd.read_csv('../data/msa_county_pop_crosswalk.csv', dtype = {"county_fips":"str"})
+    crosswalk = pd.read_csv('/app/data/msa_county_pop_crosswalk.csv', dtype = {"county_fips":"str"})
     
     keep = ["county", "county_fips"]
     crosswalk = (crosswalk[crosswalk.state == "California"][keep]

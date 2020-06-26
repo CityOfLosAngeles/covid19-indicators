@@ -15,6 +15,7 @@ sources:
       # dictionary. If these are specified, only these datasets will be available in
       # the resulting catalog. They will be available under the more human-readable
       # name specified as the key.
+      # Grab the identifier from the items we want.
       items:
         ppe: da1978f2-068c-472f-be2d-04cdec48c3d9 
         medical_surge_facilities: cbbfb307-ac91-47ec-95c0-f05684e06065
