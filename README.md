@@ -11,6 +11,7 @@ Project Organization
     ├── README.md                <- The top-level README for developers using this project.
     ├── Dockerfile               <- Docker image for this project.
     ├── data                     <- Scripts to create the data.
+    ├── catalog                  <- Catalog listing data sources from open data portals.
     ├── notebooks                <- Jupyter notebooks.
     ├── references               <- Data dictionaries, manuals, and all other explanatory materials.
     ├── conda-requirements.txt   <- The requirements file for conda installs.
@@ -40,6 +41,10 @@ Our ESRI data sources are public and listed below. The full documentation of the
 1. [Emailing the Report](#emailing-the-report)
 
 ## Data Sources
+* Scripts to ingest, process, and save our data sources are in the `data` folder.
+* CA Department of Public Health: [COVID-related open data](https://data.ca.gov/dataset?q=covid&sort=score+desc%2C+metadata_modified+desc)
+    * `catalog.yml` lists the datasets pulled from the state's open data portal 
+
 #### COVID-19 Cases
 * Global province-level time-series [feature layer](http://lahub.maps.arcgis.com/home/item.html?id=20271474d3c3404d9c79bed0dbd48580) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=daeef8efe43941748cb98d7c1f716122)
 
