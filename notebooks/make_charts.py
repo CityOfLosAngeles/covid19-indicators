@@ -377,7 +377,6 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound,
     show_svg(combined_weekly_chart)
     
     
-    
 #---------------------------------------------------------------#
 # Hospital Equipment Availability (LA County)
 #---------------------------------------------------------------#
@@ -492,3 +491,43 @@ def make_lacounty_hospital_chart(df):
     show_svg(hospital_pct_chart) 
     show_svg(hospital_num_chart)
     show_svg(hospital_covid_chart)
+
+
+#---------------------------------------------------------------#
+# COVID Hospitalizations (CA data portal)
+#---------------------------------------------------------------#
+def make_county_covid_hospital_chart(df, county_name):
+    chart_width = 350
+    hospitalizations_color = green
+    icu_color = navy
+    
+    covid_hospitalizations_chart = (
+        alt.Chart(df)
+        .mark_line()
+        .encode(
+            x=alt.X(
+                "date2",
+                timeUnit=time_unit,
+                title="date",
+                axis=alt.Axis(format=monthdate_format),
+            ),
+            y=alt.Y("num:Q", title="3-day avg"),
+            color=alt.Color(
+                "type",
+                scale=alt.Scale(
+                    domain=["All COVID-Hospitalized", "COVID-ICU"],
+                    range=[hospitalizations_color, icu_color],
+                ),
+            ),
+        ).properties(
+            title=f"{county_name} County: COVID Hospitalizations", width=chart_width
+        ).configure_title(
+            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
+        ).configure_axis(
+            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
+        ).configure_view(strokeOpacity=stroke_opacity)
+    )
+    
+    show_svg(covid_hospitalizations_chart)
+
+
