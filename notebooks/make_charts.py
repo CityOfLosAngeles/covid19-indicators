@@ -511,7 +511,7 @@ def make_county_covid_hospital_chart(df, county_name):
                 title="date",
                 axis=alt.Axis(format=monthdate_format),
             ),
-            y=alt.Y("num:Q", title="3-day avg"),
+            y=alt.Y("num:Q", title="7-day avg"),
             color=alt.Color(
                 "type",
                 scale=alt.Scale(

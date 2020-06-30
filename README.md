@@ -13,7 +13,6 @@ Project Organization
     ├── data                     <- Scripts to create the data.
     ├── catalog                  <- Catalog listing data sources from open data portals.
     ├── notebooks                <- Jupyter notebooks.
-    ├── references               <- Data dictionaries, manuals, and all other explanatory materials.
     ├── conda-requirements.txt   <- The requirements file for conda installs.
     ├── requirements.txt         <- The requirements file for reproducing the analysis environment,
     │                               e.g generated with `pip freeze > requirements.txt`

@@ -14,7 +14,7 @@ yesterday_date = default_parameters.yesterday_date
 today_date = default_parameters.today_date
 two_weeks_ago = default_parameters.two_weeks_ago
 two_days_ago = default_parameters.two_days_ago
-
+eight_days_ago = default_parameters.eight_days_ago
 
 #---------------------------------------------------------------#
 # Case Indicators (County, State, MSA, City of LA)
@@ -212,7 +212,7 @@ def meet_positive_share_for_two_weeks(yesterday_date, city_or_county):
     
     
 #---------------------------------------------------------------#
-# Hospital Equipment (City of LA)
+# Hospital Equipment (LA County)
 #---------------------------------------------------------------#  
 def meet_acute(yesterday_date):
     df = meet_hospital(yesterday_date)
@@ -252,5 +252,71 @@ def meet_hospital(yesterday_date):
     # only to be revised downward again tomorrow. Might be ok if we're using 3-day avg from yesterday.
     df = utils.prep_lacounty_hospital(start_date)
     yesterday_date = two_days_ago
+    df = df[df.date == yesterday_date]
+    return df 
+
+
+#---------------------------------------------------------------#
+# COVID-Hospitalizations (LA County)
+#---------------------------------------------------------------#
+# Data from CA open data portal
+def meet_all_hospitalization(county_state_name, yesterday_date):
+    df = meet_hospitalization(county_state_name, yesterday_date)
+    extract_col = "avg_pct_change_hospitalized"
+    try:
+        indicator = df.iloc[0][extract_col].round(2)
+        return indicator
+    except IndexError:
+        return np.nan
+
+    
+def meet_icu_hospitalization(county_state_name, yesterday_date):
+    df = meet_hospitalization(county_state_name, yesterday_date)
+    extract_col = "avg_pct_change_icu"
+    try:
+        indicator = df.iloc[0][extract_col].round(2)
+        return indicator
+    except IndexError:
+        return np.nan
+    
+"""
+Sub-functions for hospitalization data.
+"""
+def meet_hospitalization(county_state_name, yesterday_date):
+    df = utils.prep_hospital_surge(county_state_name, start_date)
+    
+     # Calculate change from prior day
+    df = df.assign(
+        change_hospitalized = df.sort_values("date")["hospitalized_covid"].diff(periods=1),
+        change_icu = df.sort_values("date")["icu_covid"].diff(periods=1),
+        prior_date = df.date2 + pd.Timedelta(days=-1)
+    )
+
+    # Guideline says that there either it's downward trending or a percent change of less than 5%.
+    # Denominator for percent change is the prior day's # hospitalizations.
+    cols = ["date2", "hospitalized_covid", "icu_covid"]
+    yesterday_df = (df[cols]
+                    .rename(columns = {"date2": "prior_date", 
+                                      "hospitalized_covid": "prior_hospitalized",
+                                      "icu_covid": "prior_icu"})
+                   )
+
+    df = pd.merge(df, yesterday_df, on = "prior_date", how = "left", validate = "1:1")
+
+    # Calculate percent change
+    df = df.assign(
+        pct_change_hospitalized = df.change_hospitalized / df.prior_hospitalized,
+        pct_change_icu = df.change_icu / df.prior_icu,
+    )    
+    
+    # The past week, up through yesterday. Grab [-8 days to -1 day]    
+    # Now, subset to the past 7 days and calculate the average pct change.
+    df = df[(df.date >= eight_days_ago)]
+    df = df.assign(
+        avg_pct_change_hospitalized = df.pct_change_hospitalized.mean(),
+        avg_pct_change_icu = df.pct_change_icu.mean()
+    )
+    
+    # The value will be constant for the past 7 days, so let's grab just yesterday's date    
     df = df[df.date == yesterday_date]
     return df 
