@@ -3,8 +3,7 @@ Collection of articles to guide the reopening strategy. Provides context for **w
 
 Examples of reopening indicators used by NY and Chicago are included for LA to benchmark its own progress. References for CA and LA's own reopening indicators are also included.
 
-For context, the NYT has reported on how the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html) and [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html), and provided an [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html).
-
+1. [Context](#context)
 1. [Dangers of Reopening Too Early](#dangers-of-reopening-too-early)
 1. [Are We Past the Peak?](#are-we-past-the-peak)
 1. [Building Public Health Capacity](#building-public-health-capacity)
@@ -13,21 +12,27 @@ For context, the NYT has reported on how the virus spread [out of China](https:/
 1. [The Path Toward Reopening](#the-path-toward-reopening)
 
 
+## Context
+* How the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html) and [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html)
+* New York Times [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html)
+* Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
+
+
+
 ## Dangers of Reopening Too Early
 * As of early May: Rushed reopenings are [a global trial-and-error experiment](https://www.nytimes.com/2020/05/07/world/europe/coronavirus-reopening-costs.html). 
-    * NYT analysis showing how US states reopening [fail to meet the WH guidelines](https://www.nytimes.com/interactive/2020/05/07/us/coronavirus-states-reopen-criteria.html).
-    * Track the state's status of reopening [here](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html).
+    * Most US states reopening [fail to meet the WH guidelines](https://www.nytimes.com/interactive/2020/05/07/us/coronavirus-states-reopen-criteria.html).
     * Virus spread [speeds up](https://www.nytimes.com/2020/05/28/world/coronavirus-live.html) in [Georgia](https://www.nytimes.com/interactive/2020/04/24/opinion/coronavirus-covid-19-georgia-reopen.html), [Texas](https://www.texastribune.org/2020/05/14/coronavirus-updates-texas/), and on average, everywhere [outside NYC](https://www.nytimes.com/2020/05/16/us/coronavirus-united-states.html); in [Japan](https://www.healthline.com/health-news/covid-19-countries-that-have-already-reopened-lessons#How-Germany-is-reopening), [South Korea](https://www.seattletimes.com/nation-world/south-korea-closes-schools-again-amid-coronavirus-spike-days-after-reopening/), Singapore, [France](https://www.washingtonpost.com/world/europe/virus-count-revised-new-clusters-emerge-as-france-reopens/2020/05/29/3223a472-a1d3-11ea-be06-af5514ee0385_story.html), [Lebanon](https://healthpolicy-watch.org/countries-that-reopen-early-may-have-waves-of-lockdowns/) and [Iran](https://www.nytimes.com/2020/05/18/world/middleeast/iran-coronavirus-surge.html).
 * As of late May, [24 US states have uncontrolled virus spread](https://www.washingtonpost.com/health/study-estimates-24-states-still-have-uncontrolled-coronavirus-spread/2020/05/22/d3032470-9c43-11ea-ac72-3841fcc9b35f_story.html)
     * By late July, CA is estimated to have 1,000 deaths per day without further mitigation
     * The [R0, or reproduction number](https://www.nytimes.com/2020/04/23/world/europe/coronavirus-R0-explainer.html), which shows how fast the virus is spreading, is still above 1 in these 24 states.
     * In CA, seeing a plateau of cases, but not decreases, suggests that [R0 is hovering close to 1](https://www.vox.com/future-perfect/2020/5/16/21254748/california-coronavirus-cases-lockdown), where virus spread is sustained, and each infected person infects 1 person, on average.
     * Leading CA health official [warns that CA is making modifications toward reopening too quickly](https://www.planetizen.com/news/2020/05/109462-reopening-california-respected-county-health-official-issues-warning)
-* As of early June, the [world rushes to reopen](https://www.nytimes.com/2020/06/09/world/coronavirus-reopenings.html) even as caseloads are rising, including [21 US states](https://www.nytimes.com/2020/06/10/us/politics/coronavirus-washington-trump.html), and we can't wish [the virus away by reopening](https://www.vox.com/science-and-health/2020/6/11/21285077/covid-19-arizona-texas-next-wave).
+* As of early June, the [world rushes to reopen](https://www.nytimes.com/2020/06/09/world/coronavirus-reopenings.html) even as caseloads are rising, including [21 US states](https://www.nytimes.com/2020/06/10/us/politics/coronavirus-washington-trump.html), and we can't wish [the virus away by reopening](https://www.vox.com/science-and-health/2020/6/11/21285077/covid-19-arizona-texas-next-wave). [Surge in cases](https://www.vox.com/2020/6/27/21302495/coronavirus-pandemic-second-wave-us-america) explained.
     * How coronavirus compares to [100 years of deadly events](https://www.nytimes.com/interactive/2020/06/10/world/coronavirus-history.html) 
     * [8 states](https://www.vox.com/2020/6/10/21286696/us-covid-19-coronavirus-cases-update-texas-arizona-north-carolina) that are the next hotspots, and TX, FL, CA are the [states that saw the largest increases in cases](https://www.nytimes.com/2020/06/12/world/coronavirus-live-updates.html) in the [past week](https://www.nytimes.com/2020/06/19/world/coronavirus-live-updates.html). As of mid-June, Florida is predicted to be [next US epicenter by mid-July](https://www.wtsp.com/article/news/health/coronavirus/upenn-chop-study-florida-could-be-next-epicenter-coronavirus/67-0f910e1a-fa6e-4e22-853e-3c3bdaf46880).
     * Rising caseloads are [predictable and avoidable](https://www.vox.com/science-and-health/2020/6/12/21288009/new-covid-spikes-arizona-florida-carolinas-texas)
-    * Preventing [superspreader events will be key](https://www.vox.com/21296067/coronavirus-trump-tulsa-oklahoma-rally-superspreaders-superspreading-bars-restaurants)
+    * Preventing [superspreader events](https://www.vox.com/21296067/coronavirus-trump-tulsa-oklahoma-rally-superspreaders-superspreading-bars-restaurants) [will be key](https://www.nytimes.com/2020/06/30/science/how-coronavirus-spreads.html)
 
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
 * Polls show that [whites are increasingly ready to reopen, but Blacks are not](https://fivethirtyeight.com/features/black-americans-were-hit-hard-by-state-shutdowns-but-are-worried-about-reopening-too/).
@@ -40,6 +45,14 @@ For context, the NYT has reported on how the virus spread [out of China](https:/
 * University of Minnesota and Harvard studies on [possible trajectories of the pandemic into late 2020 and 2021](https://www.nytimes.com/2020/05/08/health/coronavirus-pandemic-curve-scenarios.html) shows that a one-time social distancing effort is not sufficient to control this in the long term. Experts recommend turning social distancing on and off depending on case levels. 
     * Germany says [regions must reinstate restrictions](https://www.nytimes.com/2020/05/18/opinion/germany-coronavirus-reopening.html) if cases pass a certain threshold.
 * [Are any countries close to herd immunity? Not even close.](https://www.nytimes.com/interactive/2020/05/28/upshot/coronavirus-herd-immunity.html)
+* Our understanding of [asymptomatic transmission](https://www.nytimes.com/2020/06/27/world/europe/coronavirus-spread-asymptomatic.html) has evolved
+    * A study from [China, Hong Kong, and Singapore](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.17.2000257): 30-60% of spread from asymptomatic transmission
+    * [Hong Kong study](https://www.nature.com/articles/s41591-020-0869-5.pdf): estimated 44% transmission occurred prior to symptoms, infectious around 2 days prior to onset of symptoms
+    * [UK study](https://science.sciencemag.org/content/368/6491/eabb6936): estimated 50% of spread attributed to asymptomatic transmission
+    * [Study about spread on the Diamond Princess](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.10.2000180#html_fulltext): estimated 18% of spread on-board from asymptomatic transmission that occurred before the quarantine start
+    * [Study by US CDC](https://www.nytimes.com/2020/03/31/health/coronavirus-asymptomatic-transmission.html): 25% of patients might have no symptoms
+    * [Germany's Robert Koch Institute study](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30314-5/fulltext): infectiousness before or on day of symptom onset was substantial, which is when transmission was likely
+* CDC finds [deaths vastly undercounted](https://www.nytimes.com/2020/06/27/health/coronavirus-antibodies-asymptomatic.html)
 
 
 ## Building Public Health Capacity
@@ -77,7 +90,7 @@ For context, the NYT has reported on how the virus spread [out of China](https:/
 * [Reuters: Reopening plans are all over the map](https://www.reuters.com/article/us-health-coronavirus-usa-states-analysi/new-cases-deaths-u-s-states-reopening-plans-are-all-over-the-map-idUSKBN22U2U2)
 * [Vox: What works - more masks, testing, stimulus money, etc](https://www.vox.com/2020/5/13/21248157/testing-quarantine-masks-stimulus)
 * White House: [Opening Up America Again gating criteria](https://www.whitehouse.gov/wp-content/uploads/2020/04/Guidelines-for-Opening-Up-America-Again.pdf) 
-    * [NY State's](https://www.nytimes.com/2020/05/04/nyregion/coronavirus-reopen-cuomo-ny.html) and [Chicago's](https://www.chicagotribune.com/coronavirus/ct-coronavirus-chicago-reopening-lightfoot-20200508-ztpnouwexrcvfdfcr2yccbc53a-story.html) reopening indicators.
+    * [NY State's](https://www.nytimes.com/2020/05/04/nyregion/coronavirus-reopen-cuomo-ny.html) and [Chicago's](https://www.chicagotribune.com/coronavirus/ct-coronavirus-chicago-reopening-lightfoot-20200508-ztpnouwexrcvfdfcr2yccbc53a-story.html) reopening indicators, and a [comparison spreadsheet](https://github.com/CityOfLosAngeles/covid19-indicators/blob/master/Reopening_Indicators_Comparison.xlsx).
     * Arguably, [LA is more similar to NYC and Chicago](https://www.nytimes.com/2020/05/09/us/coronavirus-chicago.html) than other regions due to persistent caseloads that are flattening, but not dropping. As Chicago's benchmarks are tougher than the rest of IL, and it should be so for LA than the rest of CA.
     * LA, DC, and Chicago remain [hotspots in the US](https://www.latimes.com/california/story/2020-05-22/white-house-concerned-with-coronavirus-spread-in-l-a-area-asks-cdc-to-investigate)
     * [CA](https://covid19.ca.gov/roadmap-counties/) and [LA County](http://publichealth.lacounty.gov/media/Coronavirus/covid19_recovery_dashboard.htm) recovery metrics

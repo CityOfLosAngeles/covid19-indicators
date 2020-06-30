@@ -24,9 +24,13 @@ TESTING_URL = f"{s3_file_path}county-city-cumulative.parquet"
 
 HOSPITAL_URL = f"{s3_file_path}hospital-availability.parquet"
 
+PPE_URL = f"{s3_file_path}ca-ppe.parquet"
+
+HOSPITAL_SURGE_URL = f"{s3_file_path}ca-hospital-and-surge-capacity.parquet"
+
 CROSSWALK_URL = (
-    "https://raw.githubusercontent.com/CityOfLosAngeles/aqueduct/master/dags/"
-    "public-health/covid19/msa_county_pop_crosswalk.csv"
+    "https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/"
+    "msa_county_pop_crosswalk.csv"
 )
 
 #---------------------------------------------------------------#
@@ -500,3 +504,87 @@ def prep_lacounty_hospital(start_date):
           .reset_index(drop=True))
 
     return df
+
+
+#---------------------------------------------------------------#
+# COVID-Hospitalizations (CA data portal)
+#---------------------------------------------------------------#
+def county_covid_hospital_charts(county_state_name, start_date):
+    df = prep_hospital_surge(county_state_name, start_date)
+    df2 = make_long(df)
+    county_state_name = df2.county.iloc[0]
+    make_charts.make_county_covid_hospital_chart(df2.drop(columns="date"), county_state_name)
+    return df
+
+
+"""
+Sub-functions for county hospitalizations data.
+"""
+def prep_hospital_surge(county_state_name, start_date):
+    df = pd.read_parquet(HOSPITAL_SURGE_URL)
+    
+    df = (df.assign(
+            date = pd.to_datetime(df.date).dt.date,
+            date2 = pd.to_datetime(df.date),
+        ).rename(columns = {"county_fips": "fips"})
+    )
+    
+    # Parse the county_state_name into county_name and state_name (abbrev)
+    if "," in county_state_name:
+        county_state_name = county_state_name.split(",")[0].strip()
+
+    # County names don't have " County" at the end. There is a TriCounty, UT though.
+    if " County" in county_state_name:
+        county_state_name = county_state_name.replace(" County", "").strip()
+
+    elif any(map(str.isdigit, county_state_name)):
+        county_state_name = df[df.fips == county_state_name].county.iloc[0]
+
+    
+    keep_cols = [
+        "county",
+        "fips",
+        "date",
+        "date2",
+        "hospitalized_covid",
+        "all_hospital_beds",
+        "icu_covid",
+        "all_icu_beds",
+        "surge_available_beds"
+    ]
+
+    df = (
+        df[df.county == county_state_name][keep_cols]
+        .sort_values(["county", "fips", "date"])
+        .reset_index(drop=True)
+    )
+    
+    # Calculate 7-day average
+    df = df.assign(
+        hospitalized_avg7 = df.hospitalized_covid.rolling(window=7).mean(),
+        icu_avg7 = df.icu_covid.rolling(window=7).mean(),
+        # Surge capacity has too many NaNs...can't calculate rolling average
+    )
+
+    df = df[(df.date >= start_date) & (df.date < today_date)]
+
+    return df
+
+
+# Make the df long so that we can get the encoding to show up in altair chart
+def make_long(df):
+    keep = ["county", "fips", "date", "date2",
+           "hospitalized_avg7", "icu_avg7"]
+    df2 = (df[keep]
+           .rename(columns = {"hospitalized_avg7": "All COVID-Hospitalized",
+                             "icu_avg7": "COVID-ICU"})
+          )
+    df2 = pd.melt(df2, id_vars=["county", "fips", "date", "date2"], 
+                  value_vars=["All COVID-Hospitalized", "COVID-ICU"], 
+                  var_name = "type", value_name = "num")
+    
+    df2 = df2.assign(
+        num = pd.to_numeric(df2["num"], errors="coerce")
+    )
+    
+    return df2

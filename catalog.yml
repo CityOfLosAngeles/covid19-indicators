@@ -1,0 +1,22 @@
+metadata:
+  version: 1
+sources:
+  # CA Open Data Portal has DCAT catalog
+  ca_open_data:
+    # We identify them as being loaded with the DCAT driver
+    driver: dcat
+    # Here we specify the args used to load the catalog
+    args:
+      # The URL to the catalog
+      url: https://data.ca.gov/data.json
+      # An optional name for the catalog
+      name: ca_open_data
+      # We can also specify a subset of the datasets in the catalog using an "items"
+      # dictionary. If these are specified, only these datasets will be available in
+      # the resulting catalog. They will be available under the more human-readable
+      # name specified as the key.
+      # Grab the identifier from the items we want.
+      items:
+        ppe: da1978f2-068c-472f-be2d-04cdec48c3d9 
+        medical_surge_facilities: cbbfb307-ac91-47ec-95c0-f05684e06065
+        hospital_capacity: 529ac907-6ba1-4cb7-9aae-8966fc96aeef

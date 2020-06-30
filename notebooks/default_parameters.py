@@ -40,3 +40,11 @@ two_days_ago = (
         - timedelta(days=2)
     )
 )
+
+eight_days_ago = (
+    (datetime.today()
+                .astimezone(pytz.timezone(f'{time_zone}'))
+                .date()
+        - timedelta(days=8)
+    )
+)
