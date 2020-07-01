@@ -1,14 +1,20 @@
 """
 Pull data from CA open data related to PPE 
 """
-import intake
-import intake_dcat
-import os
+#import intake
+#import intake_dcat
+#import os
 import pandas as pd
 
 # Civis container script clones the repo and we are in /app
 # Feed it the absolute path to our catalog.yml
-catalog = intake.open_catalog("/app/catalog.yml")
+PPE_URL = (
+    "https://data.ca.gov/dataset/"
+    "da1978f2-068c-472f-be2d-04cdec48c3d9/resource/"
+    "7d2f11a4-cc0f-4189-8ba4-8bee05493af1/download/logistics_ppe.csv"
+)
+
+#catalog = intake.open_catalog("/app/catalog.yml")
 bucket_name = "public-health-dashboard"
 
 def clean_data(df):
@@ -103,6 +109,7 @@ def categorize_ppe(row):
 
 
 def update_ca_ppe(**kwargs):    
-    df = catalog.ca_open_data.ppe.read()
+    #df = catalog.ca_open_data.ppe.read()
+    df = pd.read_csv(PPE_URL)
     df = clean_data(df)
     df.to_parquet(f"s3://{bucket_name}/jhu_covid19/ca-ppe.parquet")

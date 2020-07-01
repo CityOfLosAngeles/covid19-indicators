@@ -2,12 +2,31 @@
 Pull data from CA open data related to medical surge facilities 
 and hospital data
 """
+import pandas as pd
+
+""" 
+The catalog file seems to throw up an error 
+because the dataset IDs disappear and appear at
+different times. Let's stick with the download URL for now.
+
 import intake
 import intake_dcat
 import os
-import pandas as pd
 
 catalog = intake.open_catalog("/app/catalog.yml")
+"""
+HOSPITAL_DATA_URL = (
+    "https://data.ca.gov/dataset/"
+    "529ac907-6ba1-4cb7-9aae-8966fc96aeef/resource/"
+    "42d33765-20fd-44b8-a978-b083b7542225/download/hospitals_by_county.csv"
+)
+
+SURGE_CAPACITY_URL = (
+    "https://data.ca.gov/dataset/"
+    "cbbfb307-ac91-47ec-95c0-f05684e06065/resource/"
+    "ef6675e7-cd3a-4762-ba75-2ef78d6dc334/download/bed_surge.csv"
+)
+
 bucket_name = "public-health-dashboard"
 
 def clean_surge_data(df):
@@ -96,12 +115,14 @@ def grab_county_fips(df):
 
 def update_ca_surge_hospital_data(**kwargs):    
     # Grab hospital capacity data
-    hospital_df = catalog.ca_open_data.hospital_capacity.read()
+    #hospital_df = catalog.ca_open_data.hospital_capacity.read()
+    hospital_df = pd.read_csv(HOSPITAL_DATA_URL)
     hospital_df = clean_hospital_data(hospital_df)
     hospital_df = grab_county_fips(hospital_df)
 
     # Grab surge capacity data
-    surge_df = catalog.ca_open_data.medical_surge_facilities.read()
+    #surge_df = catalog.ca_open_data.medical_surge_facilities.read()
+    surge_df = pd.read_csv(SURGE_CAPACITY_URL)
     surge_df = clean_surge_data(surge_df)
     surge_df = grab_county_fips(surge_df)
     
