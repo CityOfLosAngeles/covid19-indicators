@@ -35,9 +35,6 @@ def clean_hospital_data(df):
             date = pd.to_datetime(df.todays_date),
         ).rename(
         columns = {
-            "previous_days_covid_confirmed_patients": "prior_confirmed",
-            "previous_days_suspected_covid_patients": "prior_suspected",
-            "previous_days_conversion_covid_patients": "prior_conversion",
             "hospitalized_covid_confirmed_patients": "hospitalized_confirmed",
             "hospitalized_suspected_covid_patients": "hospitalized_suspected",
             "hospitalized_covid_patients": "hospitalized_covid",
@@ -47,8 +44,7 @@ def clean_hospital_data(df):
         }).drop(columns = ["todays_date"])
     )
     
-    integrify_me = ["prior_confirmed", "prior_suspected", "prior_conversion", 
-                    "hospitalized_confirmed", "hospitalized_suspected", 
+    integrify_me = ["hospitalized_confirmed", "hospitalized_suspected", 
                     "hospitalized_covid", "all_hospital_beds", 
                     "icu_confirmed", "icu_suspected", "icu_available"]
     
@@ -62,7 +58,6 @@ def clean_hospital_data(df):
 
     col_order = [
         "county", "date", 
-        "prior_confirmed", "prior_suspected", "prior_conversion", 
         "hospitalized_confirmed", "hospitalized_suspected", 
         "hospitalized_covid", "all_hospital_beds", 
         "icu_confirmed", "icu_suspected", "icu_covid", "icu_available", "all_icu_beds"
