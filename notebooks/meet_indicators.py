@@ -15,6 +15,8 @@ today_date = default_parameters.today_date
 two_weeks_ago = default_parameters.two_weeks_ago
 two_days_ago = default_parameters.two_days_ago
 eight_days_ago = default_parameters.eight_days_ago
+nine_days_ago = default_parameters.nine_days_ago
+
 
 #---------------------------------------------------------------#
 # Case Indicators (County, State, MSA, City of LA)
@@ -311,12 +313,19 @@ def meet_hospitalization(county_state_name, yesterday_date):
     
     # The past week, up through yesterday. Grab [-8 days to -1 day]    
     # Now, subset to the past 7 days and calculate the average pct change.
-    df = df[(df.date >= eight_days_ago)]
+    if df.date.max() == yesterday_date:
+        df = df[(df.date >= eight_days_ago)]
+    
+    # The value will be constant for the past 7 days, so let's grab just yesterday's date
+    # Data lags...so let's grab two days ago
+    if df.date.max() == two_days_ago:
+        df = df[(df.date >= nine_days_ago)]
+        yesterday_date = two_days_ago
+    
     df = df.assign(
         avg_pct_change_hospitalized = df.pct_change_hospitalized.mean(),
         avg_pct_change_icu = df.pct_change_icu.mean()
     )
     
-    # The value will be constant for the past 7 days, so let's grab just yesterday's date    
     df = df[df.date == yesterday_date]
     return df 
