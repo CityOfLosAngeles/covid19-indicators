@@ -21,67 +21,129 @@ def get_county_data(filename, workbook, sheet_name):
     df = pd.read_excel(workbook, sheet_name=sheet_name, skiprows=1, index_col=0)
     df = df.T
 
-    select_rows = [1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
-    df = df.iloc[:, select_rows]
-
-    df.reset_index(level=0, inplace=True)
+    select_rows = [1, 2, 3, 
+                7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 
+                25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46 
+                ]
+    df = df.iloc[:, select_rows].reset_index(level=0)
 
     column_names = [
         "Date",
-        "Performed",
-        "Test Kit Inventory",
-        "Hotkin_Memorial",
+        "City_Subtotal",
+        "County_Subtotal",
+        "Total_Performed",
+        "Dodgers_Stadium",
         "Hansen_Dam",
         "Crenshaw_Christian",
-        "VA_Lot15",
         "Lincoln_Park",
         "West_Valley_Warner",
         "Carbon_Health_Echo_Park",
         "Kedren_Health",
-        "Baldwin_Hills_Crenshaw",
-        "Northridge_Fashion",
+        "Special_LAPD_LAFD",
+        "HACLA",
         "Nursing_Home_Outreach",
         "Homeless_Outreach",
+        "Hotchkin_Elysian_Park",
+        "VA_Lot15_Jackie_Robinson",
+        "Baldwin_Hills_Crenshaw",
+        "Northridge_Fashion",
+        "Pomona_Fairplex",
+        "Redondo_Beach_District",
+        "Palmdale",
+        "Long_Beach_CC",
+        "Charles_Drew_Campus",
+        "Santa_Clarita",
+        "East_LA_Civic",
+        "The_Forum",
+        "Bellflower_Civic",
+        "San_Gabriel_Valley_Airport",
+        "High_Desert_Lancaster",
+        "Northridge_Hospital_Medical",
+        "AltaMed",
+        "Cedars_Sinai",
+        "City_of_Bell",
+        "Glendale_Memorial",
+        "Beverly_Hospital_Montebello",
+        "Whittier_PIH",
+        "Good_Samaritan_LA",
+        "Harbor_UCLA_Medical",
+        "AVORS_Medical_Lancaster",
+        "Pasadena_Rose_Bowl",
     ]
 
     df.columns = column_names
 
-    df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
-    df = df[
-        df.Date.dt.date
-        < datetime.datetime.now()
-        .astimezone(pytz.timezone("America/Los_Angeles"))
-        .date()
-    ].sort_values("Date")
+    # Drop the Total column
+    df = df[df.Date != "Total"]
+
+    df = (df.assign(
+        Date = pd.to_datetime(df.Date),
+        ).sort_values("Date")
+        .reset_index(drop=True)
+    )
 
     # Fill in missing values with 0's for city sites
     city_sites = [
-        "Hotkin_Memorial",
+        "Dodgers_Stadium",
         "Hansen_Dam",
         "Crenshaw_Christian",
-        "VA_Lot15",
         "Lincoln_Park",
         "West_Valley_Warner",
         "Carbon_Health_Echo_Park",
         "Kedren_Health",
-        "Baldwin_Hills_Crenshaw",
-        "Northridge_Fashion",
+        "Special_LAPD_LAFD",
+        "HACLA",
         "Nursing_Home_Outreach",
         "Homeless_Outreach",
+        "Hotchkin_Elysian_Park",
+        "VA_Lot15_Jackie_Robinson",
+        "Baldwin_Hills_Crenshaw",
+        "Northridge_Fashion",
+    ]
+
+    county_sites = [
+        "Pomona_Fairplex",
+        "Redondo_Beach_District",
+        "Palmdale",
+        "Long_Beach_CC",
+        "Charles_Drew_Campus",
+        "Santa_Clarita",
+        "East_LA_Civic",
+        "The_Forum",
+        "Bellflower_Civic",
+        "San_Gabriel_Valley_Airport",
+        "High_Desert_Lancaster",
+        "Northridge_Hospital_Medical",
+        "AltaMed",
+        "Cedars_Sinai",
+        "City_of_Bell",
+        "Glendale_Memorial",
+        "Beverly_Hospital_Montebello",
+        "Whittier_PIH",
+        "Good_Samaritan_LA",
+        "Harbor_UCLA_Medical",
+        "AVORS_Medical_Lancaster",
+        "Pasadena_Rose_Bowl",
     ]
 
     df[city_sites] = df[city_sites].fillna(0).astype(int)
+    df[county_sites] = df[county_sites].replace("TBD", 0)
+    df[county_sites] = df[county_sites].fillna(0).astype(int)
 
-    df = df.assign(City_Performed=df[city_sites].astype(int).sum(axis=1),)
-
-    # Calculate cumulative sums for whole county and city
-    keep_cols = ["Date", "Performed", "Cumulative", "City_Performed", "City_Cumulative"]
-
-    df = df.assign(
-        Performed=df.Performed.astype(int),
-        Cumulative=df.sort_values("Date")["Performed"].cumsum().astype(int),
-        City_Cumulative=df.sort_values("Date")["City_Performed"].cumsum().astype(int),
-    )[keep_cols].sort_values("Date")
+    df = (df.assign(
+            City_Subtotal=df.City_Subtotal.astype(int),
+            County_Subtotal=df.County_Subtotal.astype(int),
+            Total_Performed=df.Total_Performed.astype(int),
+        ).rename(columns = {
+            "City_Subtotal":"City_Performed",
+            "County_Subtotal": "OtherCounty_Performed",
+            "Total_Performed": "Performed"
+        })
+    )
+    
+    df = (df.sort_values("Date")
+            .reset_index(drop=True)
+    )
 
     df.to_csv(f"s3://{bucket_name}/jhu_covid19/county-city-cumulative.csv", index=False)
     df.to_parquet(f"s3://{bucket_name}/jhu_covid19/county-city-cumulative.parquet")

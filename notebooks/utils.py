@@ -300,9 +300,10 @@ def prep_testing(start_date):
         date2 = pd.to_datetime(df.Date),
     )
     
+    keep_col = ["date", "date2", "City_Performed", "Performed"]
     # Subset by start date up to yesterday's date    
     df = (df[(df.date >= start_date) & (df.date < today_date)]
-            .drop(columns = "Date")
+            [keep_col]
          )
 
     return df 
