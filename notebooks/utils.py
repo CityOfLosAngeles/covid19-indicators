@@ -238,7 +238,8 @@ def calculate_rolling_average(df):
 #---------------------------------------------------------------#
 def lacity_case_charts(start_date):
     df = prep_lacity_cases(start_date)
-    make_charts.make_lacity_cases_chart(df)
+    name = "City of LA"
+    make_charts.make_cases_deaths_chart(df, "lacity", name)
     return df
 
 
@@ -246,13 +247,15 @@ def lacity_case_charts(start_date):
 Sub-functions for City of LA case data.
 """
 def prep_lacity_cases(start_date):
-    city_df = pd.read_parquet(LA_CITY_URL)
-    city_df["date"] = city_df["date"].astype(str).apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date())    
+    df = pd.read_parquet(LA_CITY_URL)
 
-    df = (
-        city_df.rename(
+    df = (df.assign(
+            date = pd.to_datetime(df.date).dt.date,
+        ).rename(
             columns={"city_cases": "cases", 
                      "city_new_cases": "new_cases",
+                     "city_deaths": "deaths",
+                     "city_new_deaths": "new_deaths",
                      }
         )
         .sort_values("date")
@@ -260,14 +263,9 @@ def prep_lacity_cases(start_date):
     )
 
     # Derive new columns
-    df = df.assign(
-        # 7-day rolling average for new cases
-        cases_avg7=df.new_cases.rolling(window=7).mean(),
-        date2 = pd.to_datetime(df.date),
-    )
-    
-    # Subset by start date up to yesterday's date    
-    df = df[(df.date >= start_date) & (df.date < today_date)]
+    # Rolling averages will choke if there's a NaN
+    df = df.dropna(subset = ["new_cases", "new_deaths"])
+    df = calculate_rolling_average(df)
     
     return df
 

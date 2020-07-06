@@ -51,7 +51,7 @@ two_weeks_ago = default_parameters.two_weeks_ago
 
 
 #---------------------------------------------------------------#
-# Case Data (County, State, MSA)
+# Case Data (County, State, MSA, City of LA)
 #---------------------------------------------------------------#
 def make_cases_deaths_chart(df, geog, name):
     # Define chart titles
@@ -61,6 +61,9 @@ def make_cases_deaths_chart(df, geog, name):
         chart_title = f"{name}"
     if geog == "msa":
         chart_title = f"{name} MSA"
+    # Add City of LA to this geog
+    if geog == "lacity":
+        chart_title = f"{name}"
     
     # Make cases charts
     cases_line = (
@@ -164,63 +167,6 @@ def make_cases_deaths_chart(df, geog, name):
     )
         
     show_svg(combined_chart)
-
-    
-#---------------------------------------------------------------#
-# Case Data (City of LA)
-#---------------------------------------------------------------#
-def make_lacity_cases_chart(df):
-    # Make cases charts
-    cases_line = (
-        alt.Chart(df.drop(columns = "date"))
-        .mark_line()
-        .encode(
-            x=alt.X("date2", timeUnit=time_unit, 
-                    title="date", axis=alt.Axis(format=monthdate_format)
-                   ),
-            y=alt.Y("cases_avg7", title="7-day avg"),
-            color=alt.value(navy),
-        )
-       
-    )
-    
-    cases_shaded = (
-        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
-        .mark_area()
-        .encode(
-            x=alt.X("date2", timeUnit = time_unit,
-                   title = "date", axis=alt.Axis(format=monthdate_format)
-                   ),
-            y=alt.Y("cases_avg7", title="7-day avg"),
-            color=alt.value(light_gray)
-        )
-    )
-    
-    cases_extra_outline = (
-        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
-        .mark_line()
-        .encode(
-             x=alt.X("date2", timeUnit = time_unit,
-                   title = "date", axis=alt.Axis(format=monthdate_format)
-                   ),
-            y=alt.Y("cases_avg7", title="7-day avg"),
-            color=alt.value(navy_outline)
-        )
-    )    
-    
-    cases_chart = (
-        (cases_line + cases_shaded + cases_extra_outline)
-        .properties(
-            title="City of LA: New Cases", width=chart_width, height=chart_height
-        )
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
-
-    show_svg(cases_chart)   
 
     
 #---------------------------------------------------------------#

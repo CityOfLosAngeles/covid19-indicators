@@ -50,16 +50,15 @@ def get_data(workbook, sheet_name):
     df = (df.drop(columns = ["city_new_cases", "city_new_deaths"])
             .assign(
                 date = pd.to_datetime(df.date).dt.date,
+                city_cases = df.city_cases.round(0).astype("Int64"),
+                city_deaths = df.city_deaths.round(0).astype("Int64"),
             )
     )
 
     df = df.assign(
-        city_new_cases = df.sort_values("date")["city_cases"].diff(periods=1),
-        city_new_deaths = df.sort_values("date")["city_deaths"].diff(periods=1)
+        city_new_cases = df.sort_values("date")["city_cases"].diff(periods=1).astype("Int64"),
+        city_new_deaths = df.sort_values("date")["city_deaths"].diff(periods=1).astype("Int64"),
     )
-
-    for col in ["city_cases", "city_deaths", "city_new_cases", "city_new_deaths"]:
-        df[col] = df[col].astype("Int64")
 
     df = (df[df.date <= today_date]
             .dropna(subset = ["city_cases", "city_deaths"])
