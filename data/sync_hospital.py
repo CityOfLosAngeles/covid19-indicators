@@ -6,6 +6,7 @@ import os
 import pandas as pd
 
 bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
 
 workbook = (
     "https://docs.google.com/spreadsheets/d/"
@@ -27,13 +28,9 @@ def get_data(workbook):
             }
         )[keep]
     )   
-    df.to_csv(f"s3://{bucket_name}/jhu_covid19/hospital-availability.csv")
-    df.to_parquet(f"s3://{bucket_name}/jhu_covid19/hospital-availability.parquet")
+    df.to_csv(f"{S3_FILE_PATH}hospital-availability.csv", index=False)
+    df.to_parquet(f"{S3_FILE_PATH}hospital-availability.parquet")
 
 
 def update_bed_availability_data(**kwargs):
-    """
-    The actual python callable that Airflow schedules.
-    """
-    # Getting data from google sheet
     get_data(workbook)

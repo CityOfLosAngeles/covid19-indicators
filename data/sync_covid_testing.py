@@ -7,6 +7,7 @@ import pandas as pd
 import pytz
 
 bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
 
 filename = "COVID_testing_data.csv"
 workbook = (
@@ -145,13 +146,9 @@ def get_county_data(filename, workbook, sheet_name):
             .reset_index(drop=True)
     )
 
-    df.to_csv(f"s3://{bucket_name}/jhu_covid19/county-city-cumulative.csv", index=False)
-    df.to_parquet(f"s3://{bucket_name}/jhu_covid19/county-city-cumulative.parquet")
+    df.to_csv(f"{S3_FILE_PATH}county-city-testing.csv", index=False)
+    df.to_parquet(f"{S3_FILE_PATH}county-city-testing.parquet")
 
 
 def update_covid_testing_city_county_data(**kwargs):
-    """
-    The actual python callable that Airflow schedules.
-    """
     df = get_county_data(filename, workbook, sheet_name)
-    

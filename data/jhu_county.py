@@ -9,8 +9,8 @@ import pandas as pd
 
 from datetime import datetime, timedelta
 
-
 bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
 
 # URL to JHU confirmed cases US county time series.
 CASES_URL = (
@@ -379,5 +379,5 @@ def append_county_time_series(**kwargs):
     final = fix_column_dtypes(us_county)
 
     # (7) Write to CSV and overwrite the old feature layer.
-    final.to_csv(f"s3://{bucket_name}/jhu_covid19/us-county-time-series.csv")
-    final.to_parquet(f"s3://{bucket_name}/jhu_covid19/us-county-time-series.parquet")
+    final.to_csv(f"{S3_FILE_PATH}us-county-time-series.csv", index=False)
+    final.to_parquet(f"{S3_FILE_PATH}us-county-time-series.parquet")

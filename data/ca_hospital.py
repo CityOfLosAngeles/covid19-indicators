@@ -28,6 +28,7 @@ SURGE_CAPACITY_URL = (
 )
 
 bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
 
 def clean_surge_data(df):
     keep = ["county", "date", "type_of_facility", "available_beds", "occupied_beds"] 
@@ -127,8 +128,10 @@ def update_ca_surge_hospital_data(**kwargs):
     surge_df = grab_county_fips(surge_df)
     
     # Export to S3 separately
-    hospital_df.to_parquet(f"s3://{bucket_name}/jhu_covid19/ca-hospital-capacity.parquet")
-    surge_df.to_parquet(f"s3://{bucket_name}/jhu_covid19/ca-medical-surge-facilities.parquet")
+    hospital_df.to_parquet(f"{S3_FILE_PATH}ca-hospital-capacity.parquet")
+    hospital_df.to_csv(f"{S3_FILE_PATH}ca-hospital-capacity.csv", index=False)
+    surge_df.to_parquet(f"{S3_FILE_PATH}ca-medical-surge-facilities.parquet")
+    surge_df.to_csv(f"{S3_FILE_PATH}ca-medical-surge-facilities.csv", index=False)
 
     """
     Create a county time-series df at county-date level.
@@ -170,4 +173,5 @@ def update_ca_surge_hospital_data(**kwargs):
         .reset_index(drop=True)
     )
 
-    m1.to_parquet(f"s3://{bucket_name}/jhu_covid19/ca-hospital-and-surge-capacity.parquet")
+    m1.to_parquet(f"{S3_FILE_PATH}ca-hospital-and-surge-capacity.parquet")
+    m1.to_csv(f"{S3_FILE_PATH}ca-hospital-and-surge-capacity.csv", index=False)

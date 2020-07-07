@@ -16,6 +16,7 @@ PPE_URL = (
 
 #catalog = intake.open_catalog("/app/catalog.yml")
 bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
 
 def clean_data(df):
     df = (df.assign(
@@ -112,4 +113,6 @@ def update_ca_ppe(**kwargs):
     #df = catalog.ca_open_data.ppe.read()
     df = pd.read_csv(PPE_URL)
     df = clean_data(df)
-    df.to_parquet(f"s3://{bucket_name}/jhu_covid19/ca-ppe.parquet")
+    df.to_parquet(f"{S3_FILE_PATH}ca-ppe.parquet")
+    df.to_csv(f"{S3_FILE_PATH}ca-ppe.csv", index=False)
+

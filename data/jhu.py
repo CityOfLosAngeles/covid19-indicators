@@ -10,6 +10,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
 
 # URL to JHU confirmed cases time series.
 CASES_URL = (
@@ -225,6 +226,5 @@ def load_global_covid_data():
     )
 
     # Output to CSV
-    df.to_csv(f"s3://{bucket_name}/jhu_covid19/global-time-series.csv")
-    df.to_parquet(f"s3://{bucket_name}/jhu_covid19/global-time-series.parquet")
-    
+    df.to_csv(f"{S3_FILE_PATH}global-time-series.csv", index=False)
+    df.to_parquet(f"{S3_FILE_PATH}global-time-series.parquet")

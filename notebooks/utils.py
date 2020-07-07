@@ -14,19 +14,19 @@ import useful_dict
 from datetime import date, datetime, timedelta
 from IPython.display import display, Markdown
 
-s3_file_path = "s3://public-health-dashboard/jhu_covid19/"
+S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
-US_COUNTY_URL = f"{s3_file_path}us-county-time-series.parquet"
+US_COUNTY_URL = f"{S3_FILE_PATH}us-county-time-series.parquet"
 
-LA_CITY_URL = f"{s3_file_path}city-of-la-cases.parquet"
+LA_CITY_URL = f"{S3_FILE_PATH}city-of-la-cases.parquet"
 
-TESTING_URL = f"{s3_file_path}county-city-cumulative.parquet"
+TESTING_URL = f"{S3_FILE_PATH}county-city-testing.parquet"
 
-HOSPITAL_URL = f"{s3_file_path}hospital-availability.parquet"
+HOSPITAL_URL = f"{S3_FILE_PATH}hospital-availability.parquet"
 
-PPE_URL = f"{s3_file_path}ca-ppe.parquet"
+PPE_URL = f"{S3_FILE_PATH}ca-ppe.parquet"
 
-HOSPITAL_SURGE_URL = f"{s3_file_path}ca-hospital-and-surge-capacity.parquet"
+HOSPITAL_SURGE_URL = f"{S3_FILE_PATH}ca-hospital-and-surge-capacity.parquet"
 
 CROSSWALK_URL = (
     "https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/"

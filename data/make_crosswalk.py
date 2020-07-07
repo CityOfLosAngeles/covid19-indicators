@@ -13,6 +13,9 @@ LOOKUP_TABLE_URL = (
     "UID_ISO_FIPS_LookUp_Table.csv"
 )
 
+bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
+
 
 # Define functions to clean data before merging
 def coerce_integer(df):
@@ -127,6 +130,4 @@ m3 = (
 )
 
 # Export to S3 and upload to GitHub
-m3.to_csv(
-    "s3://public-health-dashboard/jhu_covid19/msa_county_pop_crosswalk.csv", index=False
-)
+m3.to_csv(f"{S3_FILE_PATH}msa_county_pop_crosswalk.csv", index=False)
