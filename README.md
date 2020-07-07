@@ -60,8 +60,6 @@ Our ESRI data sources are public and listed below. The full documentation of the
 
 * CA county-level hospitalizations time-series [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/ca-hospital-and-surge-capacity.csv)
 
-* CA zip code-level PPE delivered time-series [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/ca-ppe.csv)
-
 #### COVID-19 Testing
 * LA County and LA City COVID-19 tests administered [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/county-city-testing.csv)
 
