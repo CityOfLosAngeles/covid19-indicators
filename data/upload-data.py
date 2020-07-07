@@ -18,7 +18,7 @@ BRANCH = "schedule-csv"
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
 def upload_file(file_name):
-    PATH = f"data/{file_name}.csv"
+    PATH = f"data/{file_name}"
 
     # Get the sha of the previous version
     r = requests.get(
@@ -30,7 +30,7 @@ def upload_file(file_name):
     sha = r.json()["sha"]
 
     # Upload the new version
-    MY_FILE = f"{S3_FILE_PATH}{file_name}.csv"
+    MY_FILE = f"{S3_FILE_PATH}{file_name}"
 
     with fsspec.open(MY_FILE, "rb") as f:
         contents = f.read()
@@ -51,4 +51,11 @@ def upload_file(file_name):
     )
     r.raise_for_status()
 
-upload_file("city-of-la-cases")
+
+# LA county or city data
+upload_file("city-of-la-cases.csv")
+upload_file("county-city-testing.csv")
+upload_file("hospital-availability.csv")
+# CA open data portal data
+upload_file("ca-ppe.csv")
+upload_file("ca-hospital-and-surge-capacity.csv")
