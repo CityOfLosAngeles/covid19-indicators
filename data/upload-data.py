@@ -57,5 +57,5 @@ upload_file("city-of-la-cases.csv")
 upload_file("county-city-testing.csv")
 upload_file("hospital-availability.csv")
 # CA open data portal data
-upload_file("ca-ppe.csv")
+#upload_file("ca-ppe.csv")
 upload_file("ca-hospital-and-surge-capacity.csv")
