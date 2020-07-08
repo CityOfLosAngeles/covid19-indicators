@@ -51,19 +51,17 @@ Our ESRI data sources are public and listed below. The full documentation of the
 
 * US county-level time-series [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=8f13bb3abefe490f9edd47df89664b56) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=782ca660304a4bdda1cc9757a2504647)
 
-* Comparison of metropolitan infection rates [feature table](http://lahub.maps.arcgis.com/home/item.html?id=b37e229b71dc4c65a479e4b5912ded66) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=27efb06ce2954b90ae833dabb570b1cf). The [MSA to county crosswalk](https://github.com/CityOfLosAngeles/aqueduct/blob/master/dags/public-health/covid19/msa_county_pop_crosswalk.csv) was derived from the [National Bureau of Economic Research crosswalk](https://data.nber.org/data/cbsa-msa-fips-ssa-county-crosswalk.html) using `make-crosswalk.py`.
+* A crosswalk for linking [MSA to county](https://github.com/CityOfLosAngeles/covid19-indicators/blob/master/data/msa_county_pop_crosswalk.csv) that was derived from the [National Bureau of Economic Research crosswalk](https://data.nber.org/data/cbsa-msa-fips-ssa-county-crosswalk.html) using `make-crosswalk.py`.
 
-* LA County Dept of Public Health (DPH) neighborhood-level current date's [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=ca30397902484e9c911e8092788a0233), and the City's GeoHub [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=9681f6a5269f4b6997b398bca057b62c) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=f553fa74cbfe4e49b3a334947298fa34)
-
-* City of LA case count time-series [feature table](https://lahub.maps.arcgis.com/home/item.html?id=1d1e4679a94e43e884b97a0488fc04cf) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=7175fba373f541a7a19df56b6a0617f4)
+* City of LA cases and deaths time-series [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/city-of-la-cases.csv)
 
 #### Hospital Bed and Equipment Availability
-* LA County hospital bed and equipment availability [feature layer](http://lahub.maps.arcgis.com/home/item.html?id=956e105f422a4c1ba9ce5d215b835951) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=3da1eb3e13a14743973c96b945bd1117). Data is available for the [70 largest hospitals](http://file.lacounty.gov/SDSInter/dhs/1070069_HavBedSummary.pdf) in the county and collected in the HavBed survey.
+* LA County hospital bed and equipment availability [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/hospital-availability.csv). Data is available for the [70 largest hospitals](http://file.lacounty.gov/SDSInter/dhs/1070069_HavBedSummary.pdf) in the county and collected in the HavBed survey.
+
+* CA county-level hospitalizations time-series [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/ca-hospital-and-surge-capacity.csv)
 
 #### COVID-19 Testing
-* LA County COVID-19 tests administered [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=64b91665fef4471dafb6b2ff98daee6c) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=158dab4a07b04ecb8d47fea1746303ac)
-
-* LA County and LA City COVID-19 tests administered [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=996a863e59f04efdbe33206a6c717afb) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=3cfd003985b447c994a7252e8eb97b92)
+* LA County and LA City COVID-19 tests administered [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/county-city-testing.csv)
 
 * The City of LA tests are a subset of LA County tests. Tests done in other parts of LA County (excluding the City of LA) would be derived by taking the difference of `Performed` - `City_Performed`.
 
@@ -82,8 +80,14 @@ JHU_GLOBAL_ITEM_ID = "daeef8efe43941748cb98d7c1f716122"
 
 JHU_URL = f"http://lahub.maps.arcgis.com/sharing/rest/content/items/{JHU_GLOBAL_ITEM_ID}/data"
 
+TESTING_URL = (
+    "https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators"
+    "master/data/county-city-testing.csv"
+)
+
 import pandas as pd
 df = pd.read_csv(JHU_URL)
+df = pd.read_csv(TESTING_URL)
 ```
 
 **Import ESRI feature layer**

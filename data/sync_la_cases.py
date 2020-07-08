@@ -8,6 +8,7 @@ from datetime import date
 today_date = date.today()
 
 bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
 
 workbook = (
     "https://docs.google.com/spreadsheets/d/"
@@ -66,12 +67,9 @@ def get_data(workbook, sheet_name):
             .reset_index(drop=True)
     )
 
-    df.to_csv(f"s3://{bucket_name}/jhu_covid19/city-of-la-cases.csv", index=False)
-    df.to_parquet(f"s3://{bucket_name}/jhu_covid19/city-of-la-cases.parquet")
+    df.to_csv(f"{S3_FILE_PATH}city-of-la-cases.csv", index=False)
+    df.to_parquet(f"{S3_FILE_PATH}city-of-la-cases.parquet")
 
 
-def update_la_cases_data(**kwargs):
-    """
-    The actual python callable that Airflow schedules.
-    """    
+def update_la_cases_data(**kwargs):   
     get_data(workbook, sheet_name)

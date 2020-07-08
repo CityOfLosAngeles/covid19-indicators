@@ -10,6 +10,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
 
 # URL to JHU confirmed cases time series.
 CASES_URL = (
@@ -37,7 +38,7 @@ RECOVERED_URL = (
 
 # Can use geojson query instead
 JHU_GLOBAL_SOURCE_ID = (
-    "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/"
+    "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/"
     "ncov_cases/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&"
     "geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&"
     "resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&"
@@ -51,6 +52,7 @@ JHU_GLOBAL_SOURCE_ID = (
     "resultOffset=&resultRecordCount=&returnZ=false&returnM=false&"
     "returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token="
 )
+
 
 def parse_columns(df):
     """
@@ -225,6 +227,5 @@ def load_global_covid_data():
     )
 
     # Output to CSV
-    df.to_csv(f"s3://{bucket_name}/jhu_covid19/global-time-series.csv")
-    df.to_parquet(f"s3://{bucket_name}/jhu_covid19/global-time-series.parquet")
-    
+    df.to_csv(f"{S3_FILE_PATH}global-time-series.csv", index=False)
+    df.to_parquet(f"{S3_FILE_PATH}global-time-series.parquet")
