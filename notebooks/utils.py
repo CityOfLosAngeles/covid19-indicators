@@ -267,8 +267,6 @@ def prep_lacity_cases(start_date):
     )
 
     # Derive new columns
-    # Rolling averages will choke if there's a NaN
-    df = df.dropna(subset = ["new_cases", "new_deaths"])
     df = calculate_rolling_average(df, start_date, today_date)
     
     return df

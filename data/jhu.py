@@ -38,7 +38,7 @@ RECOVERED_URL = (
 
 # Can use geojson query instead
 JHU_GLOBAL_SOURCE_ID = (
-    "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/"
+    "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/"
     "ncov_cases/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&"
     "geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&"
     "resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&"
@@ -52,6 +52,7 @@ JHU_GLOBAL_SOURCE_ID = (
     "resultOffset=&resultRecordCount=&returnZ=false&returnM=false&"
     "returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token="
 )
+
 
 def parse_columns(df):
     """
