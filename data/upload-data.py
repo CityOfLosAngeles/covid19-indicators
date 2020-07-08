@@ -14,7 +14,7 @@ import requests
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 BASE = "https://api.github.com"
 REPO = "CityOfLosAngeles/covid19-indicators"
-BRANCH = "schedule-csv"
+BRANCH = "master"
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
 def upload_file(file_name):
@@ -44,7 +44,7 @@ def upload_file(file_name):
                 "name": "Los Angeles ITA data team",
                 "email": "ITAData@lacity.org",
             },
-            "branch": "schedule-csv",
+            "branch": "master",
             "sha": sha,
             "content": base64.b64encode(contents).decode("utf-8"),
         },

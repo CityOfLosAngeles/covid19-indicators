@@ -36,12 +36,10 @@ CROSSWALK_URL = (
 #---------------------------------------------------------------#
 # Default parameters
 #---------------------------------------------------------------#
-start_date = default_parameters.start_date
 yesterday_date = default_parameters.yesterday_date
 today_date = default_parameters.today_date
 fulldate_format = default_parameters.fulldate_format
 monthdate_format = default_parameters.monthdate_format
-
 
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA)
@@ -132,8 +130,8 @@ def prep_county(county_state_name, start_date):
         .sort_values(["county", "state", "fips", "date"])
         .reset_index(drop=True)
     )
-
-    df = calculate_rolling_average(df)
+    
+    df = calculate_rolling_average(df, start_date, today_date)
 
     return df
 
@@ -169,7 +167,7 @@ def prep_state(state_name, start_date):
         .reset_index(drop=True)
     )
     
-    df = calculate_rolling_average(df)
+    df = calculate_rolling_average(df, start_date, today_date)
 
     return df
 
@@ -183,11 +181,15 @@ def prep_msa(msa_name, start_date):
     df = prep_us_county_time_series()
 
     pop = pd.read_csv(CROSSWALK_URL, dtype={"county_fips": "str", "cbsacode": "str"},)
-    pop = pop[
-        (pop.cbsatitle == msa_name)
-        | (pop.cbsatitle.str.contains(msa_name))
-        | (pop.cbsacode == msa_name)
-    ][["cbsacode", "cbsatitle", "msa_pop", "county_fips"]].assign(msa=pop.cbsatitle)
+    pop = (pop[
+            (pop.cbsatitle == msa_name)
+            | (pop.cbsatitle.str.contains(msa_name))
+            | (pop.cbsacode == msa_name)
+            ][["cbsacode", "cbsatitle", "msa_pop", "county_fips"]]
+           .assign(
+               msa=pop.cbsatitle
+           )
+    )
 
     final_df = pd.merge(
         df, pop, left_on="fips", right_on="county_fips", how="inner", validate="m:1",
@@ -208,17 +210,19 @@ def prep_msa(msa_name, start_date):
             df.sort_values(group_cols).groupby(msa_group_cols)["deaths"].diff(periods=1)
         ),
     )
-    
-    df = calculate_rolling_average(df)
+        
+    df = calculate_rolling_average(df, start_date, today_date)
     
     return df
 
 
-def calculate_rolling_average(df):
+def calculate_rolling_average(df, start_date, today_date):
+    # Drop any NaNs or rolling average will choke
+    df = df.dropna(subset = ["new_cases", "new_deaths"])
+    
     # Derive new columns
     df = df.assign(
         cases_avg7=df.new_cases.rolling(window=7).mean(),
-        deaths_avg3=df.new_deaths.rolling(window=3).mean(),
         deaths_avg7=df.new_deaths.rolling(window=7).mean(),
     )    
     
@@ -265,7 +269,7 @@ def prep_lacity_cases(start_date):
     # Derive new columns
     # Rolling averages will choke if there's a NaN
     df = df.dropna(subset = ["new_cases", "new_deaths"])
-    df = calculate_rolling_average(df)
+    df = calculate_rolling_average(df, start_date, today_date)
     
     return df
 
@@ -356,12 +360,12 @@ def prep_la_positive_test(start_date, city_or_county):
     df = pd.merge(cases_df, tests_df, on = "date", how = "left")
     df = df.rename(columns = {tests_col: "new_tests"}) 
     
-    df = aggregate_to_week(df)
+    df = aggregate_to_week(df, start_date, today_date)
     
     return df   
     
     
-def aggregate_to_week(df): 
+def aggregate_to_week(df, start_date, today_date): 
     # Subset to particular start and end date
     df = (df[(df.date >= start_date) & (df.date < today_date)]
         .assign(

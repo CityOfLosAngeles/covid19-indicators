@@ -69,14 +69,17 @@ def parse_columns(df):
 
 def fix_fips(df):
     def correct_county_fips(row):
-        if (len(row.fips) == 4) and (row.fips != "None"):
+        if (len(row.fips) == 4):
             return "0" + row.fips
-        elif row.fips == "None":
-            return ""
-        else:
+        elif (len(row.fips) == 5):
             return row.fips
-    
+        elif (row.fips == "0") or (row.fips == "nan"):
+            return ""
+        
+    df["fips"] = df.fips.fillna(0)
     df["fips"] = df.fips.astype(str)
+    df["fips"] = df.fips.str.split(".", expand=True)[0]
+
     df["fips"] = df.apply(correct_county_fips, axis=1)
 
     for col in ["state", "county", "fips"]:
@@ -160,7 +163,8 @@ def load_jhu_us_time_series(branch="master"):
     )
 
     # Fix fips
-    df = fix_fips(df)
+    df["fips"] = df.fips.fillna(0)
+    df["fips"] = df.fips.astype(int)
 
     return df.sort_values(sort_cols).reset_index(drop=True)
 
@@ -195,20 +199,22 @@ def clean_jhu_county(df):
         "date",
     ]
 
-    df = df[keep_cols].rename(
-        columns={
-            "Confirmed": "cases",
-            "Deaths": "deaths",
-            "FIPS": "fips",
-            "Long_": "Lon",
-            "Province_State": "state",
-            "Admin2": "county",
-            "People_Tested": "people_tested",
-        }
+    df = (df[keep_cols]
+            .rename(columns={
+                "Confirmed": "cases",
+                "Deaths": "deaths",
+                "FIPS": "fips",
+                "Long_": "Lon",
+                "Province_State": "state",
+                "Admin2": "county",
+                "People_Tested": "people_tested",
+            }
+        )
     )
 
     # Fix fips
-    df = fix_fips(df)
+    df["fips"] = df.fips.fillna(0)
+    df["fips"] = df.fips.astype(int)
 
     return df
 
@@ -220,7 +226,8 @@ def fill_missing_stuff(df):
         lambda row: "New York City" if row.fips == "36061" else row.county, axis=1
     )
 
-    not_missing_coords = df[(df.Lat.notna()) & (df.Population.notna())][
+    not_missing_coords = df[(df.Lat.notna()) & 
+                            (df.Population.notna())][
         ["state", "county", "Lat", "Lon", "Population"]
     ].drop_duplicates()
 
@@ -230,7 +237,20 @@ def fill_missing_stuff(df):
         on=["state", "county"],
         how="left",
     )
+    
+    # Use merge to fix FIPS...for whatever reason, some are still in the wrong format
+    good_fips = df[df.fips != 0][
+                    ["state", "county", "fips"]].drop_duplicates()
 
+    df = pd.merge(
+        df.drop(columns = ["fips"]),
+        good_fips,
+        on=["state", "county"],
+        how="left",
+    )
+    
+    df = fix_fips(df)
+    
     # Drop duplicates and keep last observation
     for col in ["cases", "deaths"]:
         df[col] = df.groupby(sort_cols)[col].transform("max")
@@ -327,7 +347,12 @@ def fix_column_dtypes(df):
     
     for col in integrify_me:
         df[col] = df[col].astype("Int64")
-
+    
+    # Fix fips
+    df["fips"] = df.fips.astype(str)
+    df["fips"] = df.fips.str.split(".", expand=True)[0]
+    df = fix_fips(df)
+    
     # Sort columns
     col_order = [
         "county",

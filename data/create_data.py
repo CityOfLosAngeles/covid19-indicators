@@ -9,7 +9,7 @@ import sync_la_cases
 import ca_ppe
 import ca_hospital
 
-#jhu.load_global_covid_data()
+jhu.load_global_covid_data()
 jhu_county.append_county_time_series()
 
 sync_hospital.update_bed_availability_data()
