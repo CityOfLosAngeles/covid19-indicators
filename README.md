@@ -10,7 +10,7 @@ Project Organization
     ├── Makefile                 <- Makefile with commands like `make data` or `make train`
     ├── README.md                <- The top-level README for developers using this project.
     ├── Dockerfile               <- Docker image for this project.
-    ├── data                     <- Scripts to create the data.
+    ├── data                     <- Scripts to create the data and CSVs.
     ├── catalog                  <- Catalog listing data sources from open data portals.
     ├── notebooks                <- Jupyter notebooks.
     ├── conda-requirements.txt   <- The requirements file for conda installs.
@@ -42,7 +42,9 @@ Our ESRI data sources are public and listed below. The full documentation of the
 ## Data Sources
 * Scripts to ingest, process, and save our data sources are in the `data` folder.
 * CA Department of Public Health: [COVID-related open data](https://data.ca.gov/dataset?q=covid&sort=score+desc%2C+metadata_modified+desc)
-    * `catalog.yml` lists the datasets pulled from the state's open data portal 
+* `catalog.yml`: data catalog of open data sources and CSVs in the repo
+
+Use the [helpful hints](#helpful-hints) to access the data.
 
 #### COVID-19 Cases
 * Global province-level time-series [feature layer](http://lahub.maps.arcgis.com/home/item.html?id=20271474d3c3404d9c79bed0dbd48580) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=daeef8efe43941748cb98d7c1f716122)
@@ -86,8 +88,23 @@ TESTING_URL = (
 )
 
 import pandas as pd
+
 df = pd.read_csv(JHU_URL)
 df = pd.read_csv(TESTING_URL)
+```
+
+**Import from data catalog**
+```
+import intake
+import pandas as pd
+
+catalog = intake.open_catalog("../catalog.yml")
+
+# See files are inside catalog
+list(catalog)
+
+# To open a file called hospital_surge_capacity:
+df = catalog.ca_hospital_surge_capacity.read()
 ```
 
 **Import ESRI feature layer**
@@ -106,7 +123,7 @@ FEATURE_LAYER_URL = "http://lahub.maps.arcgis.com/home/item.html?id=20271474d3c3
 
 SERVICE_URL = "https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/jhu_covid19_time_series/FeatureServer/0"
 
-CORRECT_URL = "https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/jhu_covid19_time_series/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=Province_State%2C+Country_Region%2C+Lat%2C+Long%2C+date%2C+number_of_cases%2C+number_of_deaths%2C+number_of_recovered%2C+ObjectId&returnGeometry=true&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token="
+CORRECT_URL = "https://services5.arcgis.com/7nsPwEMP38bSkCjy/ArcGIS/rest/services/jhu_covid19_time_series/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=Province_State%2C+Country_Region%2C+Lat%2C+Long%2C+date%2C+number_of_cases%2C+number_of_deaths%2C+number_of_recovered%2C+ObjectId&returnGeometry=true&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token="
 
 
 import geopandas as gpd

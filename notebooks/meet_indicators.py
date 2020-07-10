@@ -40,18 +40,6 @@ def meet_death(geog, name, start_date):
     except IndexError:
         return np.nan
 
-def meet_lacity_case(start_date):
-    df = utils.prep_lacity_cases(start_date)
-    df = df[(df.date < today_date) & (df.date >= two_weeks_ago)]
-    df = lacity_past_two_weeks(df)
-    
-    extract_col = "days_fewer_cases"
-    try:
-        indicator = df.iloc[0][extract_col]
-        return indicator
-    except IndexError:
-        return np.nan
-
 
 """
 Sub-functions for cases / deaths
@@ -74,7 +62,12 @@ def meet_case_death_prep(geog, name, start_date):
         df = utils.prep_msa(msa_name, start_date)
         name = df.msa.iloc[0]
         group_cols = ["msa"]
-
+    
+    if geog=="lacity":
+        name = "City of LA"
+        df = utils.prep_lacity_cases(start_date)
+        df = df.assign(name = "City of LA")
+        group_cols = ["name"]
         
     df = df[(df.date < today_date) & (df.date >= two_weeks_ago)]
     df = past_two_weeks(df, group_cols)  
@@ -117,25 +110,6 @@ def past_two_weeks(df, group_cols):
                         .reset_index()
                         )
 
-    return two_week_totals
-    
-
-def lacity_past_two_weeks(df):
-    df = df.assign(
-        delta_cases_avg7=(
-            df.sort_values("date")["cases_avg7"]
-            .diff(periods=1)
-        ),
-    )
-
-    df = df.assign(
-        days_fewer_cases = df.apply(lambda row: 1 if row.delta_cases_avg7 < 0 
-                                    else 0, axis=1),
-        city = "LA"
-    )
-
-    two_week_totals = df.groupby("city").agg({"days_fewer_cases": "sum"}).reset_index()
-                    
     return two_week_totals
 
 

@@ -16,7 +16,30 @@ sources:
       # the resulting catalog. They will be available under the more human-readable
       # name specified as the key.
       # Grab the identifier from the items we want.
-      #items:
-        ppe: da1978f2-068c-472f-be2d-04cdec48c3d9 
-        medical_surge_facilities: cbbfb307-ac91-47ec-95c0-f05684e06065
+      items:
         hospital_capacity: 529ac907-6ba1-4cb7-9aae-8966fc96aeef
+  ca_hospital_surge_capacity:
+    driver: csv
+    description: CA county-level time-series data on hospitalizations and surge capacity.
+    args:
+      urlpath: https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/ca-hospital-and-surge-capacity.csv
+  la_city_cases:
+    driver: csv
+    description: City of LA time-series data on cases and deaths.
+    args:
+      urlpath: https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/city-of-la-cases.csv
+  la_covid_testing:
+    driver: csv
+    description: LA County and City time-series data on coronavirus tests conducted.
+    args:
+      urlpath: https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/county-city-testing.csv
+  la_hospital_equipment:
+    driver: csv
+    description: LA County acute care, ICU beds, and ventilators available based on HavBed survey (70 largest hospitals).
+    args:
+      urlpath: https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/hospital-availability.csv
+  msa_county_crosswalk:
+    driver: csv
+    description: Crosswalk linking counties to metropolitan statistical areas.
+    args:
+      urlpath: https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/msa_county_pop_crosswalk.csv
