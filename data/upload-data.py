@@ -14,7 +14,7 @@ import requests
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 BASE = "https://api.github.com"
 REPO = "CityOfLosAngeles/covid19-indicators"
-BRANCH = "master"
+BRANCH = "neighborhood-scraper"
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
 def upload_file(file_name):
@@ -44,17 +44,19 @@ def upload_file(file_name):
                 "name": "Los Angeles ITA data team",
                 "email": "ITAData@lacity.org",
             },
-            "branch": "master",
+            "branch": BRANCH,
             "sha": sha,
             "content": base64.b64encode(contents).decode("utf-8"),
         },
     )
     r.raise_for_status()
 
-
+"""
 # LA county or city data
 upload_file("city-of-la-cases.csv")
 upload_file("county-city-testing.csv")
 upload_file("hospital-availability.csv")
 # CA open data portal data
 upload_file("ca-hospital-and-surge-capacity.csv")
+"""
+upload_file("us-county-time-series.parquet")
