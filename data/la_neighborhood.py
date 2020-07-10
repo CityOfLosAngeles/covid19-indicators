@@ -116,8 +116,8 @@ def derive_columns(df, sort_cols, group_cols):
     df3 = pd.merge(df2, normalized_case_quartiles, on = "date", how = "left", validate = "m:1")
     
     # Add rankings
-    df3["rank"] = df3.groupby("date")["cases_per100k"].rank("dense", ascending=False)
-    df3["max_rank"] = df3.groupby("date")["rank"].transform("max")
+    df3["rank"] = df3.groupby("date")["cases_per100k"].rank("dense", ascending=False).astype("Int64")
+    df3["max_rank"] = df3.groupby("date")["rank"].transform("max").astype(int)
     
     return df3
 
