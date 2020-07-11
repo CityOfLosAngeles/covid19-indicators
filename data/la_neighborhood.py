@@ -1,5 +1,8 @@
 import geopandas as gpd
 import pandas as pd
+import pytz
+
+from datetime import date, datetime
 
 URL = (
     "https://raw.githubusercontent.com/ANRGUSC/"
@@ -68,7 +71,7 @@ def clean_data():
     final = derive_columns(df, sort_cols, group_cols)
     final.to_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
     
-    return df3
+    return final
 
 
 # Update data
@@ -129,6 +132,7 @@ def grab_data_from_layer():
     keep_cols = ["LCITY", "COMMUNITY", "LABEL", "CONFIRMED", "DEATHS"]
     df = df[keep_cols].assign(
         date = pd.to_datetime(df.Cases_Date, unit='ms').dt.date,
+        date2 = date.today(),
         cases = df.CONFIRMED.fillna(0).astype(int),
         deaths = df.DEATHS.fillna(0).astype(int),
     )
@@ -159,11 +163,18 @@ def grab_data_from_layer():
 
 def update_neighborhood_data(**kwargs):  
     # Read in historical data
-    historical_df = pd.read_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
+    #historical_df = pd.read_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
     
     # Grab today's data
     today_df = grab_data_from_layer()
+    today_df["date"] = datetime.today().astimezone(pytz.timezone("US/Pacific")).date()
+
+    today = datetime.today().astimezone(pytz.timezone("US/Pacific")).date()
+    month = today.month
+    day = today.day
     
+    today_df.to_parquet(f"{S3_FILE_PATH}neighborhood_{month}_{day}.parquet")
+    """
     # Append
     df = historical_df.append(today_df, sort=False)
     
@@ -204,3 +215,4 @@ def update_neighborhood_data(**kwargs):
     
     # Export to S3 and overwrite old file
     final.to_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
+    """
