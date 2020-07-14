@@ -116,7 +116,7 @@ def update_neighborhood_data(**kwargs):
     # Append together
     combined = historical_df.append(today_df, sort=False)
     
-    fill_coords = (check[check.Longitude.notna()][
+    fill_coords = (combined[combined.Longitude.notna()][
                 ["Region", "Longitude", "Latitude"]]
                .drop_duplicates()
               )
