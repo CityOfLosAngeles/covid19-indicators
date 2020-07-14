@@ -2,16 +2,13 @@ import geopandas as gpd
 import pandas as pd
 import pytz
 
-from datetime import date, datetime
+from datetime import datetime
 
-URL = (
-    "https://raw.githubusercontent.com/ANRGUSC/"
-    "lacounty_covid19_data/master/data/Covid-19.csv"
-)
+COMMIT = "8feed42789d9814152c478a57c6d370167f8df90"
 
-POP_URL = (
+HISTORICAL_URL = (
     "https://raw.githubusercontent.com/ANRGUSC/"
-    "lacounty_covid19_data/master/data/processed_population.csv"
+    f"lacounty_covid19_data/{COMMIT}/data/Covid-19.csv"
 )
 
 COUNTY_NEIGHBORHOOD_URL = (
@@ -32,14 +29,9 @@ S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
 """ DO THIS ONCE
 
-# Function to clean data up to 7/2
+# Function to clean data up to 7/13
 def clean_data():
-    df = pd.read_csv(URL)
-    pop = pd.read_csv(POP_URL)
-    
-    pop = pop.assign(
-        Population = pop.Population.astype(int)
-    )
+    df = pd.read_csv(HISTORICAL_URL)
     
     df = (df.assign(
             date = pd.to_datetime(df["Time Stamp"]).dt.date,
@@ -52,87 +44,46 @@ def clean_data():
     
     group_cols = ["Region"]
     sort_cols = ["Region", "date"]
+
+    '''
+    Check for duplicates
+
+    The duplicates should be aggregated.
+    Looks to be a product of the parsing, where the parsing took away "Unincorporated - " and "City of "
+    For some cities, such as Bradbury, Whittier, Arcadia, etc, the unincorporated portions can lie in another 
+    aggregate_region. Our crosswalk addresses this. Technically, the unincorporated ones probaby have
+    much lower case counts, and we can pick where to send them. Do we want to though?
+
+    Instead, let's take care of it in the crosswalk, and group all the duplicate Region names into the same
+    aggregate_region. So, unincorporated parts that belong in another aggregate_region instead belong to 
+    the where the Region name is the same. Ex: Unincorporated - Arcadia belongs with City of Arcadia, and inherits
+    the same aggregate_region as City of Arcadia. The populations then aren't exact, because we're shifting things
+    around, but this is a much more straightforward aggregation than picking a max / min value
+    and assigning the min value to be unincorporated, since we don't know that is true for sure.
+    '''
+
+    keep_cols = ["Region", "Longitude", "Latitude", "date", "date2"]
+    df = df.groupby(keep_cols).agg({"cases": "sum"}).reset_index()
     
-    # Check for duplicates
-    df = df.assign(
-        max_cases = df.groupby(sort_cols)["cases"].transform("max")
-    ) 
+    # Write to S3
+    df.to_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
     
-    df = (df[df.cases == df.max_cases]
-          .drop(columns = "max_cases")
-          .drop_duplicates(subset = ["Region", "date", "cases"])
-    )
-    
-    # Merge in population
-    df = pd.merge(df, pop.drop(columns = ["Latitude", "Longitude"]), 
-                 on = "Region", how = "left", validate = "m:1")
-    
-    # Derive columns
-    final = derive_columns(df, sort_cols, group_cols)
-    final.to_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
-    
-    return final
+    return df
 
 
 # Update data
 df = clean_data()    
 """
 
-def derive_columns(df, sort_cols, group_cols):
-    # Derive columns
-    POP_DENOM = 100_000
-    
-    df = (df.assign(
-            new_cases = (df.sort_values(sort_cols).groupby(group_cols)["cases"]
-                         .diff(periods=1)
-                        ),
-            cases_per100k = df.cases / df.Population * POP_DENOM,
-        ).sort_values(sort_cols)
-        .reset_index(drop=True)
-    )
-    
-    # Calculate rolling averages
-    df = (df.assign(
-            cases_avg7 = df.cases.rolling(window=7).mean(),
-            new_cases_avg7 = df.new_cases.rolling(window=7).mean(),
-            cases_per100k_avg7 = df.cases_per100k.rolling(window=7).mean(),
-        )   
-    )
-   
-    # Calculate quartiles
-    case_quartiles = (df.groupby("date")["cases_avg7"].describe()[["25%", "50%", "75%"]]
-                 .rename(columns = {"25%": "cases_p25",
-                                    "50%": "cases_p50",
-                                    "75%" :"cases_p75"})
-                 .reset_index()
-                )
-    
-    normalized_case_quartiles = (df.groupby("date")["cases_per100k_avg7"].describe()[["25%", "50%", "75%"]]
-                 .rename(columns = {"25%": "ncases_p25",
-                                    "50%": "ncases_p50",
-                                    "75%" :"ncases_p75"})
-                 .reset_index()
-                )
-    
-    
-    df2 = pd.merge(df, case_quartiles, on = "date", how = "left", validate = "m:1")
-    df3 = pd.merge(df2, normalized_case_quartiles, on = "date", how = "left", validate = "m:1")
-    
-    # Add rankings
-    df3["rank"] = df3.groupby("date")["cases_per100k"].rank("dense", ascending=False).astype("Int64")
-    df3["max_rank"] = df3.groupby("date")["rank"].transform("max").astype(int)
-    
-    return df3
 
-
-# Function to clean data since 7/10
+# Function to clean data since 7/14
 def grab_data_from_layer():
     df = gpd.read_file(COUNTY_NEIGHBORHOOD_URL)
 
     keep_cols = ["LCITY", "COMMUNITY", "LABEL", "CONFIRMED", "DEATHS"]
     df = df[keep_cols].assign(
         date = pd.to_datetime(df.Cases_Date, unit='ms').dt.date,
-        date2 = date.today(),
+        date2 = pd.to_datetime(df.Cases_Date, unit='ms').dt.normalize(),
         cases = df.CONFIRMED.fillna(0).astype(int),
         deaths = df.DEATHS.fillna(0).astype(int),
     )
@@ -146,73 +97,56 @@ def grab_data_from_layer():
             return ""
 
     df["Region"] = df.apply(clean_up_city, axis=1)  
-    """
-    # For every Region, aggregate, in case there are unincorporated parts with no cases
-    keep = ["Region", "date", "cases", "deaths"]
-
+    
+    # For every Region, aggregate, so that these match how the historical data was parsed
     df = (df.assign(
             cases = df.groupby("Region")["cases"].transform("sum"),
             deaths = df.groupby("Region")["deaths"].transform("sum"),
-            date2 = pd.to_datetime(df.date),
-        )[keep]
+        ).drop(columns = ["CONFIRMED", "DEATHS"])
           .drop_duplicates()
     )
-    """
+    
     return df
 
 
-def update_neighborhood_data(**kwargs):  
-    # Read in historical data
-    #historical_df = pd.read_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
-    
-    # Grab today's data
+def update_neighborhood_data(**kwargs):
+    historical_df = pd.read_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
     today_df = grab_data_from_layer()
-    today_df["date"] = datetime.today().astimezone(pytz.timezone("US/Pacific")).date()
+    
+    # Append together
+    combined = historical_df.append(today_df, sort=False)
+    
+    fill_coords = (check[check.Longitude.notna()][
+                ["Region", "Longitude", "Latitude"]]
+               .drop_duplicates()
+              )
+    
+    combined2 = pd.merge(combined.drop(columns = ["Longitude", "Latitude"]), 
+         fill_coords, on = "Region", how = "left", validate = "m:1")
+    
+    # Drop duplicates - 1st pass
+    combined2 = combined2.drop_duplicates(subset=["Region", "date", "date2", "cases", "deaths", 
+                                                  "LCITY", "COMMUNITY", "LABEL"])
+    
+    # Drop duplicates - 2nd pass
+    group_cols = ["Region", "date", "date2"]
+    
+    # Check the neighborhoods particularly problematic to make sure this keeps the obs we want
+    # Check El Monte, Arcadia, Whittier
+    combined2["obs"] = combined2.groupby(group_cols).cumcount() + 1
+    combined2["max_obs"] = combined2.groupby(group_cols)["obs"].transform("max")
 
-    today = datetime.today().astimezone(pytz.timezone("US/Pacific")).date()
-    month = today.month
-    day = today.day
+    final = (combined2[(combined2.max_obs==1) | 
+                 ((combined2.LABEL.notna()) & (combined2.max_obs > 1))]
+                 .drop(columns = ["obs", "max_obs"])
+                )
     
-    today_df.to_parquet(f"{S3_FILE_PATH}neighborhood_{month}_{day}.parquet")
-    """
-    # Append
-    df = historical_df.append(today_df, sort=False)
+    # Fix dtypes
+    integrify_me = ["cases", "deaths"]
+    final[integrify_me] = final[integrify_me].astype("Int64")
     
-    group_cols = ["Region"]
-    sort_cols = ["Region", "date"]
+    final = (final.sort_values(["Region", "date", "date2", "LABEL"])
+             .reset_index(drop=True)
+            )
     
-    # Check for duplicates
-    df = df.assign(
-        max_cases = df.groupby(sort_cols)["cases"].transform("max")
-    ) 
-    
-    df = (df[df.cases == df.max_cases]
-          .drop(columns = "max_cases")
-          .drop_duplicates(subset = ["Region", "date", "cases"])
-    )
-    
-    # Standardize and derive columns
-    def fill_in_stuff(df):
-        fill_me = (df[(df.Latitude.notna()) & 
-                     (df.Population.notna())][
-                    ["Region", "Latitude", "Longitude", "Population"]]
-                    .drop_duplicates()
-                  )  
-
-        df = pd.merge(df.drop(columns = ["Latitude", "Longitude", "Population"]), 
-                      fill_me, on = "Region", how = "left", validate = "m:1")
-
-        return df
-    
-    
-    df = fill_in_stuff(df)
-    
-    cols_to_start = ["Region", "date", "date2", 
-                     "Latitude", "Longitude", "Population",
-                     "cases", "deaths"]
-    
-    final = derive_columns(df[cols_to_start], sort_cols, group_cols)
-    
-    # Export to S3 and overwrite old file
     final.to_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
-    """
