@@ -12,4 +12,5 @@ Scripts and Notebooks
 * `sample-indicators`: Notebook demonstrating how to apply the indicators to other US counties, metropolitan areas, and states.
 * `county-city-indicators.ipynb`: LA County and City of LA specific notebook for our daily reporting.
 * `state-msa-indicators.ipynb`: California and Los Angeles-Long Beach-Anaheim indicators for daily reporting.
+* `neighborhood-charts.ipynb`: LA County neighborhood trends with case data.
 * `conversions.ipynb`: Conversions to get New York and Chicago testing benchmarks into the same unit. Apply it to LA by scaling according to population.

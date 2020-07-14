@@ -36,18 +36,18 @@ The City of LA uses [US county data](https://www.arcgis.com/home/item.html?id=62
 Our ESRI data sources are public and listed below. The full documentation of the City of LA's COVID-19 data and scripts is available in our [Aqueduct COVID-19 ETL work's README](https://github.com/CityOfLosAngeles/aqueduct/tree/master/dags/public-health/covid19/README.md). We are in progress of moving these data sources off of ESRI and moving to an S3 bucket. See our work in the `data` folder.
 
 
-1. [Data Sources](#data-sources)
+1. [Data Sources](#data-sources): [Cases](#covid-19-cases), [Hospital](#hospital-data) and [Testing](#covid-19-testing)    
 1. [Helpful Hints for Jupyter Notebooks](#helpful-hints)
 1. [Setting up a Conda Environment](#setting-up-a-conda-environment)
 1. [Starting with Docker](#starting-with-docker)
 1. [Emailing the Report](#emailing-the-report)
 
 ## Data Sources
-* Scripts to ingest, process, and save our data sources are in the `data` folder.
+Scripts to ingest, process, and save our data sources are in the [data](./data/) folder. Use the [helpful hints](#helpful-hints) to access the data.
+
+* Johns Hopkins University [global](https://www.arcgis.com/home/item.html?id=c0b356e20b30490c8b8b4c7bb9554e7c) data, [US county](https://www.arcgis.com/home/item.html?id=628578697fb24d8ea4c32fa0c5ae1843) data and [blog post](https://www.esri.com/arcgis-blog/products/product/public-safety/coronavirus-covid-19-data-available-by-county-from-johns-hopkins-university/), and [GitHub repo](https://github.com/CSSEGISandData/COVID-19)
 * CA Department of Public Health: [COVID-related open data](https://data.ca.gov/dataset?q=covid&sort=score+desc%2C+metadata_modified+desc)
 * `catalog.yml`: data catalog of open data sources and CSVs in the repo
-
-Use the [helpful hints](#helpful-hints) to access the data.
 
 #### COVID-19 Cases
 * Global province-level time-series [feature layer](http://lahub.maps.arcgis.com/home/item.html?id=20271474d3c3404d9c79bed0dbd48580) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=daeef8efe43941748cb98d7c1f716122)
@@ -56,20 +56,25 @@ Use the [helpful hints](#helpful-hints) to access the data.
 
 * US county-level time-series [feature layer](https://lahub.maps.arcgis.com/home/item.html?id=8f13bb3abefe490f9edd47df89664b56) and [CSV](https://lahub.maps.arcgis.com/home/item.html?id=782ca660304a4bdda1cc9757a2504647)
 
-* A crosswalk for linking [MSA to county](https://github.com/CityOfLosAngeles/covid19-indicators/blob/master/data/msa_county_pop_crosswalk.csv) that was derived from the [National Bureau of Economic Research crosswalk](https://data.nber.org/data/cbsa-msa-fips-ssa-county-crosswalk.html) using `make-crosswalk.py`.
+* A crosswalk for linking [MSA to county](https://github.com/CityOfLosAngeles/covid19-indicators/blob/master/data/msa_county_pop_crosswalk.csv) that was derived from the [National Bureau of Economic Research crosswalk](https://data.nber.org/data/cbsa-msa-fips-ssa-county-crosswalk.html) using `make_crosswalk.py`.
 
 * City of LA cases and deaths time-series [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/city-of-la-cases.csv)
 
-#### Hospital Bed and Equipment Availability
+* Scripts: `jhu.py`, `jhu_county.py`, `sync_la_cases.py`. Source: [Google spreadsheet](https://docs.google.com/spreadsheets/d/1Vk7aGL7O0ZVQRySwh6X2aKlbhYlAR_ppSyMdMPqz_aI/edit#gid=1128684515).
+
+#### Hospital Data
 * LA County hospital bed and equipment availability [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/hospital-availability.csv). Data is available for the [70 largest hospitals](http://file.lacounty.gov/SDSInter/dhs/1070069_HavBedSummary.pdf) in the county and collected in the HavBed survey.
 
 * CA county-level hospitalizations time-series [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/ca-hospital-and-surge-capacity.csv)
+
+* Scripts: `sync_hospital.py`, `ca_hospital.py`, `ca_ppe.py`. Source: [Google spreadsheet](https://docs.google.com/spreadsheets/d/1rS0Vt-kuxwQKoqZBcaOYOOTc5bL1QZqAqqPSyCaMczQ/edit?usp=sharing).
 
 #### COVID-19 Testing
 * LA County and LA City COVID-19 tests administered [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/county-city-testing.csv)
 
 * The City of LA tests are a subset of LA County tests. Tests done in other parts of LA County (excluding the City of LA) would be derived by taking the difference of `Performed` - `City_Performed`.
 
+* Script: `sync_covid_testing.py`. Source: [Google spreadsheet](https://docs.google.com/spreadsheets/d/1agPpAJ5VNqpY50u9RhcPOu7P54AS0NUZhvA2Elmp2m4/edit?usp=sharing).
 
 ## Helpful Hints
 Jupyter Notebooks can read in both the ESRI feature layer and the CSV. In our [Data Sources](#data-sources), we often provide links to the ESRI feature layer and CSV. More in our [COVID-19 indicators GitHub repo](https://github.com/CityOfLosAngeles/covid19-indicators).
