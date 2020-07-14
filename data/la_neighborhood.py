@@ -146,7 +146,7 @@ def grab_data_from_layer():
             return ""
 
     df["Region"] = df.apply(clean_up_city, axis=1)  
-    
+    """
     # For every Region, aggregate, in case there are unincorporated parts with no cases
     keep = ["Region", "date", "cases", "deaths"]
 
@@ -157,7 +157,7 @@ def grab_data_from_layer():
         )[keep]
           .drop_duplicates()
     )
-    
+    """
     return df
 
 
