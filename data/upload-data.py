@@ -44,7 +44,7 @@ def upload_file(file_name):
                 "name": "Los Angeles ITA data team",
                 "email": "ITAData@lacity.org",
             },
-            "branch": "master",
+            "branch": BRANCH,
             "sha": sha,
             "content": base64.b64encode(contents).decode("utf-8"),
         },
@@ -56,5 +56,6 @@ def upload_file(file_name):
 upload_file("city-of-la-cases.csv")
 upload_file("county-city-testing.csv")
 upload_file("hospital-availability.csv")
+upload_file("lacounty-neighborhood-time-series.parquet")
 # CA open data portal data
 upload_file("ca-hospital-and-surge-capacity.csv")

@@ -43,3 +43,14 @@ sources:
     description: Crosswalk linking counties to metropolitan statistical areas.
     args:
       urlpath: https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/msa_county_pop_crosswalk.csv
+  la_neighborhoods_crosswalk:
+    driver: csv
+    description: Crosswalk linking LA County's countywide statistical areas to larger neighborhoods with population.
+    args:
+      urlpath: https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/la_neighborhoods_population_crosswalk.csv
+  la_cases_by_neighborhood:
+    driver: parquet
+    description: LA County neighborhood-level case data.
+    args:
+      urlpath: https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/lacounty-neighborhood-time-series.parquet
+      

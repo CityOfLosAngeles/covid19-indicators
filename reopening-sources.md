@@ -33,6 +33,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * [8 states](https://www.vox.com/2020/6/10/21286696/us-covid-19-coronavirus-cases-update-texas-arizona-north-carolina) that are the next hotspots, and TX, FL, CA are the [states that saw the largest increases in cases](https://www.nytimes.com/2020/06/12/world/coronavirus-live-updates.html) in the [past week](https://www.nytimes.com/2020/06/19/world/coronavirus-live-updates.html). As of mid-June, Florida is predicted to be [next US epicenter by mid-July](https://www.wtsp.com/article/news/health/coronavirus/upenn-chop-study-florida-could-be-next-epicenter-coronavirus/67-0f910e1a-fa6e-4e22-853e-3c3bdaf46880).
     * Rising caseloads are [predictable and avoidable](https://www.vox.com/science-and-health/2020/6/12/21288009/new-covid-spikes-arizona-florida-carolinas-texas)
     * Preventing [superspreader events](https://www.vox.com/21296067/coronavirus-trump-tulsa-oklahoma-rally-superspreaders-superspreading-bars-restaurants) [will be key](https://www.nytimes.com/2020/06/30/science/how-coronavirus-spreads.html)
+* As of early July, states that reopened early [are driving the US surge in cases](https://www.nytimes.com/2020/07/09/world/coronavirus-updates.html), with death toll [expected to rise soon](https://www.nytimes.com/2020/07/10/us/daily-virus-death-toll-rises-in-some-states.html)
 
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
 * Polls show that [whites are increasingly ready to reopen, but Blacks are not](https://fivethirtyeight.com/features/black-americans-were-hit-hard-by-state-shutdowns-but-are-worried-about-reopening-too/).
@@ -75,16 +76,20 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * Antibodies don't last longer [than a couple months](https://www.nytimes.com/2020/06/18/health/coronavirus-antibodies.html), and its role in preventing re-infection is not yet clear. But, studies show that asymptomatic people are shedding the virus for potentially longer periods of time than symptomatic people.
 
 
-## Known Unknowns 
+## Known Unknowns
 * [How indoor ventilation](https://www.nytimes.com/2020/04/20/health/airflow-coronavirus-restaurants.html) affects the path of virus infection, possibly spreading [through ducts](https://wwwnc.cdc.gov/eid/article/26/7/20-0764_article#tnF1).
 * How long does [virus linger through air?](https://www.nytimes.com/2020/05/14/health/coronavirus-infections.html)
 * How long does virus remain [on surfaces?](https://www.nytimes.com/2020/05/28/well/live/whats-the-risk-of-catching-coronavirus-from-a-surface.html)
-* [Airborne transmission vs respiratory droplets](https://www.nytimes.com/2020/07/04/health/239-experts-with-one-big-claim-the-coronavirus-is-airborne.html), with increasing evidence showing the role of airborne transmission
-* What we still don't know ([NY Times](https://www.nytimes.com/2020/06/01/health/coronavirus-mysteries.html), [Vox](https://www.vox.com/2020/5/12/21248395/coronavirus-pandemic-covid-symptoms-testing-children-mysteries)): from number of cases, impact on children, the types of social distancing that can work as we reopen, and role of immunity.
-* [Legionnaires' a potential health threat](https://www.nytimes.com/2020/05/20/health/coronavirus-legionnaires-offices.html) for dormant office buildings.
-* [Reconfigured office space](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs.
+* [Airborne transmission vs respiratory droplets](https://www.nytimes.com/2020/07/04/health/239-experts-with-one-big-claim-the-coronavirus-is-airborne.html), with increasing evidence showing the role of airborne transmission, with the WHO [finally acknowledging airborne transmission](https://www.nytimes.com/2020/07/09/world/coronavirus-updates.html).
+    * Implications are that indoor spaces need to be [reconfigured](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs.
 * Do virus mutations matter? [There's evidence at a biomolecular level, but unsure if this makes the mutation more infectious](https://www.nytimes.com/2020/06/12/science/coronavirus-mutation-genetics-spike.html).
-* [1 in 5 at risk for severe COVID-19 globally](https://www.nytimes.com/2020/06/15/health/coronavirus-underlying-conditions.html)
+* Can you get COVID-19 twice? Emerging evidence suggests [maybe](https://www.vox.com/2020/7/12/21321653/getting-covid-19-twice-reinfection-antibody-herd-immunity)
+* Long-term effects: some have shown [symptoms persist in the long-term](https://www.vox.com/2020/7/14/21324201/covid-19-long-term-effects-symptoms-treatment)
+* Impact on children: [children carry similar viral loads](https://www.nytimes.com/2020/05/05/health/coronavirus-children-transmission-school.html) but appear to be less impacted, making them vectors of transmission.
+* Impact on pregnant women: [fetal infection](https://www.nytimes.com/aponline/2020/07/09/health/ap-us-med-virus-outbreak-pregnancy.html) is possible. More [evidence](https://www.nytimes.com/2020/07/14/health/coronavirus-pregnancy-covid-19.html) emerging.  
+* What we still don't know ([NY Times](https://www.nytimes.com/2020/06/01/health/coronavirus-mysteries.html), [Vox](https://www.vox.com/2020/5/12/21248395/coronavirus-pandemic-covid-symptoms-testing-children-mysteries): from number of cases, impact on children, the types of social distancing that can work as we reopen, and role of immunity.
+* [Legionnaires' a potential health threat](https://www.nytimes.com/2020/05/20/health/coronavirus-legionnaires-offices.html) for dormant office buildings.
+* [1 in 5 at risk for severe COVID-19 globally](https://www.nytimes.com/2020/06/15/health/coronavirus-underlying-conditions.html), with additional [UK research on 17M reinforcing this](https://www.nytimes.com/2020/07/08/health/coronavirus-risk-factors.html).
 
 
 ## The Path Toward Reopening

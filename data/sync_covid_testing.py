@@ -127,8 +127,13 @@ def get_county_data(filename, workbook, sheet_name):
         "Pasadena_Rose_Bowl",
     ]
 
+    # Sometimes a TBD or unknown is found. Coerce to be NaNs until it is filled in later.
+    replace_me = ["TBD", "tbd", "unknown", "Unknown", "UNKNOWN", "unk"]
+
+    df[city_sites] = df[city_sites].replace(replace_me, 0)
     df[city_sites] = df[city_sites].fillna(0).astype(int)
-    df[county_sites] = df[county_sites].replace("TBD", 0)
+
+    df[county_sites] = df[county_sites].replace(replace_me, 0)
     df[county_sites] = df[county_sites].fillna(0).astype(int)
 
     df = (df.assign(
