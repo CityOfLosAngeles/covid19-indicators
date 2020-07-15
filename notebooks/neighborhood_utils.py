@@ -13,6 +13,14 @@ def clean_data():
     df = pd.read_parquet(NEIGHBORHOOD_URL)
     crosswalk = pd.read_parquet(CROSSWALK_URL)
     
+    # Get rid of duplicates
+    # We keep the incorporated and unincorporated labels because 
+    # we need to identify duplicates when we append each time DAG runs
+    df = (df[df.Region != "Long Beach"]
+          .drop_duplicates(subset = ["Region", "date", "date2", "cases", "deaths"])
+          .drop(columns = ["LCITY", "COMMUNITY", "LABEL"])
+         )
+    
     # Our crosswalk is more extensive, get rid of stuff so we can have a m:1 merge
     crosswalk = (crosswalk[crosswalk.Region.notna()]
                  [["Region", "aggregate_region", "population"]]

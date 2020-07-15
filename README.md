@@ -28,8 +28,6 @@ This repository will track COVID-19 indicators as LA considers its reopening str
 
 **DAILY REPORT:** [https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html](https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html)
 
-**NEIGHBORHOOD TRENDS:** [WIP test link](https://services--3069--8df743f0dca2feacdd8e38ca--rondolesson.shiny.services.civis.io/civis-platform-auth?token=IIgsFWOX_orbOSnfeBo6gtiyjiR-3rf8kvJFKggtkxCDOaGtjFJL421ebUQ-BwRs9guffAfMi5k9hTctYeIb1J5RMuINrIeTWCktFCpzIKETofrQdoQ9Xnv1VzXxeqsk8yKdLMLv3eSHf9Lsow1RnBZk3dx9rvI-A4EALAPgTkvexJEmxAGCBvw03J9YbWjTzmDqXIQyHYLQKk-gfjEi5bOnEVQDPJmanBcXk3Zt4Z1kRsq9DkA0S-JHc8PEqw87c9fYJKlDvwodZE2s6ofbvOET2PhQkR3hg9iqU4ET1chc0vW3VvukSoK7cxiHFnB5ylk7LFpRtWM5hZo5qVPf9zsinQtt3xsz9E5UHXlXZGkcwq_bRD7CG-2raweA_FLlQd_P9nWsoVBhIjumABDK-kI9fIMlSREEDI38jN43XCYLF_U=). Navigate to notebooks > neighborhood_charts.ipynb
-
 
 The City of LA uses [US county data](https://www.arcgis.com/home/item.html?id=628578697fb24d8ea4c32fa0c5ae1843) published by [JHU](https://www.esri.com/arcgis-blog/products/product/public-safety/coronavirus-covid-19-data-available-by-county-from-johns-hopkins-university/). The historical time-series is pulled from JHU's CSV on GitHub and appended with the current date's data from the ESRI feature layer.
 
