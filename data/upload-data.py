@@ -14,7 +14,7 @@ import requests
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 BASE = "https://api.github.com"
 REPO = "CityOfLosAngeles/covid19-indicators"
-BRANCH = "neighborhood-scraper"
+BRANCH = "master"
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
 def upload_file(file_name):
