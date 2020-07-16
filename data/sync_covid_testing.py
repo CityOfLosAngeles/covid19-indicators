@@ -130,11 +130,17 @@ def get_county_data(filename, workbook, sheet_name):
     # Sometimes a TBD or unknown is found. Coerce to be NaNs until it is filled in later.
     replace_me = ["TBD", "tbd", "unknown", "Unknown", "UNKNOWN", "unk"]
 
-    df[city_sites] = df[city_sites].replace(replace_me, 0)
-    df[city_sites] = df[city_sites].fillna(0).astype(int)
+    def replace_str_with_zero(df, cols_to_apply):
+        df[cols_to_apply] = df[cols_to_apply].replace(replace_me, 0)
+        df[cols_to_apply] = df[cols_to_apply].fillna(0).astype(int)
+        
+        return df
+    
+    total_cols = ["City_Subtotal", "County_Subtotal", "Total_Performed"]
 
-    df[county_sites] = df[county_sites].replace(replace_me, 0)
-    df[county_sites] = df[county_sites].fillna(0).astype(int)
+    df = replace_str_with_zero(df, city_sites)
+    df = replace_str_with_zero(df, county_sites)
+    df = replace_str_with_zero(df, total_cols)
 
     df = (df.assign(
             City_Subtotal=df.City_Subtotal.astype(int),
