@@ -277,7 +277,7 @@ def prep_lacity_cases(start_date):
 #---------------------------------------------------------------#
 def lacounty_testing_charts(start_date, lower_bound, upper_bound):
     df = prep_testing(start_date)
-    plot_col = "Performed"
+    plot_col = "County_Performed"
     chart_title = "LA County: Daily Testing"
     make_charts.make_la_testing_chart(df.drop(columns="date"), plot_col, chart_title, lower_bound, upper_bound)
     return df
@@ -285,7 +285,7 @@ def lacounty_testing_charts(start_date, lower_bound, upper_bound):
 
 def lacity_testing_charts(start_date, lower_bound, upper_bound):
     df = prep_testing(start_date)
-    plot_col = "City_Performed"
+    plot_col = "City_Site_Performed"
     chart_title = "City of LA: Daily Testing"
     make_charts.make_la_testing_chart(df.drop(columns="date"), plot_col, chart_title, lower_bound, upper_bound)
     return df
@@ -298,16 +298,25 @@ def prep_testing(start_date):
     df = pd.read_parquet(TESTING_URL)
 
     df = df.assign(
-        date=df.Date.astype(str).apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date()),
-        date2 = pd.to_datetime(df.Date),
+        date=df.date.astype(str).apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date()),
+        date2 = pd.to_datetime(df.date),
     )
-    
-    keep_col = ["date", "date2", "City_Performed", "Performed"]
+        
+    keep_col = ["date", "date2", "City_Site_Performed", "County_Performed"]
     # Subset by start date up to yesterday's date    
     df = (df[(df.date >= start_date) & (df.date < today_date)]
             [keep_col]
          )
-
+    
+    # Need to add condition to address where zeroes are stand-ins
+    df.loc[(df.date == yesterday_date) & 
+       (df.City_Site_Performed == df.County_Performed) & 
+       (df.City_Site_Performed == 0), 
+       ["City_Site_Performed", "County_Performed"]
+          ] = np.nan
+    
+    df = df.dropna(subset=["City_Site_Performed", "County_Performed"])
+    
     return df 
 
 
@@ -348,11 +357,11 @@ def prep_la_positive_test(start_date, city_or_county):
 
     if city_or_county == "county":
         cases_df = prep_county("Los Angeles, CA", start_date)
-        tests_col = "Performed"
+        tests_col = "County_Performed"
     
     if city_or_county == "city":
         cases_df = prep_lacity_cases(start_date)
-        tests_col = "City_Performed"
+        tests_col = "City_Site_Performed"
     
     #  Merge and rename columns
     df = pd.merge(cases_df, tests_df, on = "date", how = "left")

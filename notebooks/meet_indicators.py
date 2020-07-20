@@ -120,10 +120,10 @@ def meet_daily_testing(yesterday_date, city_or_county, lower_bound, upper_bound)
     df = utils.prep_testing(start_date)
     
     if city_or_county == "county":
-        extract_col = "Performed"
+        extract_col = "County_Performed"
         
     if city_or_county == "city":
-        extract_col = "City_Performed"
+        extract_col = "City_Site_Performed"
     
     try:
         indicator = df[df.date==yesterday_date].iloc[0][extract_col]
