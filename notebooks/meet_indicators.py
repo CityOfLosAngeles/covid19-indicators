@@ -18,6 +18,16 @@ eight_days_ago = default_parameters.eight_days_ago
 nine_days_ago = default_parameters.nine_days_ago
 
 
+from datetime import datetime, date, timedelta
+import pytz
+three_days_ago = (
+    (datetime.today()
+                .astimezone(pytz.timezone(f'{time_zone}'))
+                .date()
+        - timedelta(days=3)
+    )
+)
+
 #---------------------------------------------------------------#
 # Case Indicators (County, State, MSA, City of LA)
 #---------------------------------------------------------------#    
@@ -119,6 +129,11 @@ def past_two_weeks(df, group_cols):
 def meet_daily_testing(yesterday_date, city_or_county, lower_bound, upper_bound):
     df = utils.prep_testing(start_date)
     
+    # 7/20: can't understand why county's persons tested and city tests (tests or persons?)
+    # don't pass sanity checks
+    # allow county's results to lag, because it does seem to be slightly out-dated.
+    yesterday_date = three_days_ago
+
     if city_or_county == "county":
         extract_col = "County_Performed"
         
@@ -227,7 +242,7 @@ def meet_hospital(yesterday_date):
     # Noting that yesterday's date always seems to surpass benchmark
     # only to be revised downward again tomorrow. Might be ok if we're using 3-day avg from yesterday.
     df = utils.prep_lacounty_hospital(start_date)
-    yesterday_date = two_days_ago
+    yesterday_date = three_days_ago
     df = df[df.date == yesterday_date]
     return df 
 
