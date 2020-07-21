@@ -7,6 +7,7 @@ import pandas as pd
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
 NEIGHBORHOOD_URL = f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet"
+
 CROSSWALK_URL = f"{S3_FILE_PATH}la_neighborhoods_population_crosswalk.parquet"
 
 def clean_data():
