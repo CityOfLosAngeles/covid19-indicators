@@ -34,6 +34,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * Rising caseloads are [predictable and avoidable](https://www.vox.com/science-and-health/2020/6/12/21288009/new-covid-spikes-arizona-florida-carolinas-texas)
     * Preventing [superspreader events](https://www.vox.com/21296067/coronavirus-trump-tulsa-oklahoma-rally-superspreaders-superspreading-bars-restaurants) [will be key](https://www.nytimes.com/2020/06/30/science/how-coronavirus-spreads.html)
 * As of early July, states that reopened early [are driving the US surge in cases](https://www.nytimes.com/2020/07/09/world/coronavirus-updates.html), with death toll [expected to rise soon](https://www.nytimes.com/2020/07/10/us/daily-virus-death-toll-rises-in-some-states.html)
+* As of mid July, CDC estimates that [actual cases are 2-13x higher than confirmed cases](https://www.nytimes.com/2020/07/21/health/coronavirus-infections-us.html).
 
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
 * Polls show that [whites are increasingly ready to reopen, but Blacks are not](https://fivethirtyeight.com/features/black-americans-were-hit-hard-by-state-shutdowns-but-are-worried-about-reopening-too/).
