@@ -7,7 +7,10 @@ import pandas as pd
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
 NEIGHBORHOOD_URL = f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet"
+
 CROSSWALK_URL = f"{S3_FILE_PATH}la_neighborhoods_population_crosswalk.parquet"
+
+NEIGHBORHOOD_TEST_URL = f"{S3_FILE_PATH}la-county-neighborhood-testing-time-series.parquet"
 
 def clean_data():
     df = pd.read_parquet(NEIGHBORHOOD_URL)
@@ -93,4 +96,65 @@ def derive_columns(df, sort_cols, group_cols):
     df3["max_rank"] = df3.groupby("date")["rank"].transform("max").astype(int)
     
     return df3
+
+
+def clean_testing_data():
+    df = pd.read_parquet(NEIGHBORHOOD_TEST_URL)
+
+    keep_cols = ["neighborhood", "persons_tested_final", 
+                "persons_tested_pos_final", "date"]
     
+    df = (df[keep_cols]
+            .assign(
+                date = df.date.dt.date,
+                date2 = pd.to_datetime(df.date)
+            )
+        )
+    
+    def clean_up_city(row):
+        if "City of " in row.neighborhood:
+            return row.neighborhood.replace("City of", "")
+        if "Los Angeles - " in row.neighborhood:
+            return row.neighborhood.replace("Los Angeles - ", "")
+        if "Unincorporated - " in row.neighborhood:
+            return row.neighborhood.replace("Unincorporated - ", "")
+
+    df["Region"] = df.apply(clean_up_city, axis=1).str.strip() 
+    
+    # For every Region, aggregate, so that these match how the historical data was parsed
+    df = (df.assign(
+            persons_tested = (df.groupby(["Region", "date"])["persons_tested_final"]
+                            .transform("sum")),
+            persons_tested_pos = (df.groupby(["Region", "date"])["persons_tested_pos_final"]
+                                .transform("sum")),
+        ).drop(columns = ["persons_tested_final", "persons_tested_pos_final"])
+          .drop_duplicates()
+    )
+    
+    # Merge in population crosswalk (cleaned up)
+    crosswalk = pd.read_parquet(CROSSWALK_URL)
+
+    df2 = pd.merge(df.drop(columns = "neighborhood"), crosswalk, 
+                   on = "Region", how = "inner")
+    
+    # Aggregate to aggregate_region
+    df3 = (df2.groupby(["region_num", "aggregate_region", "population", "date", "date2"])
+       .agg({"persons_tested": "sum", "persons_tested_pos": "sum"})
+       .reset_index()
+      )
+    
+    POP_DENOM = 1_000
+    
+    df3 = (df3.assign(
+            pct_positive = df3.persons_tested_pos / df3.persons_tested,
+            positive_per1k = df3.persons_tested_pos / df3.population * POP_DENOM
+        )
+    )
+
+    integrify_me = ["region_num", "population", "persons_tested", "persons_tested_pos"]
+
+    df3[integrify_me] = df3[integrify_me].astype("Int64")
+    
+    df3 = df3.sort_values(["aggregate_region", "date"]).reset_index(drop=True)
+    
+    return df3

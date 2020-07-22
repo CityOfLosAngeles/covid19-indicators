@@ -14,6 +14,7 @@ yesterday_date = default_parameters.yesterday_date
 today_date = default_parameters.today_date
 two_weeks_ago = default_parameters.two_weeks_ago
 two_days_ago = default_parameters.two_days_ago
+three_days_ago = default_parameters.three_days_ago
 eight_days_ago = default_parameters.eight_days_ago
 nine_days_ago = default_parameters.nine_days_ago
 
@@ -119,11 +120,19 @@ def past_two_weeks(df, group_cols):
 def meet_daily_testing(yesterday_date, city_or_county, lower_bound, upper_bound):
     df = utils.prep_testing(start_date)
     
+    """
+    7/20: can't understand why county's persons tested and city tests 
+    (tests and persons tested) don't pass sanity checks.
+    Allow county's results to lag; it updates only after ___ days (3? 5? 7?).
+    Start with 3.
+    """
+    yesterday_date = three_days_ago
+
     if city_or_county == "county":
-        extract_col = "Performed"
+        extract_col = "County_Performed"
         
     if city_or_county == "city":
-        extract_col = "City_Performed"
+        extract_col = "City_Site_Performed"
     
     try:
         indicator = df[df.date==yesterday_date].iloc[0][extract_col]

@@ -277,7 +277,7 @@ def prep_lacity_cases(start_date):
 #---------------------------------------------------------------#
 def lacounty_testing_charts(start_date, lower_bound, upper_bound):
     df = prep_testing(start_date)
-    plot_col = "Performed"
+    plot_col = "County_Performed"
     chart_title = "LA County: Daily Testing"
     make_charts.make_la_testing_chart(df.drop(columns="date"), plot_col, chart_title, lower_bound, upper_bound)
     return df
@@ -285,7 +285,7 @@ def lacounty_testing_charts(start_date, lower_bound, upper_bound):
 
 def lacity_testing_charts(start_date, lower_bound, upper_bound):
     df = prep_testing(start_date)
-    plot_col = "City_Performed"
+    plot_col = "City_Site_Performed"
     chart_title = "City of LA: Daily Testing"
     make_charts.make_la_testing_chart(df.drop(columns="date"), plot_col, chart_title, lower_bound, upper_bound)
     return df
@@ -298,16 +298,20 @@ def prep_testing(start_date):
     df = pd.read_parquet(TESTING_URL)
 
     df = df.assign(
-        date=df.Date.astype(str).apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date()),
-        date2 = pd.to_datetime(df.Date),
+        date=df.date.astype(str).apply(lambda x: datetime.strptime(x, "%Y-%m-%d").date()),
+        date2 = pd.to_datetime(df.date),
     )
     
-    keep_col = ["date", "date2", "City_Performed", "Performed"]
+    # 7/20: since we can't figure out how mayor's spreadsheet ties with Rshiny
+    # Just use county data, drop city for now
+    keep_col = ["date", "date2", "County_Person_Performed", "County_Person_Positive",
+               "County_Performed", "County_Positive"]
+    
     # Subset by start date up to yesterday's date    
     df = (df[(df.date >= start_date) & (df.date < today_date)]
             [keep_col]
          )
-
+        
     return df 
 
 
@@ -345,19 +349,11 @@ We lack results for positive/negative results for each test batch (ideal).
 """
 def prep_la_positive_test(start_date, city_or_county):
     tests_df = prep_testing(start_date)
-
+    
     if city_or_county == "county":
-        cases_df = prep_county("Los Angeles, CA", start_date)
-        tests_col = "Performed"
-    
-    if city_or_county == "city":
-        cases_df = prep_lacity_cases(start_date)
-        tests_col = "City_Performed"
-    
-    #  Merge and rename columns
-    df = pd.merge(cases_df, tests_df, on = "date", how = "left")
-    df = df.rename(columns = {tests_col: "new_tests"}) 
-    
+        df = tests_df.copy()
+        tests_col = "County_Performed"
+
     df = aggregate_to_week(df, start_date, today_date)
     
     return df   
@@ -373,16 +369,16 @@ def aggregate_to_week(df, start_date, today_date):
     
     # Aggregate to the week
     weekly_total = (df.groupby("week")
-                .agg({"new_cases":"sum", 
-                      "new_tests":"sum",
+                .agg({"County_Positive":"sum", 
+                      "County_Performed":"sum",
                       "date": "min",
-                      "cases":"count",
+                      "County_Person_Performed":"count",
                      })
                 .reset_index()
-                .rename(columns = {"new_cases":"weekly_cases", 
-                                   "new_tests":"weekly_tests", 
+                .rename(columns = {"County_Positive":"weekly_cases", 
+                                   "County_Performed":"weekly_tests", 
                                    "date": "start_of_week", 
-                                   "cases":"days_counted"})
+                                   "County_Person_Performed":"days_counted"})
                )
 
     df = pd.merge(df, weekly_total, on = "week", how = "inner")
