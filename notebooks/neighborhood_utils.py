@@ -10,7 +10,7 @@ NEIGHBORHOOD_URL = f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet"
 
 CROSSWALK_URL = f"{S3_FILE_PATH}la_neighborhoods_population_crosswalk.parquet"
 
-NEIGHBORHOOD_TEST_URL = f"{S3_FILE_PATH}la-county-neighborhood-testing-time-series.parquet"
+NEIGHBORHOOD_APPENDED_URL = f"{S3_FILE_PATH}la-county-neighborhood-testing-appended.parquet"
 
 def clean_data():
     df = pd.read_parquet(NEIGHBORHOOD_URL)
@@ -99,7 +99,7 @@ def derive_columns(df, sort_cols, group_cols):
 
 
 def clean_testing_data():
-    df = pd.read_parquet(NEIGHBORHOOD_TEST_URL)
+    df = pd.read_parquet(NEIGHBORHOOD_APPENDED_URL)
 
     keep_cols = ["neighborhood", "persons_tested_final", 
                 "persons_tested_pos_final", "date"]
@@ -156,5 +156,5 @@ def clean_testing_data():
     df3[integrify_me] = df3[integrify_me].astype("Int64")
     
     df3 = df3.sort_values(["aggregate_region", "date"]).reset_index(drop=True)
-    
+        
     return df3

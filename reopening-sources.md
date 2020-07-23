@@ -31,14 +31,14 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * As of early June, the [world rushes to reopen](https://www.nytimes.com/2020/06/09/world/coronavirus-reopenings.html) even as caseloads are rising, including [21 US states](https://www.nytimes.com/2020/06/10/us/politics/coronavirus-washington-trump.html), and we can't wish [the virus away by reopening](https://www.vox.com/science-and-health/2020/6/11/21285077/covid-19-arizona-texas-next-wave). [Surge in cases](https://www.vox.com/2020/6/27/21302495/coronavirus-pandemic-second-wave-us-america) explained.
     * How coronavirus compares to [100 years of deadly events](https://www.nytimes.com/interactive/2020/06/10/world/coronavirus-history.html) 
     * [8 states](https://www.vox.com/2020/6/10/21286696/us-covid-19-coronavirus-cases-update-texas-arizona-north-carolina) that are the next hotspots, and TX, FL, CA are the [states that saw the largest increases in cases](https://www.nytimes.com/2020/06/12/world/coronavirus-live-updates.html) in the [past week](https://www.nytimes.com/2020/06/19/world/coronavirus-live-updates.html). As of mid-June, Florida is predicted to be [next US epicenter by mid-July](https://www.wtsp.com/article/news/health/coronavirus/upenn-chop-study-florida-could-be-next-epicenter-coronavirus/67-0f910e1a-fa6e-4e22-853e-3c3bdaf46880).
-    * Rising caseloads are [predictable and avoidable](https://www.vox.com/science-and-health/2020/6/12/21288009/new-covid-spikes-arizona-florida-carolinas-texas)
-    * Preventing [superspreader events](https://www.vox.com/21296067/coronavirus-trump-tulsa-oklahoma-rally-superspreaders-superspreading-bars-restaurants) [will be key](https://www.nytimes.com/2020/06/30/science/how-coronavirus-spreads.html)
+    * Rising caseloads are [predictable and avoidable](https://www.vox.com/science-and-health/2020/6/12/21288009/new-covid-spikes-arizona-florida-carolinas-texas).
+    * Preventing [superspreader events](https://www.vox.com/21296067/coronavirus-trump-tulsa-oklahoma-rally-superspreaders-superspreading-bars-restaurants) [will be key](https://www.nytimes.com/2020/06/30/science/how-coronavirus-spreads.html).
 * As of early July, states that reopened early [are driving the US surge in cases](https://www.nytimes.com/2020/07/09/world/coronavirus-updates.html), with death toll [expected to rise soon](https://www.nytimes.com/2020/07/10/us/daily-virus-death-toll-rises-in-some-states.html)
-* As of mid July, CDC estimates that [actual cases are 2-13x higher than confirmed cases](https://www.nytimes.com/2020/07/21/health/coronavirus-infections-us.html).
+* As of mid July, CDC estimates that [deaths vastly undercounted](https://www.nytimes.com/2020/06/27/health/coronavirus-antibodies-asymptomatic.html) and [cases are 2-13x higher than confirmed cases](https://www.nytimes.com/2020/07/21/health/coronavirus-infections-us.html).
+    * Hospitalizations nationwide [now match the April's peak hospitalizations](https://www.nytimes.com/interactive/2020/07/23/us/coronavirus-hospitalizations-us.html).
 
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
 * Polls show that [whites are increasingly ready to reopen, but Blacks are not](https://fivethirtyeight.com/features/black-americans-were-hit-hard-by-state-shutdowns-but-are-worried-about-reopening-too/).
-
 
 
 ## Are We Past the Peak?
@@ -53,8 +53,8 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * [UK study](https://science.sciencemag.org/content/368/6491/eabb6936): estimated 50% of spread attributed to asymptomatic transmission
     * [Study about spread on the Diamond Princess](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.10.2000180#html_fulltext): estimated 18% of spread on-board from asymptomatic transmission that occurred before the quarantine start
     * [Study by US CDC](https://www.nytimes.com/2020/03/31/health/coronavirus-asymptomatic-transmission.html): 25% of patients might have no symptoms
-    * [Germany's Robert Koch Institute study](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30314-5/fulltext): infectiousness before or on day of symptom onset was substantial, which is when transmission was likely
-* CDC finds [deaths vastly undercounted](https://www.nytimes.com/2020/06/27/health/coronavirus-antibodies-asymptomatic.html)
+    * [Germany's Robert Koch Institute study](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30314-5/fulltext): infectiousness before or on day of symptom onset was substantial, which is when transmission was likely.
+* There are way more cases beyond simply [more testing](https://www.nytimes.com/interactive/2020/07/22/us/covid-testing-rising-cases.html).
 
 
 ## Building Public Health Capacity
@@ -84,7 +84,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * [Airborne transmission vs respiratory droplets](https://www.nytimes.com/2020/07/04/health/239-experts-with-one-big-claim-the-coronavirus-is-airborne.html), with increasing evidence showing the role of airborne transmission, with the WHO [finally acknowledging airborne transmission](https://www.nytimes.com/2020/07/09/world/coronavirus-updates.html).
     * Implications are that indoor spaces need to be [reconfigured](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs.
 * Do virus mutations matter? [There's evidence at a biomolecular level, but unsure if this makes the mutation more infectious](https://www.nytimes.com/2020/06/12/science/coronavirus-mutation-genetics-spike.html).
-* Can you get COVID-19 twice? Emerging evidence suggests [maybe](https://www.vox.com/2020/7/12/21321653/getting-covid-19-twice-reinfection-antibody-herd-immunity)
+* Can you get COVID-19 twice? Emerging evidence suggests [maybe](https://www.vox.com/2020/7/12/21321653/getting-covid-19-twice-reinfection-antibody-herd-immunity) but [unlikely](https://www.nytimes.com/2020/07/22/health/covid-antibodies-herd-immunity.html)
 * Long-term effects: some have shown [symptoms persist in the long-term](https://www.vox.com/2020/7/14/21324201/covid-19-long-term-effects-symptoms-treatment)
 * Impact on children: [children carry similar viral loads](https://www.nytimes.com/2020/05/05/health/coronavirus-children-transmission-school.html) but appear to be less impacted, making them vectors of transmission.
 * Impact on pregnant women: [fetal infection](https://www.nytimes.com/aponline/2020/07/09/health/ap-us-med-virus-outbreak-pregnancy.html) is possible. More [evidence](https://www.nytimes.com/2020/07/14/health/coronavirus-pregnancy-covid-19.html) emerging.  
@@ -94,8 +94,6 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 
 
 ## The Path Toward Reopening
-* [Reuters: Reopening plans are all over the map](https://www.reuters.com/article/us-health-coronavirus-usa-states-analysi/new-cases-deaths-u-s-states-reopening-plans-are-all-over-the-map-idUSKBN22U2U2)
-* [Vox: What works - more masks, testing, stimulus money, etc](https://www.vox.com/2020/5/13/21248157/testing-quarantine-masks-stimulus)
 * White House: [Opening Up America Again gating criteria](https://www.whitehouse.gov/wp-content/uploads/2020/04/Guidelines-for-Opening-Up-America-Again.pdf) 
     * [NY State's](https://www.nytimes.com/2020/05/04/nyregion/coronavirus-reopen-cuomo-ny.html) and [Chicago's](https://www.chicagotribune.com/coronavirus/ct-coronavirus-chicago-reopening-lightfoot-20200508-ztpnouwexrcvfdfcr2yccbc53a-story.html) reopening indicators, and a [comparison spreadsheet](https://github.com/CityOfLosAngeles/covid19-indicators/blob/master/Reopening_Indicators_Comparison.xlsx).
     * Arguably, [LA is more similar to NYC and Chicago](https://www.nytimes.com/2020/05/09/us/coronavirus-chicago.html) than other regions due to persistent caseloads that are flattening, but not dropping. As Chicago's benchmarks are tougher than the rest of IL, and it should be so for LA than the rest of CA.
