@@ -56,6 +56,7 @@ def upload_file(file_name):
 upload_file("city-of-la-cases.csv")
 upload_file("county-city-testing.csv")
 upload_file("hospital-availability.csv")
-upload_file("lacounty-neighborhood-time-series.parquet")
+upload_file("la-county-neighborhood-time-series.parquet")
+upload_file("la-county-neighborhood-testing-time-series.parquet")
 # CA open data portal data
 upload_file("ca-hospital-and-surge-capacity.csv")

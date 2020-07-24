@@ -66,7 +66,7 @@ def clean_data():
     df = df.groupby(keep_cols).agg({"cases": "sum"}).reset_index()
     
     # Write to S3
-    df.to_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
+    df.to_parquet(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet")
     
     return df
 
@@ -110,7 +110,7 @@ def grab_data_from_layer():
 
 
 def update_neighborhood_data(**kwargs):
-    historical_df = pd.read_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
+    historical_df = pd.read_parquet(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet")
     today_df = grab_data_from_layer()
     
     # Append together
@@ -149,4 +149,4 @@ def update_neighborhood_data(**kwargs):
              .reset_index(drop=True)
             )
     
-    final.to_parquet(f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet")
+    final.to_parquet(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet")

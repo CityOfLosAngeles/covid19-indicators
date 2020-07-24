@@ -6,7 +6,7 @@ import pandas as pd
 
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
-NEIGHBORHOOD_URL = f"{S3_FILE_PATH}lacounty-neighborhood-time-series.parquet"
+NEIGHBORHOOD_URL = f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet"
 
 CROSSWALK_URL = f"{S3_FILE_PATH}la_neighborhoods_population_crosswalk.parquet"
 
@@ -156,5 +156,7 @@ def clean_testing_data():
     df3[integrify_me] = df3[integrify_me].astype("Int64")
     
     df3 = df3.sort_values(["aggregate_region", "date"]).reset_index(drop=True)
-        
+    
+    df3.to_parquet(f"{S3_FILE_PATH}la-county-neighborhood-testing-time-series.parquet")
+    
     return df3
