@@ -14,7 +14,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 
 ## Context
 * How the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html) and [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html)
-* New York Times [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html)
+* New York Times [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html) and how the [US compares against other hotspots](https://www.nytimes.com/interactive/2020/07/23/us/coronavirus-hotspots-countries.html)
 * Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
 * [Timeline of administrative failures](https://www.nytimes.com/2020/07/18/us/politics/trump-coronavirus-response-failure-leadership.html)
 
