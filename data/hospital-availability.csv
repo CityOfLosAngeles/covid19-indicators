@@ -1325,3 +1325,15 @@ date,equipment,status,num
 7/27/2020,Ventilators,COVID Person Under Investigation,24
 7/27/2020,Ventilators,COVID Occupied,391
 7/27/2020,Ventilators,Unavailable,681
+7/28/2020,Acute Care Beds,Available,465
+7/28/2020,Acute Care Beds,COVID Person Under Investigation,380
+7/28/2020,Acute Care Beds,COVID Occupied,1326
+7/28/2020,Acute Care Beds,Unavailable,
+7/28/2020,ICU Beds,Available,135
+7/28/2020,ICU Beds,COVID Person Under Investigation,81
+7/28/2020,ICU Beds,COVID Occupied,548
+7/28/2020,ICU Beds,Unavailable,
+7/28/2020,Ventilators,Available,1250
+7/28/2020,Ventilators,COVID Person Under Investigation,24
+7/28/2020,Ventilators,COVID Occupied,382
+7/28/2020,Ventilators,Unavailable,722
