@@ -116,7 +116,6 @@ def load_jhu_us_time_series(branch="master"):
 
     # join
     merge_cols = [
-        "UID",
         "iso2",
         "iso3",
         "code3",
@@ -126,9 +125,11 @@ def load_jhu_us_time_series(branch="master"):
         "Country_Region",
         "Lat",
         "Long_",
-        "date",
+        "Combined_Key"
     ]
-    m1 = pd.merge(cases_df, deaths_df, on=merge_cols, how="left")
+    
+    m1 = pd.merge(cases_df, deaths_df.drop(columns = merge_cols), 
+            on=["UID", "date"], how="left")
 
     df = pd.merge(m1.drop(columns="Population"), lookup_table, on="UID", how="left")
 
