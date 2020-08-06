@@ -13,7 +13,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 
 
 ## Context
-* How the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html) and [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html)
+* How the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html), [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html), and the unique [failure to control the virus in the US ](https://www.nytimes.com/2020/08/06/us/united-states-failure-coronavirus.html)
 * New York Times [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html) and how the [US compares against other hotspots](https://www.nytimes.com/interactive/2020/07/23/us/coronavirus-hotspots-countries.html)
 * Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
 * [Timeline of administrative failures](https://www.nytimes.com/2020/07/18/us/politics/trump-coronavirus-response-failure-leadership.html)
@@ -47,13 +47,14 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * University of Minnesota and Harvard studies on [possible trajectories of the pandemic into late 2020 and 2021](https://www.nytimes.com/2020/05/08/health/coronavirus-pandemic-curve-scenarios.html) shows that a one-time social distancing effort is not sufficient to control this in the long term. Experts recommend turning social distancing on and off depending on case levels. 
     * Germany says [regions must reinstate restrictions](https://www.nytimes.com/2020/05/18/opinion/germany-coronavirus-reopening.html) if cases pass a certain threshold.
 * [Are any countries close to herd immunity? Not even close.](https://www.nytimes.com/interactive/2020/05/28/upshot/coronavirus-herd-immunity.html)
-* Our understanding of [asymptomatic transmission](https://www.nytimes.com/2020/06/27/world/europe/coronavirus-spread-asymptomatic.html) has evolved
+* Our understanding of [asymptomatic transmission](https://www.nytimes.com/2020/06/27/world/europe/coronavirus-spread-asymptomatic.html) has evolved to a significant fraction of cases are due such spread
     * A study from [China, Hong Kong, and Singapore](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.17.2000257): 30-60% of spread from asymptomatic transmission
     * [Hong Kong study](https://www.nature.com/articles/s41591-020-0869-5.pdf): estimated 44% transmission occurred prior to symptoms, infectious around 2 days prior to onset of symptoms
     * [UK study](https://science.sciencemag.org/content/368/6491/eabb6936): estimated 50% of spread attributed to asymptomatic transmission
     * [Study about spread on the Diamond Princess](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.10.2000180#html_fulltext): estimated 18% of spread on-board from asymptomatic transmission that occurred before the quarantine start
     * [Study by US CDC](https://www.nytimes.com/2020/03/31/health/coronavirus-asymptomatic-transmission.html): 25% of patients might have no symptoms
     * [Germany's Robert Koch Institute study](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30314-5/fulltext): infectiousness before or on day of symptom onset was substantial, which is when transmission was likely.
+    * [South Korean study](https://www.nytimes.com/2020/08/06/health/coronavirus-asymptomatic-transmission.html) found that asymptomatic people carried similar viral loads in their nose, throat, and lungs, and for just as long as those who develop symptoms
 * There are way more cases beyond simply [more testing](https://www.nytimes.com/interactive/2020/07/22/us/covid-testing-rising-cases.html).
 
 
