@@ -1445,3 +1445,15 @@ date,equipment,status,num
 8/6/2020,Ventilators,COVID Person Under Investigation,28
 8/6/2020,Ventilators,COVID Occupied,323
 8/6/2020,Ventilators,Unavailable,718
+8/7/2020,Acute Care Beds,Available,517
+8/7/2020,Acute Care Beds,COVID Person Under Investigation,321
+8/7/2020,Acute Care Beds,COVID Occupied,930
+8/7/2020,Acute Care Beds,Unavailable,
+8/7/2020,ICU Beds,Available,125
+8/7/2020,ICU Beds,COVID Person Under Investigation,66
+8/7/2020,ICU Beds,COVID Occupied,473
+8/7/2020,ICU Beds,Unavailable,
+8/7/2020,Ventilators,Available,1123
+8/7/2020,Ventilators,COVID Person Under Investigation,19
+8/7/2020,Ventilators,COVID Occupied,317
+8/7/2020,Ventilators,Unavailable,730
