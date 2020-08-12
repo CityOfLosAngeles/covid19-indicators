@@ -150,3 +150,4 @@ def update_neighborhood_data(**kwargs):
             )
     
     final.to_parquet(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet")
+    final.to_csv(f"{S3_FILE_PATH}la-county-neighborhood-time-series.csv", index=False)
