@@ -75,7 +75,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * Germany's research on [who has antibodies, how long antibodies last after infection, and what levels of antibodies are needed to prevent re-infection](https://www.nytimes.com/2020/04/18/world/europe/with-broad-random-tests-for-antibodies-germany-seeks-path-out-of-lockdown.html)
 * [How long do antibodies last?](https://www.nytimes.com/2020/05/07/health/coronavirus-antibody-prevalence.html) Remains to be seen.
     * Spain, with one of the worst outbreaks in Europe, [only sees about 5% of its population with immunity](https://www.vox.com/2020/5/16/21259492/covid-antibodies-spain-serology-study-coronavirus-immunity) and in [NYC, with the worst US outbreak](https://www.nytimes.com/interactive/2020/05/28/upshot/coronavirus-herd-immunity.html), about 20% of its population.
-    * Antibodies don't last longer [than a couple months](https://www.nytimes.com/2020/06/18/health/coronavirus-antibodies.html), and its role in preventing re-infection is not yet clear. But, studies show that asymptomatic people are shedding the virus for potentially longer periods of time than symptomatic people.
+    * Antibodies don't last longer [than a couple months](https://www.nytimes.com/2020/06/18/health/coronavirus-antibodies.html), with the CDC later confirming that [antibodies may last 3 months](https://www.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/quarantine.html). Its role in preventing re-infection is not yet clear. But, studies show that asymptomatic people are shedding the virus for potentially longer periods of time than symptomatic people.
 
 
 ## Known Unknowns
