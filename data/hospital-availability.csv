@@ -1496,11 +1496,11 @@ date,equipment,status,num
 8/11/2020,Acute Care Beds,Available,561
 8/11/2020,Acute Care Beds,COVID Person Under Investigation,296
 8/11/2020,Acute Care Beds,COVID Occupied,879
-8/11/2020,Acute Care Beds,Unavailable,
+8/11/2020,Acute Care Beds,Unavailable,10287
 8/11/2020,ICU Beds,Available,109
 8/11/2020,ICU Beds,COVID Person Under Investigation,82
 8/11/2020,ICU Beds,COVID Occupied,476
-8/11/2020,ICU Beds,Unavailable,
+8/11/2020,ICU Beds,Unavailable,1461
 8/11/2020,Ventilators,Available,1200
 8/11/2020,Ventilators,COVID Person Under Investigation,18
 8/11/2020,Ventilators,COVID Occupied,298
@@ -1508,24 +1508,24 @@ date,equipment,status,num
 8/12/2020,Acute Care Beds,Available,544
 8/12/2020,Acute Care Beds,COVID Person Under Investigation,295
 8/12/2020,Acute Care Beds,COVID Occupied,845
-8/12/2020,Acute Care Beds,Unavailable,
+8/12/2020,Acute Care Beds,Unavailable,10453
 8/12/2020,ICU Beds,Available,131
 8/12/2020,ICU Beds,COVID Person Under Investigation,63
 8/12/2020,ICU Beds,COVID Occupied,436
-8/12/2020,ICU Beds,Unavailable,
+8/12/2020,ICU Beds,Unavailable,1466
 8/12/2020,Ventilators,Available,1159
 8/12/2020,Ventilators,COVID Person Under Investigation,27
 8/12/2020,Ventilators,COVID Occupied,300
 8/12/2020,Ventilators,Unavailable,785
-8/13/2020,Acute Care Beds,Available,544
-8/13/2020,Acute Care Beds,COVID Person Under Investigation,295
-8/13/2020,Acute Care Beds,COVID Occupied,845
+8/13/2020,Acute Care Beds,Available,446
+8/13/2020,Acute Care Beds,COVID Person Under Investigation,341
+8/13/2020,Acute Care Beds,COVID Occupied,811
 8/13/2020,Acute Care Beds,Unavailable,
-8/13/2020,ICU Beds,Available,131
-8/13/2020,ICU Beds,COVID Person Under Investigation,63
-8/13/2020,ICU Beds,COVID Occupied,436
+8/13/2020,ICU Beds,Available,136
+8/13/2020,ICU Beds,COVID Person Under Investigation,69
+8/13/2020,ICU Beds,COVID Occupied,435
 8/13/2020,ICU Beds,Unavailable,
-8/13/2020,Ventilators,Available,1159
-8/13/2020,Ventilators,COVID Person Under Investigation,27
-8/13/2020,Ventilators,COVID Occupied,300
-8/13/2020,Ventilators,Unavailable,785
+8/13/2020,Ventilators,Available,1197
+8/13/2020,Ventilators,COVID Person Under Investigation,19
+8/13/2020,Ventilators,COVID Occupied,302
+8/13/2020,Ventilators,Unavailable,772
