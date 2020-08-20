@@ -19,7 +19,6 @@ datasets = [
     "city-of-la-cases.csv", 
     "county-city-testing.csv", 
     "hospital-availability.csv", 
-    "la-county-neighborhood-time-series.parquet", 
     "la-county-neighborhood-time-series.csv", 
     "ca-hospital-and-surge-capacity.csv"
 ]
