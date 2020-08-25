@@ -19,7 +19,7 @@ knitr::opts_chunk$set(dev = "cairo_pdf")
 options(knitr.kable.NA = "")
 options(kableExtra.latex.load_packages = FALSE)
 
-setwd("GitHub/covid19-indicators")
+#setwd("GitHub/covid19-indicators")
 
 library(tidyverse)
 library(knitr)
@@ -27,6 +27,7 @@ library(kableExtra)
 library(ggplot2)
 library(plotly)
 library(scales)
+library(glue)
 ```
 
 
@@ -36,42 +37,49 @@ This report contains information about how LA County and the City of LA performe
 
 **LA is certainly an epicenter**. LA reached [5,000 deaths](https://www.latimes.com/california/story/2020-08-11/13000-more-coronavirus-cases-california-test-results-backlog) by mid-August, the 3rd highest US county by deaths, after Queens and Kings Counties in New York.
 
-## Case Charts
+### Cases and Deaths by Neighborhood
+
 
 
 ```{r echo=FALSE,  fig.width =7 , fig.height =2}
 # arbitrary data to demonstrate a table
 #today_date = sys.Date()
-data <- read.csv(file = "data/city-of-la-cases.csv", header = TRUE, sep = ",")
+data <- read.csv(file = "data/la-county-neighborhood-time-series.csv", 
+                 header = TRUE, sep = ",", row.names(FALSE))
 
 data$date <- as.Date(factor(data$date))
-
 #sapply(data, class)
 
-df <- tail(data, 5)
+NEIGHBORHOOD = "Hacienda Heights"
+
+neighborhood_df <- filter(data, Region == NEIGHBORHOOD) %>%
+  select(c("Region", "date", "cases", "deaths"))
+
+past_week <- tail(neighborhood_df, 7)
 
 
-kable(df, format.args = list(big.mark = ",")) %>%
+# Print table of past week
+kable(past_week, format.args = list(big.mark = ",")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
                 position = "float_left") %>%
   column_spec(1, bold = T, border_right = T)
-
 ```
 
-Blah blah blah
 
+```{r echo=FALSE}
+CASE_TITLE = "{NEIGHBORHOOD}: Total Cases"
+DEATH_TITLE = "{NEIGHBORHOOD}: Total Deaths"
 
+# Add new_cases and new_deaths columns
+neighborhood_df <- neighborhood_df %>% 
+  mutate(new_cases = cases - lag(cases)) %>%
+  mutate(new_deaths = deaths - lag(deaths))
 
-```{r echo=FALSE,  fig.width =7 , fig.height =2}
-
-# Line chart of all cases
-cases <- ggplot() + 
-      geom_line(
-        aes(y = city_cases, x = date), data = data, color = "blue") +
-        xlab("date") + ylab("# cumulative cases") + 
-        ggtitle("City of LA\nTotal Cases") +
+  
+chart_aesthetics <- function(chart) {
+  chart <- chart +
         theme(
-          plot.title = element_text(family = "Lato", face = "bold", color = "gray", 
+          plot.title = element_text(family = "Arial", face = "bold", color = "gray", 
                                     size = 14, hjust=0.5), 
           axis.title.x = element_text(size = 10), 
           axis.title.y = element_text(size=10), 
@@ -79,37 +87,33 @@ cases <- ggplot() +
           ) +
         scale_x_date(labels = date_format("%m-%d"), breaks = date_breaks("2 weeks")
         ) 
+  
+  return(chart)
+}
+```
+This chart shows total cases over time.
 
-cases <- ggplotly(cases)
-cases
+```{r echo=FALSE,  fig.width =7 , fig.height =5}
+# Cases chart
+cases_chart <- ggplot() + 
+      geom_line(
+        aes(y = cases, x = date), data = neighborhood_df, color = "blue") +
+        xlab("date") + ylab("# cumulative cases") + 
+        ggtitle(glue(CASE_TITLE))
 
+cases_chart <- chart_aesthetics(cases_chart) %>% ggplotly()
+cases_chart
 ```
 
+This chart shows total deaths over time (deaths data was collected by neighborhoods starting mid-July).
+```{r echo=FALSE, fig.width =7, fig.height =5}
+# Deaths chart
+deaths_chart <- ggplot() + 
+      geom_line(
+        aes(y = deaths, x = date), data = neighborhood_df, color = "red") +
+        xlab("date") + ylab("# cumulative deaths") + 
+        ggtitle(glue(DEATH_TITLE))
 
-```{r echo=FALSE,  fig.width =7 , fig.height =2}
-# arbitrary data to demonstrate a table
-data <- tribble(~Industry, ~workers, ~increase,
-  "Retail trade", 1000, 10,
-  "Accomodation and food services", 989, 10,
-  "Manufacturing", 54, 10,
-  "Health care", 54, 10,
-  "Administrative services", 10, 10,
-  "Construction", 12, 10,
-  "Male, unmarried or spouse not present", 145, 10,
-  "Female, unmarried or spouse not present", 88, 10,
-  "Married couple", 89, 10)
-
-kable(data, format = "html", booktabs = TRUE,
-      col.names = c(" ", "Thousands of variable 1", "Variable 2 ($)"),
-      align = c("l", "c", "c"),
-      linesep = "") %>%
-  kable_styling(full_width = TRUE) %>%
-  pack_rows("Industry", 1, 6) %>%
-  pack_rows("Sex and marital status", 7, 9) %>%
-  column_spec(1, width = "7cm") %>%
-  column_spec(2, width = "4.75cm") %>%
-  row_spec(0, bold = TRUE,
-           extra_css = "border-top: 0; border-bottom:5px solid red;") %>%
-  add_header_above(c(" " , " ", " "))
+deaths_chart <- chart_aesthetics(deaths_chart) %>% ggplotly()
+deaths_chart
 ```
-
