@@ -8,6 +8,8 @@ output:
     df_print: paged
 sansfont: Lato
 urlcolor: null
+params:
+  neighborhood: "Hacienda Heights"
 ---
 
 
@@ -31,14 +33,15 @@ library(glue)
 ```
 
 
-# LA's COVID-19 Reopening Indicators
+# LA Coronavirus Trends by Neighborhood
 
-This report contains information about how LA County and the City of LA performed yesterday, on a number of key COVID-19 indicators related to the speed at which opening up can occur. Taken together, performing well against the benchmarks provide confidence in moving through each phase of reopening.
+This report contains coronavirus data for LA County neighborhoods. We'll use it to demonstrate producing parameterized reports. 
 
 **LA is certainly an epicenter**. LA reached [5,000 deaths](https://www.latimes.com/california/story/2020-08-11/13000-more-coronavirus-cases-california-test-results-backlog) by mid-August, the 3rd highest US county by deaths, after Queens and Kings Counties in New York.
 
 ### Cases and Deaths by Neighborhood
 
+The charts below look at total cases and deaths in `r params$neighborhood`. Data for `r params$neighborhood` over the past week is shown:
 
 
 ```{r echo=FALSE,  fig.width =7 , fig.height =2}
@@ -50,9 +53,7 @@ data <- read.csv(file = "data/la-county-neighborhood-time-series.csv",
 data$date <- as.Date(factor(data$date))
 #sapply(data, class)
 
-NEIGHBORHOOD = "Hacienda Heights"
-
-neighborhood_df <- filter(data, Region == NEIGHBORHOOD) %>%
+neighborhood_df <- filter(data, Region == params$neighborhood) %>%
   select(c("Region", "date", "cases", "deaths"))
 
 past_week <- tail(neighborhood_df, 7)
@@ -67,8 +68,8 @@ kable(past_week, format.args = list(big.mark = ",")) %>%
 
 
 ```{r echo=FALSE}
-CASE_TITLE = "{NEIGHBORHOOD}: Total Cases"
-DEATH_TITLE = "{NEIGHBORHOOD}: Total Deaths"
+CASE_TITLE = "{params$neighborhood}: Total Cases"
+DEATH_TITLE = "{params$neighborhood}: Total Deaths"
 
 # Add new_cases and new_deaths columns
 neighborhood_df <- neighborhood_df %>% 
@@ -106,11 +107,14 @@ cases_chart
 ```
 
 This chart shows total deaths over time (deaths data was collected by neighborhoods starting mid-July).
+
 ```{r echo=FALSE, fig.width =7, fig.height =5}
 # Deaths chart
 deaths_chart <- ggplot() + 
       geom_line(
-        aes(y = deaths, x = date), data = neighborhood_df, color = "red") +
+        aes(y = deaths, x = date), 
+        data = filter(neighborhood_df, date >= '2020-07-01'), 
+        color = "red") +
         xlab("date") + ylab("# cumulative deaths") + 
         ggtitle(glue(DEATH_TITLE))
 
