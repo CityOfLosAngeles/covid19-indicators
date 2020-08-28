@@ -17,6 +17,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * New York Times [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html) and how the [US compares against other hotspots](https://www.nytimes.com/interactive/2020/07/23/us/coronavirus-hotspots-countries.html)
 * Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
 * [Timeline of administrative failures](https://www.nytimes.com/2020/07/18/us/politics/trump-coronavirus-response-failure-leadership.html)
+* [Timeline of various gatherings](nytimes.com/interactive/2020/08/28/us/covid-virus-cluster.html) that resulted in outbreaks
 
 
 ## Dangers of Reopening Too Early
@@ -76,6 +77,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * [How long do antibodies last?](https://www.nytimes.com/2020/05/07/health/coronavirus-antibody-prevalence.html) Remains to be seen.
     * Spain, with one of the worst outbreaks in Europe, [only sees about 5% of its population with immunity](https://www.vox.com/2020/5/16/21259492/covid-antibodies-spain-serology-study-coronavirus-immunity) and in [NYC, with the worst US outbreak](https://www.nytimes.com/interactive/2020/05/28/upshot/coronavirus-herd-immunity.html), about 20% of its population.
     * Antibodies don't last longer [than a couple months](https://www.nytimes.com/2020/06/18/health/coronavirus-antibodies.html), with the CDC later confirming that [antibodies may last 3 months](https://www.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/quarantine.html). Its role in preventing re-infection is not yet clear. But, studies show that asymptomatic people are shedding the virus for potentially longer periods of time than symptomatic people.
+    * Documented re-infection in [Hong Kong](https://www.nytimes.com/2020/08/24/health/coronavirus-reinfection.html)
 
 
 ## Known Unknowns
