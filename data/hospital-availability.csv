@@ -1688,11 +1688,11 @@ date,equipment,status,num
 8/27/2020,Acute Care Beds,Available,695
 8/27/2020,Acute Care Beds,COVID Person Under Investigation,292
 8/27/2020,Acute Care Beds,COVID Occupied,681
-8/27/2020,Acute Care Beds,Unavailable,
+8/27/2020,Acute Care Beds,Unavailable,10592
 8/27/2020,ICU Beds,Available,122
 8/27/2020,ICU Beds,COVID Person Under Investigation,61
 8/27/2020,ICU Beds,COVID Occupied,327
-8/27/2020,ICU Beds,Unavailable,
+8/27/2020,ICU Beds,Unavailable,1396
 8/27/2020,Ventilators,Available,1188
 8/27/2020,Ventilators,COVID Person Under Investigation,24
 8/27/2020,Ventilators,COVID Occupied,220
@@ -1700,12 +1700,48 @@ date,equipment,status,num
 8/28/2020,Acute Care Beds,Available,549
 8/28/2020,Acute Care Beds,COVID Person Under Investigation,288
 8/28/2020,Acute Care Beds,COVID Occupied,639
-8/28/2020,Acute Care Beds,Unavailable,
+8/28/2020,Acute Care Beds,Unavailable,10484
 8/28/2020,ICU Beds,Available,113
 8/28/2020,ICU Beds,COVID Person Under Investigation,64
 8/28/2020,ICU Beds,COVID Occupied,304
-8/28/2020,ICU Beds,Unavailable,
+8/28/2020,ICU Beds,Unavailable,1416
 8/28/2020,Ventilators,Available,1160
 8/28/2020,Ventilators,COVID Person Under Investigation,20
 8/28/2020,Ventilators,COVID Occupied,204
 8/28/2020,Ventilators,Unavailable,827
+8/29/2020,Acute Care Beds,Available,525
+8/29/2020,Acute Care Beds,COVID Person Under Investigation,269
+8/29/2020,Acute Care Beds,COVID Occupied,559
+8/29/2020,Acute Care Beds,Unavailable,10303
+8/29/2020,ICU Beds,Available,93
+8/29/2020,ICU Beds,COVID Person Under Investigation,59
+8/29/2020,ICU Beds,COVID Occupied,289
+8/29/2020,ICU Beds,Unavailable,1402
+8/29/2020,Ventilators,Available,1290
+8/29/2020,Ventilators,COVID Person Under Investigation,20
+8/29/2020,Ventilators,COVID Occupied,189
+8/29/2020,Ventilators,Unavailable,749
+8/30/2020,Acute Care Beds,Available,680
+8/30/2020,Acute Care Beds,COVID Person Under Investigation,278
+8/30/2020,Acute Care Beds,COVID Occupied,638
+8/30/2020,Acute Care Beds,Unavailable,
+8/30/2020,ICU Beds,Available,124
+8/30/2020,ICU Beds,COVID Person Under Investigation,57
+8/30/2020,ICU Beds,COVID Occupied,312
+8/30/2020,ICU Beds,Unavailable,
+8/30/2020,Ventilators,Available,1143
+8/30/2020,Ventilators,COVID Person Under Investigation,23
+8/30/2020,Ventilators,COVID Occupied,210
+8/30/2020,Ventilators,Unavailable,780
+8/31/2020,Acute Care Beds,Available,774
+8/31/2020,Acute Care Beds,COVID Person Under Investigation,265
+8/31/2020,Acute Care Beds,COVID Occupied,651
+8/31/2020,Acute Care Beds,Unavailable,
+8/31/2020,ICU Beds,Available,152
+8/31/2020,ICU Beds,COVID Person Under Investigation,64
+8/31/2020,ICU Beds,COVID Occupied,280
+8/31/2020,ICU Beds,Unavailable,
+8/31/2020,Ventilators,Available,1278
+8/31/2020,Ventilators,COVID Person Under Investigation,21
+8/31/2020,Ventilators,COVID Occupied,189
+8/31/2020,Ventilators,Unavailable,796
