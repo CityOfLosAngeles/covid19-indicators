@@ -88,6 +88,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * Implications are that indoor spaces need to be [reconfigured](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs.
     * A [Diamond Princess study](https://www.nytimes.com/2020/07/30/health/diamond-princess-coronavirus-aerosol.html) found that the virus spread through airborne transmission. Over 60% of infections were spread through the smaller droplets, with implications that good ventilation is not enough, but masks would still be necessary.
     * [Airborne floating virus](https://www.nytimes.com/2020/08/11/health/coronavirus-aerosols-indoors.html) can infect others at distances greater than 6 ft.
+    * [China's bus study](https://www.nytimes.com/2020/09/01/health/coronavirus-bus-china.html
 * Do virus mutations matter? [There's evidence at a biomolecular level, but unsure if this makes the mutation more infectious](https://www.nytimes.com/2020/06/12/science/coronavirus-mutation-genetics-spike.html).
 * Can you get COVID-19 twice? Emerging evidence suggests [maybe](https://www.vox.com/2020/7/12/21321653/getting-covid-19-twice-reinfection-antibody-herd-immunity) but [unlikely](https://www.nytimes.com/2020/07/22/health/covid-antibodies-herd-immunity.html)
 * Long-term effects: some have shown [symptoms persist in the long-term](https://www.vox.com/2020/7/14/21324201/covid-19-long-term-effects-symptoms-treatment)
