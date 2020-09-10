@@ -15,9 +15,10 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 ## Context
 * How the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html), [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html), and the unique [failure to control the virus in the US ](https://www.nytimes.com/2020/08/06/us/united-states-failure-coronavirus.html)
 * New York Times [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html) and how the [US compares against other hotspots](https://www.nytimes.com/interactive/2020/07/23/us/coronavirus-hotspots-countries.html)
-* Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
+* Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html). Track the White House coronavirus task force's report on [each state](https://www.nytimes.com/interactive/2020/07/28/us/states-report-virus-response-july-26.html)
 * [Timeline of administrative failures](https://www.nytimes.com/2020/07/18/us/politics/trump-coronavirus-response-failure-leadership.html)
 * [Timeline of various gatherings](nytimes.com/interactive/2020/08/28/us/covid-virus-cluster.html) that resulted in outbreaks
+* Track outbreaks on [college campuses](https://www.nytimes.com/interactive/2020/us/covid-college-cases-tracker.html)
 
 
 ## Dangers of Reopening Too Early
@@ -37,6 +38,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * As of early July, states that reopened early [are driving the US surge in cases](https://www.nytimes.com/2020/07/09/world/coronavirus-updates.html), with death toll [expected to rise soon](https://www.nytimes.com/2020/07/10/us/daily-virus-death-toll-rises-in-some-states.html)
 * As of mid July, CDC estimates that [deaths vastly undercounted](https://www.nytimes.com/2020/06/27/health/coronavirus-antibodies-asymptomatic.html) and [cases are 2-13x higher than confirmed cases](https://www.nytimes.com/2020/07/21/health/coronavirus-infections-us.html).
     * Hospitalizations nationwide [now match the April's peak hospitalizations](https://www.nytimes.com/interactive/2020/07/23/us/coronavirus-hospitalizations-us.html).
+    * By early September, experts are estimating how many [deaths could have been averted](https://www.vox.com/future-perfect/2020/9/9/21428769/covid-19-coronavirus-deaths-statistics-us-canada-europe).
 
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
 * Polls show that [whites are increasingly ready to reopen, but Blacks are not](https://fivethirtyeight.com/features/black-americans-were-hit-hard-by-state-shutdowns-but-are-worried-about-reopening-too/).
