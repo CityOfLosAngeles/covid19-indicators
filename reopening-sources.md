@@ -18,7 +18,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html). Track the White House coronavirus task force's report on [each state](https://www.nytimes.com/interactive/2020/07/28/us/states-report-virus-response-july-26.html)
 * [Timeline of administrative failures](https://www.nytimes.com/2020/07/18/us/politics/trump-coronavirus-response-failure-leadership.html)
 * [Timeline of various gatherings](nytimes.com/interactive/2020/08/28/us/covid-virus-cluster.html) that resulted in outbreaks
-* Track outbreaks on [college campuses](https://www.nytimes.com/interactive/2020/us/covid-college-cases-tracker.html)
+* Track outbreaks on [college campuses](https://www.nytimes.com/interactive/2020/us/covid-college-cases-tracker.html) or trends among [children](https://www.nytimes.com/interactive/2020/08/31/us/coronavirus-cases-children.html)
 
 
 ## Dangers of Reopening Too Early
@@ -86,6 +86,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * [How indoor ventilation](https://www.nytimes.com/2020/04/20/health/airflow-coronavirus-restaurants.html) affects the path of virus infection, possibly spreading [through ducts](https://wwwnc.cdc.gov/eid/article/26/7/20-0764_article#tnF1).
 * How long does [virus linger through air?](https://www.nytimes.com/2020/05/14/health/coronavirus-infections.html)
 * How long does virus remain [on surfaces?](https://www.nytimes.com/2020/05/28/well/live/whats-the-risk-of-catching-coronavirus-from-a-surface.html)
+* Why it is more dangerous for [older adults](https://www.nytimes.com/2020/09/08/health/covid-aging-immune-system.html)
 * [Airborne transmission vs respiratory droplets](https://www.nytimes.com/2020/07/04/health/239-experts-with-one-big-claim-the-coronavirus-is-airborne.html), with increasing evidence showing the role of airborne transmission, with the WHO [finally acknowledging airborne transmission](https://www.nytimes.com/2020/07/09/world/coronavirus-updates.html). The research understanding [is still evolving](https://www.nytimes.com/2020/07/30/opinion/coronavirus-aerosols.html), with airborne spread playing an increasing role in the virus's spread.
     * Implications are that indoor spaces need to be [reconfigured](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs.
     * A [Diamond Princess study](https://www.nytimes.com/2020/07/30/health/diamond-princess-coronavirus-aerosol.html) found that the virus spread through airborne transmission. Over 60% of infections were spread through the smaller droplets, with implications that good ventilation is not enough, but masks would still be necessary.
