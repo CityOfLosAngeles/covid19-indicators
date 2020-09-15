@@ -53,9 +53,10 @@ def case_rate(county_state_name, start_date, time_period):
     new_cases_avg7 = df[extract_col].mean()
     
     # Convert to cases per 100k
-    cases_per100k = (new_cases_avg7 / county_pop * POP_RATE).round(2)
+    cases_per100k = (new_cases_avg7 / county_pop * POP_RATE).round(2).iloc[0]
     
     return cases_per100k
+
     
 """
 Sub-functions for case rate
@@ -89,8 +90,9 @@ def positive_rate(start_date, time_period):
     extract_col2 = ["County_Performed"]
     
     positivity_rate = (df[extract_col1].sum().iloc[0]) / (df[extract_col2].sum().iloc[0])    
+    positivity_rate = positivity_rate.round(3)
     
-    return positivity_rate.round(3)
+    return positivity_rate
 
 
 """
@@ -121,6 +123,6 @@ def test_rate(start_date, time_period):
     extract_col = ["County_Performed"]
     tests_avg7 = df[extract_col].mean()
     
-    tests_per100k = (tests_avg7 / LA_POP * POP_RATE).round(2)
+    tests_per100k = (tests_avg7 / LA_POP * POP_RATE).round(2).iloc[0]
     
     return tests_per100k
