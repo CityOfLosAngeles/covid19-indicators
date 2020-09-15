@@ -18,19 +18,18 @@ S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
 US_COUNTY_URL = f"{S3_FILE_PATH}us-county-time-series.parquet"
 
-LA_CITY_URL = f"{S3_FILE_PATH}city-of-la-cases.parquet"
-
 TESTING_URL = f"{S3_FILE_PATH}county-city-testing.parquet"
-
-HOSPITAL_URL = f"{S3_FILE_PATH}hospital-availability.parquet"
-
-PPE_URL = f"{S3_FILE_PATH}ca-ppe.parquet"
 
 HOSPITAL_SURGE_URL = f"{S3_FILE_PATH}ca-hospital-and-surge-capacity.parquet"
 
 CROSSWALK_URL = (
     "https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/"
     "msa_county_pop_crosswalk.csv"
+)
+
+CA_POP_CROSSWALK_URL = (
+    "https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/"
+    "ca_county_pop_crosswalk.csv"
 )
 
 #---------------------------------------------------------------#
