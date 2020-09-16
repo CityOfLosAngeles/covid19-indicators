@@ -195,51 +195,6 @@ def meet_positive_share_for_two_weeks(yesterday_date, city_or_county):
     except IndexError:
         return np.nan    
     
-    
-#---------------------------------------------------------------#
-# Hospital Equipment (LA County)
-#---------------------------------------------------------------#  
-def meet_acute(yesterday_date):
-    df = meet_hospital(yesterday_date)
-    extract_col = "pct_available_avg3"
-    try:
-        indicator = df[df.equipment.str.contains("Acute")].iloc[0][extract_col].round(2)
-        return indicator
-    except IndexError:
-        return np.nan
-
-
-def meet_icu(yesterday_date):
-    df = meet_hospital(yesterday_date)
-    extract_col = "pct_available_avg3"
-    try:
-        indicator = df[df.equipment.str.contains("ICU")].iloc[0][extract_col].round(2)
-        return indicator
-    except IndexError:
-        return np.nan
-    
-    
-def meet_ventilator(yesterday_date):
-    df = meet_hospital(yesterday_date)
-    extract_col = "pct_available_avg3"
-    try:
-        indicator = df[df.equipment.str.contains("Ventilator")].iloc[0][extract_col].round(2)
-        return indicator
-    except IndexError:
-        return np.nan  
-    
-    
-"""
-Sub-functions for hospital data.
-"""    
-def meet_hospital(yesterday_date):
-    # Noting that yesterday's date always seems to surpass benchmark
-    # only to be revised downward again tomorrow. Might be ok if we're using 3-day avg from yesterday.
-    df = utils.prep_lacounty_hospital(start_date)
-    yesterday_date = two_days_ago
-    df = df[df.date == yesterday_date]
-    return df 
-
 
 #---------------------------------------------------------------#
 # COVID-Hospitalizations (LA County)

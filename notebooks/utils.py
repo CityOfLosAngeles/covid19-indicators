@@ -22,10 +22,6 @@ LA_CITY_URL = f"{S3_FILE_PATH}city-of-la-cases.parquet"
 
 TESTING_URL = f"{S3_FILE_PATH}county-city-testing.parquet"
 
-HOSPITAL_URL = f"{S3_FILE_PATH}hospital-availability.parquet"
-
-PPE_URL = f"{S3_FILE_PATH}ca-ppe.parquet"
-
 HOSPITAL_SURGE_URL = f"{S3_FILE_PATH}ca-hospital-and-surge-capacity.parquet"
 
 CROSSWALK_URL = (

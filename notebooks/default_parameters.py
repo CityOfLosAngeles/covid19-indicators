@@ -25,11 +25,27 @@ today_date = (
              .date()
 )
 
+one_week_ago = (
+    (datetime.today()
+                .astimezone(pytz.timezone(f'{time_zone}'))
+                .date()
+        - timedelta(days=8)
+    )
+) 
+
 two_weeks_ago = (
     (datetime.today()
                 .astimezone(pytz.timezone(f'{time_zone}'))
                 .date()
         - timedelta(days=15)
+    )
+)
+
+three_weeks_ago = (
+    (datetime.today()
+                .astimezone(pytz.timezone(f'{time_zone}'))
+                .date()
+        - timedelta(days=22)
     )
 )
 
