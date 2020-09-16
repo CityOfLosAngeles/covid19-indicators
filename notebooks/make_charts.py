@@ -29,8 +29,8 @@ orange = "#FCA800"
 blue = "#1696D2"
 gray = "#797C7C"
 purple = "#6B1F84"
-orange = "#FFC414"
-yellow = "#FFC414"
+orange = "#F7AE1D"
+yellow = "#D0E700"
 
 # These colors are used for the shading on cases/deaths
 light_gray = "#EAEBEB"
