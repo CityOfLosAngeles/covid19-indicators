@@ -8,6 +8,8 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 1. [Are We Past the Peak?](#are-we-past-the-peak)
 1. [Building Public Health Capacity](#building-public-health-capacity)
 1. [Antibodies and Immunity Research](#antibodies-and-immunity-research)
+1. [Its Effect on Subgroups](#its-effect-on-subgroups)
+1. [Its Effect in the Air](#its-effect-in-the-air)
 1. [Known Unknowns](#known-unknowns)
 1. [The Path Toward Reopening](#the-path-toward-reopening)
 
@@ -80,23 +82,30 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * Spain, with one of the worst outbreaks in Europe, [only sees about 5% of its population with immunity](https://www.vox.com/2020/5/16/21259492/covid-antibodies-spain-serology-study-coronavirus-immunity) and in [NYC, with the worst US outbreak](https://www.nytimes.com/interactive/2020/05/28/upshot/coronavirus-herd-immunity.html), about 20% of its population.
     * Antibodies don't last longer [than a couple months](https://www.nytimes.com/2020/06/18/health/coronavirus-antibodies.html), with the CDC later confirming that [antibodies may last 3 months](https://www.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/quarantine.html). Its role in preventing re-infection is not yet clear. But, studies show that asymptomatic people are shedding the virus for potentially longer periods of time than symptomatic people.
     * 1st documented re-infection in [Hong Kong](https://www.nytimes.com/2020/08/24/health/coronavirus-reinfection.html) and [in the US](https://www.nytimes.com/reuters/2020/08/28/us/28reuters-health-coronavirus-reinfection.html).
+* Do virus mutations matter? [There's evidence at a biomolecular level, but unsure if this makes the mutation more infectious](https://www.nytimes.com/2020/06/12/science/coronavirus-mutation-genetics-spike.html).
+* Can you get COVID-19 twice? Emerging evidence suggests [maybe](https://www.vox.com/2020/7/12/21321653/getting-covid-19-twice-reinfection-antibody-herd-immunity) but [unlikely](https://www.nytimes.com/2020/07/22/health/covid-antibodies-herd-immunity.html)
 
 
-## Known Unknowns
+## Its Effect on Subgroups
+* Why it is more dangerous for [older adults](https://www.nytimes.com/2020/09/08/health/covid-aging-immune-system.html)
+* Long-term effects: some have shown [symptoms persist in the long-term](https://www.vox.com/2020/7/14/21324201/covid-19-long-term-effects-symptoms-treatment)
+* Impact on children: children carry [similar viral loads](https://www.nytimes.com/2020/05/05/health/coronavirus-children-transmission-school.html) or [more](https://www.nytimes.com/2020/07/30/health/coronavirus-children.html) but appear to be less impacted, making them vectors of transmission.
+* Impact on pregnant women: [fetal infection](https://www.nytimes.com/aponline/2020/07/09/health/ap-us-med-virus-outbreak-pregnancy.html) is possible. More [evidence](https://www.nytimes.com/2020/07/14/health/coronavirus-pregnancy-covid-19.html) emerging.  
+* How to safely reopen schools: nearly 40% of school staff are [vulnerable](https://www.nytimes.com/2020/09/17/world/covid-19-coronavirus.html#link-400db8e0)
+
+
+## Its Effect in the Air
 * [How indoor ventilation](https://www.nytimes.com/2020/04/20/health/airflow-coronavirus-restaurants.html) affects the path of virus infection, possibly spreading [through ducts](https://wwwnc.cdc.gov/eid/article/26/7/20-0764_article#tnF1).
 * How long does [virus linger through air?](https://www.nytimes.com/2020/05/14/health/coronavirus-infections.html)
 * How long does virus remain [on surfaces?](https://www.nytimes.com/2020/05/28/well/live/whats-the-risk-of-catching-coronavirus-from-a-surface.html)
-* Why it is more dangerous for [older adults](https://www.nytimes.com/2020/09/08/health/covid-aging-immune-system.html)
 * [Airborne transmission vs respiratory droplets](https://www.nytimes.com/2020/07/04/health/239-experts-with-one-big-claim-the-coronavirus-is-airborne.html), with increasing evidence showing the role of airborne transmission, with the WHO [finally acknowledging airborne transmission](https://www.nytimes.com/2020/07/09/world/coronavirus-updates.html). The research understanding [is still evolving](https://www.nytimes.com/2020/07/30/opinion/coronavirus-aerosols.html), with airborne spread playing an increasing role in the virus's spread.
     * Implications are that indoor spaces need to be [reconfigured](https://www.vox.com/recode/2020/4/14/21211789/coronavirus-office-space-work-from-home-design-architecture-real-estate) with higher air filtration, more cleaning high touch surfaces, and UV light to kill germs.
     * A [Diamond Princess study](https://www.nytimes.com/2020/07/30/health/diamond-princess-coronavirus-aerosol.html) found that the virus spread through airborne transmission. Over 60% of infections were spread through the smaller droplets, with implications that good ventilation is not enough, but masks would still be necessary.
     * [Airborne floating virus](https://www.nytimes.com/2020/08/11/health/coronavirus-aerosols-indoors.html) can infect others at distances greater than 6 ft.
     * [China's bus study](https://www.nytimes.com/2020/09/01/health/coronavirus-bus-china.html
-* Do virus mutations matter? [There's evidence at a biomolecular level, but unsure if this makes the mutation more infectious](https://www.nytimes.com/2020/06/12/science/coronavirus-mutation-genetics-spike.html).
-* Can you get COVID-19 twice? Emerging evidence suggests [maybe](https://www.vox.com/2020/7/12/21321653/getting-covid-19-twice-reinfection-antibody-herd-immunity) but [unlikely](https://www.nytimes.com/2020/07/22/health/covid-antibodies-herd-immunity.html)
-* Long-term effects: some have shown [symptoms persist in the long-term](https://www.vox.com/2020/7/14/21324201/covid-19-long-term-effects-symptoms-treatment)
-* Impact on children: children carry [similar viral loads](https://www.nytimes.com/2020/05/05/health/coronavirus-children-transmission-school.html) or [more](https://www.nytimes.com/2020/07/30/health/coronavirus-children.html) but appear to be less impacted, making them vectors of transmission.
-* Impact on pregnant women: [fetal infection](https://www.nytimes.com/aponline/2020/07/09/health/ap-us-med-virus-outbreak-pregnancy.html) is possible. More [evidence](https://www.nytimes.com/2020/07/14/health/coronavirus-pregnancy-covid-19.html) emerging.  
+
+
+## Known Unknowns
 * What we still don't know ([NY Times](https://www.nytimes.com/2020/06/01/health/coronavirus-mysteries.html), [Vox](https://www.vox.com/2020/5/12/21248395/coronavirus-pandemic-covid-symptoms-testing-children-mysteries): from number of cases, impact on children, the types of social distancing that can work as we reopen, and role of immunity.
 * [Legionnaires' a potential health threat](https://www.nytimes.com/2020/05/20/health/coronavirus-legionnaires-offices.html) for dormant office buildings.
 * [1 in 5 at risk for severe COVID-19 globally](https://www.nytimes.com/2020/06/15/health/coronavirus-underlying-conditions.html), with additional [UK research on 17M reinforcing this](https://www.nytimes.com/2020/07/08/health/coronavirus-risk-factors.html).
