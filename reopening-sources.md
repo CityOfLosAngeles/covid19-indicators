@@ -20,7 +20,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html). Track the White House coronavirus task force's report on [each state](https://www.nytimes.com/interactive/2020/07/28/us/states-report-virus-response-july-26.html)
 * [Timeline of administrative failures](https://www.nytimes.com/2020/07/18/us/politics/trump-coronavirus-response-failure-leadership.html)
 * [Timeline of various gatherings](nytimes.com/interactive/2020/08/28/us/covid-virus-cluster.html) that resulted in outbreaks
-* Track outbreaks on [college campuses](https://www.nytimes.com/interactive/2020/us/covid-college-cases-tracker.html) or trends among [children](https://www.nytimes.com/interactive/2020/08/31/us/coronavirus-cases-children.html)
+* Track outbreaks on [college campuses](https://www.nytimes.com/interactive/2020/us/covid-college-cases-tracker.html), trends among [children](https://www.nytimes.com/interactive/2020/08/31/us/coronavirus-cases-children.html), and whether K12 schools are [publishing counts](https://www.nytimes.com/interactive/2020/09/21/us/covid-schools.html)
 
 
 ## Dangers of Reopening Too Early
