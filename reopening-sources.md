@@ -88,6 +88,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 
 ## Its Effect on Subgroups
 * Why it is more dangerous for [older adults](https://www.nytimes.com/2020/09/08/health/covid-aging-immune-system.html)
+    * Young people may have [seeded infections in older people in the US from May-Aug 2020](https://www.nytimes.com/2020/09/24/world/covid-19-coronavirus.html#link-7f8a5627) according to the CDC's [report](https://www.cdc.gov/mmwr/volumes/69/wr/pdfs/mm6939e1-H.pdf)
 * Long-term effects: some have shown [symptoms persist in the long-term](https://www.vox.com/2020/7/14/21324201/covid-19-long-term-effects-symptoms-treatment)
 * Impact on children: children carry [similar viral loads](https://www.nytimes.com/2020/05/05/health/coronavirus-children-transmission-school.html) or [more](https://www.nytimes.com/2020/07/30/health/coronavirus-children.html) but appear to be less impacted, making them vectors of transmission.
 * Impact on pregnant women: [fetal infection](https://www.nytimes.com/aponline/2020/07/09/health/ap-us-med-virus-outbreak-pregnancy.html) is possible. More [evidence](https://www.nytimes.com/2020/07/14/health/coronavirus-pregnancy-covid-19.html) emerging.  
