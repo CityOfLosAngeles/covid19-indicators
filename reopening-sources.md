@@ -41,6 +41,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * As of mid July, CDC estimates that [deaths vastly undercounted](https://www.nytimes.com/2020/06/27/health/coronavirus-antibodies-asymptomatic.html) and [cases are 2-13x higher than confirmed cases](https://www.nytimes.com/2020/07/21/health/coronavirus-infections-us.html).
     * Hospitalizations nationwide [now match the April's peak hospitalizations](https://www.nytimes.com/interactive/2020/07/23/us/coronavirus-hospitalizations-us.html).
     * By early September, experts are estimating how many [deaths could have been averted](https://www.vox.com/future-perfect/2020/9/9/21428769/covid-19-coronavirus-deaths-statistics-us-canada-europe).
+* As of Sept, CDC estimates that about 10% of Americans [have antibodies](https://www.nytimes.com/2020/09/29/health/coronavirus-herd-immunity.html), leaving 90% vulnerable, and herd immunity very far off.
 
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
 * Polls show that [whites are increasingly ready to reopen, but Blacks are not](https://fivethirtyeight.com/features/black-americans-were-hit-hard-by-state-shutdowns-but-are-worried-about-reopening-too/).
@@ -91,6 +92,8 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * Young people may have [seeded infections in older people in the US from May-Aug 2020](https://www.nytimes.com/2020/09/24/world/covid-19-coronavirus.html#link-7f8a5627) according to the CDC's [report](https://www.cdc.gov/mmwr/volumes/69/wr/pdfs/mm6939e1-H.pdf)
 * Long-term effects: some have shown [symptoms persist in the long-term](https://www.vox.com/2020/7/14/21324201/covid-19-long-term-effects-symptoms-treatment)
 * Impact on children: children carry [similar viral loads](https://www.nytimes.com/2020/05/05/health/coronavirus-children-transmission-school.html) or [more](https://www.nytimes.com/2020/07/30/health/coronavirus-children.html) but appear to be less impacted, making them vectors of transmission.
+    * Even small gatherings [may play a role in the spread](https://www.nytimes.com/2020/09/24/parenting/family-gatherings-coronavirus.html)
+    * Children under 10 are [half as likely](https://www.nytimes.com/2020/09/28/health/coronavirus-children.html) to get infected, but children 14 yrs and older are just as likely as adults to get infected.
 * Impact on pregnant women: [fetal infection](https://www.nytimes.com/aponline/2020/07/09/health/ap-us-med-virus-outbreak-pregnancy.html) is possible. More [evidence](https://www.nytimes.com/2020/07/14/health/coronavirus-pregnancy-covid-19.html) emerging.  
 * How to safely reopen schools: nearly 40% of school staff are [vulnerable](https://www.nytimes.com/2020/09/17/world/covid-19-coronavirus.html#link-400db8e0)
 
