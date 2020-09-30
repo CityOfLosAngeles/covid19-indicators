@@ -45,6 +45,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
 * Polls show that [whites are increasingly ready to reopen, but Blacks are not](https://fivethirtyeight.com/features/black-americans-were-hit-hard-by-state-shutdowns-but-are-worried-about-reopening-too/).
+    * Survey also finds that Black and Latino families are [extremely vulnerable, especially financially](https://www.nytimes.com/live/2020/09/30/world/covid-19-coronavirus#the-pandemics-financial-pain-is-worst-for-black-and-latino-parents-a-survey-finds)
 
 
 ## Are We Past the Peak?
@@ -93,7 +94,8 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * Long-term effects: some have shown [symptoms persist in the long-term](https://www.vox.com/2020/7/14/21324201/covid-19-long-term-effects-symptoms-treatment)
 * Impact on children: children carry [similar viral loads](https://www.nytimes.com/2020/05/05/health/coronavirus-children-transmission-school.html) or [more](https://www.nytimes.com/2020/07/30/health/coronavirus-children.html) but appear to be less impacted, making them vectors of transmission.
     * Even small gatherings [may play a role in the spread](https://www.nytimes.com/2020/09/24/parenting/family-gatherings-coronavirus.html)
-    * Children under 10 are [half as likely](https://www.nytimes.com/2020/09/28/health/coronavirus-children.html) to get infected, but children 14 yrs and older are just as likely as adults to get infected.
+    * US CDC finds children under 10 are [half as likely](https://www.nytimes.com/2020/09/28/health/coronavirus-children.html) to get infected, but children 14 yrs and older are just as likely as adults to get infected.
+    * Study in India on 85k children finds that [children of all ages can infect and spread](https://www.nytimes.com/live/2020/09/30/world/covid-19-coronavirus#a-massive-study-in-india-found-key-insights-on-how-the-spread-of-the-virus-differs-by-age-and-gender)
 * Impact on pregnant women: [fetal infection](https://www.nytimes.com/aponline/2020/07/09/health/ap-us-med-virus-outbreak-pregnancy.html) is possible. More [evidence](https://www.nytimes.com/2020/07/14/health/coronavirus-pregnancy-covid-19.html) emerging.  
 * How to safely reopen schools: nearly 40% of school staff are [vulnerable](https://www.nytimes.com/2020/09/17/world/covid-19-coronavirus.html#link-400db8e0)
 
