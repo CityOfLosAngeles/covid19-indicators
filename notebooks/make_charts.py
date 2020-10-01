@@ -44,7 +44,7 @@ grid_opacity = 0.4
 domain_opacity = 0.4
 stroke_opacity = 0
 time_unit = "monthdate"
-chart_width = 250
+chart_width = 300
 chart_height = 200
 bin_spacing = 100
 fulldate_format = "%-m/%-d/%y"
@@ -176,7 +176,7 @@ def make_cases_deaths_chart(df, geog, name):
 # Testing Data (LA County and City of LA)
 #---------------------------------------------------------------#
 def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
-    chart_width = 400
+    chart_width = 500
         
     bar = (
         alt.Chart(df)
@@ -225,7 +225,7 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
 def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
                                 testing_lower_bound, testing_upper_bound, 
                                 chart_title1, chart_title2): 
-    chart_width = 200
+    chart_width = 250
     positive_bar = (
         alt.Chart(df)
         .mark_bar(color = navy, binSpacing = bin_spacing)

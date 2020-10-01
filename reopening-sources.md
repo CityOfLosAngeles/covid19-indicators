@@ -15,12 +15,12 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 
 
 ## Context
-* How the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html), [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html), and the unique [failure to control the virus in the US ](https://www.nytimes.com/2020/08/06/us/united-states-failure-coronavirus.html)
-* New York Times [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html) and how the [US compares against other hotspots](https://www.nytimes.com/interactive/2020/07/23/us/coronavirus-hotspots-countries.html)
-* Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html). Track the White House coronavirus task force's report on [each state](https://www.nytimes.com/interactive/2020/07/28/us/states-report-virus-response-july-26.html)
-* [Timeline of administrative failures](https://www.nytimes.com/2020/07/18/us/politics/trump-coronavirus-response-failure-leadership.html)
-* [Timeline of various gatherings](nytimes.com/interactive/2020/08/28/us/covid-virus-cluster.html) that resulted in outbreaks
-* Track outbreaks on [college campuses](https://www.nytimes.com/interactive/2020/us/covid-college-cases-tracker.html), trends among [children](https://www.nytimes.com/interactive/2020/08/31/us/coronavirus-cases-children.html), and whether K12 schools are [publishing counts](https://www.nytimes.com/interactive/2020/09/21/us/covid-schools.html)
+* How the virus spread [out of China](https://www.nytimes.com/interactive/2020/03/22/world/coronavirus-spread.html), [within the US](https://www.nytimes.com/interactive/2020/us/coronavirus-spread.html), and the unique [failure to control the virus in the US ](https://www.nytimes.com/2020/08/06/us/united-states-failure-coronavirus.html).
+* New York Times [interactive analysis of global and US cases](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html) and how the [US compares against other hotspots](https://www.nytimes.com/interactive/2020/07/23/us/coronavirus-hotspots-countries.html).
+* Track each US state's: [initial reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html) and now [pauses in reopening](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html). Track the White House coronavirus task force's report on [each state](https://www.nytimes.com/interactive/2020/07/28/us/states-report-virus-response-july-26.html).
+* [Timeline of administrative failures](https://www.nytimes.com/2020/07/18/us/politics/trump-coronavirus-response-failure-leadership.html).
+* Timeline of various gatherings that resulted in outbreaks in the [US](nytimes.com/interactive/2020/08/28/us/covid-virus-cluster.html) and [Europe](https://www.nytimes.com/2020/09/30/world/europe/ski-party-pandemic-travel-coronavirus.html).
+* Track outbreaks on [college campuses](https://www.nytimes.com/interactive/2020/us/covid-college-cases-tracker.html), trends among [children](https://www.nytimes.com/interactive/2020/08/31/us/coronavirus-cases-children.html), and whether K12 schools are [publishing counts](https://www.nytimes.com/interactive/2020/09/21/us/covid-schools.html).
 
 
 ## Dangers of Reopening Too Early
