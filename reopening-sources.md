@@ -21,6 +21,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * [Timeline of administrative failures](https://www.nytimes.com/2020/07/18/us/politics/trump-coronavirus-response-failure-leadership.html).
 * Timeline of various gatherings that resulted in outbreaks in the [US](nytimes.com/interactive/2020/08/28/us/covid-virus-cluster.html) and [Europe](https://www.nytimes.com/2020/09/30/world/europe/ski-party-pandemic-travel-coronavirus.html).
 * Track outbreaks on [college campuses](https://www.nytimes.com/interactive/2020/us/covid-college-cases-tracker.html), trends among [children](https://www.nytimes.com/interactive/2020/08/31/us/coronavirus-cases-children.html), and whether K12 schools are [publishing counts](https://www.nytimes.com/interactive/2020/09/21/us/covid-schools.html).
+* [Illustration of exposure, incubation, and spread](https://www.nytimes.com/interactive/2020/10/02/science/charting-a-coronavirus-infection.html)
 
 
 ## Dangers of Reopening Too Early
