@@ -2288,12 +2288,48 @@ date,equipment,status,num
 10/16/2020,Acute Care Beds,Available,506
 10/16/2020,Acute Care Beds,COVID Person Under Investigation,192
 10/16/2020,Acute Care Beds,COVID Occupied,463
-10/16/2020,Acute Care Beds,Unavailable,
+10/16/2020,Acute Care Beds,Unavailable,10518
 10/16/2020,ICU Beds,Available,113
 10/16/2020,ICU Beds,COVID Person Under Investigation,35
 10/16/2020,ICU Beds,COVID Occupied,163
-10/16/2020,ICU Beds,Unavailable,
+10/16/2020,ICU Beds,Unavailable,1381
 10/16/2020,Ventilators,Available,1158
 10/16/2020,Ventilators,COVID Person Under Investigation,6
 10/16/2020,Ventilators,COVID Occupied,94
 10/16/2020,Ventilators,Unavailable,765
+10/17/2020,Acute Care Beds,Available,603
+10/17/2020,Acute Care Beds,COVID Person Under Investigation,222
+10/17/2020,Acute Care Beds,COVID Occupied,413
+10/17/2020,Acute Care Beds,Unavailable,10430
+10/17/2020,ICU Beds,Available,139
+10/17/2020,ICU Beds,COVID Person Under Investigation,45
+10/17/2020,ICU Beds,COVID Occupied,163
+10/17/2020,ICU Beds,Unavailable,1359
+10/17/2020,Ventilators,Available,1114
+10/17/2020,Ventilators,COVID Person Under Investigation,9
+10/17/2020,Ventilators,COVID Occupied,98
+10/17/2020,Ventilators,Unavailable,619
+10/18/2020,Acute Care Beds,Available,595
+10/18/2020,Acute Care Beds,COVID Person Under Investigation,173
+10/18/2020,Acute Care Beds,COVID Occupied,444
+10/18/2020,Acute Care Beds,Unavailable,10084
+10/18/2020,ICU Beds,Available,173
+10/18/2020,ICU Beds,COVID Person Under Investigation,38
+10/18/2020,ICU Beds,COVID Occupied,184
+10/18/2020,ICU Beds,Unavailable,1333
+10/18/2020,Ventilators,Available,1159
+10/18/2020,Ventilators,COVID Person Under Investigation,8
+10/18/2020,Ventilators,COVID Occupied,118
+10/18/2020,Ventilators,Unavailable,793
+10/19/2020,Acute Care Beds,Available,677
+10/19/2020,Acute Care Beds,COVID Person Under Investigation,200
+10/19/2020,Acute Care Beds,COVID Occupied,464
+10/19/2020,Acute Care Beds,Unavailable,
+10/19/2020,ICU Beds,Available,178
+10/19/2020,ICU Beds,COVID Person Under Investigation,63
+10/19/2020,ICU Beds,COVID Occupied,181
+10/19/2020,ICU Beds,Unavailable,
+10/19/2020,Ventilators,Available,1332
+10/19/2020,Ventilators,COVID Person Under Investigation,11
+10/19/2020,Ventilators,COVID Occupied,115
+10/19/2020,Ventilators,Unavailable,742
