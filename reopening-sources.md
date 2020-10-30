@@ -66,6 +66,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * [Germany's Robert Koch Institute study](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30314-5/fulltext): infectiousness before or on day of symptom onset was substantial, which is when transmission was likely.
     * [South Korean study](https://www.nytimes.com/2020/08/06/health/coronavirus-asymptomatic-transmission.html) found that asymptomatic people carried similar viral loads in their nose, throat, and lungs, and for just as long as those who develop symptoms
 * There are way more cases beyond simply [more testing](https://www.nytimes.com/interactive/2020/07/22/us/covid-testing-rising-cases.html).
+* [Mask mandates work](https://www.wkms.org/post/vanderbilt-analysis-finds-covid-striking-hardest-tennessee-where-masks-aren-t-required#stream/0), based on Vanderbilt University's research, as hospitalizations spike when a smaller share of patients come from counties with a mask mandate. [Report here.](https://www.vumc.org/health-policy/sites/default/files/public_files/Vanderbilt%20COVID19%20Report-Oct%2027.pdf)
 
 
 ## Building Public Health Capacity
