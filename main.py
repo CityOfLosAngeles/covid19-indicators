@@ -25,6 +25,8 @@ if not os.path.exists('outputs'):
 
 output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.ipynb'
 
+print(os.environ.get("AWS_ACCESS_KEY_ID"))
+
 # Try executing the notebook. If it fails due to data being incomplete,
 # try again in an hour, for a maximum of ten hours.
 MAX_TRIES = 10
