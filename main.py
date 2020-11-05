@@ -32,7 +32,7 @@ RETRY = 60 * 60
 for i in range(MAX_TRIES):
     try:
         pm.execute_notebook(
-           '/app/notebooks/simpler-notebook.ipynb',
+           '/app/notebooks/county-city-indicators.ipynb',
            output_path,
            cwd='/app/notebooks'
         )
