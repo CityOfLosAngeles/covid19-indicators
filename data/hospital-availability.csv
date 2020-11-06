@@ -2502,14 +2502,38 @@ date,equipment,status,num
 11/2/2020,Ventilators,COVID Occupied,123
 11/2/2020,Ventilators,Unavailable,706
 11/3/2020,Acute Care Beds,Available,595
-11/3/2020,Acute Care Beds,COVID Person Under Investigation,184
-11/3/2020,Acute Care Beds,COVID Occupied,493
-11/3/2020,Acute Care Beds,Unavailable,
+11/3/2020,Acute Care Beds,COVID Person Under Investigation,187
+11/3/2020,Acute Care Beds,COVID Occupied,525
+11/3/2020,Acute Care Beds,Unavailable,10284
 11/3/2020,ICU Beds,Available,123
-11/3/2020,ICU Beds,COVID Person Under Investigation,32
-11/3/2020,ICU Beds,COVID Occupied,194
-11/3/2020,ICU Beds,Unavailable,
+11/3/2020,ICU Beds,COVID Person Under Investigation,34
+11/3/2020,ICU Beds,COVID Occupied,219
+11/3/2020,ICU Beds,Unavailable,1336
 11/3/2020,Ventilators,Available,1191
-11/3/2020,Ventilators,COVID Person Under Investigation,6
-11/3/2020,Ventilators,COVID Occupied,116
-11/3/2020,Ventilators,Unavailable,711
+11/3/2020,Ventilators,COVID Person Under Investigation,8
+11/3/2020,Ventilators,COVID Occupied,134
+11/3/2020,Ventilators,Unavailable,779
+11/4/2020,Acute Care Beds,Available,622
+11/4/2020,Acute Care Beds,COVID Person Under Investigation,179
+11/4/2020,Acute Care Beds,COVID Occupied,526
+11/4/2020,Acute Care Beds,Unavailable,10448
+11/4/2020,ICU Beds,Available,127
+11/4/2020,ICU Beds,COVID Person Under Investigation,38
+11/4/2020,ICU Beds,COVID Occupied,222
+11/4/2020,ICU Beds,Unavailable,1372
+11/4/2020,Ventilators,Available,1316
+11/4/2020,Ventilators,COVID Person Under Investigation,6
+11/4/2020,Ventilators,COVID Occupied,138
+11/4/2020,Ventilators,Unavailable,787
+11/5/2020,Acute Care Beds,Available,592
+11/5/2020,Acute Care Beds,COVID Person Under Investigation,156
+11/5/2020,Acute Care Beds,COVID Occupied,527
+11/5/2020,Acute Care Beds,Unavailable,
+11/5/2020,ICU Beds,Available,111
+11/5/2020,ICU Beds,COVID Person Under Investigation,40
+11/5/2020,ICU Beds,COVID Occupied,224
+11/5/2020,ICU Beds,Unavailable,
+11/5/2020,Ventilators,Available,1237
+11/5/2020,Ventilators,COVID Person Under Investigation,11
+11/5/2020,Ventilators,COVID Occupied,126
+11/5/2020,Ventilators,Unavailable,848
