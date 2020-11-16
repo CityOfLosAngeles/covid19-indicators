@@ -24,11 +24,10 @@ Project Organization
 
 --------
 
-This repository will track COVID-19 indicators as LA considers its reopening strategy. We will also provide sample notebooks for how others can use the Johns Hopkins University COVID-19 data, which is available for all US counties, to look at trends in other counties or states. 
+This repository will track COVID-19 indicators as LA considers its reopening strategy. We will also provide sample notebooks for how others can use the Johns Hopkins University COVID-19 data, which is available for all US counties, to look at trends in other counties or states. *Related repo*: [https://github.com/CityOfLosAngeles/covid19-rmarkdown](https://github.com/CityOfLosAngeles/covid19-rmarkdown)
 
 **DAILY REPORT:** [https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html](https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html)
 
-**LA COUNTY NEIGHBORHOODS:** [neighborhood-charts](https://services--3318--88d2d07aa86a0a419feb377f--rondolesson.shiny-1.services.civis.io/civis-platform-auth?token=9r5ny3aFkbDI0az-E20gcqK1tzmujqOUgTC02h4eh04TxpqmJYF4N5oDOE0aS02uJCaBP9MG7a_xlxXvmaAEtodrO-D7lVe3D74G4OsS4nobFDvxnlM1IPnHRzgpT2e05KTlhsA6b40AIk5QCOjbauvUAigZVQTWoxG_qY5kSHZB89aaCFqcv8uP3L1Bkc03Y8X61iQ6nnZPCrKhVgoTr6gSSXBXidSEgkvGuz1HNzGwfGbDHTTxOIJZWrkog287FzMn-gciN-IsUba37eTtLWKzN0bNvtKsCeoDGp2sUj8ie6l6ZUIOeaiYzxDx49vfY_Bh5DU7VAPWNzsz7muBm9lXM3VCF2sLCaVvNtlfqx1HdM5rDrKBmiu-i1EUnu_yB7YsPF7i5v20OgDRu_lH1wHNH1doIrlLqqf9FfN28SP8Jfs=)
 
 The City of LA uses [US county data](https://www.arcgis.com/home/item.html?id=628578697fb24d8ea4c32fa0c5ae1843) published by [JHU](https://www.esri.com/arcgis-blog/products/product/public-safety/coronavirus-covid-19-data-available-by-county-from-johns-hopkins-university/). The historical time-series is pulled from JHU's CSV on GitHub and appended with the current date's data from the ESRI feature layer.
 

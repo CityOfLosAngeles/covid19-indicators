@@ -6,7 +6,7 @@ Let's check in CSV for others.
 import civis
 import os
 
-from civis_aqueduct_utils.github import upload_file_to_github, DEFAULT_COMMITTER
+from civis_aqueduct_utils.github import upload_file_to_github
 
 # Constants for loading the file to master branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
@@ -15,12 +15,18 @@ BRANCH = "master"
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 COMMIT_MESSAGE = "Update data"
 
+DEFAULT_COMMITTER = {
+    "name": "Los Angeles ITA data team",
+    "email": "ITAData@lacity.org",
+}
+
 datasets = [
     "city-of-la-cases.csv", 
     "county-city-testing.csv", 
     "hospital-availability.csv", 
     "la-county-neighborhood-time-series.csv", 
-    "ca-hospital-and-surge-capacity.csv"
+    "ca-hospital-and-surge-capacity.csv",
+    "us-county-time-series.parquet",
 ]
 
 for file_name in datasets:
