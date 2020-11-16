@@ -80,6 +80,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
  * [Summary of what we've learned](https://www.nytimes.com/article/coronavirus-facts-history.html): always wear masks, we can't depend on herd immunity, and we can't count on warmer weather alone.
  * [Philisophical differences](https://www.nytimes.com/2020/05/28/us/politics/biden-trump-coronavirus-testing.html) between state-led strategy vs federal strategy
     * [Biden's national coronavirus plan](https://www.documentcloud.org/documents/6927667-COVID-National-Diagnostics-Strategy-05-24-2020-v.html#document/p2)
+    * Regular testing, [in addition to other monitoring protocols are needed](https://www.nytimes.com/2020/11/11/health/coronavirus-navy-parris-roosevelt.html)
 
 
 ## Antibodies and Immunity Research

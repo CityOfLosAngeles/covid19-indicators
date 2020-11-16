@@ -16,11 +16,12 @@ S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 COMMIT_MESSAGE = "Update data"
 
 datasets = [
-    "city-of-la-cases.csv", 
-    "county-city-testing.csv", 
-    "hospital-availability.csv", 
-    "la-county-neighborhood-time-series.csv", 
-    "ca-hospital-and-surge-capacity.csv"
+    #"city-of-la-cases.csv", 
+    #"county-city-testing.csv", 
+    #"hospital-availability.csv", 
+    #"la-county-neighborhood-time-series.csv", 
+    #"ca-hospital-and-surge-capacity.csv",
+    "us-county-time-series.parquet",
 ]
 
 for file_name in datasets:
