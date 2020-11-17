@@ -46,6 +46,8 @@ for i in range(MAX_TRIES):
 else:
     raise RuntimeError(f"Unable to get fresh data after {MAX_TRIES} tries.")
 """
+
+
 # shell out, run NB Convert 
 output_format = 'html'
 subprocess.run([
@@ -57,6 +59,12 @@ subprocess.run([
     "--no-prompt",
     output_path,
 ])
+
+"""
+output_format = "html"
+cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
+output_file = './ca-county-trends.html'
+"""
 
 # Constants for loading the file to GH Pages
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
