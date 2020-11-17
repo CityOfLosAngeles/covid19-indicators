@@ -18,6 +18,13 @@ sys.path.append(os.getcwd())
 
 output_path = './ca-county-trends.ipynb'
 
+pm.execute_notebook(
+    '/app/notebooks/ca-counties.ipynb',
+    output_path,
+    cwd='/app/notebooks'
+)
+
+"""
 # Try executing the notebook. If it fails due to data being incomplete,
 # try again in an hour, for a maximum of ten hours.
 MAX_TRIES = 10
@@ -38,7 +45,7 @@ for i in range(MAX_TRIES):
             raise e
 else:
     raise RuntimeError(f"Unable to get fresh data after {MAX_TRIES} tries.")
-
+"""
 # shell out, run NB Convert 
 output_format = 'html'
 subprocess.run([
@@ -57,6 +64,8 @@ BASE = "https://api.github.com"
 REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "gh-pages"
 PATH = "ca-county-trends.html"
+
+print(TOKEN)
 
 # Get the sha of the previous version
 r = requests.get(
@@ -80,7 +89,7 @@ r = requests.put(
             "name": "Los Angeles ITA data team",
             "email": "ITAData@lacity.org",
         },
-        "branch": BRANCH,
+        "branch": "gh-pages",
         "sha": sha,
         "content": base64.b64encode(content).decode("utf-8"),
     },
