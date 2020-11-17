@@ -62,10 +62,9 @@ subprocess.run([
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 BASE = "https://api.github.com"
 REPO = "CityOfLosAngeles/covid19-indicators"
-BRANCH = "gh-pages"
+BRANCH = "other-cities"
 PATH = "ca-county-trends.html"
 
-print(TOKEN)
 
 # Get the sha of the previous version
 r = requests.get(
@@ -89,7 +88,7 @@ r = requests.put(
             "name": "Los Angeles ITA data team",
             "email": "ITAData@lacity.org",
         },
-        "branch": "gh-pages",
+        "branch": BRANCH,
         "sha": sha,
         "content": base64.b64encode(content).decode("utf-8"),
     },

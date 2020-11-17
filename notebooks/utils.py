@@ -265,7 +265,7 @@ def calculate_rolling_average(df, start_date, today_date):
 def find_tier_cutoffs(df, population_col):
     
     # Use CA's definition of what is widespread vs minimal
-    population = df[population_col].iloc[0]
+    population = df[population_col]
     POP_DENOM = 100_000
     
     df = df.assign(
