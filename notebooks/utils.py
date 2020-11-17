@@ -127,8 +127,19 @@ def prep_county(county_state_name, start_date):
         .reset_index(drop=True)
     )
     
-    df = calculate_rolling_average(df, start_date, today_date)
+    # Merge in population
+    pop = (pd.read_csv(CROSSWALK_URL, dtype={"county_fips": "str", "cbsacode": "str"})
+           [["county_fips", "county_pop"]]
+           .rename(columns = {"county_fips": "fips"})
+          )
 
+    df = pd.merge(df, pop,
+                  on = "fips", how = "inner", validate = "m:1"
+    )
+    
+    df = calculate_rolling_average(df, start_date, today_date)
+    df = find_tier_cutoffs(df, "county_pop")
+    
     return df
 
 
@@ -163,7 +174,24 @@ def prep_state(state_name, start_date):
         .reset_index(drop=True)
     )
     
+    # Merge in population
+    pop = (pd.read_csv(CROSSWALK_URL, dtype={"county_fips": "str", "cbsacode": "str"})
+           [["state", "county_pop"]]
+          )
+    
+    pop = (pop.groupby("state")
+           .agg({"county_pop":"sum"})
+           .reset_index()
+           .rename(columns = {"county_pop": "state_pop"})
+          )
+
+    df = pd.merge(df, pop,
+                  on = "state", how = "inner", validate = "m:1"
+    )
+    
+    
     df = calculate_rolling_average(df, start_date, today_date)
+    df = find_tier_cutoffs(df, "state_pop")
 
     return df
 
@@ -208,7 +236,8 @@ def prep_msa(msa_name, start_date):
     )
         
     df = calculate_rolling_average(df, start_date, today_date)
-    
+    df = find_tier_cutoffs(df, "msa_pop")
+
     return df
 
 
@@ -229,6 +258,21 @@ def calculate_rolling_average(df, start_date, today_date):
     )   
     
     df = df[(df.date >= start_date) & (df.date < today_date)]
+    
+    return df
+
+
+def find_tier_cutoffs(df, population_col):
+    
+    # Use CA's definition of what is widespread vs minimal
+    population = df[population_col]
+    POP_DENOM = 100_000
+    
+    df = df.assign(
+        tier1_case_cutoff = round(((1 / POP_DENOM) * population), 2),
+        tier2_case_cutoff = round(((4 / POP_DENOM) * population), 2),
+        tier3_case_cutoff = round(((7 / POP_DENOM) * population), 2),
+    )
     
     return df
 
