@@ -68,83 +68,103 @@ def make_cases_deaths_chart(df, geog, name):
     if geog == "lacity":
         chart_title = f"{name}"
     
-    # Make cases charts
-    cases_line = (
-        alt.Chart(df.drop(columns = "date"))
+    # Set up base charts
+    base = (alt.Chart(
+        df.drop(columns = "date"))
         .mark_line()
         .encode(
-            x=alt.X("date2", timeUnit=time_unit, 
-                    title="date", axis=alt.Axis(format=monthdate_format)
-                   ),
+            x=alt.X("date2", timeUnit=time_unit,
+                   title="date", axis=alt.Axis(format=monthdate_format))
+        )
+    )
+    
+    base_2weeks = (
+        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        .mark_line()
+        .encode(
+            x=alt.X("date2", timeUnit=time_unit,
+                    title="date", axis=alt.Axis(format=monthdate_format))
+        )
+    )
+    
+    tier_base = (base.mark_line(strokeDash=[2,3]))
+        
+    # Make cases charts    
+    cases_line = (
+        base
+        .encode(
             y=alt.Y("cases_avg7", title="7-day avg"),
             color=alt.value(navy),
         )
     )
     
     cases_shaded = (
-        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        base_2weeks
         .mark_area()
         .encode(
-            x=alt.X("date2", timeUnit = time_unit,
-                   title = "date", axis=alt.Axis(format=monthdate_format)
-                   ),
             y=alt.Y("cases_avg7", title="7-day avg"),
             color=alt.value(light_gray)
         )
     )
     
     cases_extra_outline = (
-        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        base_2weeks
         .mark_line()
         .encode(
-             x=alt.X("date2", timeUnit = time_unit,
-                   title = "date", axis=alt.Axis(format=monthdate_format)
-                   ),
             y=alt.Y("cases_avg7", title="7-day avg"),
             color=alt.value(navy_outline)
         )
     )
     
-    cases_chart = (
-        (cases_line + cases_shaded + cases_extra_outline)
-              .properties(
-                  title=f"{chart_title}: New Cases", width=chart_width, height=chart_height
-                )
-        )
+    tier1_hline = (
+        tier_base
+        .encode(y=alt.Y("tier1_case_cutoff"),
+               color=alt.value(orange))
+    )
+    
+    tier2_hline = (
+        tier_base
+        .encode(y=alt.Y("tier2_case_cutoff"),
+               color=alt.value(maroon))
+    )
+    
+    tier3_hline = (
+        tier_base
+        .encode(y=alt.Y("tier3_case_cutoff"), 
+               color=alt.value(purple))
+    )
 
+
+    cases_chart = (
+        (cases_line + cases_shaded + cases_extra_outline + 
+         tier1_hline + tier2_hline + tier3_hline)
+        .properties(
+              title=f"{chart_title}: New Cases", width=chart_width, height=chart_height
+            )
+        )
+    
     
     # Make deaths chart
     deaths_line = (
-        alt.Chart(df.drop(columns = "date"))
-        .mark_line()
+        base
         .encode(
-            x=alt.X("date2", timeUnit=time_unit, 
-                    title="date", axis=alt.Axis(format=monthdate_format)
-                   ),
             y=alt.Y("deaths_avg7", title="7-day avg"),
             color=alt.value(blue),
         )
     )
 
     deaths_shaded = (
-        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
+        base_2weeks
         .mark_area()
         .encode(
-            x=alt.X("date2", timeUnit = time_unit,
-                   title = "date", axis=alt.Axis(format=monthdate_format)
-                   ),
             y=alt.Y("deaths_avg7", title="7-day avg"),
             color=alt.value(light_gray)
         )
     )
     
     deaths_extra_outline = (
-        alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
-        .mark_line()
+        base_2weeks
         .encode(
-             x=alt.X("date2", timeUnit = time_unit,
-                   title = "date", axis=alt.Axis(format=monthdate_format)
-                   ),
             y=alt.Y("deaths_avg7", title="7-day avg"),
             color=alt.value(blue_outline)
         )
