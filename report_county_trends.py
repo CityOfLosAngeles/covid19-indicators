@@ -11,39 +11,40 @@ import time
 import civis
 import pandas as pd
 import papermill as pm 
-#import requests
 
 from civis_aqueduct_utils.github import upload_file_to_github
 
 sys.path.append(os.getcwd())
 
-output_path = './ca-county-trends.ipynb'
+notebooks_to_run = ["ca-counties.ipynb", "us-counties.ipynb"]
+output_path = ["./ca-county-trends.ipynb", "./us-county-trends.ipynb"]
 
-pm.execute_notebook(
-    '/app/notebooks/ca-counties.ipynb',
-    output_path,
-    cwd='/app/notebooks'
-)
+for i, file_name in enumerate(notebooks_to_run):
+    pm.execute_notebook(
+        f'/app/notebooks/{file_name}',
+        output_path[i],
+        cwd='/app/notebooks'
+    )
 
 
-# shell out, run NB Convert 
-output_format = 'html'
-subprocess.run([
-    "jupyter",
-    "nbconvert",
-    "--to",
-    output_format,
-    "--no-input",
-    "--no-prompt",
-    output_path,
-])    
+    # shell out, run NB Convert 
+    output_format = 'html'
+    subprocess.run([
+        "jupyter",
+        "nbconvert",
+        "--to",
+        output_format,
+        "--no-input",
+        "--no-prompt",
+        output_path[i],
+    ])    
 
 
 # Constants for loading the file to GH Pages branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "gh-pages"
-COMMIT_MESSAGE = "Update ca-county-trends"
+COMMIT_MESSAGE = "Update county-trends"
 
 DEFAULT_COMMITTER = {
     "name": "Los Angeles ITA data team",
@@ -52,6 +53,7 @@ DEFAULT_COMMITTER = {
 
 datasets = [
     "ca-county-trends.html", 
+    "us-county-trends.html",
 ]
 
 for file_name in datasets:
