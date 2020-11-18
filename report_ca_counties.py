@@ -70,9 +70,8 @@ output_file = './ca-county-trends.html'
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 BASE = "https://api.github.com"
 REPO = "CityOfLosAngeles/covid19-indicators"
-BRANCH = "other-cities"
+BRANCH = "gh-pages"
 PATH = "ca-county-trends.html"
-
 
 # Get the sha of the previous version
 r = requests.get(
@@ -82,6 +81,8 @@ r = requests.get(
 )
 r.raise_for_status()
 sha = r.json()["sha"]
+
+                
 
 # Upload the new version
 with open(PATH, "rb") as f:

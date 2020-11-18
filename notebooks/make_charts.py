@@ -93,7 +93,7 @@ def make_cases_deaths_chart(df, geog, name):
     cases_line = (
         base
         .encode(
-            y=alt.Y("cases_avg7", title="7-day avg"),
+            y=alt.Y("cases_avg7:Q", title="7-day avg"),
             color=alt.value(navy),
         )
     )
@@ -102,7 +102,7 @@ def make_cases_deaths_chart(df, geog, name):
         base_2weeks
         .mark_area()
         .encode(
-            y=alt.Y("cases_avg7", title="7-day avg"),
+            y=alt.Y("cases_avg7:Q", title="7-day avg"),
             color=alt.value(light_gray)
         )
     )
@@ -111,26 +111,26 @@ def make_cases_deaths_chart(df, geog, name):
         base_2weeks
         .mark_line()
         .encode(
-            y=alt.Y("cases_avg7", title="7-day avg"),
+            y=alt.Y("cases_avg7:Q", title="7-day avg"),
             color=alt.value(navy_outline)
         )
     )
     
     tier1_hline = (
         tier_base
-        .encode(y=alt.Y("tier1_case_cutoff"),
+        .encode(y=alt.Y("tier1_case_cutoff:Q"),
                color=alt.value(orange))
     )
     
     tier2_hline = (
         tier_base
-        .encode(y=alt.Y("tier2_case_cutoff"),
+        .encode(y=alt.Y("tier2_case_cutoff:Q"),
                color=alt.value(maroon))
     )
     
     tier3_hline = (
         tier_base
-        .encode(y=alt.Y("tier3_case_cutoff"), 
+        .encode(y=alt.Y("tier3_case_cutoff:Q"), 
                color=alt.value(purple))
     )
 
@@ -148,7 +148,7 @@ def make_cases_deaths_chart(df, geog, name):
     deaths_line = (
         base
         .encode(
-            y=alt.Y("deaths_avg7", title="7-day avg"),
+            y=alt.Y("deaths_avg7:Q", title="7-day avg"),
             color=alt.value(blue),
         )
     )
@@ -157,7 +157,7 @@ def make_cases_deaths_chart(df, geog, name):
         base_2weeks
         .mark_area()
         .encode(
-            y=alt.Y("deaths_avg7", title="7-day avg"),
+            y=alt.Y("deaths_avg7:Q", title="7-day avg"),
             color=alt.value(light_gray)
         )
     )
@@ -165,7 +165,7 @@ def make_cases_deaths_chart(df, geog, name):
     deaths_extra_outline = (
         base_2weeks
         .encode(
-            y=alt.Y("deaths_avg7", title="7-day avg"),
+            y=alt.Y("deaths_avg7:Q", title="7-day avg"),
             color=alt.value(blue_outline)
         )
     )    
