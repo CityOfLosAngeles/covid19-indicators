@@ -44,7 +44,7 @@ for i, file_name in enumerate(notebooks_to_run):
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "gh-pages"
-COMMIT_MESSAGE = "Update ca-county-trends"
+COMMIT_MESSAGE = "Update county-trends"
 
 DEFAULT_COMMITTER = {
     "name": "Los Angeles ITA data team",
