@@ -28,6 +28,10 @@ This repository will track COVID-19 indicators as LA considers its reopening str
 
 **DAILY REPORT:** [https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html](https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html)
 
+**CA COUNTIES REPORT:** [https://cityoflosangeles.github.io/covid19-indicators/ca-county-trends.html](https://cityoflosangeles.github.io/covid19-indicators/ca-county-trends.html)
+
+**OTHER MAJOR US COUNTIES REPORT:** [https://cityoflosangeles.github.io/covid19-indicators/us-county-trends.html](https://cityoflosangeles.github.io/covid19-indicators/us-county-trends.html)
+
 
 The City of LA uses [US county data](https://www.arcgis.com/home/item.html?id=628578697fb24d8ea4c32fa0c5ae1843) published by [JHU](https://www.esri.com/arcgis-blog/products/product/public-safety/coronavirus-covid-19-data-available-by-county-from-johns-hopkins-university/). The historical time-series is pulled from JHU's CSV on GitHub and appended with the current date's data from the ESRI feature layer.
 
@@ -49,14 +53,14 @@ Scripts to ingest, process, and save our data sources are in the [data](./data/)
 #### COVID-19 Cases
 * Global province-level time-series (processed data in S3 bucket)
 
-* US county-level time-series (processed data in S3 bucket)
+* US county-level time-series [parquet](https://github.com/CityOfLosAngeles/covid19-indicators/blob/master/data/us-county-time-series.parquet)
 
 * City of LA cases and deaths time-series [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/city-of-la-cases.csv)
 
 * Scripts: `jhu.py`, `jhu_county.py`, `sync_la_cases.py`. Source: [Google spreadsheet](https://docs.google.com/spreadsheets/d/1Vk7aGL7O0ZVQRySwh6X2aKlbhYlAR_ppSyMdMPqz_aI/edit#gid=1128684515).
 
 #### Hospital Data
-* LA County hospital bed and equipment availability [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/hospital-availability.csv). Data is available for the [70 largest hospitals](http://file.lacounty.gov/SDSInter/dhs/1070069_HavBedSummary.pdf) in the county and collected in the HavBed survey.
+* LA County hospital bed and equipment availability (**not used** ) [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/hospital-availability.csv). Data is available for the [70 largest hospitals](http://file.lacounty.gov/SDSInter/dhs/1070069_HavBedSummary.pdf) in the county and collected in the HavBed survey.
 
 * CA county-level hospitalizations time-series [CSV](https://raw.githubusercontent.com/CityOfLosAngeles/covid19-indicators/master/data/ca-hospital-and-surge-capacity.csv)
 
