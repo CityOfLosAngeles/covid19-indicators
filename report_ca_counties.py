@@ -11,8 +11,9 @@ import time
 import civis
 import pandas as pd
 import papermill as pm 
-import requests
+#import requests
 
+from civis_aqueduct_utils.github import upload_file_to_github
 
 sys.path.append(os.getcwd())
 
@@ -23,29 +24,6 @@ pm.execute_notebook(
     output_path,
     cwd='/app/notebooks'
 )
-
-"""
-# Try executing the notebook. If it fails due to data being incomplete,
-# try again in an hour, for a maximum of ten hours.
-MAX_TRIES = 10
-RETRY = 60 * 60
-for i in range(MAX_TRIES):
-    try:
-        pm.execute_notebook(
-           '/app/notebooks/ca-counties.ipynb',
-           output_path,
-           cwd='/app/notebooks'
-        )
-        break
-    except pm.PapermillExecutionError as e:
-        if "Data incomplete" in e.evalue:
-            print(f"Data incomplete, trying again in {RETRY} seconds")
-            time.sleep(RETRY)
-        else:
-            raise e
-else:
-    raise RuntimeError(f"Unable to get fresh data after {MAX_TRIES} tries.")
-"""
 
 
 # shell out, run NB Convert 
@@ -58,48 +36,31 @@ subprocess.run([
     "--no-input",
     "--no-prompt",
     output_path,
-])
+])    
 
-"""
-output_format = "html"
-cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
-output_file = './ca-county-trends.html'
-"""
 
-# Constants for loading the file to GH Pages
+# Constants for loading the file to GH Pages branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
-BASE = "https://api.github.com"
 REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "gh-pages"
-PATH = "ca-county-trends.html"
+COMMIT_MESSAGE = "Update ca-county-trends"
 
-# Get the sha of the previous version
-r = requests.get(
-    f"{BASE}/repos/{REPO}/contents/{PATH}",
-    params={"ref": BRANCH},
-    headers={"Authorization": f"token {TOKEN}"},
-)
-r.raise_for_status()
-sha = r.json()["sha"]
+DEFAULT_COMMITTER = {
+    "name": "Los Angeles ITA data team",
+    "email": "ITAData@lacity.org",
+}
 
-                
+datasets = [
+    "ca-county-trends.html", 
+]
 
-# Upload the new version
-with open(PATH, "rb") as f:
-    content = f.read()
-
-r = requests.put(
-    f"{BASE}/repos/{REPO}/contents/{PATH}",
-    headers={"Authorization": f"token {TOKEN}"},
-    json={
-        "message": "Update ca-county-trends.html",
-        "committer": {
-            "name": "Los Angeles ITA data team",
-            "email": "ITAData@lacity.org",
-        },
-        "branch": BRANCH,
-        "sha": sha,
-        "content": base64.b64encode(content).decode("utf-8"),
-    },
-)
-r.raise_for_status()
+for file_name in datasets:
+    upload_file_to_github(
+        TOKEN,
+        REPO,
+        BRANCH,
+        f"{file_name}",
+        f"{file_name}",
+        f"{COMMIT_MESSAGE}",
+        DEFAULT_COMMITTER,
+    )
