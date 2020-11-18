@@ -56,7 +56,7 @@ two_weeks_ago = default_parameters.two_weeks_ago
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA, City of LA)
 #---------------------------------------------------------------#
-def make_cases_deaths_chart(df, geog, name):
+def setup_cases_deaths_chart(df, geog, name):
     # Define chart titles
     if geog == "county":
         chart_title = f"{name} County"
@@ -93,7 +93,7 @@ def make_cases_deaths_chart(df, geog, name):
     cases_line = (
         base
         .encode(
-            y=alt.Y("cases_avg7", title="7-day avg"),
+            y=alt.Y("cases_avg7:Q", title="7-day avg"),
             color=alt.value(navy),
         )
     )
@@ -102,7 +102,7 @@ def make_cases_deaths_chart(df, geog, name):
         base_2weeks
         .mark_area()
         .encode(
-            y=alt.Y("cases_avg7", title="7-day avg"),
+            y=alt.Y("cases_avg7:Q", title="7-day avg"),
             color=alt.value(light_gray)
         )
     )
@@ -111,26 +111,26 @@ def make_cases_deaths_chart(df, geog, name):
         base_2weeks
         .mark_line()
         .encode(
-            y=alt.Y("cases_avg7", title="7-day avg"),
+            y=alt.Y("cases_avg7:Q", title="7-day avg"),
             color=alt.value(navy_outline)
         )
     )
     
     tier1_hline = (
         tier_base
-        .encode(y=alt.Y("tier1_case_cutoff"),
+        .encode(y=alt.Y("tier1_case_cutoff:Q"),
                color=alt.value(orange))
     )
     
     tier2_hline = (
         tier_base
-        .encode(y=alt.Y("tier2_case_cutoff"),
+        .encode(y=alt.Y("tier2_case_cutoff:Q"),
                color=alt.value(maroon))
     )
     
     tier3_hline = (
         tier_base
-        .encode(y=alt.Y("tier3_case_cutoff"), 
+        .encode(y=alt.Y("tier3_case_cutoff:Q"), 
                color=alt.value(purple))
     )
 
@@ -148,7 +148,7 @@ def make_cases_deaths_chart(df, geog, name):
     deaths_line = (
         base
         .encode(
-            y=alt.Y("deaths_avg7", title="7-day avg"),
+            y=alt.Y("deaths_avg7:Q", title="7-day avg"),
             color=alt.value(blue),
         )
     )
@@ -157,7 +157,7 @@ def make_cases_deaths_chart(df, geog, name):
         base_2weeks
         .mark_area()
         .encode(
-            y=alt.Y("deaths_avg7", title="7-day avg"),
+            y=alt.Y("deaths_avg7:Q", title="7-day avg"),
             color=alt.value(light_gray)
         )
     )
@@ -165,7 +165,7 @@ def make_cases_deaths_chart(df, geog, name):
     deaths_extra_outline = (
         base_2weeks
         .encode(
-            y=alt.Y("deaths_avg7", title="7-day avg"),
+            y=alt.Y("deaths_avg7:Q", title="7-day avg"),
             color=alt.value(blue_outline)
         )
     )    
@@ -178,6 +178,11 @@ def make_cases_deaths_chart(df, geog, name):
                 )
         )    
     
+    return cases_chart, deaths_chart
+
+
+def make_cases_deaths_chart(df, geog, name):  
+    cases_chart, deaths_chart = setup_cases_deaths_chart(df, geog, name)
     
     # Cases and deaths chart to display side-by-side
     combined_chart = (
@@ -245,19 +250,18 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
 def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
                                 testing_lower_bound, testing_upper_bound, 
                                 chart_title1, chart_title2): 
-    chart_width = 250
+    base = (alt.Chart(df)
+            .mark_bar(binSpacing = bin_spacing)
+            .encode(
+                x=alt.X("week2", title="date", sort=None)
+            )
+    )
+    
     positive_bar = (
-        alt.Chart(df)
-        .mark_bar(color = navy, binSpacing = bin_spacing)
+        base
+        .mark_bar(color = navy)
         .encode(
-            x=alt.X(
-                "week2",
-                title="date",
-                sort=None
-            ),
-            y=alt.Y(
-                "pct_positive", 
-                title="Percent",
+            y=alt.Y("pct_positive", title="Percent",
                 axis=alt.Axis(format="%")
             ),
         )
@@ -282,38 +286,20 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound,
          )
 
     test_bar = (
-        alt.Chart(df)
-        .mark_bar(color = blue, binSpacing = bin_spacing)
+        base
+        .mark_bar(color = blue)
         .encode(
-            x=alt.X(
-                "week2",
-                title="date", 
-                sort=None
-            ),
-            y=alt.Y(
-                "weekly_tests", 
-                title="# Weekly Tests",
-            ),
+            y=alt.Y("weekly_tests", title="# Weekly Tests",),
         )
     )
-    
     
     num_positive_bar  = (
-        alt.Chart(df)
-        .mark_bar(color = gray, binSpacing = bin_spacing)
+        base
+        .mark_bar(color = gray)
         .encode(
-            x=alt.X(
-                "week2",
-                title="date", 
-                sort=None
-            ),
-            y=alt.Y(
-                "weekly_cases", 
-                title="# Weekly Tests",
-            ),
+            y=alt.Y("weekly_cases", title="# Weekly Tests",),
         )
     )
-    
     
     weekly_test_lower_line = (
         alt.Chart(pd.DataFrame({"y": [testing_lower_bound * 7]}))
@@ -465,8 +451,7 @@ def make_lacounty_hospital_chart(df):
 #---------------------------------------------------------------#
 # COVID Hospitalizations (CA data portal)
 #---------------------------------------------------------------#
-def make_county_covid_hospital_chart(df, county_name):
-    chart_width = 350
+def setup_county_covid_hospital_chart(df, county_name):
     hospitalizations_color = green
     icu_color = navy
     
@@ -487,10 +472,22 @@ def make_county_covid_hospital_chart(df, county_name):
                     domain=["All COVID-Hospitalized", "COVID-ICU"],
                     range=[hospitalizations_color, icu_color],
                 ),
-            ),
+            )
         ).properties(
-            title=f"{county_name} County: COVID Hospitalizations", width=chart_width
-        ).configure_title(
+            title=f"{county_name} County: COVID Hospitalizations", 
+            width=chart_width, height=chart_height
+        )
+    )
+        
+    return covid_hospitalizations_chart
+
+
+def make_county_covid_hospital_chart(df, county_name):
+    
+    chart = setup_county_covid_hospital_chart(df, county_name)
+    
+    covid_hospitalizations_chart = (
+        chart.configure_title(
             fontSize=title_font_size, font=font_name, anchor="middle", color="black"
         ).configure_axis(
             gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
@@ -498,5 +495,3 @@ def make_county_covid_hospital_chart(df, county_name):
     )
     
     show_svg(covid_hospitalizations_chart)
-
-
