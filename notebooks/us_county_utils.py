@@ -15,8 +15,15 @@ import pandas as pd
 import default_parameters
 import utils
 
+from IPython.display import Markdown, HTML
+
 start_date = default_parameters.start_date
 today_date = default_parameters.today_date
+yesterday_date = default_parameters.yesterday_date
+one_week_ago = default_parameters.one_week_ago
+
+fulldate_format = default_parameters.fulldate_format
+
 
 # Clean the JHU county data at once
 def clean_jhu(start_date):
@@ -97,3 +104,44 @@ def clean_hospitalizations(start_date):
     df = utils.make_long(df)
     
     return df
+
+
+def county_caption(df, county_name):
+    df = df[df.county == county_name]
+    
+    '''
+    This changes the columns to string...which shows up incorrectly in Markdown.
+    
+    cols_to_format = ["cases", "deaths", "new_cases", "new_deaths"]
+    for c in cols_to_format:
+        df[c] = df[c].map("{:,g}".format)
+    '''
+
+    extract_col = "cases"    
+    cumulative_cases = df[df.date == yesterday_date].iloc[0][extract_col]
+    
+    extract_col = "cases_avg7"
+    new_cases_1week = df[df.date == one_week_ago].iloc[0][extract_col]
+    new_cases_yesterday = df[df.date == yesterday_date].iloc[0][extract_col]   
+    pct_change_new_cases = (((new_cases_yesterday - new_cases_1week) / new_cases_1week) * 100).round(1)
+    
+    
+    extract_col = "deaths"
+    cumulative_deaths = df[df.date == yesterday_date][extract_col].iloc[0]
+
+    
+    extract_col = "deaths_avg7"
+    new_deaths_1week = df[df.date == one_week_ago].iloc[0][extract_col]
+    new_deaths_yesterday = df[df.date == yesterday_date].iloc[0][extract_col]      
+    pct_change_new_deaths = (((new_deaths_yesterday - new_deaths_1week) / new_deaths_1week) * 100).round(1)
+
+    
+    display(
+        Markdown(
+            f"As of {yesterday_date.strftime(fulldate_format)}, there were **{cumulative_cases:,}** total cases "
+            f"and **{cumulative_deaths:,}** total deaths. "
+            f"<br>In the past week, new cases (7-day rolling avg) grew by **{pct_change_new_cases}%**; new deaths (7-day rolling avg) grew by **{pct_change_new_deaths}%**. " 
+        )
+    )
+    
+    
