@@ -38,6 +38,7 @@ for i in range(MAX_TRIES):
            output_path,
            cwd='/app/notebooks'
         )
+        print("Ran notebook")
         break
     except pm.PapermillExecutionError as e:
         if "Data incomplete" in e.evalue:
@@ -55,6 +56,8 @@ cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_p
 output_file = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.pdf'
 
 os.system(cmd)
+
+print("Finish shelling")
 
 # Replace sender@example.com with your "From" address.
 # This address must be verified with Amazon SES.
