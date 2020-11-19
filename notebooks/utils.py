@@ -625,3 +625,57 @@ def make_long(df):
     )
     
     return df2
+
+
+#---------------------------------------------------------------#
+# Calculate doubling time on JHU case data
+#---------------------------------------------------------------#
+def days_since_100_cases(df, sort_cols, group_cols):
+    
+    # Start counting day 1 as when 100 cases is reached
+    df = df.assign(
+        gt_100cases = df.apply(lambda x: 1 if x.cases >= 100 else 0, axis=1)
+    )
+
+    df = df.assign(
+        days_obs = df.sort_values(sort_cols).groupby(group_cols).cumcount() + 1
+    )
+
+    
+    return df
+
+def doubling_time(df, window=7):
+    sort_cols = ["fips", "county", "date"]
+    group_cols = ["fips", "county", "gt_100cases"]
+    
+    df = days_since_100_cases(df, sort_cols, group_cols)
+    
+    shift_amt = (window - 1)
+    df = df.assign(
+        cases_in_past = (df.sort_values(sort_cols)
+                           .groupby(group_cols)["cases"]
+                           .apply(lambda x: x.shift(shift_amt))
+                          ),
+        days_in_past = (df.sort_values(sort_cols)
+                          .groupby(group_cols)["days_obs"]
+                          .apply(lambda x: x.shift(shift_amt))
+                         ),
+    )
+    
+    df = df.assign(
+        doubling_time = ( ((df.days_obs - df.days_in_past) * np.log(2)) / 
+                        ( np.log(df.cases / df.cases_in_past) )
+                       ),
+    )
+    
+    # Set doubling time to NaN if it's before 100 cases
+    df = df.assign(
+        doubling_time = df.apply(lambda x: x.doubling_time if x.gt_100cases==1 
+                                 else np.nan, axis=1)
+    )
+    
+    drop_cols = ["gt_100cases", "days_in_past", "cases_in_past", "days_obs"]
+    
+    df = df.drop(columns = drop_cols)
+    
+    return df
