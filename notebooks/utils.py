@@ -662,6 +662,8 @@ def doubling_time(df, window=7):
                          ),
     )
     
+    np.seterr(divide='ignore')
+
     df = df.assign(
         doubling_time = ( ((df.days_obs - df.days_in_past) * np.log(2)) / 
                         ( np.log(df.cases / df.cases_in_past) )
