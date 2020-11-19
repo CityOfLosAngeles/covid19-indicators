@@ -28,43 +28,31 @@ output_path2 = f'./outputs/simpler-notebook2.ipynb'
 
 print(os.environ.get("AWS_ACCESS_KEY_ID"))
 
-# Try executing the notebook. If it fails due to data being incomplete,
-# try again in an hour, for a maximum of ten hours.
-MAX_TRIES = 10
-RETRY = 60 * 60
-for i in range(MAX_TRIES):
-    try:
-        pm.execute_notebook(
-           '/app/notebooks/simpler-notebook.ipynb',
-           output_path,
-           cwd='/app/notebooks'
-        )
-        print("Ran notebook1")
+pm.execute_notebook(
+   '/app/notebooks/simpler-notebook2.ipynb',
+   output_path2,
+   cwd='/app/notebooks'
+)
+print("Ran notebook2")
 
-        pm.execute_notebook(
-           '/app/notebooks/simpler-notebook2.ipynb',
-           output_path2,
-           cwd='/app/notebooks'
-        )
-        print("Ran notebook2")
-        break
-    except pm.PapermillExecutionError as e:
-        if "Data incomplete" in e.evalue:
-            print(f"Data incomplete, trying again in {RETRY} seconds")
-            time.sleep(RETRY)
-        else:
-            raise e
-else:
-    raise RuntimeError(f"Unable to get fresh data after {MAX_TRIES} tries.")
+"""
+pm.execute_notebook(
+   '/app/notebooks/simpler-notebook.ipynb',
+   output_path,
+   cwd='/app/notebooks'
+)
+print("Ran notebook1")
+"""
+
 
 # shell out, run NB Convert 
 output_format = 'PDFviaHTML'
-cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
+#cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
 cmd2 = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path2}"
 
 output_file = f'./outputs/simpler-notebook2.pdf'
 
-os.system(cmd)
+#os.system(cmd)
 print("Finish shelling #1")
 os.system(cmd2)
 print("Finish shelling #2")
