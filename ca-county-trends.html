@@ -14435,7 +14435,24 @@ Code available in GitHub: <a href="https://github.com/CityOfLosAngeles/covid19-i
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput ">
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell  jp-mod-noInput ">
+
+<div class="jp-Cell-outputWrapper">
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>/opt/conda/lib/python3.7/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell  jp-mod-noInput ">
 
@@ -14522,7 +14539,7 @@ width=700
 <br>
 <strong>San Diego-Imperial:</strong> <a href="#imperial">Imperial</a>, 
 <a href="#san_diego">San Diego</a></p>
-<p>Reference: <a href="https://census.ca.gov/regions/">Census CA Regions</a></p>
+<p><sub>Reference: [Census CA Regions](https://census.ca.gov/regions/)</sub></p>
 
 </div>
 </div>
@@ -14549,7 +14566,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>348,336</strong> total cases and <strong>7,335</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>41.1%</strong>; new deaths (7-day rolling avg) grew by <strong>20.2%</strong>.</p>
+<p>As of 11/18/20, there were <strong>348,336</strong> total cases and <strong>7,335</strong> total deaths. <br>In the past week, new cases grew by <strong>41.1%</strong>; new deaths grew by <strong>20.2%</strong>. <br>In the past week, the doubling time went from <strong>108 days</strong> to <strong>79 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14592,7 +14609,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>26,655</strong> total cases and <strong>494</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>38.4%</strong>; new deaths (7-day rolling avg) grew by <strong>-35.3%</strong>.</p>
+<p>As of 11/18/20, there were <strong>26,655</strong> total cases and <strong>494</strong> total deaths. <br>In the past week, new cases grew by <strong>38.4%</strong>; new deaths grew by <strong>-35.3%</strong>. <br>In the past week, the doubling time went from <strong>117 days</strong> to <strong>86 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14635,7 +14652,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>21,630</strong> total cases and <strong>253</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>43.3%</strong>; new deaths (7-day rolling avg) grew by <strong>-100.0%</strong>.</p>
+<p>As of 11/18/20, there were <strong>21,630</strong> total cases and <strong>253</strong> total deaths. <br>In the past week, new cases grew by <strong>43.3%</strong>; new deaths grew by <strong>-100.0%</strong>. <br>In the past week, the doubling time went from <strong>102 days</strong> to <strong>74 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14678,7 +14695,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>14,431</strong> total cases and <strong>353</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>77.7%</strong>; new deaths (7-day rolling avg) grew by <strong>300.0%</strong>.</p>
+<p>As of 11/18/20, there were <strong>14,431</strong> total cases and <strong>353</strong> total deaths. <br>In the past week, new cases grew by <strong>77.7%</strong>; new deaths grew by <strong>300.0%</strong>. <br>In the past week, the doubling time went from <strong>153 days</strong> to <strong>91 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14720,7 +14737,7 @@ width=700
 <div class="jp-OutputArea-child">
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>/app/notebooks/us_county_utils.py:136: RuntimeWarning: divide by zero encountered in double_scalars
+<pre>/app/notebooks/us_county_utils.py:139: RuntimeWarning: divide by zero encountered in double_scalars
   pct_change_new_deaths = (((new_deaths_yesterday - new_deaths_1week) / new_deaths_1week) * 100).round(1)
 </pre>
 </div>
@@ -14730,7 +14747,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>7,448</strong> total cases and <strong>128</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>59.2%</strong>; new deaths (7-day rolling avg) grew by <strong>inf%</strong>.</p>
+<p>As of 11/18/20, there were <strong>7,448</strong> total cases and <strong>128</strong> total deaths. <br>In the past week, new cases grew by <strong>59.2%</strong>; new deaths grew by <strong>inf%</strong>. <br>In the past week, the doubling time went from <strong>346 days</strong> to <strong>187 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14773,7 +14790,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>66,585</strong> total cases and <strong>1,528</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>47.2%</strong>; new deaths (7-day rolling avg) grew by <strong>-39.1%</strong>.</p>
+<p>As of 11/18/20, there were <strong>66,585</strong> total cases and <strong>1,528</strong> total deaths. <br>In the past week, new cases grew by <strong>47.2%</strong>; new deaths grew by <strong>-39.1%</strong>. <br>In the past week, the doubling time went from <strong>126 days</strong> to <strong>87 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14816,7 +14833,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>77,636</strong> total cases and <strong>1,383</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>110.6%</strong>; new deaths (7-day rolling avg) grew by <strong>34.8%</strong>.</p>
+<p>As of 11/18/20, there were <strong>77,636</strong> total cases and <strong>1,383</strong> total deaths. <br>In the past week, new cases grew by <strong>110.6%</strong>; new deaths grew by <strong>34.8%</strong>. <br>In the past week, the doubling time went from <strong>146 days</strong> to <strong>77 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14859,7 +14876,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>31,387</strong> total cases and <strong>533</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>45.1%</strong>; new deaths (7-day rolling avg) grew by <strong>90.0%</strong>.</p>
+<p>As of 11/18/20, there were <strong>31,387</strong> total cases and <strong>533</strong> total deaths. <br>In the past week, new cases grew by <strong>45.1%</strong>; new deaths grew by <strong>90.0%</strong>. <br>In the past week, the doubling time went from <strong>69 days</strong> to <strong>53 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14902,7 +14919,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>78,298</strong> total cases and <strong>1,118</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>63.6%</strong>; new deaths (7-day rolling avg) grew by <strong>175.0%</strong>.</p>
+<p>As of 11/18/20, there were <strong>78,298</strong> total cases and <strong>1,118</strong> total deaths. <br>In the past week, new cases grew by <strong>63.6%</strong>; new deaths grew by <strong>175.0%</strong>. <br>In the past week, the doubling time went from <strong>74 days</strong> to <strong>48 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14945,7 +14962,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>67,241</strong> total cases and <strong>945</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>106.6%</strong>; new deaths (7-day rolling avg) grew by <strong>172.7%</strong>.</p>
+<p>As of 11/18/20, there were <strong>67,241</strong> total cases and <strong>945</strong> total deaths. <br>In the past week, new cases grew by <strong>106.6%</strong>; new deaths grew by <strong>172.7%</strong>. <br>In the past week, the doubling time went from <strong>102 days</strong> to <strong>55 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -14988,7 +15005,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>13,952</strong> total cases and <strong>156</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>21.4%</strong>; new deaths (7-day rolling avg) grew by <strong>-25.0%</strong>.</p>
+<p>As of 11/18/20, there were <strong>13,952</strong> total cases and <strong>156</strong> total deaths. <br>In the past week, new cases grew by <strong>21.4%</strong>; new deaths grew by <strong>-25.0%</strong>. <br>In the past week, the doubling time went from <strong>99 days</strong> to <strong>88 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -15031,7 +15048,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>12,780</strong> total cases and <strong>168</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>16.0%</strong>; new deaths (7-day rolling avg) grew by <strong>-25.0%</strong>.</p>
+<p>As of 11/18/20, there were <strong>12,780</strong> total cases and <strong>168</strong> total deaths. <br>In the past week, new cases grew by <strong>16.0%</strong>; new deaths grew by <strong>-25.0%</strong>. <br>In the past week, the doubling time went from <strong>99 days</strong> to <strong>79 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -15074,7 +15091,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>10,612</strong> total cases and <strong>133</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>44.3%</strong>; new deaths (7-day rolling avg) grew by <strong>0.0%</strong>.</p>
+<p>As of 11/18/20, there were <strong>10,612</strong> total cases and <strong>133</strong> total deaths. <br>In the past week, new cases grew by <strong>44.3%</strong>; new deaths grew by <strong>0.0%</strong>. <br>In the past week, the doubling time went from <strong>194 days</strong> to <strong>130 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -15117,7 +15134,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>29,297</strong> total cases and <strong>453</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>37.4%</strong>; new deaths (7-day rolling avg) grew by <strong>-31.6%</strong>.</p>
+<p>As of 11/18/20, there were <strong>29,297</strong> total cases and <strong>453</strong> total deaths. <br>In the past week, new cases grew by <strong>37.4%</strong>; new deaths grew by <strong>-31.6%</strong>. <br>In the past week, the doubling time went from <strong>77 days</strong> to <strong>59 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -15159,7 +15176,7 @@ width=700
 <div class="jp-OutputArea-child">
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>/app/notebooks/us_county_utils.py:136: RuntimeWarning: invalid value encountered in double_scalars
+<pre>/app/notebooks/us_county_utils.py:139: RuntimeWarning: invalid value encountered in double_scalars
   pct_change_new_deaths = (((new_deaths_yesterday - new_deaths_1week) / new_deaths_1week) * 100).round(1)
 </pre>
 </div>
@@ -15169,7 +15186,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>3,557</strong> total cases and <strong>26</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>33.6%</strong>; new deaths (7-day rolling avg) grew by <strong>nan%</strong>.</p>
+<p>As of 11/18/20, there were <strong>3,557</strong> total cases and <strong>26</strong> total deaths. <br>In the past week, new cases grew by <strong>33.6%</strong>; new deaths grew by <strong>nan%</strong>. <br>In the past week, the doubling time went from <strong>59 days</strong> to <strong>46 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -15212,7 +15229,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>9,161</strong> total cases and <strong>80</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>49.2%</strong>; new deaths (7-day rolling avg) grew by <strong>-66.7%</strong>.</p>
+<p>As of 11/18/20, there were <strong>9,161</strong> total cases and <strong>80</strong> total deaths. <br>In the past week, new cases grew by <strong>49.2%</strong>; new deaths grew by <strong>-66.7%</strong>. <br>In the past week, the doubling time went from <strong>79 days</strong> to <strong>65 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
@@ -15255,7 +15272,7 @@ width=700
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output " data-mime-type="text/markdown">
-<p>As of 11/18/20, there were <strong>16,797</strong> total cases and <strong>173</strong> total deaths. <br>In the past week, new cases (7-day rolling avg) grew by <strong>44.9%</strong>; new deaths (7-day rolling avg) grew by <strong>-50.0%</strong>.</p>
+<p>As of 11/18/20, there were <strong>16,797</strong> total cases and <strong>173</strong> total deaths. <br>In the past week, new cases grew by <strong>44.9%</strong>; new deaths grew by <strong>-50.0%</strong>. <br>In the past week, the doubling time went from <strong>92 days</strong> to <strong>68 days</strong> <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>.</p>
 
 </div>
 
