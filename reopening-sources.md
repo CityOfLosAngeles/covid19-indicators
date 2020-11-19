@@ -91,6 +91,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * 1st documented re-infection in [Hong Kong](https://www.nytimes.com/2020/08/24/health/coronavirus-reinfection.html) and [in the US](https://www.nytimes.com/reuters/2020/08/28/us/28reuters-health-coronavirus-reinfection.html).
 * Do virus mutations matter? [There's evidence at a biomolecular level, but unsure if this makes the mutation more infectious](https://www.nytimes.com/2020/06/12/science/coronavirus-mutation-genetics-spike.html).
 * Can you get COVID-19 twice? Emerging evidence suggests [maybe](https://www.vox.com/2020/7/12/21321653/getting-covid-19-twice-reinfection-antibody-herd-immunity) but [unlikely](https://www.nytimes.com/2020/07/22/health/covid-antibodies-herd-immunity.html)
+* Initial study [shows immunity may last longer than a couple of months](https://www.nytimes.com/2020/11/17/health/coronavirus-immunity.html)
 
 
 ## Its Effect on Subgroups
