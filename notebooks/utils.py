@@ -14,7 +14,8 @@ import useful_dict
 from datetime import date, datetime, timedelta
 from IPython.display import display, Markdown
 
-S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+#S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+S3_FILE_PATH = "s3://civis-test-public/"
 
 US_COUNTY_URL = f"{S3_FILE_PATH}us-county-time-series.parquet"
 

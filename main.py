@@ -77,6 +77,8 @@ ATTACHMENT = output_file
 # The email body for recipients with non-HTML email clients.
 BODY_TEXT = "Hello,\r\nPlease see the attached file for a status update on coronavirus-related indicators."
 
+print(BODY_TEXT)
+
 # The HTML body of the email.
 BODY_HTML =  """\
 <html>
