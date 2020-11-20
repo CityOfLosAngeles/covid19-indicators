@@ -142,13 +142,111 @@ def county_caption(df, county_name):
     doubling_time_1week = df[df.date == one_week_ago].iloc[0][extract_col].round(0).astype(int)
     doubling_time_yesterday = df[df.date == yesterday_date].iloc[0][extract_col].round(0).astype(int)      
     
-    display(
-        Markdown(
-            f"As of {yesterday_date.strftime(fulldate_format)}, there were **{cumulative_cases:,}** total cases "
-            f"and **{cumulative_deaths:,}** total deaths. "
-            f"<br>In the past week, new cases grew by **{pct_change_new_cases}%**; "
-            f"new deaths grew by **{pct_change_new_deaths}%**. " 
-            f"<br>In the past week, the doubling time went from **{doubling_time_1week} days** to "
-            f"**{doubling_time_yesterday} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
+    # Add condition for small numbers; report 7-day rolling average instead of percent change
+    threshold = 10
+    cases_under = ((new_cases_1week <= threshold) or (new_cases_yesterday <= threshold))
+    cases_over = ((new_cases_1week > threshold) and (new_cases_yesterday > threshold))
+    
+    deaths_under = ((new_deaths_1week <= threshold) or (new_deaths_yesterday <= threshold))
+    deaths_over = ((new_deaths_1week > threshold) and (new_deaths_yesterday > threshold))
+    
+    if cases_under and deaths_over:
+        display(
+            Markdown(
+                f"As of {yesterday_date.strftime(fulldate_format)}, there were **{cumulative_cases:,}** total cases "
+                f"and **{cumulative_deaths:,}** total deaths. "
+                f"<br>In the past week, new cases went from **{new_cases_1week:.1f}** to **{new_cases_yesterday:.1f}**; "
+                f"new deaths grew by **{pct_change_new_deaths}%**. " 
+                f"<br>In the past week, the doubling time went from **{doubling_time_1week} days** to "
+                f"**{doubling_time_yesterday} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
+            )
         )
-    )
+
+    elif cases_over and deaths_under:
+        display(
+            Markdown(
+                f"As of {yesterday_date.strftime(fulldate_format)}, there were **{cumulative_cases:,}** total cases "
+                f"and **{cumulative_deaths:,}** total deaths. "
+                f"<br>In the past week, new cases grew by **{pct_change_new_cases}%**; "
+                f"new deaths went from **{new_deaths_1week:.1f}** to **{new_deaths_yesterday:.1f}**. " 
+                f"<br>In the past week, the doubling time went from **{doubling_time_1week} days** to "
+                f"**{doubling_time_yesterday} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
+            )
+        )
+    
+    elif cases_under and deaths_under:
+        display(
+            Markdown(
+                f"As of {yesterday_date.strftime(fulldate_format)}, there were **{cumulative_cases:,}** total cases "
+                f"and **{cumulative_deaths:,}** total deaths. "
+                f"<br>In the past week, new cases went from **{new_cases_1week:,.1f}**  to **{new_cases_yesterday:,.0f}**; "
+                f"new deaths went from **{new_deaths_1week:.1f}** to **{new_deaths_yesterday:.1f}**. " 
+                f"<br>In the past week, the doubling time went from **{doubling_time_1week} days** to "
+                f"**{doubling_time_yesterday} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
+            )
+        )        
+    
+    else:   
+        display(
+            Markdown(
+                f"As of {yesterday_date.strftime(fulldate_format)}, there were **{cumulative_cases:,}** total cases "
+                f"and **{cumulative_deaths:,}** total deaths. "
+                f"<br>In the past week, new cases grew by **{pct_change_new_cases}%**; "
+                f"new deaths grew by **{pct_change_new_deaths}%**. " 
+                f"<br>In the past week, the doubling time went from **{doubling_time_1week} days** to "
+                f"**{doubling_time_yesterday} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
+            )
+        )
+
+def ca_hospitalizations_caption(df, county_name):
+    df = df[df.county == county_name]
+    
+    extract_col = "COVID-ICU"
+    icu_1week = df[(df.date == one_week_ago) & (df["type"]==extract_col)].iloc[0]["num"]
+    icu_yesterday = df[(df.date == yesterday_date) & (df["type"]==extract_col)].iloc[0]["num"]      
+    pct_change_icu = (((icu_yesterday - icu_1week) / icu_1week) * 100).round(1)
+    
+    extract_col = "All COVID-Hospitalized"
+    hosp_1week = df[(df.date == one_week_ago) & (df["type"]==extract_col)].iloc[0]["num"]
+    hosp_yesterday = df[(df.date == yesterday_date) & (df["type"]==extract_col)].iloc[0]["num"]      
+    pct_change_hosp = (((hosp_yesterday - hosp_1week) / hosp_1week) * 100).round(1)
+    
+    # Add condition for small numbers; report 7-day rolling average instead of percent change
+    threshold = 10
+    icu_under = ((icu_1week <= threshold) or (icu_yesterday <= threshold))
+    icu_over = ((icu_1week > threshold) and (icu_yesterday > threshold))
+    
+    hosp_under = ((hosp_1week <= threshold) or (hosp_yesterday <= threshold))
+    hosp_over = ((hosp_1week > threshold) and (hosp_yesterday > threshold))
+    
+    if icu_under and hosp_over: 
+        display(
+            Markdown(
+                f"In the past week, all COVID hospitalizations grew by **{pct_change_hosp}%**.; "
+                f"COVID ICU hospitalizations went from **{icu_1week:.1f}** to **{icu_yesterday:.1f}**. "
+            )
+        )
+        
+    elif icu_over and hosp_under:
+        display(
+            Markdown(
+                f"In the past week, all COVID hospitalizations went from **{hosp_1week:.1f}** to **{hosp_yesterday:.1f}**.; "
+                f"COVID ICU hospitalizations grew by **{pct_change_icu}%**. "
+            )
+        )
+        
+    elif icu_under and hosp_under:
+        display(
+            Markdown(
+                f"In the past week, all COVID hospitalizations went from **{hosp_1week:.1f}** to **{hosp_yesterday:.1f}**.; "
+                f"COVID ICU hospitalizations went from **{icu_1week:.1f}** to **{icu_yesterday:.1f}**. "
+            )
+        )
+        
+    else:
+        display(
+            Markdown(
+                f"In the past week, all COVID hospitalizations grew by **{pct_change_hosp}%**.; "
+                f"COVID ICU hospitalizations grew by **{pct_change_icu}%**. "
+            )
+        )
