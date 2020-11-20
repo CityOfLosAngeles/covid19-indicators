@@ -57,14 +57,10 @@ try:
     execute_notebook_make_pdf("simpler-notebook")
 except:
     print("did not execute simpler-notebook")
-    pass
-try:
-    execute_notebook_make_pdf("simpler-notebook2")
-except:
-    print("did not execute simpler-notebook2")
     raise
+
     
-output_file = f'./outputs/simpler-notebook2.pdf'
+output_file = f'./outputs/simpler-notebook.pdf'
 
 """
 
