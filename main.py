@@ -27,34 +27,34 @@ output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stat
 output_path2 = f'./outputs/simpler-notebook2.ipynb'
 
 print(os.environ.get("AWS_ACCESS_KEY_ID"))
-
+"""
 pm.execute_notebook(
    '/app/notebooks/simpler-notebook2.ipynb',
    output_path2,
    cwd='/app/notebooks'
 )
 print("Ran notebook2")
-
 """
+
 pm.execute_notebook(
    '/app/notebooks/simpler-notebook.ipynb',
    output_path,
    cwd='/app/notebooks'
 )
 print("Ran notebook1")
-"""
+
 
 
 # shell out, run NB Convert 
 output_format = 'PDFviaHTML'
-#cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
-cmd2 = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path2}"
+cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
+#cmd2 = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path2}"
 
 output_file = f'./outputs/simpler-notebook2.pdf'
 
-#os.system(cmd)
+os.system(cmd)
 print("Finish shelling #1")
-os.system(cmd2)
+#os.system(cmd2)
 print("Finish shelling #2")
 
 # Replace sender@example.com with your "From" address.
