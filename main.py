@@ -24,59 +24,36 @@ if not os.path.exists('outputs'):
     os.makedirs('outputs') 
 
 
-#output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.ipynb'
+output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.ipynb'
 
-print(os.environ.get("AWS_ACCESS_KEY_ID"))
-
-
-def execute_notebook_make_pdf(notebook_name):  
-    output_path = f'./outputs/{notebook_name}.ipynb'
-    output_format = 'PDFviaHTML'
-
-    pm.execute_notebook(
-        f'/app/notebooks/{notebook_name}.ipynb',
-        output_path,
-        cwd='/app/notebooks'
-    )
-    
-    if notebook_name=="simpler-notebook":
-        notebook_description = "S3 Bucket Permission"
-    else:
-        notebook_description = "SES Email Permission"
-    
-    print(f"Ran {notebook_name}: {notebook_description}")    
-    
-    cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
-    os.system(cmd)
-    print(f"Finish shelling {notebook_name}")  
-    
-    output_file = f'./outputs/{notebook_name}.pdf'   
-    
-
-try:
-    execute_notebook_make_pdf("simpler-notebook")
-except:
-    print("did not execute simpler-notebook")
-    raise
-
-    
-output_file = f'./outputs/simpler-notebook.pdf'
-
-"""
+# Try executing the notebook. If it fails due to data being incomplete,
+# try again in an hour, for a maximum of ten hours.
+MAX_TRIES = 10
+RETRY = 60 * 60
+for i in range(MAX_TRIES):
+    try:
+        pm.execute_notebook(
+           '/app/notebooks/county-city-indicators.ipynb',
+           output_path,
+           cwd='/app/notebooks'
+        )
+        break
+    except pm.PapermillExecutionError as e:
+        if "Data incomplete" in e.evalue:
+            print(f"Data incomplete, trying again in {RETRY} seconds")
+            time.sleep(RETRY)
+        else:
+            raise e
+else:
+    raise RuntimeError(f"Unable to get fresh data after {MAX_TRIES} tries.")
 
 # shell out, run NB Convert 
 output_format = 'PDFviaHTML'
 cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
-cmd2 = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path2}"
 
-# Attach the file with no S3 access needed to the email
-output_file = f'./outputs/simpler-notebook2.pdf'
+output_file = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.pdf'
 
 os.system(cmd)
-print("Finish shelling #1")
-os.system(cmd2)
-print("Finish shelling #2")
-"""
 
 # Replace sender@example.com with your "From" address.
 # This address must be verified with Amazon SES.
@@ -98,8 +75,6 @@ ATTACHMENT = output_file
 
 # The email body for recipients with non-HTML email clients.
 BODY_TEXT = "Hello,\r\nPlease see the attached file for a status update on coronavirus-related indicators."
-
-print(BODY_TEXT)
 
 # The HTML body of the email.
 BODY_HTML =  """\
