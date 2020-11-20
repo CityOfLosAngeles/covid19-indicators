@@ -23,39 +23,64 @@ sys.path.append(os.getcwd())
 if not os.path.exists('outputs'):
     os.makedirs('outputs') 
 
-output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.ipynb'
-output_path2 = f'./outputs/simpler-notebook2.ipynb'
+
+#output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stats.ipynb'
 
 print(os.environ.get("AWS_ACCESS_KEY_ID"))
+
+
+def execute_notebook_make_pdf(notebook_name):  
+    output_path = f'./outputs/{notebook_name}.ipynb'
+    output_format = 'PDFviaHTML'
+
+    pm.execute_notebook(
+        f'/app/notebooks/{notebook_name}.ipynb',
+        output_path,
+        cwd='/app/notebooks'
+    )
+    
+    if notebook_name=="simpler-notebook":
+        notebook_description = "S3 Bucket Permission"
+    else:
+        notebook_description = "SES Email Permission"
+    
+    print(f"Ran {notebook_name}: {notebook_description}")    
+    
+    cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
+    os.system(cmd)
+    print(f"Finish shelling {notebook_name}")  
+    
+    output_file = f'./outputs/{notebook_name}.pdf'   
+    
+
+try:
+    execute_notebook_make_pdf("simpler-notebook")
+except:
+    print("did not execute simpler-notebook")
+    pass
+try:
+    execute_notebook_make_pdf("simpler-notebook2")
+except:
+    print("did not execute simpler-notebook2")
+    raise
+    
+output_file = f'./outputs/simpler-notebook2.pdf'
+
 """
-pm.execute_notebook(
-   '/app/notebooks/simpler-notebook2.ipynb',
-   output_path2,
-   cwd='/app/notebooks'
-)
-print("Ran notebook2")
-"""
-
-pm.execute_notebook(
-   '/app/notebooks/simpler-notebook.ipynb',
-   output_path,
-   cwd='/app/notebooks'
-)
-print("Ran notebook1")
-
-
 
 # shell out, run NB Convert 
 output_format = 'PDFviaHTML'
 cmd  = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path}"
-#cmd2 = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path2}"
+cmd2 = f"jupyter nbconvert --to {output_format} --no-input --no-prompt {output_path2}"
 
+# Attach the file with no S3 access needed to the email
 output_file = f'./outputs/simpler-notebook2.pdf'
 
 os.system(cmd)
 print("Finish shelling #1")
-#os.system(cmd2)
+os.system(cmd2)
 print("Finish shelling #2")
+"""
 
 # Replace sender@example.com with your "From" address.
 # This address must be verified with Amazon SES.
