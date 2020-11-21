@@ -201,6 +201,13 @@ def county_caption(df, county_name):
 def ca_hospitalizations_caption(df, county_name):
     df = df[df.county == county_name]
     
+    if df.date.max() == default_parameters.two_days_ago:
+        yesterday_date = default_parameters.two_days_ago
+        one_week_ago = default_parameters.nine_days_ago
+    else:
+        yesterday_date = default_parameters.yesterday_date
+        one_week_ago = default_parameters.one_week_ago
+
     extract_col = "COVID-ICU"
     icu_1week = df[(df.date == one_week_ago) & (df["type"]==extract_col)].iloc[0]["num"]
     icu_yesterday = df[(df.date == yesterday_date) & (df["type"]==extract_col)].iloc[0]["num"]      
