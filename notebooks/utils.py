@@ -309,6 +309,13 @@ def prep_lacity_cases(start_date):
     # Derive new columns
     df = calculate_rolling_average(df, start_date, today_date)
     
+    # Assign City of LA pop, then tier cutoffs will work
+    df = df.assign(
+        city_pop = 3_990_000
+    )
+    
+    df = find_tier_cutoffs(df, "city_pop")
+   
     return df
 
 

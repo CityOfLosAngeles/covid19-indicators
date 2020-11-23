@@ -24,7 +24,7 @@ def show_svg(image_name):
 #---------------------------------------------------------------#
 navy = "#0A4C6A"
 maroon = "#F3324C"
-green = "#10DE7A"
+green = "#32D486"
 orange = "#FCA800"
 blue = "#1696D2"
 gray = "#797C7C"
@@ -86,16 +86,9 @@ def setup_cases_deaths_chart(df, geog, name):
                     title="date", axis=alt.Axis(format=monthdate_format))
         )
     )
-        
-    tier_base = (
-        alt.Chart(
-            pd.DataFrame({"tier1": [df.tier1_case_cutoff.iloc[0]], 
-                          "tier2": [df.tier2_case_cutoff.iloc[0]], 
-                          "tier3": [df.tier3_case_cutoff.iloc[0]]
-                       })
-                 )
-        .mark_line(strokeDash=[2,3])
-    )
+    
+    
+    tier_base = (base.mark_line(strokeDash=[2,3], clip=True))
         
     # Make cases charts    
     cases_line = (
@@ -124,21 +117,22 @@ def setup_cases_deaths_chart(df, geog, name):
         )
     )
     
+
     tier1_hline = (
         tier_base
-        .encode(y=alt.Y("tier1:Q"),
+        .encode(y=alt.Y("tier1_case_cutoff:Q"),
                color=alt.value(orange))
     )
-    
+
     tier2_hline = (
         tier_base
-        .encode(y=alt.Y("tier2:Q"),
+        .encode(y=alt.Y("tier2_case_cutoff:Q"),
                color=alt.value(maroon))
     )
     
     tier3_hline = (
         tier_base
-        .encode(y=alt.Y("tier3:Q"),
+        .encode(y=alt.Y("tier3_case_cutoff:Q"),
                color=alt.value(purple))
     )
 
