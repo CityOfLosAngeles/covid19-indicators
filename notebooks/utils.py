@@ -670,7 +670,7 @@ def doubling_time(df, window=7):
     )
     
     np.seterr(divide='ignore')
-
+    #https://stackoverflow.com/questions/27784528/numpy-division-with-runtimewarning-invalid-value-encountered-in-double-scalars?rq=1
     df = df.assign(
         doubling_time = ( ((df.days_obs - df.days_in_past) * np.log(2)) / 
                         ( np.log(df.cases / df.cases_in_past) )
