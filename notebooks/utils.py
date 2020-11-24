@@ -309,6 +309,13 @@ def prep_lacity_cases(start_date):
     # Derive new columns
     df = calculate_rolling_average(df, start_date, today_date)
     
+    # Assign City of LA pop, then tier cutoffs will work
+    df = df.assign(
+        city_pop = 3_990_000
+    )
+    
+    df = find_tier_cutoffs(df, "city_pop")
+   
     return df
 
 
@@ -663,7 +670,7 @@ def doubling_time(df, window=7):
     )
     
     np.seterr(divide='ignore')
-
+    #https://stackoverflow.com/questions/27784528/numpy-division-with-runtimewarning-invalid-value-encountered-in-double-scalars?rq=1
     df = df.assign(
         doubling_time = ( ((df.days_obs - df.days_in_past) * np.log(2)) / 
                         ( np.log(df.cases / df.cases_in_past) )
