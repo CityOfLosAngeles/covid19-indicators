@@ -32,7 +32,7 @@ This repository will track COVID-19 indicators as LA considers its reopening str
 
 **OTHER MAJOR US COUNTIES REPORT:** [https://tinyurl.com/uscountycovidtrends](https://cityoflosangeles.github.io/covid19-indicators/us-county-trends.html)
 
-**LA COUNTY NEIGHBORHOODS REPORT:** [https://tinyurl.com/uscountycovidtrends](https://cityoflosangeles.github.io/covid19-indicators/la-neighborhoods-trends.html)
+**LA COUNTY NEIGHBORHOODS REPORT:** [https://tinyurl.com/laneighborhoodcovidtrends](https://cityoflosangeles.github.io/covid19-indicators/la-neighborhoods-trends.html)
 
 The City of LA uses [US county data](https://www.arcgis.com/home/item.html?id=628578697fb24d8ea4c32fa0c5ae1843) published by [JHU](https://www.esri.com/arcgis-blog/products/product/public-safety/coronavirus-covid-19-data-available-by-county-from-johns-hopkins-university/). The historical time-series is pulled from JHU's CSV on GitHub and appended with the current date's data from the ESRI feature layer.
 
