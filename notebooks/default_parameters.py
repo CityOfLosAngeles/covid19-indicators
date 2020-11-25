@@ -80,3 +80,11 @@ nine_days_ago = (
         - timedelta(days=9)
     )
 )
+
+one_month_ago = (
+    (datetime.today()
+                .astimezone(pytz.timezone(f'{time_zone}'))
+                .date()
+        - timedelta(days=31)
+    )
+)
