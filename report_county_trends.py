@@ -16,8 +16,18 @@ from civis_aqueduct_utils.github import upload_file_to_github
 
 sys.path.append(os.getcwd())
 
-notebooks_to_run = ["ca-counties.ipynb", "us-counties.ipynb"]
-output_path = ["./ca-county-trends.ipynb", "./us-county-trends.ipynb"]
+notebooks_to_run = [
+    "ca-counties.ipynb", 
+    "us-counties.ipynb", 
+    "la-neighborhoods.ipynb"
+]
+
+output_path = [
+    "./ca-county-trends.ipynb", 
+    "./us-county-trends.ipynb", 
+    "./la-neighborhoods-trends.ipynb"
+]
+
 
 for i, file_name in enumerate(notebooks_to_run):
     pm.execute_notebook(
@@ -54,7 +64,9 @@ DEFAULT_COMMITTER = {
 datasets = [
     "ca-county-trends.html", 
     "us-county-trends.html",
+    "la-neighborhoods-trends.html",
 ]
+
 
 for file_name in datasets:
     upload_file_to_github(

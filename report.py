@@ -19,10 +19,10 @@ sys.path.append(os.getcwd())
 output_path = './coronavirus-stats.ipynb'
 
 # Try executing the notebook. If it fails due to data being incomplete,
-# try in 30 min, max 10x (can reduce to twice an hour bc data is updated in batches)
+# try in 20 min, max 15x (try 3x/hr, for 5 hrs)
 # old - try again in an hour, for a maximum of ten hours.
-MAX_TRIES = 10
-RETRY = 30 * 60
+MAX_TRIES = 15
+RETRY = 20 * 60
 for i in range(MAX_TRIES):
     try:
         pm.execute_notebook(
