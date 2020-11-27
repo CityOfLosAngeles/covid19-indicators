@@ -9,6 +9,7 @@ import default_parameters
 import make_charts
 import neighborhood_utils
 
+from datetime import timedelta
 from IPython.display import display_html, Markdown, HTML, Image
 
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
@@ -103,6 +104,7 @@ def prep_data(start_date):
     return df
 
 
+
 def setup_chart(df, neighborhood, chart_type):
     if chart_type == "cases":
         plot_col = "cases_avg7"
@@ -191,6 +193,22 @@ def make_chart(df, neighborhood):
     
     subset_df = df[df.aggregate_region == neighborhood]
     
+    # Fill in missing date
+    missing_date = subset_df.loc[subset_df.date2=="11/18/20"]
+
+    missing_date = missing_date.assign(
+        date2 = missing_date.date2 + timedelta(days=1),
+    )
+
+    missing_date = missing_date.assign(
+        date = missing_date.date2.dt.date
+    )
+    
+    subset_df = (subset_df.append(missing_date)
+          .sort_values("date2")
+          .reset_index(drop=True)
+         )
+    
     cases_chart = setup_chart(subset_df, neighborhood, "cases")
     ncases_chart = setup_chart(subset_df, neighborhood, "normalized_cases")
     new_cases_chart = setup_chart(subset_df, neighborhood, "new_cases")
@@ -211,14 +229,15 @@ def make_chart(df, neighborhood):
 
     make_charts.show_svg(combined_chart)
     
-    
+        
+        
 def summary_sentence(df, neighborhood):
     extract_col = "cases"
     cases_1month = df[df.date == one_month_ago][extract_col].iloc[0]
     cases_2weeks = df[df.date == two_weeks_ago][extract_col].iloc[0]
     cases_1week = df[df.date == one_week_ago][extract_col].iloc[0]
     cases_yesterday = df[df.date == yesterday_date][extract_col].iloc[0]
-    
+
     pct_positive_2days = (df[df.date == two_days_ago]["pct_positive"].iloc[0] * 100).round(1)
     positive_per1k_2days = df[df.date == two_days_ago]["positive_per1k"].iloc[0].round(2)
     

@@ -30,24 +30,27 @@ output_path = [
 
 
 for i, file_name in enumerate(notebooks_to_run):
-    pm.execute_notebook(
-        f'/app/notebooks/{file_name}',
-        output_path[i],
-        cwd='/app/notebooks'
-    )
+    try:
+        pm.execute_notebook(
+            f'/app/notebooks/{file_name}',
+            output_path[i],
+            cwd='/app/notebooks'
+        )
 
 
-    # shell out, run NB Convert 
-    output_format = 'html'
-    subprocess.run([
-        "jupyter",
-        "nbconvert",
-        "--to",
-        output_format,
-        "--no-input",
-        "--no-prompt",
-        output_path[i],
-    ])    
+        # shell out, run NB Convert 
+        output_format = 'html'
+        subprocess.run([
+            "jupyter",
+            "nbconvert",
+            "--to",
+            output_format,
+            "--no-input",
+            "--no-prompt",
+            output_path[i],
+        ])   
+    except:
+        pass
 
 
 # Constants for loading the file to GH Pages branch
@@ -69,12 +72,15 @@ datasets = [
 
 
 for file_name in datasets:
-    upload_file_to_github(
-        TOKEN,
-        REPO,
-        BRANCH,
-        f"{file_name}",
-        f"{file_name}",
-        f"{COMMIT_MESSAGE}",
-        DEFAULT_COMMITTER,
-    )
+    try:
+        upload_file_to_github(
+            TOKEN,
+            REPO,
+            BRANCH,
+            f"{file_name}",
+            f"{file_name}",
+            f"{COMMIT_MESSAGE}",
+            DEFAULT_COMMITTER,
+        )
+    except:
+        pass
