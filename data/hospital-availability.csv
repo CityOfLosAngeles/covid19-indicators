@@ -2828,12 +2828,24 @@ date,equipment,status,num
 11/30/2020,Acute Care Beds,Available,513
 11/30/2020,Acute Care Beds,COVID Person Under Investigation,185
 11/30/2020,Acute Care Beds,COVID Occupied,1680
-11/30/2020,Acute Care Beds,Unavailable,
+11/30/2020,Acute Care Beds,Unavailable,10885
 11/30/2020,ICU Beds,Available,116
 11/30/2020,ICU Beds,COVID Person Under Investigation,27
 11/30/2020,ICU Beds,COVID Occupied,527
-11/30/2020,ICU Beds,Unavailable,
+11/30/2020,ICU Beds,Unavailable,1526
 11/30/2020,Ventilators,Available,1097
 11/30/2020,Ventilators,COVID Person Under Investigation,12
 11/30/2020,Ventilators,COVID Occupied,299
 11/30/2020,Ventilators,Unavailable,743
+12/1/2020,Acute Care Beds,Available,393
+12/1/2020,Acute Care Beds,COVID Person Under Investigation,215
+12/1/2020,Acute Care Beds,COVID Occupied,1805
+12/1/2020,Acute Care Beds,Unavailable,
+12/1/2020,ICU Beds,Available,86
+12/1/2020,ICU Beds,COVID Person Under Investigation,42
+12/1/2020,ICU Beds,COVID Occupied,565
+12/1/2020,ICU Beds,Unavailable,
+12/1/2020,Ventilators,Available,983
+12/1/2020,Ventilators,COVID Person Under Investigation,11
+12/1/2020,Ventilators,COVID Occupied,326
+12/1/2020,Ventilators,Unavailable,702
