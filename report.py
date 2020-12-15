@@ -20,7 +20,6 @@ output_path = './coronavirus-stats.ipynb'
 
 # Try executing the notebook. If it fails due to data being incomplete,
 # try in 20 min, max 15x (try 3x/hr, for 5 hrs)
-# old - try again in an hour, for a maximum of ten hours.
 MAX_TRIES = 15
 RETRY = 20 * 60
 for i in range(MAX_TRIES):
