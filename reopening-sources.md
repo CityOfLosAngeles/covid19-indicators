@@ -82,6 +82,8 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
  * [Philisophical differences](https://www.nytimes.com/2020/05/28/us/politics/biden-trump-coronavirus-testing.html) between state-led strategy vs federal strategy
     * [Biden's national coronavirus plan](https://www.documentcloud.org/documents/6927667-COVID-National-Diagnostics-Strategy-05-24-2020-v.html#document/p2)
     * Regular testing, [in addition to other monitoring protocols are needed](https://www.nytimes.com/2020/11/11/health/coronavirus-navy-parris-roosevelt.html)
+* [Behavioral science](https://www.nytimes.com/2020/12/10/magazine/covid-research-behavior-.html) has insights for how to encourage and reinforce good public health behaviors
+* CDC will soon label [masks with their effectiveness](https://www.nytimes.com/2020/12/16/health/covid-masks-effectiveness.html)
 
 
 ## Antibodies and Immunity Research
