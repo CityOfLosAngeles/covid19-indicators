@@ -209,6 +209,11 @@ def make_chart(df, neighborhood):
           .reset_index(drop=True)
          )
     
+    # 12/22 data has issue...data was missing for several days prior
+    # all got lumped toegther into 12/22
+    # interpolate? 
+    subset_df = subset_df.loc[subset_df.date2 != "12/22/20"]
+    
     cases_chart = setup_chart(subset_df, neighborhood, "cases")
     ncases_chart = setup_chart(subset_df, neighborhood, "normalized_cases")
     new_cases_chart = setup_chart(subset_df, neighborhood, "new_cases")

@@ -42,6 +42,11 @@ def clean_data():
     
     sort_cols = ["aggregate_region", "date", "date2"]
     group_cols = ["aggregate_region"]
+    
+    # 12/22 data problematic, it's sum of 12/20, 12/21, and 12/22 data
+    # Messing up rolling averages
+    aggregated = aggregated.loc[aggregated.date2 != "12/22/20"]
+    
     final = derive_columns(aggregated, sort_cols, group_cols)
     
     return final
