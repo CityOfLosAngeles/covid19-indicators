@@ -237,28 +237,29 @@ def make_chart(df, neighborhood):
         
         
 def summary_sentence(df, neighborhood):
-    extract_col = "cases"
-    cases_1month = df[df.date == one_month_ago][extract_col].iloc[0]
-    cases_2weeks = df[df.date == two_weeks_ago][extract_col].iloc[0]
-    cases_1week = df[df.date == one_week_ago][extract_col].iloc[0]
-    
     max_date = df.date.max()
-    
-    cases_yesterday = df[df.date == max_date][extract_col].iloc[0]
-
-    pct_positive_2days = (df[df.date == max_date]["pct_positive"].iloc[0] * 100).round(1)
-    positive_per1k_2days = df[df.date == max_date]["positive_per1k"].iloc[0].round(2)
-    
     try:
+        extract_col = "cases"
+        cases_1month = df[df.date == one_month_ago][extract_col].iloc[0]
+        cases_2weeks = df[df.date == two_weeks_ago][extract_col].iloc[0]
+        cases_1week = df[df.date == one_week_ago][extract_col].iloc[0]
+
+        cases_yesterday = df[df.date == max_date][extract_col].iloc[0]
+
+        pct_positive_2days = (df[df.date == max_date]["pct_positive"].iloc[0] * 100).round(1)
+        positive_per1k_2days = df[df.date == max_date]["positive_per1k"].iloc[0].round(2)
+
         extract_col2 = "cases_per100k"
         n_cases_1week = df[df.date == one_week_ago][extract_col2].iloc[0].round(2)
         # Sometimes cases for yesterday don't show, we'll have to use 2 days ago       
         n_cases_yesterday = df[df.date == max_date][extract_col2].iloc[0].round(2)
+
         ranking = df[df.date == max_date]["rank"].iloc[0].astype(int)
         max_rank = df[df.date == max_date]["max_rank"].iloc[0].astype(int)
-               
+
         pct_change = (((n_cases_yesterday - n_cases_1week) / n_cases_1week) * 100).round(1)
-        
+
+    
         display(Markdown(
             f"Cumulative cases reported in {neighborhood}: "
             f"{cases_1month:,} cases a month ago; {cases_2weeks:,} cases 2 weeks ago; " 
@@ -271,6 +272,7 @@ def summary_sentence(df, neighborhood):
             "on cases per 100k <i>(1 being the most severely hit)</i>."
             )
         )   
+        
     except AttributeError:
          display(Markdown(
             f"Cumulative cases reported in {neighborhood}: "
@@ -279,4 +281,6 @@ def summary_sentence(df, neighborhood):
             f"{neighborhood} has missing data; cases per 100k and rankings based on cases per 100k "
              "cannot be calculated. "
             )
-        )        
+        )
+    except:
+        pass

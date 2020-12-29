@@ -72,7 +72,7 @@ for key, file_name in notebooks_to_run.items():
 
     print("Converted to HTML")
     # Now find the HTML file and upload
-    name = file_name.split(".")[0]
+    name = file_name.replace(".ipynb", "").replace("./", "")
     html_file_name = f"{name}.html" 
     print(f"name: {name}")
     print(f"html name: {html_file_name}")
@@ -81,8 +81,8 @@ for key, file_name in notebooks_to_run.items():
         TOKEN,
         REPO,
         BRANCH,
-        f"{file_name}",
-        f"{file_name}",
+        f"{html_file_name}",
+        f"{html_file_name}",
         f"{COMMIT_MESSAGE}",
         DEFAULT_COMMITTER,
     )
