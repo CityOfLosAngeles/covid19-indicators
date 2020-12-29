@@ -28,23 +28,9 @@ DEFAULT_COMMITTER = {
 }
 
 
-'''
-notebooks_to_run = [
-    "ca-counties.ipynb", 
-    "us-counties.ipynb", 
-    "la-neighborhoods.ipynb"
-]
-
-output_path = [
-    "./ca-county-trends.ipynb", 
-    "./us-county-trends.ipynb", 
-    "./la-neighborhoods-trends.ipynb"
-]
-'''
-
 notebooks_to_run = {
-    #"ca-counties.ipynb": "./ca-county-trends.ipynb",
-    #"us-counties.ipynb": "./us-county-trends.ipynb", 
+    "ca-counties.ipynb": "./ca-county-trends.ipynb",
+    "us-counties.ipynb": "./us-county-trends.ipynb", 
     "la-neighborhoods.ipynb": "./la-neighborhoods-trends.ipynb",
 }
 
@@ -88,37 +74,3 @@ for key, file_name in notebooks_to_run.items():
     )
 
     print("Successful upload to GitHub")
-
-
-'''
-# Constants for loading the file to GH Pages branch
-TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
-REPO = "CityOfLosAngeles/covid19-indicators"
-BRANCH = "gh-pages"
-COMMIT_MESSAGE = "Update county-trends"
-
-DEFAULT_COMMITTER = {
-    "name": "Los Angeles ITA data team",
-    "email": "ITAData@lacity.org",
-}
-
-datasets = [
-    #"ca-county-trends.html", 
-    #"us-county-trends.html",
-    "la-neighborhoods-trends.html",
-]
-
-
-for file_name in datasets:
-    try:
-        upload_file_to_github(
-            TOKEN,
-            REPO,
-            BRANCH,
-            f"{file_name}",
-            f"{file_name}",
-            f"{COMMIT_MESSAGE}",
-            DEFAULT_COMMITTER,
-        )
-    except:
-        pass'''
