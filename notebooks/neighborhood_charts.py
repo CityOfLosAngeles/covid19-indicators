@@ -188,31 +188,11 @@ def setup_chart(df, neighborhood, chart_type):
                 )
     
     return chart
+    
 
 def make_chart(df, neighborhood):
     
     subset_df = df[df.aggregate_region == neighborhood]
-    
-    # Fill in missing date
-    missing_date = subset_df.loc[subset_df.date2=="11/18/20"]
-
-    missing_date = missing_date.assign(
-        date2 = missing_date.date2 + timedelta(days=1),
-    )
-
-    missing_date = missing_date.assign(
-        date = missing_date.date2.dt.date
-    )
-    
-    subset_df = (subset_df.append(missing_date)
-          .sort_values("date2")
-          .reset_index(drop=True)
-         )
-    
-    # 12/22 data has issue...data was missing for several days prior
-    # all got lumped toegther into 12/22
-    # interpolate? 
-    subset_df = subset_df.loc[subset_df.date2 != "12/22/20"]
     
     cases_chart = setup_chart(subset_df, neighborhood, "cases")
     ncases_chart = setup_chart(subset_df, neighborhood, "normalized_cases")

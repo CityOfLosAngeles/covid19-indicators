@@ -2,7 +2,10 @@
 Functions to clean up neighborhood data
 and feed into interactive charts
 """
+import numpy as np
 import pandas as pd
+
+from datetime import date, timedelta
 
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
@@ -17,12 +20,16 @@ def clean_data():
     crosswalk = pd.read_parquet(CROSSWALK_URL)
     
     # Get rid of duplicates
-    # We keep the incorporated and unincorporated labels because 
-    # we need to identify duplicates when we append each time DAG runs
+    # We keep the incorporated and unincorporated labels because     
+    # If there are duplicate dates, but diff values for cases and deaths, let's keep the max
     df = (df[df.Region != "Long Beach"]
-          .drop_duplicates(subset = ["Region", "date", "date2", "cases", "deaths"])
+          .assign(
+              cases = df.groupby(["Region", "date", "date2"])["cases"].transform("max"),
+              deaths = df.groupby(["Region", "date", "date2"])["deaths"].transform("max"),
+          ).drop_duplicates(subset = ["Region", "date", "date2", "cases", "deaths"])
           .drop(columns = ["LCITY", "COMMUNITY", "LABEL"])
-         )
+    )
+
     
     # Our crosswalk is more extensive, get rid of stuff so we can have a m:1 merge
     crosswalk = (crosswalk[crosswalk.Region.notna()]
@@ -32,6 +39,11 @@ def clean_data():
     
     # Merge in pop
     df = pd.merge(df, crosswalk, on = "Region", how = "inner", validate = "m:1")
+    
+    # Be explicit about which missing values to fill in
+    # Add new lines if more missing data appears later
+    df = interpolate_linearly(df, "11/18/20", "11/20/20")
+    df = interpolate_linearly(df, "12/19/20", "12/22/20")
     
     # Aggregate 
     keep_cols = ["aggregate_region", "population", "date", "date2"]
@@ -43,13 +55,97 @@ def clean_data():
     sort_cols = ["aggregate_region", "date", "date2"]
     group_cols = ["aggregate_region"]
     
-    # 12/22 data problematic, it's sum of 12/20, 12/21, and 12/22 data
-    # Messing up rolling averages
-    aggregated = aggregated.loc[aggregated.date2 != "12/22/20"]
-    
     final = derive_columns(aggregated, sort_cols, group_cols)
     
     return final
+
+
+def interpolate_linearly(df, start_date, end_date):
+    """
+    Interpolate and fill in missing data
+    df: pandas.DataFrame
+    start_date: inclusive, provide the date where there is case/death numbers,
+                right before the set of missing values.
+    end_date: inclusive, provide the date where there is case/death numbers, 
+                right after the set of missing values.
+                
+    Ex: if 12/20 and 12/21 are missing, start_date is 12/19 and end_date is 12/22.
+    """
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+    
+    days_in_between = (end_date - start_date).days - 1 
+
+    # Now interpolate, but do it just around where the missing area is
+    starting_df = df.loc[df.date2==start_date]
+    ending_df = df.loc[df.date2 == end_date]
+    
+    sort_cols = ["Region", "date2"]
+    group_cols = ["Region"]
+
+    df2 = starting_df.copy()
+    for i in range(1, days_in_between + 1):
+        df2 = (df2.append(starting_df)
+                        .reset_index(drop=True)
+                       )
+
+        df2["obs"] = df2.groupby(group_cols).cumcount() + 1
+
+        df2 = df2.assign(
+                date2 = df2.apply(lambda x: x.date2 + timedelta(days = i) if x.obs==i 
+                                           else x.date2, axis=1),
+                cases = df2.apply(lambda x: np.nan if x.obs==i else x.cases, axis=1),
+                deaths = df2.apply(lambda x: np.nan if x.obs==i else x.deaths, axis=1),
+        )
+        df2["date"] = df2.date2.dt.date
+
+        if i == days_in_between:  
+            df2 = (df2.append(ending_df)
+                   .sort_values(sort_cols)
+                    .drop(columns = "obs")
+                    .reset_index(drop=True)
+                   )
+
+    # Find our start / end points to calculate change
+    for col in ["cases", "deaths"]:
+        df2 = (df2.sort_values(sort_cols)
+                    .assign(
+                        start = df2.groupby(group_cols)[col].transform("min"),
+                        change = (df2.groupby(group_cols)[col].transform("max") - 
+                                  df2.groupby(group_cols)[col].transform("min")),
+                )
+            )
+
+        df2 = (df2.assign(
+                    daily_change = (df2.change / (days_in_between + 1))
+                ).rename(columns = {"daily_change": f"change_{col}", 
+                                   "start": f"start_{col}"})
+            )
+    
+    df2 = df2.assign(
+            days_since = df2.sort_values(sort_cols).groupby(group_cols).cumcount(),
+        )
+    
+    for col in ["cases", "deaths"]:
+        start_col = f"start_{col}"
+        change_col = f"change_{col}"
+        
+        df2[col] = (df2[col].fillna(
+                    df2[start_col] + (df2[change_col] * df2.days_since))
+                 .astype(int)
+                )
+
+    # Append it back to original df
+    full_df = (df[(df.date2 != start_date) & (df.date2 != end_date)]
+               .append(df2.drop(
+                   columns = ["days_since", "change", 
+                              "start_cases", "start_deaths", 
+                              "change_cases", "change_deaths"]), sort=False)
+               .sort_values(sort_cols)
+               .reset_index(drop=True)
+              )
+
+    return full_df
 
 
 def derive_columns(df, sort_cols, group_cols):
