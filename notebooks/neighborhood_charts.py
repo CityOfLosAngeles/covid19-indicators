@@ -82,7 +82,7 @@ def prep_data(start_date):
         max_date = df.groupby("aggregate_region")["date"].transform("max")
     )
 
-    df = (df[df.max_date == yesterday_date]
+    df = (df[df.max_date >= one_week_ago]
           .drop(columns = "max_date")
           .sort_values(["aggregate_region", "date"])
           .reset_index(drop=True)
@@ -188,26 +188,11 @@ def setup_chart(df, neighborhood, chart_type):
                 )
     
     return chart
+    
 
 def make_chart(df, neighborhood):
     
     subset_df = df[df.aggregate_region == neighborhood]
-    
-    # Fill in missing date
-    missing_date = subset_df.loc[subset_df.date2=="11/18/20"]
-
-    missing_date = missing_date.assign(
-        date2 = missing_date.date2 + timedelta(days=1),
-    )
-
-    missing_date = missing_date.assign(
-        date = missing_date.date2.dt.date
-    )
-    
-    subset_df = (subset_df.append(missing_date)
-          .sort_values("date2")
-          .reset_index(drop=True)
-         )
     
     cases_chart = setup_chart(subset_df, neighborhood, "cases")
     ncases_chart = setup_chart(subset_df, neighborhood, "normalized_cases")
@@ -232,44 +217,54 @@ def make_chart(df, neighborhood):
         
         
 def summary_sentence(df, neighborhood):
-    extract_col = "cases"
-    cases_1month = df[df.date == one_month_ago][extract_col].iloc[0]
-    cases_2weeks = df[df.date == two_weeks_ago][extract_col].iloc[0]
-    cases_1week = df[df.date == one_week_ago][extract_col].iloc[0]
-    cases_yesterday = df[df.date == yesterday_date][extract_col].iloc[0]
-
-    pct_positive_2days = (df[df.date == two_days_ago]["pct_positive"].iloc[0] * 100).round(1)
-    positive_per1k_2days = df[df.date == two_days_ago]["positive_per1k"].iloc[0].round(2)
-    
+    max_date = df.date.max()
     try:
+        extract_col = "cases"
+        cases_1month = df[df.date == one_month_ago][extract_col].iloc[0]
+        cases_2weeks = df[df.date == two_weeks_ago][extract_col].iloc[0]
+        cases_1week = df[df.date == one_week_ago][extract_col].iloc[0]
+        cases_yesterday = df[df.date == max_date][extract_col].iloc[0]
+
+        pct_positive_2days = (df[df.date == max_date]["pct_positive"].iloc[0] * 100).round(1)
+        positive_per1k_2days = df[df.date == max_date]["positive_per1k"].iloc[0].round(2)
+
         extract_col2 = "cases_per100k"
         n_cases_1week = df[df.date == one_week_ago][extract_col2].iloc[0].round(2)
-        n_cases_yesterday = df[df.date == yesterday_date][extract_col2].iloc[0].round(2)
-        
+        # Sometimes cases for yesterday don't show, we'll have to use 2 days ago       
+        n_cases_yesterday = df[df.date == max_date][extract_col2].iloc[0].round(2)
+
+        ranking = df[df.date == max_date]["rank"].iloc[0].astype(int)
+        max_rank = df[df.date == max_date]["max_rank"].iloc[0].astype(int)
+
         pct_change = (((n_cases_yesterday - n_cases_1week) / n_cases_1week) * 100).round(1)
-                     
-        ranking = df[df.date == yesterday_date]["rank"].iloc[0].astype(int)
-        max_rank = df[df.date == yesterday_date]["max_rank"].iloc[0].astype(int)
         
-        
+        extract_col3 = "new_cases"
+        new_cases_1week = cases_yesterday - cases_1week
+        new_cases_yesterday = df[df.date == max_date][extract_col3].iloc[0]
+    
         display(Markdown(
             f"Cumulative cases reported in {neighborhood}: "
-            f"{cases_1month:,} cases a month ago; {cases_2weeks:,} cases 2 weeks ago; " 
-            f"{cases_1week:,} cases 1 week ago; {cases_yesterday:,} cases yesterday. "
-            f"This translates to a <strong>{pct_change}% </strong> change in the past week. "
-            f"Of those tested so far, {pct_positive_2days}% tested positive, with persons testing positive at a "
+            f"<br>1 month ago: {cases_1month:,};  2 weeks ago: {cases_2weeks:,}" 
+            f"<br>1 week ago: {cases_1week:,};  yesterday: {cases_yesterday:,}"
+            f"<br> New cases past week: {new_cases_1week:,}; new cases yesterday: {new_cases_yesterday:,}"
+            f"<br>Percent change over past week: <strong>{pct_change}% </strong>"
+            f"<br>Of those tested so far, {pct_positive_2days}% tested positive, with persons testing positive at a "
             f"rate of {positive_per1k_2days:,} per 1k. "
-            f"As of {yesterday_date.strftime(fulldate_format)}, "
+            f"<br>As of {max_date.strftime(fulldate_format)}, "
             f"{neighborhood} ranked <strong> {ranking} out of {max_rank} </strong> neighborhoods "
             "on cases per 100k <i>(1 being the most severely hit)</i>."
             )
         )   
+        
     except AttributeError:
          display(Markdown(
-            f"Cumulative cases reported in {neighborhood}: "
-            f"{cases_1month} cases a month ago; {cases_2weeks} cases 2 weeks ago; " 
-            f"{cases_1week} cases 1 week ago. "
+            f"Cumulative cases reported in {neighborhood}:"
+            f"<br>1 month ago: {cases_1month:,};  2 weeks ago: {cases_2weeks:,}" 
+            f"<br>1 week ago: {cases_1week:,};  yesterday: {cases_yesterday:,}"
+            f"<br> New cases past week: {new_cases_1week:,}; new cases yesterday: {new_cases_yesterday:,}"
             f"{neighborhood} has missing data; cases per 100k and rankings based on cases per 100k "
              "cannot be calculated. "
             )
-        )        
+        )
+    except:
+        pass

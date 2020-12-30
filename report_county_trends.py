@@ -16,43 +16,6 @@ from civis_aqueduct_utils.github import upload_file_to_github
 
 sys.path.append(os.getcwd())
 
-notebooks_to_run = [
-    "ca-counties.ipynb", 
-    "us-counties.ipynb", 
-    "la-neighborhoods.ipynb"
-]
-
-output_path = [
-    "./ca-county-trends.ipynb", 
-    "./us-county-trends.ipynb", 
-    "./la-neighborhoods-trends.ipynb"
-]
-
-
-for i, file_name in enumerate(notebooks_to_run):
-    try:
-        pm.execute_notebook(
-            f'/app/notebooks/{file_name}',
-            output_path[i],
-            cwd='/app/notebooks'
-        )
-
-
-        # shell out, run NB Convert 
-        output_format = 'html'
-        subprocess.run([
-            "jupyter",
-            "nbconvert",
-            "--to",
-            output_format,
-            "--no-input",
-            "--no-prompt",
-            output_path[i],
-        ])   
-    except:
-        pass
-
-
 # Constants for loading the file to GH Pages branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
@@ -64,23 +27,50 @@ DEFAULT_COMMITTER = {
     "email": "ITAData@lacity.org",
 }
 
-datasets = [
-    "ca-county-trends.html", 
-    "us-county-trends.html",
-    "la-neighborhoods-trends.html",
-]
 
+notebooks_to_run = {
+    "ca-counties.ipynb": "./ca-county-trends.ipynb",
+    "us-counties.ipynb": "./us-county-trends.ipynb", 
+    "la-neighborhoods.ipynb": "./la-neighborhoods-trends.ipynb",
+}
 
-for file_name in datasets:
-    try:
-        upload_file_to_github(
-            TOKEN,
-            REPO,
-            BRANCH,
-            f"{file_name}",
-            f"{file_name}",
-            f"{COMMIT_MESSAGE}",
-            DEFAULT_COMMITTER,
-        )
-    except:
-        pass
+for key, file_name in notebooks_to_run.items():
+
+    pm.execute_notebook(
+        f'/app/notebooks/{key}',
+        file_name,
+        cwd='/app/notebooks'
+    )
+
+    print("Ran notebook")
+    
+    # shell out, run NB Convert 
+    output_format = 'html'
+    subprocess.run([
+        "jupyter",
+        "nbconvert",
+        "--to",
+        output_format,
+        "--no-input",
+        "--no-prompt",
+        file_name,
+    ]) 
+
+    print("Converted to HTML")
+    # Now find the HTML file and upload
+    name = file_name.replace(".ipynb", "").replace("./", "")
+    html_file_name = f"{name}.html" 
+    print(f"name: {name}")
+    print(f"html name: {html_file_name}")
+    
+    upload_file_to_github(
+        TOKEN,
+        REPO,
+        BRANCH,
+        f"{html_file_name}",
+        f"{html_file_name}",
+        f"{COMMIT_MESSAGE}",
+        DEFAULT_COMMITTER,
+    )
+
+    print("Successful upload to GitHub")

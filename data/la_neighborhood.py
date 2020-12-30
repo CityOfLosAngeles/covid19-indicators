@@ -11,6 +11,7 @@ HISTORICAL_URL = (
     f"lacounty_covid19_data/{COMMIT}/data/Covid-19.csv"
 )
 
+# https://services.arcgis.com/RmCCgQtiZLDCtblq/arcgis/rest/services/COVID19_Current_Cases_For_Display/FeatureServer/0
 COUNTY_NEIGHBORHOOD_URL = (
     "https://services.arcgis.com/RmCCgQtiZLDCtblq/ArcGIS/rest/services/COVID19_Current_Cases_For_Display/"
     "FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&"

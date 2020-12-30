@@ -24,6 +24,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * Track outbreaks on [college campuses](https://www.nytimes.com/interactive/2020/us/covid-college-cases-tracker.html), trends among [children](https://www.nytimes.com/interactive/2020/08/31/us/coronavirus-cases-children.html), and whether K12 schools are [publishing counts](https://www.nytimes.com/interactive/2020/09/21/us/covid-schools.html).
 * [Illustration of exposure, incubation, and spread](https://www.nytimes.com/interactive/2020/10/02/science/charting-a-coronavirus-infection.html)
 * Build your own [NYT dashboard to track cases](https://www.nytimes.com/interactive/2020/us/covid-cases-deaths-tracker.html)
+* Track ICU capacity [by county](https://www.nytimes.com/interactive/2020/12/23/us/covid-rising-icu-capacity.html) and [by hospital facility](https://www.nytimes.com/interactive/2020/12/09/us/covid-hospitals-icu-capacity.html)
 
 
 ## Dangers of Reopening Too Early
