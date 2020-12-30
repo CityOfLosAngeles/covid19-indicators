@@ -223,7 +223,6 @@ def summary_sentence(df, neighborhood):
         cases_1month = df[df.date == one_month_ago][extract_col].iloc[0]
         cases_2weeks = df[df.date == two_weeks_ago][extract_col].iloc[0]
         cases_1week = df[df.date == one_week_ago][extract_col].iloc[0]
-
         cases_yesterday = df[df.date == max_date][extract_col].iloc[0]
 
         pct_positive_2days = (df[df.date == max_date]["pct_positive"].iloc[0] * 100).round(1)
@@ -238,16 +237,20 @@ def summary_sentence(df, neighborhood):
         max_rank = df[df.date == max_date]["max_rank"].iloc[0].astype(int)
 
         pct_change = (((n_cases_yesterday - n_cases_1week) / n_cases_1week) * 100).round(1)
-
+        
+        extract_col3 = "new_cases"
+        new_cases_1week = cases_yesterday - cases_1week
+        new_cases_yesterday = df[df.date == max_date][extract_col3].iloc[0]
     
         display(Markdown(
             f"Cumulative cases reported in {neighborhood}: "
-            f"{cases_1month:,} cases a month ago; {cases_2weeks:,} cases 2 weeks ago; " 
-            f"{cases_1week:,} cases 1 week ago; {cases_yesterday:,} cases yesterday. "
-            f"This translates to a <strong>{pct_change}% </strong> change in the past week. "
-            f"Of those tested so far, {pct_positive_2days}% tested positive, with persons testing positive at a "
+            f"<br>1 month ago: {cases_1month:,};  2 weeks ago: {cases_2weeks:,}" 
+            f"<br>1 week ago: {cases_1week:,};  yesterday: {cases_yesterday:,}"
+            f"<br> New cases past week: {new_cases_1week:,}; new cases yesterday: {new_cases_yesterday:,}"
+            f"<br>Percent change over past week: <strong>{pct_change}% </strong>"
+            f"<br>Of those tested so far, {pct_positive_2days}% tested positive, with persons testing positive at a "
             f"rate of {positive_per1k_2days:,} per 1k. "
-            f"As of {max_date.strftime(fulldate_format)}, "
+            f"<br>As of {max_date.strftime(fulldate_format)}, "
             f"{neighborhood} ranked <strong> {ranking} out of {max_rank} </strong> neighborhoods "
             "on cases per 100k <i>(1 being the most severely hit)</i>."
             )
@@ -255,9 +258,10 @@ def summary_sentence(df, neighborhood):
         
     except AttributeError:
          display(Markdown(
-            f"Cumulative cases reported in {neighborhood}: "
-            f"{cases_1month} cases a month ago; {cases_2weeks} cases 2 weeks ago; " 
-            f"{cases_1week} cases 1 week ago. "
+            f"Cumulative cases reported in {neighborhood}:"
+            f"<br>1 month ago: {cases_1month:,};  2 weeks ago: {cases_2weeks:,}" 
+            f"<br>1 week ago: {cases_1week:,};  yesterday: {cases_yesterday:,}"
+            f"<br> New cases past week: {new_cases_1week:,}; new cases yesterday: {new_cases_yesterday:,}"
             f"{neighborhood} has missing data; cases per 100k and rankings based on cases per 100k "
              "cannot be calculated. "
             )
