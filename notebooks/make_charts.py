@@ -73,8 +73,8 @@ def setup_cases_deaths_chart(df, geog, name):
         df.drop(columns = "date"))
         .mark_line()
         .encode(
-            x=alt.X("date2", timeUnit=time_unit,
-                   title="date", axis=alt.Axis(format=monthdate_format))
+            x=alt.X("date2", 
+                   title="date", axis=alt.Axis(format=fulldate_format))
         )
     )
     
@@ -82,8 +82,8 @@ def setup_cases_deaths_chart(df, geog, name):
         alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
         .mark_line()
         .encode(
-            x=alt.X("date2", timeUnit=time_unit,
-                    title="date", axis=alt.Axis(format=monthdate_format))
+            x=alt.X("date2", 
+                    title="date", axis=alt.Axis(format=fulldate_format))
         )
     )
     
@@ -203,17 +203,17 @@ def make_cases_deaths_chart(df, geog, name):
 # Testing Data (LA County and City of LA)
 #---------------------------------------------------------------#
 def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
-    chart_width = 500
-        
+    
+    chart_width = 650
+    
     bar = (
         alt.Chart(df)
         .mark_bar(color=navy)
         .encode(
             x=alt.X(
-                "date2",
-                timeUnit=time_unit,
+                "date2:T",
                 title="date",
-                axis=alt.Axis(format=monthdate_format),
+                axis=alt.Axis(format=fulldate_format),
             ),
             y=alt.Y(plot_col, title="# Tests"),
         )
@@ -252,6 +252,9 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
 def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound, 
                                 testing_lower_bound, testing_upper_bound, 
                                 chart_title1, chart_title2): 
+    num_weeks = len(df.week2.unique())  
+    chart_width = num_weeks * 10
+    
     base = (alt.Chart(df)
             .mark_bar(binSpacing = bin_spacing)
             .encode(
@@ -348,10 +351,9 @@ def make_lacounty_hospital_chart(df):
         .mark_line()
         .encode(
             x=alt.X(
-                "date2",
-                timeUnit=time_unit,
+                "date2:T",
                 title="date",
-                axis=alt.Axis(format=monthdate_format),
+                axis=alt.Axis(format=fulldate_format),
             ),
             y=alt.Y("pct_available_avg3", title="3-day avg", 
                     axis=alt.Axis(format="%")
@@ -392,10 +394,9 @@ def make_lacounty_hospital_chart(df):
         .mark_line()
         .encode(
             x=alt.X(
-                "date2",
-                timeUnit=time_unit,
+                "date2:T",
                 title="date",
-                axis=alt.Axis(format=monthdate_format),
+                axis=alt.Axis(format=fulldate_format),
             ),
             y=alt.Y("n_available_avg3", title="3-day avg"),
             color=alt.Color(
@@ -419,10 +420,9 @@ def make_lacounty_hospital_chart(df):
         .mark_line()
         .encode(
             x=alt.X(
-                "date2",
-                timeUnit=time_unit,
+                "date2:T",
                 title="date",
-                axis=alt.Axis(format=monthdate_format),
+                axis=alt.Axis(format=fulldate_format),
             ),
             y=alt.Y("n_covid_avg7", title="7-day avg"),
             color=alt.Color(
@@ -462,10 +462,9 @@ def setup_county_covid_hospital_chart(df, county_name):
         .mark_line()
         .encode(
             x=alt.X(
-                "date2",
-                timeUnit=time_unit,
+                "date2:T",
                 title="date",
-                axis=alt.Axis(format=monthdate_format),
+                axis=alt.Axis(format=fulldate_format),
             ),
             y=alt.Y("num:Q", title="7-day avg"),
             color=alt.Color(
