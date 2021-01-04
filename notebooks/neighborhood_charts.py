@@ -128,8 +128,8 @@ def setup_chart(df, neighborhood, chart_type):
     base = (
         alt.Chart(df.drop(columns = "date"))
         .encode(
-            x=alt.X("date2", timeUnit = time_unit,
-                    title="date", axis=alt.Axis(format=monthdate_format)
+            x=alt.X("date2:T", #timeUnit = time_unit,
+                    title="date", axis=alt.Axis(format=fulldate_format)
                    )
         )
     )
@@ -137,8 +137,8 @@ def setup_chart(df, neighborhood, chart_type):
     base_2weeks = (
         alt.Chart(df[df.date >= two_weeks_ago].drop(columns = "date"))
         .encode(
-            x=alt.X("date2", timeUnit = time_unit,
-                    title="date", axis=alt.Axis(format=monthdate_format)
+            x=alt.X("date2:T", #timeUnit = time_unit,
+                    title="date", axis=alt.Axis(format=fulldate_format)
                    )
         )
     )

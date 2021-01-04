@@ -35,42 +35,44 @@ notebooks_to_run = {
 }
 
 for key, file_name in notebooks_to_run.items():
+    try:
+        pm.execute_notebook(
+            f'/app/notebooks/{key}',
+            file_name,
+            cwd='/app/notebooks'
+        )
 
-    pm.execute_notebook(
-        f'/app/notebooks/{key}',
-        file_name,
-        cwd='/app/notebooks'
-    )
+        print("Ran notebook")
 
-    print("Ran notebook")
-    
-    # shell out, run NB Convert 
-    output_format = 'html'
-    subprocess.run([
-        "jupyter",
-        "nbconvert",
-        "--to",
-        output_format,
-        "--no-input",
-        "--no-prompt",
-        file_name,
-    ]) 
+        # shell out, run NB Convert 
+        output_format = 'html'
+        subprocess.run([
+            "jupyter",
+            "nbconvert",
+            "--to",
+            output_format,
+            "--no-input",
+            "--no-prompt",
+            file_name,
+        ]) 
 
-    print("Converted to HTML")
-    # Now find the HTML file and upload
-    name = file_name.replace(".ipynb", "").replace("./", "")
-    html_file_name = f"{name}.html" 
-    print(f"name: {name}")
-    print(f"html name: {html_file_name}")
-    
-    upload_file_to_github(
-        TOKEN,
-        REPO,
-        BRANCH,
-        f"{html_file_name}",
-        f"{html_file_name}",
-        f"{COMMIT_MESSAGE}",
-        DEFAULT_COMMITTER,
-    )
+        print("Converted to HTML")
+        # Now find the HTML file and upload
+        name = file_name.replace(".ipynb", "").replace("./", "")
+        html_file_name = f"{name}.html" 
+        print(f"name: {name}")
+        print(f"html name: {html_file_name}")
 
-    print("Successful upload to GitHub")
+        upload_file_to_github(
+            TOKEN,
+            REPO,
+            BRANCH,
+            f"{html_file_name}",
+            f"{html_file_name}",
+            f"{COMMIT_MESSAGE}",
+            DEFAULT_COMMITTER,
+        )
+
+        print("Successful upload to GitHub")
+    except: 
+        pass

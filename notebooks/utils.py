@@ -444,7 +444,7 @@ def aggregate_to_week(df, start_date, today_date):
             weekly_cases = df.weekly_cases.astype(int),
             weekly_tests = df.weekly_tests.astype(int),
             pct_positive = df.weekly_cases / df.weekly_tests,
-            week2 = pd.to_datetime(df.start_of_week).dt.strftime(monthdate_format),
+            week2 = pd.to_datetime(df.start_of_week).dt.strftime(fulldate_format),
         )
     )
     
