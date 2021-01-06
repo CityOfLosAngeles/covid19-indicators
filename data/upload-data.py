@@ -14,11 +14,11 @@ REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "master"
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 COMMIT_MESSAGE = "Update data"
-
 DEFAULT_COMMITTER = {
     "name": "Los Angeles ITA data team",
     "email": "ITAData@lacity.org",
 }
+
 
 datasets = [
     "city-of-la-cases.csv", 
@@ -27,6 +27,7 @@ datasets = [
     "ca-hospital-and-surge-capacity.csv",
     "us-county-time-series.parquet",
 ]
+
 
 for file_name in datasets:
     upload_file_to_github(

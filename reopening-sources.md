@@ -97,6 +97,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * Nov 2020: more evidence emerges that a particular mutation [can be more contagious, though not causing more severe symptoms](https://www.nytimes.com/2020/11/24/world/covid-mutation.html)
 * Can you get COVID-19 twice? Emerging evidence suggests [maybe](https://www.vox.com/2020/7/12/21321653/getting-covid-19-twice-reinfection-antibody-herd-immunity) but [unlikely](https://www.nytimes.com/2020/07/22/health/covid-antibodies-herd-immunity.html)
     * Initial study [shows immunity may last longer than a couple of months](https://www.nytimes.com/2020/11/17/health/coronavirus-immunity.html)
+    * Using game theory to model best approach for [vaccination plan](https://www.nytimes.com/2020/12/20/health/virus-vaccine-game-theory.html)
 
 
 ## Its Effect on Subgroups
