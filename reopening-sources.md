@@ -69,6 +69,8 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * [South Korean study](https://www.nytimes.com/2020/08/06/health/coronavirus-asymptomatic-transmission.html) found that asymptomatic people carried similar viral loads in their nose, throat, and lungs, and for just as long as those who develop symptoms
 * There are way more cases beyond simply [more testing](https://www.nytimes.com/interactive/2020/07/22/us/covid-testing-rising-cases.html).
 * [Mask mandates work](https://www.wkms.org/post/vanderbilt-analysis-finds-covid-striking-hardest-tennessee-where-masks-aren-t-required#stream/0), based on Vanderbilt University's research, as hospitalizations spike when a smaller share of patients come from counties with a mask mandate. [Report here.](https://www.vumc.org/health-policy/sites/default/files/public_files/Vanderbilt%20COVID19%20Report-Oct%2027.pdf)
+    * In areas hard-hit, [doubling-up on masks](https://www.nytimes.com/2021/01/12/health/coronavirus-masks-transmission.html) can help slow the transmission, [medical journal article here](https://www.cell.com/med/pdf/S2666-6340(20)30072-6.pdf). 
+* With the new UK variant, which is estimated to be 50% more transmissible, [US COVID cases may spike in coming weeks](https://www.nytimes.com/2021/01/15/health/covid-cdc-variant.html), and may be dominant strain by Mar 2021.
 
 
 ## Building Public Health Capacity
