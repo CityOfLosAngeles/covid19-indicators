@@ -28,6 +28,19 @@ DEATHS_URL = (
     "time_series_covid19_deaths_global.csv"
 )
 
+"""
+To pull a CSV from GitHub:
+URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv'
+
+df = pd.read_csv(URL)
+
+
+To pull a file from S3 (will need to include AWS credentials to the S3 bucket in Civis):
+S3_PATH = "s3://public-health-dashboard/file.csv"
+
+df = pd.read_csv(S3_PATH)
+
+"""
 
 # Feature ID for JHU global source data
 JHU_GLOBAL_SOURCE_ID = "c0b356e20b30490c8b8b4c7bb9554e7c"
