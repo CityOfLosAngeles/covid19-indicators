@@ -25,6 +25,8 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * [Illustration of exposure, incubation, and spread](https://www.nytimes.com/interactive/2020/10/02/science/charting-a-coronavirus-infection.html)
 * Build your own [NYT dashboard to track cases](https://www.nytimes.com/interactive/2020/us/covid-cases-deaths-tracker.html)
 * Track ICU capacity [by county](https://www.nytimes.com/interactive/2020/12/23/us/covid-rising-icu-capacity.html) and [by hospital facility](https://www.nytimes.com/interactive/2020/12/09/us/covid-hospitals-icu-capacity.html)
+* Track your [county's risk level](https://www.nytimes.com/interactive/2021/us/covid-risk-map.html)
+* Track your state's [vaccination efforts](https://www.nytimes.com/interactive/2020/us/covid-19-vaccine-doses.html)
 
 
 ## Dangers of Reopening Too Early
@@ -87,6 +89,9 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * Regular testing, [in addition to other monitoring protocols are needed](https://www.nytimes.com/2020/11/11/health/coronavirus-navy-parris-roosevelt.html)
 * [Behavioral science](https://www.nytimes.com/2020/12/10/magazine/covid-research-behavior-.html) has insights for how to encourage and reinforce good public health behaviors
 * CDC will soon label [masks with their effectiveness](https://www.nytimes.com/2020/12/16/health/covid-masks-effectiveness.html)
+* Restrictions must be paired with [vaccinations to save the most lives](https://www.nytimes.com/interactive/2021/01/24/us/covid-vaccine-rollout.html)
+    * If restrictions are strengthened until mid-July, there would be 19 million fewer infections in the US
+    * If current restrictions were lifted in February, there would be 29 million more infections in the US
 
 
 ## Antibodies and Immunity Research
