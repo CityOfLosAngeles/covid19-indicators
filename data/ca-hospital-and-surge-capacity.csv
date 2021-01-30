@@ -304,6 +304,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Alameda,06001,436,2523,119,191,
 2021-01-26,Alameda,06001,418,2504,120,191,
 2021-01-27,Alameda,06001,400,2521,111,176,
+2021-01-28,Alameda,06001,399,2524,115,178,
 2020-03-29,Butte,06007,,,,,
 2020-03-30,Butte,06007,16,,3,8,
 2020-03-31,Butte,06007,24,,5,7,
@@ -609,6 +610,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Butte,06007,49,451,9,18,
 2021-01-26,Butte,06007,52,451,8,17,
 2021-01-27,Butte,06007,47,451,7,16,
+2021-01-28,Butte,06007,42,451,8,15,
 2020-03-29,Contra Costa,06013,85,,23,85,
 2020-03-30,Contra Costa,06013,79,,17,107,
 2020-03-31,Contra Costa,06013,81,,21,89,
@@ -914,6 +916,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Contra Costa,06013,241,1302,61,86,
 2021-01-26,Contra Costa,06013,236,1309,60,87,
 2021-01-27,Contra Costa,06013,208,1324,56,92,
+2021-01-28,Contra Costa,06013,203,1313,53,86,
 2020-03-29,Del Norte,06015,3,,0,3,
 2020-03-30,Del Norte,06015,2,,0,5,
 2020-03-31,Del Norte,06015,4,,0,3,
@@ -1219,6 +1222,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Del Norte,06015,0,51,0,2,
 2021-01-26,Del Norte,06015,0,51,0,2,
 2021-01-27,Del Norte,06015,0,51,0,2,
+2021-01-28,Del Norte,06015,1,51,1,2,
 2020-03-29,El Dorado,06017,6,,3,6,
 2020-03-30,El Dorado,06017,9,,6,15,
 2020-03-31,El Dorado,06017,19,,6,18,
@@ -1524,6 +1528,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,El Dorado,06017,20,190,10,15,
 2021-01-26,El Dorado,06017,22,190,6,11,
 2021-01-27,El Dorado,06017,20,190,6,10,
+2021-01-28,El Dorado,06017,18,190,3,12,
 2020-03-29,Fresno,06019,124,,17,39,
 2020-03-30,Fresno,06019,98,,17,41,
 2020-03-31,Fresno,06019,304,,23,46,
@@ -1829,6 +1834,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Fresno,06019,569,1555,88,96,
 2021-01-26,Fresno,06019,572,1559,99,111,
 2021-01-27,Fresno,06019,533,1557,85,94,
+2021-01-28,Fresno,06019,500,1543,92,104,
 2020-03-29,Humboldt,06023,11,,0,18,
 2020-03-30,Humboldt,06023,9,,0,10,
 2020-03-31,Humboldt,06023,12,,4,12,
@@ -2134,6 +2140,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Humboldt,06023,14,276,5,19,
 2021-01-26,Humboldt,06023,24,276,5,18,
 2021-01-27,Humboldt,06023,23,276,2,14,
+2021-01-28,Humboldt,06023,17,276,2,9,
 2020-03-29,Imperial,06025,105,,3,5,
 2020-03-30,Imperial,06025,128,,6,10,
 2020-03-31,Imperial,06025,112,,7,11,
@@ -2439,6 +2446,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Imperial,06025,84,234,39,44,29
 2021-01-26,Imperial,06025,82,234,37,38,26
 2021-01-27,Imperial,06025,76,234,37,38,28
+2021-01-28,Imperial,06025,75,234,36,37,32
 2020-03-29,Kern,06029,73,,16,55,
 2020-03-30,Kern,06029,141,,14,65,
 2020-03-31,Kern,06029,77,,12,58,
@@ -2744,6 +2752,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Kern,06029,387,1150,96,114,
 2021-01-26,Kern,06029,369,1136,89,118,
 2021-01-27,Kern,06029,346,1148,83,113,
+2021-01-28,Kern,06029,326,1153,92,116,
 2020-03-29,Kings,06031,7,,1,3,
 2020-03-30,Kings,06031,14,,3,3,
 2020-03-31,Kings,06031,4,,3,7,
@@ -3049,6 +3058,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Kings,06031,95,136,10,12,
 2021-01-26,Kings,06031,90,137,8,13,
 2021-01-27,Kings,06031,77,136,11,12,
+2021-01-28,Kings,06031,81,132,10,11,
 2020-03-29,Lake,06033,1,,1,3,
 2020-03-30,Lake,06033,1,,1,4,
 2020-03-31,Lake,06033,4,,2,5,
@@ -3354,6 +3364,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Lake,06033,9,62,2,4,
 2021-01-26,Lake,06033,9,49,5,7,
 2021-01-27,Lake,06033,10,62,6,7,
+2021-01-28,Lake,06033,8,62,5,6,
 2020-03-29,Lassen,06035,2,,0,,
 2020-03-30,Lassen,06035,4,,0,,
 2020-03-31,Lassen,06035,7,,0,,
@@ -3659,6 +3670,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Lassen,06035,7,25,0,0,
 2021-01-26,Lassen,06035,6,25,0,0,
 2021-01-27,Lassen,06035,3,25,0,0,
+2021-01-28,Lassen,06035,3,25,0,0,
 2020-03-29,Los Angeles,06037,1621,,373,718,
 2020-03-30,Los Angeles,06037,1878,,489,945,
 2020-03-31,Los Angeles,06037,1952,,554,999,
@@ -3964,6 +3976,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Los Angeles,06037,6500,19309,1572,1874,84
 2021-01-26,Los Angeles,06037,6371,19292,1572,1887,83
 2021-01-27,Los Angeles,06037,6210,19289,1528,1842,83
+2021-01-28,Los Angeles,06037,6041,19275,1527,1799,82
 2020-03-29,Madera,06039,7,,2,10,
 2020-03-30,Madera,06039,6,,4,8,
 2020-03-31,Madera,06039,4,,1,6,
@@ -4269,6 +4282,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Madera,06039,64,278,21,21,6
 2021-01-26,Madera,06039,67,278,19,19,6
 2021-01-27,Madera,06039,69,278,20,20,6
+2021-01-28,Madera,06039,73,272,20,20,6
 2020-03-29,Marin,06041,20,,8,19,
 2020-03-30,Marin,06041,19,,6,22,
 2020-03-31,Marin,06041,23,,6,21,
@@ -4574,6 +4588,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Marin,06041,30,333,6,14,
 2021-01-26,Marin,06041,32,335,8,17,
 2021-01-27,Marin,06041,30,340,7,16,
+2021-01-28,Marin,06041,29,350,6,15,
 2020-03-29,Mendocino,06045,12,,0,1,
 2020-03-30,Mendocino,06045,13,,1,9,
 2020-03-31,Mendocino,06045,1,,0,7,
@@ -4879,6 +4894,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Mendocino,06045,18,112,3,10,
 2021-01-26,Mendocino,06045,18,116,3,8,
 2021-01-27,Mendocino,06045,17,117,3,5,
+2021-01-28,Mendocino,06045,17,114,3,29,
 2020-03-29,Merced,06047,8,,0,3,
 2020-03-30,Merced,06047,10,,2,13,
 2020-03-31,Merced,06047,14,,2,12,
@@ -5184,6 +5200,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Merced,06047,54,271,15,16,
 2021-01-26,Merced,06047,54,271,16,17,
 2021-01-27,Merced,06047,53,271,16,18,
+2021-01-28,Merced,06047,52,271,21,21,
 2020-03-29,Monterey,06053,18,,3,13,
 2020-03-30,Monterey,06053,27,,4,21,
 2020-03-31,Monterey,06053,26,,6,23,
@@ -5489,6 +5506,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Monterey,06053,158,720,26,45,
 2021-01-26,Monterey,06053,161,720,22,36,
 2021-01-27,Monterey,06053,164,719,31,42,
+2021-01-28,Monterey,06053,151,719,30,41,
 2020-03-29,Napa,06055,26,,,,
 2020-03-30,Napa,06055,11,,1,10,
 2020-03-31,Napa,06055,6,,2,14,
@@ -5794,6 +5812,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Napa,06055,24,196,8,8,
 2021-01-26,Napa,06055,21,202,7,10,
 2021-01-27,Napa,06055,21,222,8,15,
+2021-01-28,Napa,06055,21,215,4,6,
 2020-03-29,Nevada,06057,,,1,4,
 2020-03-30,Nevada,06057,43,,7,10,
 2020-03-31,Nevada,06057,76,,3,9,
@@ -6099,6 +6118,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Nevada,06057,12,138,3,4,
 2021-01-26,Nevada,06057,12,129,3,7,
 2021-01-27,Nevada,06057,9,129,2,9,
+2021-01-28,Nevada,06057,13,126,2,5,
 2020-03-29,Orange,06059,241,,71,202,
 2020-03-30,Orange,06059,349,,100,231,
 2020-03-31,Orange,06059,338,,89,220,
@@ -6404,6 +6424,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Orange,06059,1714,5894,439,528,-10
 2021-01-26,Orange,06059,1694,5890,454,544,-10
 2021-01-27,Orange,06059,1624,5985,442,539,-9
+2021-01-28,Orange,06059,1554,5960,430,547,-12
 2020-03-29,Placer,06061,32,,5,15,
 2020-03-30,Placer,06061,38,,6,35,
 2020-03-31,Placer,06061,45,,6,34,
@@ -6709,6 +6730,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Placer,06061,123,766,25,33,
 2021-01-26,Placer,06061,126,775,25,31,
 2021-01-27,Placer,06061,120,774,28,35,
+2021-01-28,Placer,06061,132,775,26,34,
 2020-03-29,Riverside,06065,122,,33,79,
 2020-03-30,Riverside,06065,193,,55,132,
 2020-03-31,Riverside,06065,235,,87,162,
@@ -7014,6 +7036,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Riverside,06065,1389,3380,323,349,15
 2021-01-26,Riverside,06065,1337,3411,321,350,15
 2021-01-27,Riverside,06065,1313,3453,329,362,15
+2021-01-28,Riverside,06065,1252,3433,304,324,15
 2020-03-29,Sacramento,06067,63,,30,80,
 2020-03-30,Sacramento,06067,131,,44,102,
 2020-03-31,Sacramento,06067,163,,51,117,
@@ -7319,6 +7342,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Sacramento,06067,392,2607,116,184,16
 2021-01-26,Sacramento,06067,404,2644,116,170,19
 2021-01-27,Sacramento,06067,402,2669,112,173,20
+2021-01-28,Sacramento,06067,381,2659,115,163,21
 2020-03-29,San Benito,06069,2,,1,2,
 2020-03-30,San Benito,06069,2,,1,2,
 2020-03-31,San Benito,06069,1,,1,2,
@@ -7624,6 +7648,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,San Benito,06069,14,25,5,5,
 2021-01-26,San Benito,06069,12,25,5,7,
 2021-01-27,San Benito,06069,11,25,5,5,
+2021-01-28,San Benito,06069,12,25,5,5,
 2020-03-29,San Bernardino,06071,156,,39,104,
 2020-03-30,San Bernardino,06071,246,,60,126,
 2020-03-31,San Bernardino,06071,313,,81,144,
@@ -7929,6 +7954,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,San Bernardino,06071,1299,3604,288,340,
 2021-01-26,San Bernardino,06071,1261,3604,288,354,
 2021-01-27,San Bernardino,06071,1232,3665,292,359,
+2021-01-28,San Bernardino,06071,1179,3655,280,361,
 2020-03-29,San Diego,06073,332,,116,321,
 2020-03-30,San Diego,06073,592,,95,323,
 2020-03-31,San Diego,06073,566,,114,322,
@@ -8234,6 +8260,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,San Diego,06073,1492,6486,416,584,12
 2021-01-26,San Diego,06073,1472,6490,412,569,11
 2021-01-27,San Diego,06073,1404,6491,400,556,12
+2021-01-28,San Diego,06073,1383,6487,397,556,14
 2020-03-29,San Francisco,06075,123,,34,95,
 2020-03-30,San Francisco,06075,150,,25,115,
 2020-03-31,San Francisco,06075,136,,44,121,
@@ -8539,6 +8566,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,San Francisco,06075,199,2109,54,108,
 2021-01-26,San Francisco,06075,187,2113,55,103,
 2021-01-27,San Francisco,06075,179,2109,54,103,
+2021-01-28,San Francisco,06075,178,2108,55,110,
 2020-03-29,San Joaquin,06077,69,,7,14,
 2020-03-30,San Joaquin,06077,58,,12,65,
 2020-03-31,San Joaquin,06077,98,,19,47,
@@ -8844,6 +8872,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,San Joaquin,06077,286,910,84,91,3
 2021-01-26,San Joaquin,06077,279,931,76,84,3
 2021-01-27,San Joaquin,06077,271,916,72,78,3
+2021-01-28,San Joaquin,06077,269,908,73,78,3
 2020-03-29,San Luis Obispo,06079,19,,7,955,
 2020-03-30,San Luis Obispo,06079,16,,7,964,
 2020-03-31,San Luis Obispo,06079,22,,9,964,
@@ -9149,6 +9178,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,San Luis Obispo,06079,47,460,13,25,
 2021-01-26,San Luis Obispo,06079,49,460,14,27,
 2021-01-27,San Luis Obispo,06079,46,460,18,31,
+2021-01-28,San Luis Obispo,06079,43,460,18,30,
 2020-03-29,San Mateo,06081,73,,26,54,
 2020-03-30,San Mateo,06081,96,,29,76,
 2020-03-31,San Mateo,06081,83,,23,60,
@@ -9454,6 +9484,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,San Mateo,06081,155,715,38,54,
 2021-01-26,San Mateo,06081,160,726,35,47,
 2021-01-27,San Mateo,06081,161,735,39,51,
+2021-01-28,San Mateo,06081,156,750,35,51,
 2020-03-29,Santa Barbara,06083,36,,12,59,
 2020-03-30,Santa Barbara,06083,44,,18,66,
 2020-03-31,Santa Barbara,06083,48,,21,69,
@@ -9759,6 +9790,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Santa Barbara,06083,200,603,53,69,
 2021-01-26,Santa Barbara,06083,212,603,60,73,
 2021-01-27,Santa Barbara,06083,198,603,53,68,
+2021-01-28,Santa Barbara,06083,187,603,50,67,
 2020-03-29,Santa Clara,06085,213,,80,150,
 2020-03-30,Santa Clara,06085,246,,97,200,
 2020-03-31,Santa Clara,06085,253,,90,182,
@@ -10064,6 +10096,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Santa Clara,06085,549,3102,134,176,
 2021-01-26,Santa Clara,06085,518,3122,128,175,
 2021-01-27,Santa Clara,06085,521,3143,135,182,
+2021-01-28,Santa Clara,06085,496,3145,135,182,
 2020-03-29,Santa Cruz,06087,0,,0,,
 2020-03-30,Santa Cruz,06087,2,,0,4,
 2020-03-31,Santa Cruz,06087,11,,3,10,
@@ -10369,6 +10402,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Santa Cruz,06087,58,372,5,9,
 2021-01-26,Santa Cruz,06087,61,373,6,7,
 2021-01-27,Santa Cruz,06087,52,373,6,8,
+2021-01-28,Santa Cruz,06087,40,372,6,9,
 2020-03-29,Shasta,06089,0,,0,,
 2020-03-30,Shasta,06089,5,,0,13,
 2020-03-31,Shasta,06089,6,,1,5,
@@ -10674,6 +10708,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Shasta,06089,43,567,4,18,
 2021-01-26,Shasta,06089,39,567,4,17,
 2021-01-27,Shasta,06089,37,567,2,17,
+2021-01-28,Shasta,06089,32,567,2,17,
 2020-03-29,Solano,06095,34,,5,33,
 2020-03-30,Solano,06095,31,,6,53,
 2020-03-31,Solano,06095,30,,11,53,
@@ -10979,6 +11014,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Solano,06095,171,606,48,52,
 2021-01-26,Solano,06095,162,613,48,57,
 2021-01-27,Solano,06095,161,618,47,53,
+2021-01-28,Solano,06095,158,614,42,50,
 2020-03-29,Sonoma,06097,27,,7,19,
 2020-03-30,Sonoma,06097,29,,7,36,
 2020-03-31,Sonoma,06097,26,,6,27,
@@ -11284,6 +11320,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Sonoma,06097,100,654,27,42,
 2021-01-26,Sonoma,06097,98,679,26,39,
 2021-01-27,Sonoma,06097,100,657,22,36,
+2021-01-28,Sonoma,06097,95,642,22,35,
 2020-03-29,Stanislaus,06099,68,,17,42,
 2020-03-30,Stanislaus,06099,68,,14,43,
 2020-03-31,Stanislaus,06099,51,,10,44,
@@ -11589,6 +11626,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Stanislaus,06099,316,1297,74,82,14
 2021-01-26,Stanislaus,06099,303,1297,67,81,14
 2021-01-27,Stanislaus,06099,301,1297,64,79,14
+2021-01-28,Stanislaus,06099,291,1303,61,79,14
 2020-03-29,Sutter,06101,0,,0,,
 2020-03-30,Sutter,06101,0,,0,,
 2020-03-31,Sutter,06101,0,,0,,
@@ -11894,6 +11932,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Sutter,06101,0,14,0,0,
 2021-01-26,Sutter,06101,0,14,0,0,
 2021-01-27,Sutter,06101,0,14,0,0,
+2021-01-28,Sutter,06101,0,14,0,0,
 2020-03-29,Tehama,06103,0,,0,2,
 2020-03-30,Tehama,06103,2,,0,2,
 2020-03-31,Tehama,06103,2,,0,4,
@@ -12199,6 +12238,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Tehama,06103,14,59,1,2,
 2021-01-26,Tehama,06103,10,59,1,2,
 2021-01-27,Tehama,06103,8,59,1,4,
+2021-01-28,Tehama,06103,11,59,2,3,
 2020-03-29,Tulare,06107,19,,8,15,
 2020-03-30,Tulare,06107,26,,10,17,
 2020-03-31,Tulare,06107,20,,9,18,
@@ -12504,6 +12544,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Tulare,06107,161,672,23,35,0
 2021-01-26,Tulare,06107,160,676,23,38,-2
 2021-01-27,Tulare,06107,157,672,22,34,1
+2021-01-28,Tulare,06107,160,672,23,37,-1
 2020-03-29,Tuolumne,06109,6,,0,0,
 2020-03-30,Tuolumne,06109,3,,0,3,
 2020-03-31,Tuolumne,06109,37,,0,4,
@@ -12809,6 +12850,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Tuolumne,06109,10,84,2,4,
 2021-01-26,Tuolumne,06109,8,84,2,4,
 2021-01-27,Tuolumne,06109,6,84,2,5,
+2021-01-28,Tuolumne,06109,7,84,2,5,
 2020-03-29,Ventura,06111,109,,24,38,
 2020-03-30,Ventura,06111,107,,33,48,
 2020-03-31,Ventura,06111,111,,29,41,
@@ -13114,6 +13156,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Ventura,06111,425,1224,89,114,
 2021-01-26,Ventura,06111,430,1224,93,118,
 2021-01-27,Ventura,06111,419,1233,93,115,
+2021-01-28,Ventura,06111,393,1218,92,118,
 2020-03-29,Yolo,06113,5,,2,2,
 2020-03-30,Yolo,06113,4,,3,3,
 2020-03-31,Yolo,06113,5,,4,5,
@@ -13419,6 +13462,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Yolo,06113,28,134,12,13,
 2021-01-26,Yolo,06113,27,131,10,10,
 2021-01-27,Yolo,06113,22,131,8,8,
+2021-01-28,Yolo,06113,19,132,8,8,
 2020-03-29,Yuba,06115,14,,6,8,
 2020-03-30,Yuba,06115,20,,6,16,
 2020-03-31,Yuba,06115,23,,6,12,
@@ -13724,6 +13768,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-25,Yuba,06115,54,256,11,13,
 2021-01-26,Yuba,06115,54,261,12,16,
 2021-01-27,Yuba,06115,51,261,11,15,
+2021-01-28,Yuba,06115,49,261,12,14,
 2020-03-29,Amador,,1,,0,2,
 2020-03-29,Calaveras,,,,,,
 2020-03-29,Colusa,,,,,,
@@ -17076,3 +17121,14 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-01-27,Plumas,,0,35,0,0,
 2021-01-27,Siskiyou,,2,56,0,4,
 2021-01-27,Trinity,,0,25,0,0,
+2021-01-28,Amador,,12,52,6,6,
+2021-01-28,Calaveras,,3,33,1,6,
+2021-01-28,Colusa,,7,48,0,5,
+2021-01-28,Glenn,,5,47,0,0,
+2021-01-28,Inyo,,4,29,0,2,
+2021-01-28,Mariposa,,0,14,0,0,
+2021-01-28,Modoc,,0,12,0,0,
+2021-01-28,Mono,,0,17,0,1,
+2021-01-28,Plumas,,0,35,0,0,
+2021-01-28,Siskiyou,,3,56,0,4,
+2021-01-28,Trinity,,0,25,0,0,
