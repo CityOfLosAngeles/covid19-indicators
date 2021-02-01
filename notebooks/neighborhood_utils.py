@@ -24,6 +24,8 @@ def clean_data():
     # If there are duplicate dates, but diff values for cases and deaths, let's keep the max
     df = (df[df.Region != "Long Beach"]
           .assign(
+              # Had to convert date to string to write to parquet, but we want it as datetime/object
+              date = pd.to_datetime(df.date).dt.date,
               cases = df.groupby(["Region", "date", "date2"])["cases"].transform("max"),
               deaths = df.groupby(["Region", "date", "date2"])["deaths"].transform("max"),
           ).drop_duplicates(subset = ["Region", "date", "date2", "cases", "deaths"])
@@ -44,6 +46,7 @@ def clean_data():
     # Add new lines if more missing data appears later
     df = interpolate_linearly(df, "11/18/20", "11/20/20")
     df = interpolate_linearly(df, "12/19/20", "12/22/20")
+    df = interpolate_linearly(df, "1/21/21", "1/30/21")
     
     # Aggregate 
     keep_cols = ["aggregate_region", "population", "date", "date2"]
