@@ -11,6 +11,19 @@ HISTORICAL_URL = (
     f"lacounty_covid19_data/{COMMIT}/data/Covid-19.csv"
 )
 
+S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+
+"""
+Between 7/14/20 - 1/21/21, used a function to clean ESRI feature layer and 
+append it to our parquet.
+
+
+After 1/21, the values stopped getting updated, even though the layer was overwritten
+When compared to the RShiny table by communities, the values were much lower.
+
+Adjust the function to clean RShiny csv table instead of ESRI feature layer.
+"""
+
 # https://services.arcgis.com/RmCCgQtiZLDCtblq/arcgis/rest/services/COVID19_Current_Cases_For_Display/FeatureServer/0
 COUNTY_NEIGHBORHOOD_URL = (
     "https://services.arcgis.com/RmCCgQtiZLDCtblq/ArcGIS/rest/services/COVID19_Current_Cases_For_Display/"
@@ -26,7 +39,6 @@ COUNTY_NEIGHBORHOOD_URL = (
     "returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token="
 )
 
-S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 
 """ DO THIS ONCE
 
@@ -72,11 +84,6 @@ def clean_data():
     return df
 
 
-# Update data
-df = clean_data()    
-"""
-
-
 # Function to clean data since 7/14
 def grab_data_from_layer():
     df = gpd.read_file(COUNTY_NEIGHBORHOOD_URL)
@@ -110,28 +117,91 @@ def grab_data_from_layer():
     return df
 
 
-def update_neighborhood_data(**kwargs):
+# Update data
+df = clean_data()   
+today_df = grab_data_from_layer()
+"""
+
+RSHINY_CASES = f"{S3_FILE_PATH}la-county-neighborhood-rshiny.csv"
+
+# Function to clean data since 2/1/21
+def grab_today_from_rshiny():
+    df = pd.read_csv(RSHINY_CASES)
+    
+    df = (df[["neighborhood", "cases_final", "deaths_final", "date"]]
+          .assign(
+              date2 = pd.to_datetime(df.date)
+          ).rename(columns = {
+              "neighborhood": "Region", 
+              "cases_final": "cases", 
+              "deaths_final": "deaths",
+          })
+         )
+    
+    # To match crosswalk, we will have to adjust `neighborhood` column so we can append with historical
+    # Pattern is City of, Los Angeles - , and Unincorporated - 
+    # In our crosswalk, we also have Los Angeles - , Unincorporated - , but need to fix the incorporated cities
+    df["Region"] = (df.Region.str.replace("City of ", "")
+                        .str.replace("Unincorporated - ", "")
+                        .str.replace("Los Angeles - ", "")
+                        .str.strip()
+                       )
+    
+    # Make sure there are no duplicates by date, if there are, only keep max
+    # Shouldn't be, unless we run script 2x in a day
+    group_cols = ["Region", "date2"]
+    df = (df.assign(
+            cases = df.groupby(group_cols)["cases"].transform("max"),
+            deaths = df.groupby(group_cols)["deaths"].transform("max"),
+        ).drop_duplicates(subset = ["Region", "date2", "cases", "deaths"])
+    ).sort_values(group_cols).reset_index(drop=True)
+    
+    return df
+
+
+def update_neighborhood_data():
     historical_df = pd.read_parquet(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet")
-    today_df = grab_data_from_layer()
+    today_df = grab_today_from_rshiny()    
+    
+    replacement_names = {
+        "Park LaBrea": "Park La Brea", 
+        "Pico": "Pico-Union",
+        "San Francisquito Canyon/Bouquet C": "San Francisquito Canyon/Bouquet Canyon",
+        "Temple": "Temple-Beaudry",
+    }
+
+    historical_df["Region"] = historical_df.apply(lambda x: replacement_names[x.Region] 
+                                                  if x.Region in replacement_names 
+                                                  else x.Region, axis=1)
     
     # Append together
     combined = historical_df.append(today_df, sort=False)
+
+    # We'll fill in all the missing info, Lat/Lon, LCITY, COMMUNITY, LABEL
+    fill_me_cols = ["Longitude", "Latitude", "LCITY", "COMMUNITY", "LABEL"]
+    keep_me = ["Region"] + fill_me_cols
     
-    fill_coords = (combined[combined.Longitude.notna()][
-                ["Region", "Longitude", "Latitude"]]
-               .drop_duplicates()
+    fill_coords = (combined[combined.Longitude.notna()]
+                   .sort_values(["Region", "date2"], ascending = [True, False])
+                   [keep_me]
+                   .drop_duplicates(subset = "Region", keep = "first")
+                   .reset_index(drop=True)
               )
-    
-    combined2 = pd.merge(combined.drop(columns = ["Longitude", "Latitude"]), 
-         fill_coords, on = "Region", how = "left", validate = "m:1")
-    
+
+    combined2 = pd.merge(combined.drop(columns = fill_me_cols), 
+                         fill_coords, 
+                         on = "Region", 
+                         how = "left", 
+                         validate = "m:1")
+   
     # Drop duplicates - 1st pass
-    combined2 = combined2.drop_duplicates(subset=["Region", "date", "date2", "cases", "deaths", 
+    combined2 = combined2.drop_duplicates(subset=["Region", "date", "date2", 
+                                                  "cases", "deaths", 
                                                   "LCITY", "COMMUNITY", "LABEL"])
-    
+
     # Drop duplicates - 2nd pass
     group_cols = ["Region", "date", "date2"]
-    
+
     # Check the neighborhoods particularly problematic to make sure this keeps the obs we want
     # Check El Monte, Arcadia, Whittier
     combined2["obs"] = combined2.groupby(group_cols).cumcount() + 1
@@ -142,10 +212,13 @@ def update_neighborhood_data(**kwargs):
                  .drop(columns = ["obs", "max_obs"])
                 )
     
-    # Fix dtypes
-    integrify_me = ["cases", "deaths"]
-    final[integrify_me] = final[integrify_me].astype("Int64")
-    
+    # Fix dtypes    
+    final = final.astype({
+        "cases": "Int64", 
+        "deaths": "Int64", 
+        "date": "str",
+    })
+
     final = (final.sort_values(["Region", "date", "date2", "LABEL"])
              .reset_index(drop=True)
             )
