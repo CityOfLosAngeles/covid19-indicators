@@ -407,3 +407,10 @@ def append_county_time_series(**kwargs):
     # (7) Write to CSV and overwrite the old feature layer.
     final.to_csv(f"{S3_FILE_PATH}us-county-time-series.csv", index=False)
     final.to_parquet(f"{S3_FILE_PATH}us-county-time-series.parquet")
+    
+    # (8) Create a smaller CSV 
+    drop_cols = ["Lat", "Lon", "people_tested", 
+                 "state_cases", "state_deaths", 
+                 "new_state_cases", "new_state_deaths"]
+    
+    final.drop(columns = drop_cols).to_csv(f"{S3_FILE_PATH}us-county-time-series-short.csv", index=False)
