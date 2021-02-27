@@ -11,7 +11,7 @@ from civis_aqueduct_utils.github import upload_file_to_github
 # Constants for loading the file to master branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
-BRANCH = "master"
+BRANCH = "hangups"
 S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
 COMMIT_MESSAGE = "Update data"
 DEFAULT_COMMITTER = {
@@ -21,13 +21,13 @@ DEFAULT_COMMITTER = {
 
 
 datasets = [
-    "city-of-la-cases.csv", 
-    "county-city-testing.csv", 
-    "la-county-neighborhood-time-series.csv", 
-    "ca-hospital-and-surge-capacity.csv",
-    "us-county-time-series.parquet",
+    #"city-of-la-cases.csv", 
+    #"county-city-testing.csv", 
+    #"la-county-neighborhood-time-series.csv", 
+    #"ca-hospital-and-surge-capacity.csv",
+    #"us-county-time-series.parquet",
+    #"global-time-series.csv",
     "us-county-time-series-short.csv",
-    "global-time-series.csv",
 ]
 
 

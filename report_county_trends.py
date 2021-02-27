@@ -75,4 +75,5 @@ for key, file_name in notebooks_to_run.items():
 
         print("Successful upload to GitHub")
     except: 
+        print(f"Unsuccessful upload of {key}")
         pass
