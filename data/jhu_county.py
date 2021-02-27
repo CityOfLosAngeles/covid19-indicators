@@ -76,9 +76,7 @@ def fix_fips(df):
         elif (row.fips == "0") or (row.fips == "nan"):
             return ""
         
-    df["fips"] = df.fips.fillna(0)
-    df["fips"] = df.fips.astype(str)
-    df["fips"] = df.fips.str.split(".", expand=True)[0]
+    df["fips"] = df.fips.fillna(0).astype(str).str.split(".", expand=True)[0]
 
     df["fips"] = df.apply(correct_county_fips, axis=1)
 
@@ -214,8 +212,7 @@ def clean_jhu_county(df):
     )
 
     # Fix fips
-    df["fips"] = df.fips.fillna(0)
-    df["fips"] = df.fips.astype(int)
+    df["fips"] = df.fips.fillna(0).astype(int)
 
     return df
 
@@ -350,8 +347,7 @@ def fix_column_dtypes(df):
         df[col] = df[col].astype("Int64")
     
     # Fix fips
-    df["fips"] = df.fips.astype(str)
-    df["fips"] = df.fips.str.split(".", expand=True)[0]
+    df["fips"] = df.fips.astype(str).str.split(".", expand=True)[0]
     df = fix_fips(df)
     
     # Sort columns
@@ -408,9 +404,17 @@ def append_county_time_series(**kwargs):
     final.to_csv(f"{S3_FILE_PATH}us-county-time-series.csv", index=False)
     final.to_parquet(f"{S3_FILE_PATH}us-county-time-series.parquet")
     
-    # (8) Create a smaller CSV 
+    # (8) Create a smaller CSV (with 2021 data that is constantly updated)
     drop_cols = ["Lat", "Lon", "people_tested", 
                  "state_cases", "state_deaths", 
-                 "new_state_cases", "new_state_deaths"]
-    
-    final.drop(columns = drop_cols).to_csv(f"{S3_FILE_PATH}us-county-time-series-short.csv", index=False)
+                 "new_state_cases", "new_state_deaths",
+                 "date2"]
+
+    final_short = final.assign(
+        date2 = pd.to_datetime(final.date),
+    )
+
+    (final_short[final_short.date2 >= "2021-1-1"]
+                .drop(columns = drop_cols)
+                .to_csv(f"{S3_FILE_PATH}us-county-time-series-short.csv", index=False)
+    )
