@@ -405,16 +405,10 @@ def append_county_time_series(**kwargs):
     final.to_parquet(f"{S3_FILE_PATH}us-county-time-series.parquet")
     
     # (8) Create a smaller CSV (with 2021 data that is constantly updated)
-    drop_cols = ["Lat", "Lon", "people_tested", 
-                 "state_cases", "state_deaths", 
-                 "new_state_cases", "new_state_deaths",
-                 "date2"]
-
     final_short = final.assign(
         date2 = pd.to_datetime(final.date),
     )
 
     (final_short[final_short.date2 >= "2021-1-1"]
-                .drop(columns = drop_cols)
                 .to_csv(f"{S3_FILE_PATH}us-county-time-series-short.csv", index=False)
     )
