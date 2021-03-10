@@ -50,6 +50,8 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
     * By early September, experts are estimating how many [deaths could have been averted](https://www.vox.com/future-perfect/2020/9/9/21428769/covid-19-coronavirus-deaths-statistics-us-canada-europe).
 * As of Sept, CDC estimates that about 10% of Americans [have antibodies](https://www.nytimes.com/2020/09/29/health/coronavirus-herd-immunity.html), leaving 90% vulnerable, and herd immunity very far off.
 * As of late Oct, researchers found that death toll in the US amounted around [2.5 million person-years](https://www.nytimes.com/2020/10/21/health/coronavirus-statistics-deaths.html), had those who died lived to their expected life expectancy.
+* CDC finds indoor and outdoor dining linked to [more transmission and cases](https://www.nytimes.com/live/2021/03/05/world/covid-19-coronavirus#cdc-masks-dining-virus)
+
 
 * Contrary to popular belief, a [survey of expert economists](http://www.igmchicago.org/surveys/policy-for-the-covid-19-crisis/) shows support for a [large contraction of economic activity until the spread of infections has dropped significantly](https://www.nytimes.com/2020/04/14/opinion/coronavirus-reopen-economy.html).
 * Polls show that [whites are increasingly ready to reopen, but Blacks are not](https://fivethirtyeight.com/features/black-americans-were-hit-hard-by-state-shutdowns-but-are-worried-about-reopening-too/).
