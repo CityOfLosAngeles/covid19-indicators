@@ -16,10 +16,11 @@ import os
 catalog = intake.open_catalog("/app/catalog.yml")
 """
 HOSPITAL_DATA_URL = (
-    "https://data.ca.gov/dataset/"
-    "529ac907-6ba1-4cb7-9aae-8966fc96aeef/resource/"
-    "42d33765-20fd-44b8-a978-b083b7542225/download/hospitals_by_county.csv"
+    "https://data.chhs.ca.gov/dataset/"
+    "2df3e19e-9ee4-42a6-a087-9761f82033f6/resource/"
+    "47af979d-8685-4981-bced-96a6b79d3ed5/download/covid19hospitalbycounty.csv"
 )
+
 
 SURGE_CAPACITY_URL = (
     "https://data.ca.gov/dataset/"
