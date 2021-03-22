@@ -4639,7 +4639,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-03-17,Los Angeles,06037,1038,19207,269,825,13
 2021-03-18,Los Angeles,06037,981,19272,242,828,7
 2021-03-19,Los Angeles,06037,932,19208,238,822,2
-2021-03-20,Los Angeles,06037,874,19185,212,779,
+2021-03-20,Los Angeles,06037,874,19185,212,779,3
 2020-03-29,Madera,06039,7,,2,10,
 2020-03-30,Madera,06039,6,,4,8,
 2020-03-31,Madera,06039,4,,1,6,
@@ -7495,7 +7495,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-03-17,Orange,06059,243,5811,54,305,30
 2021-03-18,Orange,06059,227,5811,51,305,6
 2021-03-19,Orange,06059,218,5783,44,290,6
-2021-03-20,Orange,06059,211,5803,46,300,
+2021-03-20,Orange,06059,211,5803,46,300,6
 2020-03-29,Placer,06061,32,,5,15,
 2020-03-30,Placer,06061,38,,6,35,
 2020-03-31,Placer,06061,45,,6,34,
@@ -9637,7 +9637,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-03-17,San Diego,06073,282,6472,89,364,24
 2021-03-18,San Diego,06073,282,6472,96,364,24
 2021-03-19,San Diego,06073,267,6473,101,396,24
-2021-03-20,San Diego,06073,269,6468,98,371,
+2021-03-20,San Diego,06073,269,6468,98,371,24
 2020-03-29,San Francisco,06075,123,,34,95,
 2020-03-30,San Francisco,06075,150,,25,115,
 2020-03-31,San Francisco,06075,136,,44,121,
