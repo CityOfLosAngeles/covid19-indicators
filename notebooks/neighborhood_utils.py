@@ -47,6 +47,7 @@ def clean_data():
     df = interpolate_linearly(df, "11/18/20", "11/20/20")
     df = interpolate_linearly(df, "12/19/20", "12/22/20")
     df = interpolate_linearly(df, "1/21/21", "1/30/21")
+    df = interpolate_linearly(df, "3/29/21", "4/3/21")
     
     # Aggregate 
     keep_cols = ["aggregate_region", "population", "date", "date2"]
