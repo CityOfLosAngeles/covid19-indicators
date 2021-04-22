@@ -204,7 +204,7 @@ def make_cases_deaths_chart(df, geog, name):
 #---------------------------------------------------------------#
 def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
     
-    chart_width = 650
+    chart_width = 900
     
     bar = (
         alt.Chart(df)
@@ -253,7 +253,7 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound,
                                 testing_lower_bound, testing_upper_bound, 
                                 chart_title1, chart_title2): 
     num_weeks = len(df.week2.unique())  
-    chart_width = num_weeks * 10
+    chart_width = num_weeks * 15
     
     base = (alt.Chart(df)
             .mark_bar(binSpacing = bin_spacing)
