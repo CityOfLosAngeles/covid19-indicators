@@ -110,7 +110,7 @@ def clean_hospitalizations(start_date):
 
 # Caption to include under each county
 def county_caption(df, county_name):
-    df = df[df.county == county_name]
+    df = df[df.county == county_name].reset_index(drop=True)
     
     '''
     This changes the columns to string...which shows up incorrectly in Markdown.
@@ -265,3 +265,35 @@ def ca_hospitalizations_caption(df, county_name):
                 f"COVID ICU hospitalizations grew by **{pct_change_icu}%**. "
             )
         )
+        
+        
+def ca_vaccinations_caption(df, county_name):
+    df = df[df.county == county_name]
+    
+    if df.date.max() == default_parameters.two_days_ago:
+        yesterday_date = default_parameters.two_days_ago
+        one_week_ago = default_parameters.nine_days_ago
+    else:
+        yesterday_date = default_parameters.yesterday_date
+        one_week_ago = default_parameters.one_week_ago
+    
+    extract_col = "cumulative_total_doses"
+    cumulative_doses_yesterday = df[(df.date == yesterday_date) & (df.variable==extract_col)].iloc[0]["value"]
+    cumulative_doses_one_week_ago = df[(df.date == one_week_ago) & (df.variable==extract_col)].iloc[0]["value"]
+    change = (cumulative_doses_yesterday - cumulative_doses_one_week_ago) 
+    
+    fully_vaccinated = df[(df.date == yesterday_date) & 
+                          (df.variable=="cumulative_fully_vaccinated")].iloc[0]["proportion"]
+    one_dose = df[(df.date == yesterday_date) & 
+                  (df.variable=="cumulative_at_least_one_dose")].iloc[0]["proportion"]
+    
+    display(
+        Markdown(
+            f"As of {yesterday_date.strftime(fulldate_format)}, {cumulative_doses_yesterday:,} cumulative doses have been administered ({change:,} in the past week)."
+            f"So far, **{one_dose*100:.1f}%** of the county has received at least 1 dose and **{fully_vaccinated*100:.1f}** is fully vaccinated."
+        )
+    )
+        
+    
+        
+    

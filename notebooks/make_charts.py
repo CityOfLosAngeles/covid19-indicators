@@ -37,6 +37,8 @@ light_gray = "#EAEBEB"
 navy_outline = "#052838"
 blue_outline = "#1277A5"
 
+# Used on vaccinations charts
+dark_gray = "#323434"
 
 title_font_size = 10
 font_name = "Arial"
@@ -473,3 +475,62 @@ def make_county_covid_hospital_chart(df, county_name):
 #---------------------------------------------------------------#
 # Vaccinations (CA data portal)
 #---------------------------------------------------------------#       
+def setup_county_vaccination_doses_chart(df, county_name):
+    brand_dict = {
+        "cumulative_total_doses": "All", 
+        "cumulative_pfizer_doses": "Pfizer", 
+        "cumulative_moderna_doses": "Moderna", 
+        "cumulative_jj_doses": "J&J",
+    }
+    
+    chart = (
+        alt.Chart(df[(df.county==county_name) &
+                    ((df.variable.isin(brand_dict.keys())))]
+                  .assign(brand=df.variable.map(brand_dict))
+                 )
+        .mark_line()
+        .encode(
+            x=alt.X("date:T", 
+                    title="date",
+                    axis=alt.Axis(format=fulldate_format)),
+            y=alt.Y("value:Q", title="# Doses"),
+            color=alt.Color("brand:N",
+                            scale=alt.Scale(
+                                domain=["All", "Pfizer", "Moderna", "J&J"],
+                                range=[dark_gray, blue_outline, green, orange])
+                           )
+        ).properties(title = f"{county_name} County: Cumulative Vaccines Administered", 
+                     width = chart_width, height =chart_height)
+    )
+    
+    return chart
+
+
+def setup_county_vaccinated_population_chart(df, county_name):
+    legend_dict = {
+        "cumulative_at_least_one_dose": "At least 1 dose", 
+        "cumulative_fully_vaccinated": "Fully vaccinated", 
+    }
+    
+    chart = (
+        alt.Chart(df[(df.county==county_name) &
+                    (df.variable.isin(legend_dict.keys()))]
+                  .assign(legend_value=df.variable.map(legend_dict))
+                 )
+        .mark_line()
+        .encode(
+            x=alt.X("date:T", 
+                    title="date",
+                    axis=alt.Axis(format=fulldate_format)),
+            y=alt.Y("proportion:Q", title="% County's Population", 
+                   axis=alt.Axis(format="%")),
+            color=alt.Color("legend_value:N", legend=alt.Legend(title=""),
+                            scale=alt.Scale(
+                                domain=["At least 1 dose", "Fully vaccinated"],
+                                range=[navy, blue])
+                           )
+        ).properties(title = f"{county_name} County: Vaccinated Population", 
+                     width = chart_width, height =chart_height)
+    )
+        
+    return chart
