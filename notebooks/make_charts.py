@@ -183,18 +183,23 @@ def setup_cases_deaths_chart(df, geog, name):
     return cases_chart, deaths_chart
 
 
+def configure_chart(chart):
+    chart = (chart
+             .configure_title(
+                fontSize=title_font_size, font=font_name, anchor="middle", color="black"
+             ).configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
+        .configure_view(strokeOpacity=stroke_opacity)
+    )
+    
+    return chart
+
 def make_cases_deaths_chart(df, geog, name):  
     cases_chart, deaths_chart = setup_cases_deaths_chart(df, geog, name)
     
     # Cases and deaths chart to display side-by-side
-    combined_chart = (
-        alt.hconcat(cases_chart, deaths_chart)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
+    combined_chart = alt.hconcat(cases_chart, deaths_chart)
+    
+    combined_chart = configure_chart(combined_chart)
         
     show_svg(combined_chart)
 
@@ -233,18 +238,11 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
     testing_chart = (
         (bar + line1 + line2)
         .properties(title=chart_title, width=chart_width)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
     )
+    testing_chart = configure_chart(testing_chart)
 
     show_svg(testing_chart)   
  
-
     
 #---------------------------------------------------------------#
 # Share of Positive Tests by Week (LA County)
@@ -325,14 +323,8 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound,
          )
     
     
-    combined_weekly_chart = (
-        alt.hconcat(positive_chart, test_chart)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
+    combined_weekly_chart = alt.hconcat(positive_chart, test_chart)
+    combined_weekly_chart = configure_chart(combined_weekly_chart)
         
     show_svg(combined_weekly_chart)
     
@@ -380,13 +372,6 @@ def make_lacounty_hospital_chart(df):
             title="Percent of Available Hospital Equipment by Type",
             width=chart_width,
         )
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
     )
 
     hospital_num_chart = (
@@ -407,12 +392,7 @@ def make_lacounty_hospital_chart(df):
                 ),
             ),
         ).properties(
-            title="Number of Available Hospital Equipment by Type", width=chart_width
-        ).configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        ).configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        ).configure_view(strokeOpacity=stroke_opacity)
+            title="Number of Available Hospital Equipment by Type", width=chart_width)
     )
 
     hospital_covid_chart = (
@@ -436,15 +416,13 @@ def make_lacounty_hospital_chart(df):
             title="Number of COVID-Occupied / Under Investigation Equipment Use by Type",
             width=chart_width,
         )
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
     )
 
+    hospital_pct_chart = configure_chart(hospital_pct_chart)
+    hospital_num_chart = configure_chart(hospital_num_chart)
+    hospital_covid_chart = configure_chart(hospital_covid_chart)
+
+        
     show_svg(hospital_pct_chart) 
     show_svg(hospital_num_chart)
     show_svg(hospital_covid_chart)
@@ -487,12 +465,11 @@ def make_county_covid_hospital_chart(df, county_name):
     
     chart = setup_county_covid_hospital_chart(df, county_name)
     
-    covid_hospitalizations_chart = (
-        chart.configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        ).configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        ).configure_view(strokeOpacity=stroke_opacity)
-    )
+    covid_hospitalizations_chart = configure_chart(chart)
     
     show_svg(covid_hospitalizations_chart)
+
+    
+#---------------------------------------------------------------#
+# Vaccinations (CA data portal)
+#---------------------------------------------------------------#       
