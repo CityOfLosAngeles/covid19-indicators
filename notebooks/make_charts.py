@@ -54,6 +54,8 @@ monthdate_format = "%-m/%-d"
 
 two_weeks_ago = default_parameters.two_weeks_ago
 
+# If chart_width needs to be adjusted because of the legend
+scaling_factor = 0.87
 
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA, City of LA)
@@ -334,21 +336,26 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound,
 #---------------------------------------------------------------#
 # Hospital Equipment Availability (LA County)
 #---------------------------------------------------------------#
+def base_hospital_chart(df):
+    chart = (alt.Chart(df)
+             .mark_line()
+             .encode(
+                 x=alt.X("date2:T", title="date", 
+                         axis=alt.Axis(format=fulldate_format))
+             )
+    )
+    
+    return chart
+
 def make_lacounty_hospital_chart(df):
     chart_width = 350
     acute_color = green
     icu_color = navy
     ventilator_color = orange
 
-    base = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X(
-                "date2:T",
-                title="date",
-                axis=alt.Axis(format=fulldate_format),
-            ),
+    skeleton = base_hospital_chart(df)
+    
+    base = (skeleton.encode(
             y=alt.Y("pct_available_avg3", title="3-day avg", 
                     axis=alt.Axis(format="%")
             ),
@@ -375,16 +382,11 @@ def make_lacounty_hospital_chart(df):
             width=chart_width,
         )
     )
-
+    
+    
+    
     hospital_num_chart = (
-        alt.Chart(df)
-        .mark_line()
-        .encode(
-            x=alt.X(
-                "date2:T",
-                title="date",
-                axis=alt.Axis(format=fulldate_format),
-            ),
+        skeleton.encode(
             y=alt.Y("n_available_avg3", title="3-day avg"),
             color=alt.Color(
                 "equipment",
@@ -398,14 +400,8 @@ def make_lacounty_hospital_chart(df):
     )
 
     hospital_covid_chart = (
-        alt.Chart(df)
-        .mark_line()
+        skeleton
         .encode(
-            x=alt.X(
-                "date2:T",
-                title="date",
-                axis=alt.Axis(format=fulldate_format),
-            ),
             y=alt.Y("n_covid_avg7", title="7-day avg"),
             color=alt.Color(
                 "equipment",
@@ -437,15 +433,11 @@ def setup_county_covid_hospital_chart(df, county_name):
     hospitalizations_color = green
     icu_color = navy
     
+    base = base_hospital_chart(df)
+    
     covid_hospitalizations_chart = (
-        alt.Chart(df)
-        .mark_line()
+        base
         .encode(
-            x=alt.X(
-                "date2:T",
-                title="date",
-                axis=alt.Axis(format=fulldate_format),
-            ),
             y=alt.Y("num:Q", title="7-day avg"),
             color=alt.Color(
                 "type",
@@ -474,7 +466,19 @@ def make_county_covid_hospital_chart(df, county_name):
     
 #---------------------------------------------------------------#
 # Vaccinations (CA data portal)
-#---------------------------------------------------------------#       
+#---------------------------------------------------------------#
+def base_vaccination_chart(df):
+    chart = (alt.Chart(df)
+             .mark_line()
+             .encode(
+                 x=alt.X("date:T", title="date", 
+                        axis=alt.Axis(format=fulldate_format))
+             )
+            )
+    
+    return chart
+
+
 def setup_county_vaccination_doses_chart(df, county_name):
     brand_dict = {
         "cumulative_total_doses": "All", 
@@ -483,16 +487,15 @@ def setup_county_vaccination_doses_chart(df, county_name):
         "cumulative_jj_doses": "J&J",
     }
     
-    chart = (
-        alt.Chart(df[(df.county==county_name) &
+    df = (df[(df.county==county_name) &
                     ((df.variable.isin(brand_dict.keys())))]
-                  .assign(brand=df.variable.map(brand_dict))
-                 )
-        .mark_line()
+          .assign(brand=df.variable.map(brand_dict))
+         )
+    
+    base = base_vaccination_chart(df)
+    
+    chart = (base
         .encode(
-            x=alt.X("date:T", 
-                    title="date",
-                    axis=alt.Axis(format=fulldate_format)),
             y=alt.Y("value:Q", title="# Doses"),
             color=alt.Color("brand:N",
                             scale=alt.Scale(
@@ -500,7 +503,7 @@ def setup_county_vaccination_doses_chart(df, county_name):
                                 range=[dark_gray, blue_outline, green, orange])
                            )
         ).properties(title = f"{county_name} County: Cumulative Vaccines Administered", 
-                     width = chart_width, height =chart_height)
+                     width = chart_width*scaling_factor, height = chart_height)
     )
     
     return chart
@@ -512,16 +515,16 @@ def setup_county_vaccinated_population_chart(df, county_name):
         "cumulative_fully_vaccinated": "Fully vaccinated", 
     }
     
-    chart = (
-        alt.Chart(df[(df.county==county_name) &
-                    (df.variable.isin(legend_dict.keys()))]
-                  .assign(legend_value=df.variable.map(legend_dict))
-                 )
-        .mark_line()
+    df = (df[(df.county==county_name) &
+            (df.variable.isin(legend_dict.keys()))]
+            .assign(legend_value=df.variable.map(legend_dict))
+         )
+          
+        
+    base = base_vaccination_chart(df)
+    
+    chart = (base
         .encode(
-            x=alt.X("date:T", 
-                    title="date",
-                    axis=alt.Axis(format=fulldate_format)),
             y=alt.Y("proportion:Q", title="% County's Population", 
                    axis=alt.Axis(format="%")),
             color=alt.Color("legend_value:N", legend=alt.Legend(title=""),
@@ -530,7 +533,31 @@ def setup_county_vaccinated_population_chart(df, county_name):
                                 range=[navy, blue])
                            )
         ).properties(title = f"{county_name} County: Vaccinated Population", 
-                     width = chart_width, height =chart_height)
+                     width = chart_width*scaling_factor, height = chart_height)
+    )
+        
+    return chart
+
+
+def setup_county_vaccinated_category(df, county_name, category="Age Group"):
+    df = df[(df.county==county_name) & 
+             (df.demographic_category==category) & 
+             (df.variable=="cumulative_fully_vaccinated")]
+
+    base = base_vaccination_chart(df)
+
+    chart = (base
+             .encode(
+                 y=alt.Y("proportion:Q", title="% of Eligible Population", 
+                         axis=alt.Axis(format="%")),
+                 color=alt.Color("demographic_value:N", legend=alt.Legend(title="Age Group"),
+                                 scale=alt.Scale(
+                                     domain=["0-17", "18-49", "50-64", "65+"],
+                                     range=[orange, blue, green, navy]
+                                 )
+                                ),
+            ).properties(title=f"{county_name} County: Proportion Vaccinated by {category}", 
+                        width = chart_width*scaling_factor, height = chart_height)
     )
         
     return chart
