@@ -37,8 +37,8 @@ COUNTY_VACCINE_URL = (
 
 COUNTY_DEMOGRAPHICS_URL = (
     "https://data.chhs.ca.gov/dataset/e283ee5a-cf18-4f20-a92c-ee94a2866ccd/resource/"
-    "faee36da-bd8c-40f7-96d4-d8f283a12b0a/download/"
-    "covid19vaccinesadministeredbydemographics.csv"
+    "71729331-2f09-4ea4-a52f-a2661972e146/download/"
+    "covid19vaccinesbycountybydemographic.csv"
 )
 
 
@@ -735,6 +735,22 @@ def clean_vaccines_by_county():
     return df2
 
 
-
-
-
+def clean_vaccines_by_demographics():
+    df = pd.read_csv(COUNTY_DEMOGRAPHICS_URL)
+    
+    df = df.assign(
+        date = pd.to_datetime(df.administered_date),
+    )
+    
+    # Reshape and make long(er)
+    id_vars = ["county", "county_type", "demographic_category", "demographic_value",
+              "est_population", "est_age_16plus_pop", 
+               "administered_date", "date", "suppress_data"]
+    
+    
+    df2 = df.melt(id_vars=id_vars)
+    df2 = df2.assign(
+        proportion = df2.value.divide(df2.est_age_16plus_pop)
+    )
+    
+    return df2
