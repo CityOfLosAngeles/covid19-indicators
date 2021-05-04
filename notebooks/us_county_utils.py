@@ -160,8 +160,8 @@ def county_caption(df, county_name):
                 f"<br>In the past week, new cases went from **{new_cases_1week:.1f}** to **{new_cases_yesterday:.1f}**; "
                 f"new deaths grew by **{pct_change_new_deaths}%**. " 
                 f"<br>New cases are **{new_cases_tier4_proportion:.1f}x** higher than the Tier 4 cut-off. <i><span style='color:#797C7C'>(1 = Tier 4 widespread cut-off; 2 = new cases are 2x higher than the Tier 4 cut-off)</span></i>."
-                f"<br>In the past week, the doubling time went from **{doubling_time_1week} days** to "
-                f"**{doubling_time_yesterday} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
+                f"<br>In the past week, the doubling time went from **{doubling_time_1week:,} days** to "
+                f"**{doubling_time_yesterday:,} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
             )
         )
 
@@ -173,8 +173,8 @@ def county_caption(df, county_name):
                 f"<br>In the past week, new cases grew by **{pct_change_new_cases}%**; "
                 f"new deaths went from **{new_deaths_1week:.1f}** to **{new_deaths_yesterday:.1f}**. " 
                 f"<br>New cases are **{new_cases_tier4_proportion:.1f}x** higher than the Tier 4 cut-off. <i><span style='color:#797C7C'>(1 = Tier 4 widespread cut-off; 2 = new cases are 2x higher than the Tier 4 cut-off)</span></i>."
-                f"<br>In the past week, the doubling time went from **{doubling_time_1week} days** to "
-                f"**{doubling_time_yesterday} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
+                f"<br>In the past week, the doubling time went from **{doubling_time_1week:,} days** to "
+                f"**{doubling_time_yesterday:,} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
             )
         )
     
@@ -268,7 +268,9 @@ def ca_hospitalizations_caption(df, county_name):
         
         
 def ca_vaccinations_caption(df, county_name):
-    df = df[df.county == county_name]
+    df = df[df.county == county_name].assign(
+              date = pd.to_datetime(df.date).dt.date
+          )
     
     if df.date.max() == default_parameters.two_days_ago:
         yesterday_date = default_parameters.two_days_ago
@@ -280,7 +282,7 @@ def ca_vaccinations_caption(df, county_name):
     extract_col = "cumulative_total_doses"
     cumulative_doses_yesterday = df[(df.date == yesterday_date) & (df.variable==extract_col)].iloc[0]["value"]
     cumulative_doses_one_week_ago = df[(df.date == one_week_ago) & (df.variable==extract_col)].iloc[0]["value"]
-    change = (cumulative_doses_yesterday - cumulative_doses_one_week_ago) 
+    change = cumulative_doses_yesterday - cumulative_doses_one_week_ago
     
     fully_vaccinated = df[(df.date == yesterday_date) & 
                           (df.variable=="cumulative_fully_vaccinated")].iloc[0]["proportion"]
@@ -289,8 +291,8 @@ def ca_vaccinations_caption(df, county_name):
     
     display(
         Markdown(
-            f"As of {yesterday_date.strftime(fulldate_format)}, {cumulative_doses_yesterday:,} cumulative doses have been administered ({change:,} in the past week)."
-            f"So far, **{one_dose*100:.1f}%** of the county has received at least 1 dose and **{fully_vaccinated*100:.1f}** is fully vaccinated."
+            f"**{cumulative_doses_yesterday:,}** cumulative doses have been administered ({change:,} doses administered in the past week). "
+            f"Already, **{one_dose*100:.1f}%** of the county has received at least 1 dose and **{fully_vaccinated*100:.1f}%** is fully vaccinated."
         )
     )
         
