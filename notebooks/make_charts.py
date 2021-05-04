@@ -37,6 +37,8 @@ light_gray = "#EAEBEB"
 navy_outline = "#052838"
 blue_outline = "#1277A5"
 
+# Used on vaccinations charts
+dark_gray = "#323434"
 
 title_font_size = 10
 font_name = "Arial"
@@ -183,18 +185,23 @@ def setup_cases_deaths_chart(df, geog, name):
     return cases_chart, deaths_chart
 
 
+def configure_chart(chart):
+    chart = (chart
+             .configure_title(
+                fontSize=title_font_size, font=font_name, anchor="middle", color="black"
+             ).configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
+        .configure_view(strokeOpacity=stroke_opacity)
+    )
+    
+    return chart
+
 def make_cases_deaths_chart(df, geog, name):  
     cases_chart, deaths_chart = setup_cases_deaths_chart(df, geog, name)
     
     # Cases and deaths chart to display side-by-side
-    combined_chart = (
-        alt.hconcat(cases_chart, deaths_chart)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
+    combined_chart = alt.hconcat(cases_chart, deaths_chart)
+    
+    combined_chart = configure_chart(combined_chart)
         
     show_svg(combined_chart)
 
@@ -233,18 +240,11 @@ def make_la_testing_chart(df, plot_col, chart_title, lower_bound, upper_bound):
     testing_chart = (
         (bar + line1 + line2)
         .properties(title=chart_title, width=chart_width)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
     )
+    testing_chart = configure_chart(testing_chart)
 
     show_svg(testing_chart)   
  
-
     
 #---------------------------------------------------------------#
 # Share of Positive Tests by Week (LA County)
@@ -325,14 +325,8 @@ def make_la_positive_test_chart(df, positive_lower_bound, positive_upper_bound,
          )
     
     
-    combined_weekly_chart = (
-        alt.hconcat(positive_chart, test_chart)
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(gridOpacity=grid_opacity, domainOpacity=domain_opacity)
-        .configure_view(strokeOpacity=stroke_opacity)
-    )
+    combined_weekly_chart = alt.hconcat(positive_chart, test_chart)
+    combined_weekly_chart = configure_chart(combined_weekly_chart)
         
     show_svg(combined_weekly_chart)
     
@@ -380,13 +374,6 @@ def make_lacounty_hospital_chart(df):
             title="Percent of Available Hospital Equipment by Type",
             width=chart_width,
         )
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
     )
 
     hospital_num_chart = (
@@ -407,12 +394,7 @@ def make_lacounty_hospital_chart(df):
                 ),
             ),
         ).properties(
-            title="Number of Available Hospital Equipment by Type", width=chart_width
-        ).configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        ).configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        ).configure_view(strokeOpacity=stroke_opacity)
+            title="Number of Available Hospital Equipment by Type", width=chart_width)
     )
 
     hospital_covid_chart = (
@@ -436,15 +418,13 @@ def make_lacounty_hospital_chart(df):
             title="Number of COVID-Occupied / Under Investigation Equipment Use by Type",
             width=chart_width,
         )
-        .configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        )
-        .configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        )
-        .configure_view(strokeOpacity=stroke_opacity)
     )
 
+    hospital_pct_chart = configure_chart(hospital_pct_chart)
+    hospital_num_chart = configure_chart(hospital_num_chart)
+    hospital_covid_chart = configure_chart(hospital_covid_chart)
+
+        
     show_svg(hospital_pct_chart) 
     show_svg(hospital_num_chart)
     show_svg(hospital_covid_chart)
@@ -487,12 +467,70 @@ def make_county_covid_hospital_chart(df, county_name):
     
     chart = setup_county_covid_hospital_chart(df, county_name)
     
-    covid_hospitalizations_chart = (
-        chart.configure_title(
-            fontSize=title_font_size, font=font_name, anchor="middle", color="black"
-        ).configure_axis(
-            gridOpacity=grid_opacity, domainOpacity=domain_opacity, ticks=False
-        ).configure_view(strokeOpacity=stroke_opacity)
-    )
+    covid_hospitalizations_chart = configure_chart(chart)
     
     show_svg(covid_hospitalizations_chart)
+
+    
+#---------------------------------------------------------------#
+# Vaccinations (CA data portal)
+#---------------------------------------------------------------#       
+def setup_county_vaccination_doses_chart(df, county_name):
+    brand_dict = {
+        "cumulative_total_doses": "All", 
+        "cumulative_pfizer_doses": "Pfizer", 
+        "cumulative_moderna_doses": "Moderna", 
+        "cumulative_jj_doses": "J&J",
+    }
+    
+    chart = (
+        alt.Chart(df[(df.county==county_name) &
+                    ((df.variable.isin(brand_dict.keys())))]
+                  .assign(brand=df.variable.map(brand_dict))
+                 )
+        .mark_line()
+        .encode(
+            x=alt.X("date:T", 
+                    title="date",
+                    axis=alt.Axis(format=fulldate_format)),
+            y=alt.Y("value:Q", title="# Doses"),
+            color=alt.Color("brand:N",
+                            scale=alt.Scale(
+                                domain=["All", "Pfizer", "Moderna", "J&J"],
+                                range=[dark_gray, blue_outline, green, orange])
+                           )
+        ).properties(title = f"{county_name} County: Cumulative Vaccines Administered", 
+                     width = chart_width, height =chart_height)
+    )
+    
+    return chart
+
+
+def setup_county_vaccinated_population_chart(df, county_name):
+    legend_dict = {
+        "cumulative_at_least_one_dose": "At least 1 dose", 
+        "cumulative_fully_vaccinated": "Fully vaccinated", 
+    }
+    
+    chart = (
+        alt.Chart(df[(df.county==county_name) &
+                    (df.variable.isin(legend_dict.keys()))]
+                  .assign(legend_value=df.variable.map(legend_dict))
+                 )
+        .mark_line()
+        .encode(
+            x=alt.X("date:T", 
+                    title="date",
+                    axis=alt.Axis(format=fulldate_format)),
+            y=alt.Y("proportion:Q", title="% County's Population", 
+                   axis=alt.Axis(format="%")),
+            color=alt.Color("legend_value:N", legend=alt.Legend(title=""),
+                            scale=alt.Scale(
+                                domain=["At least 1 dose", "Fully vaccinated"],
+                                range=[navy, blue])
+                           )
+        ).properties(title = f"{county_name} County: Vaccinated Population", 
+                     width = chart_width, height =chart_height)
+    )
+        
+    return chart
