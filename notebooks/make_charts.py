@@ -55,7 +55,7 @@ monthdate_format = "%-m/%-d"
 two_weeks_ago = default_parameters.two_weeks_ago
 
 # If chart_width needs to be adjusted because of the legend
-scaling_factor = 0.87
+scaling_factor = 0.85
 
 #---------------------------------------------------------------#
 # Case Data (County, State, MSA, City of LA)
