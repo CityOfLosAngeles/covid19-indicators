@@ -26,6 +26,8 @@ Project Organization
 
 This repository will track COVID-19 indicators as LA considers its reopening strategy. We will also provide sample notebooks for how others can use the Johns Hopkins University COVID-19 data, which is available for all US counties, to look at trends in other counties or states. *Related repo*: [https://github.com/CityOfLosAngeles/covid19-rmarkdown](https://github.com/CityOfLosAngeles/covid19-rmarkdown)
 
+**TEST REPORT:** [TEST](https://cityoflosangeles.github.io/covid19-indicators/test-report.html)
+
 **LA COUNTY DETAILED DAILY REPORT:** [https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html](https://cityoflosangeles.github.io/covid19-indicators/coronavirus-stats.html)
 
 **CA COUNTIES REPORT:** [https://tinyurl.com/cacovidtrends](https://cityoflosangeles.github.io/covid19-indicators/ca-county-trends.html)
