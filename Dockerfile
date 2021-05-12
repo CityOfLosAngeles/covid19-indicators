@@ -12,4 +12,4 @@ RUN conda install --yes -c conda-forge --file /tmp/conda-requirements.txt
 
 COPY requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
-CMD ["/app/server"]
+CMD ["/root/work/server"]
