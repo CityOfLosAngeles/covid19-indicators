@@ -6,6 +6,7 @@ RUN go mod download
 COPY invoke.go ./
 RUN go build -mod=readonly -v -o server
 COPY script.sh ./
+COPY gcp/test1.py ./
 
 COPY conda-requirements.txt /tmp/
 RUN conda install --yes -c conda-forge --file /tmp/conda-requirements.txt
