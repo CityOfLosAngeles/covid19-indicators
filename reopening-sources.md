@@ -28,6 +28,7 @@ Examples of reopening indicators used by NY and Chicago are included for LA to b
 * Track your [county's risk level](https://www.nytimes.com/interactive/2021/us/covid-risk-map.html)
 * Track your state's [vaccination efforts](https://www.nytimes.com/interactive/2020/us/covid-19-vaccine-doses.html)
 * Scenarios for reaching [herd immunity with vaccine rollout](https://www.nytimes.com/interactive/2021/02/20/us/us-herd-immunity-covid.html), with [global data showing vaccines being extremely effective](https://www.nytimes.com/2021/02/23/opinion/covid-vaccines-transmission.html)
+* Track your state's 2021 [reopening plans](https://www.nytimes.com/interactive/2020/us/states-reopen-map-coronavirus.html)
 
 
 ## Dangers of Reopening Too Early
