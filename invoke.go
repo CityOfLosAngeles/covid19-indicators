@@ -30,7 +30,7 @@ func scriptHandler(w http.ResponseWriter, r *http.Request) {
 //test
 	//RUN_SCRIPT:=os.Getenv("RUN_SCRIPT")
 	if COMMAND == "" {
-		cmd := exec.CommandContext(r.Context(), "python", "test1.py")
+		cmd := exec.CommandContext(r.Context(), "python", "gcp/test1.py")
 		cmd.Stderr = os.Stderr
 		out, err := cmd.Output()
 		if err != nil {
