@@ -25,12 +25,24 @@ func main() {
 }
 
 func scriptHandler(w http.ResponseWriter, r *http.Request) {
-	cmd := exec.CommandContext(r.Context(), "python", "test1.py")
-	cmd.Stderr = os.Stderr
-	out, err := cmd.Output()
-	if err != nil {
-		w.WriteHeader(500)
+	COMMAND:=os.Getenv("COMMAND")
+	RUN_SCRIPT:=os.Getenv("RUN_SCRIPT")
+	if COMMAND == "" {
+		cmd := exec.CommandContext(r.Context(), "python", "test1.py")
+		cmd.Stderr = os.Stderr
+		out, err := cmd.Output()
+		if err != nil {
+			w.WriteHeader(500)
+		}
+		w.Write(out)
+	} else {
+		cmd := exec.CommandContext(r.Context(), COMMAND, RUN_SCRIPT)
+		cmd.Stderr = os.Stderr
+		out, err := cmd.Output()
+		if err != nil {
+			w.WriteHeader(500)
+		}
+		w.Write(out)
 	}
-	w.Write(out)
 }
 
