@@ -44,5 +44,6 @@ func scriptHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Write(out)
 	}
+	COMMAND:=os.GetEnv("test")
 }
 
