@@ -16,3 +16,4 @@ import papermill as pm
 
 for x in os.environ:
     print((x,os.getenv(x)))
+print("Cloud Run auto build good")
