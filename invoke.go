@@ -28,8 +28,8 @@ func scriptHandler(w http.ResponseWriter, r *http.Request) {
 	COMMAND:=os.Getenv("COMMAND")
 //	COMMAND2:=os.Getenv("test")
 //test
-	RUN_SCRIPT:=os.Getenv("RUN_SCRIPT")
-//	if COMMAND == "" {
+	//RUN_SCRIPT:=os.Getenv("RUN_SCRIPT")
+	if COMMAND == "" {
 		cmd := exec.CommandContext(r.Context(), "python", "test1.py")
 		cmd.Stderr = os.Stderr
 		out, err := cmd.Output()
@@ -37,14 +37,15 @@ func scriptHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(500)
 		}
 		w.Write(out)
-//	} else {
-//		cmd := exec.CommandContext(r.Context(), COMMAND, RUN_SCRIPT)
-//		cmd.Stderr = os.Stderr
-//		out, err := cmd.Output()
-//		if err != nil {
-//			w.WriteHeader(500)
-//		}
-//		w.Write(out)
-//	}
+	} else {
+		cmd := exec.CommandContext(r.Context(), "/bin/bash", "script.sh")
+		//cmd := exec.CommandContext(r.Context(), COMMAND, RUN_SCRIPT)
+		cmd.Stderr = os.Stderr
+		out, err := cmd.Output()
+		if err != nil {
+			w.WriteHeader(500)
+		}
+		w.Write(out)
+	}
 }
 
