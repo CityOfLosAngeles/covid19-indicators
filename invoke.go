@@ -27,6 +27,7 @@ func main() {
 func scriptHandler(w http.ResponseWriter, r *http.Request) {
 	COMMAND:=os.Getenv("COMMAND")
 //	COMMAND2:=os.Getenv("test")
+//test
 	RUN_SCRIPT:=os.Getenv("RUN_SCRIPT")
 	if COMMAND == "" {
 		cmd := exec.CommandContext(r.Context(), "python", "test1.py")
