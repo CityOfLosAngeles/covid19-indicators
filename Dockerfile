@@ -1,3 +1,4 @@
+#test
 FROM cityofla/ita-data-civis-lab:sha-4888c7e  
 RUN apt-get update && apt-get install -y \
   golang
