@@ -744,13 +744,13 @@ def clean_vaccines_by_demographics():
     
     # Reshape and make long(er)
     id_vars = ["county", "county_type", "demographic_category", "demographic_value",
-              "est_population", "est_age_16plus_pop", 
+              "est_population", "est_age_12plus_pop", 
                "administered_date", "date", "suppress_data"]
     
     
     df2 = df.melt(id_vars=id_vars)
     df2 = df2.assign(
-        proportion = df2.value.divide(df2.est_age_16plus_pop)
+        proportion = df2.value.divide(df2.est_age_12plus_pop)
     )
     
     return df2
