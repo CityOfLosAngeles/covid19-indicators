@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"log"
 	"net/http"
 	"os"
@@ -35,8 +36,8 @@ func scriptHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(500)
 		}
 		w.Write(out)
-	} else {
-		cmd := exec.CommandContext(r.Context(), COMMAND, RUN_SCRIPT)
+	} else if strings.Contains(COMMAND,"bash") {
+		cmd := exec.CommandContext(r.Context(), COMMAND,"-c", RUN_SCRIPT)
 		cmd.Stderr = os.Stderr
 		out, err := cmd.Output()
 		if err != nil {
