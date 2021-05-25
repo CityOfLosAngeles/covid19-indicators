@@ -11,9 +11,8 @@ import subprocess
 import sys
 import time
 
-import pandas as pd
-import papermill as pm 
-
+dateTimeObj = datetime.now()
+timestampStr = dateTimeObj.strftime("%Y-%b-%d (%H:%M:%S.%f)")
+print('Current Timestamp : ', timestampStr)
 for x in os.environ:
     print((x,os.getenv(x)))
-print("Cloud Run auto build good")
