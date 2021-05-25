@@ -3,7 +3,7 @@ list environment variables
 """
 
 import base64
-import datetime
+from datetime import datetime
 import fsspec
 import os
 import requests
