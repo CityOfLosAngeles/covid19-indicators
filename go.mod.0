@@ -1,3 +1,0 @@
-module github.com/GoogleCloudPlatform/cloud-run-samples
-
-go 1.14
