@@ -1,14 +1,25 @@
 """
 Simplified functions to use in test-report.
+
+Source credentials: https://stackoverflow.com/questions/61816351/how-to-get-a-csv-into-a-dataframe-from-gcs-with-credentials-from-script
+
+This didn't really work?
+https://stackoverflow.com/questions/56596951/save-pandas-data-frame-to-google-cloud-bucket
 """
+
+import gcsfs
 import pandas as pd
+
+CREDENTIAL = "../gcp-credential.json"
+gs = gcsfs.GCSFileSystem(project="ita-datalakepoc") #token=f"{CREDENTIAL}"
+
+BUCKET_NAME = "electedoffice_covid19_indicators"
 
 COUNTY_VACCINE_URL = (
     "https://data.chhs.ca.gov/dataset/e283ee5a-cf18-4f20-a92c-ee94a2866ccd/resource/"
     "130d7ba2-b6eb-438d-a412-741bde207e1c/download/"
     "covid19vaccinesbycounty.csv"
 )
-
 
 #---------------------------------------------------------------#
 # Vaccines Administered
@@ -39,5 +50,7 @@ def clean_vaccines_by_county():
     df2 = df2.assign(
         proportion = df2.value.divide(df2.county_pop2020)
     )
+    
+    df2.to_parquet(f"gcs://{BUCKET_NAME}/vaccines_by_county.parquet")  
     
     return df2
