@@ -1,2 +1,0 @@
-COMMAND=/bin/bash
-RUN_SCRIPT=script.sh
