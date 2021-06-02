@@ -150,6 +150,7 @@ def prep_county(county_state_name, start_date):
                   on = "fips", how = "inner", validate = "m:1"
     )
     
+    df = find_outliers(df, threshold=10)
     df = calculate_rolling_average(df, start_date, today_date)
     df = find_tier_cutoffs(df, "county_pop")
     
@@ -202,7 +203,7 @@ def prep_state(state_name, start_date):
                   on = "state", how = "inner", validate = "m:1"
     )
     
-    
+    df = find_outliers(df, threshold=10)
     df = calculate_rolling_average(df, start_date, today_date)
     df = find_tier_cutoffs(df, "state_pop")
 
@@ -247,7 +248,8 @@ def prep_msa(msa_name, start_date):
             df.sort_values(group_cols).groupby(msa_group_cols)["deaths"].diff(periods=1)
         ),
     )
-        
+    
+    df = find_outliers(df, threshold=10)
     df = calculate_rolling_average(df, start_date, today_date)
     df = find_tier_cutoffs(df, "msa_pop")
 
@@ -286,6 +288,45 @@ def find_tier_cutoffs(df, population_col):
         tier2_case_cutoff = round(((4 / POP_DENOM) * population), 2),
         tier3_case_cutoff = round(((7 / POP_DENOM) * population), 2),
     )
+    
+    return df
+
+
+def find_outliers(df, threshold=10):
+    # If the new cases is more than 10x the previous day's or the next day's new cases
+    # it's probably an outlier
+    # Found 1 case of outlier in LA on 5/27/21, where it showed over 4,000 new cases in the raw data
+    # But surrounding days are in the 100-200's.
+    # Use a generalized function to suppress outlier dates
+    sort_cols = ["county", "state", "fips", "date"]
+    group_cols = ["county", "state", "fips"]
+    
+    df = df.assign(
+        previous_day = (df.sort_values(sort_cols)
+                        .groupby(group_cols)["new_cases"]
+                        .apply(lambda x: x.shift(1))
+                       ),
+        post_day = (df.sort_values(sort_cols)
+                    .groupby(group_cols)["new_cases"]
+                    .apply(lambda x: x.shift(-1))
+                   ),
+    )
+    
+    
+    df = df.assign(
+        outlier = (df.dropna()
+                   .apply(lambda x: 1 if (x.new_cases >= (x.previous_day*threshold)) and 
+                          (x.new_cases >= (x.post_day*threshold))
+                           else 0, axis=1)
+                  )
+    )
+    
+    # Drop the outlier
+    df = (df[df.outlier==0]
+          .drop(columns=["previous_day", "post_day", "outlier"])
+          .sort_values(sort_cols)
+          .reset_index(drop=True)
+         )
     
     return df
 
