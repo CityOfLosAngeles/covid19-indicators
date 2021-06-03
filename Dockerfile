@@ -1,4 +1,5 @@
 FROM cityofla/ita-data-civis-lab:sha-4888c7e  
+RUN curl -sSL https://sdk.cloud.google.com |bash
 RUN apt-get update && apt-get install -y \
   golang
 WORKDIR /app
