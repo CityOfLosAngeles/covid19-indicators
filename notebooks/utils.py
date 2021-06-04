@@ -312,11 +312,14 @@ def find_outliers(df, threshold=10):
                    ),
     )
     
-    
+    # When we get to small numbers of new cases, it's easy for it to oscillate more
+    # Let's only apply outlier rule if previous/post day new cases > 20. 
+    # Definitely when it's single digits, cases can easily jump from 2 new cases to 20 new cases
     df = df.assign(
         outlier = (df.dropna()
                    .apply(lambda x: 1 if (x.new_cases >= (x.previous_day*threshold)) and 
-                          (x.new_cases >= (x.post_day*threshold))
+                          (x.new_cases >= (x.post_day*threshold)) and 
+                          (x.previous_day > 20) and (x.post_day > 20)
                            else 0, axis=1)
                   )
     )
