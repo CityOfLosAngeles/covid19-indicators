@@ -552,7 +552,7 @@ def setup_county_vaccinated_category(df, county_name, category="Age Group"):
                          axis=alt.Axis(format="%")),
                  color=alt.Color("demographic_value:N", legend=alt.Legend(title="Age Group"),
                                  scale=alt.Scale(
-                                     domain=["0-17", "18-49", "50-64", "65+"],
+                                     domain=["12-17", "18-49", "50-64", "65+"],
                                      range=[orange, blue, green, navy]
                                  )
                                 ),
