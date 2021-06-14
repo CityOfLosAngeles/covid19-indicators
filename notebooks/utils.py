@@ -767,14 +767,17 @@ def clean_vaccines_by_county():
     id_vars = ["county", "administered_date", "date", 
                "county_fips", "county_pop2020", "california_flag"]
     
-    df2 = df.melt(id_vars=id_vars)
+    df2 = (df[df.date < pd.to_datetime(today_date)]
+           .melt(id_vars=id_vars)
+           .reset_index(drop=True)
+          )
     
     # Let's also get the proportion relative to that county's pop
     # Ultimately, only interested in partially/fully vaccinated population,
     # but generate it for all the other variables too
     df2 = df2.assign(
-        proportion = df2.value.divide(df2.county_pop2020)
-    )
+            proportion = df2.value.divide(df2.county_pop2020)
+        )
     
     return df2
 
@@ -783,8 +786,8 @@ def clean_vaccines_by_demographics():
     df = pd.read_csv(COUNTY_DEMOGRAPHICS_URL)
     
     df = df.assign(
-        date = pd.to_datetime(df.administered_date),
-    )
+            date = pd.to_datetime(df.administered_date),
+        )
     
     # Reshape and make long(er)
     id_vars = ["county", "county_type", "demographic_category", "demographic_value",
@@ -792,9 +795,13 @@ def clean_vaccines_by_demographics():
                "administered_date", "date", "suppress_data"]
     
     
-    df2 = df.melt(id_vars=id_vars)
+    df2 = (df[df.date < pd.to_datetime(today_date)]
+           .melt(id_vars=id_vars)
+           .reset_index(drop=True)
+          )
     df2 = df2.assign(
         proportion = df2.value.divide(df2.est_age_12plus_pop)
     )
+
     
     return df2
