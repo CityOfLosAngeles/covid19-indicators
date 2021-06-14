@@ -1,4 +1,5 @@
 #!/bin/bash
+
 FNAME="$2"
 ENAME="$1"
 CMD="echo \$$ENAME"
