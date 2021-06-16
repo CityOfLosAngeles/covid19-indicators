@@ -11,3 +11,5 @@ jhu.load_global_covid_data()
 jhu_county.append_county_time_series()
 
 ca_hospital.update_ca_surge_hospital_data()
+
+print("Successful update of occasional data")

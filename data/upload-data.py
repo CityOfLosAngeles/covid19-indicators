@@ -41,3 +41,5 @@ for file_name in datasets:
         f"{COMMIT_MESSAGE}",
         DEFAULT_COMMITTER,
     )
+
+print("Successful upload of datasets to GitHub")
