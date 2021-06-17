@@ -3,7 +3,6 @@ Upload the CSV to GitHub.
 We will continue to use parquets in S3.
 Let's check in CSV for others.
 """
-import civis
 import os
 
 from civis_aqueduct_utils.github import upload_file_to_github

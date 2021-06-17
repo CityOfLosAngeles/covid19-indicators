@@ -8,7 +8,6 @@ import subprocess
 import sys
 import time
 
-import civis
 import pandas as pd
 import papermill as pm 
 
