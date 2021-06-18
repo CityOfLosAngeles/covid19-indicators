@@ -128,7 +128,7 @@ def county_caption(df, county_name):
     extract_col = "cases_avg7"
     new_cases_1week = df[df.date == one_week_ago].iloc[0][extract_col]
     new_cases_yesterday = df[df.date == yesterday_date].iloc[0][extract_col]
-    tier3_cutoff = df[df.date == yesterday_date].iloc[0]["tier3_case_cutoff"]
+    tier1_cutoff = df[df.date == yesterday_date].iloc[0]["tier1_case_cutoff"]
     pct_change_new_cases = (((new_cases_yesterday - new_cases_1week) / new_cases_1week) * 100).round(1)
     new_cases_tier1_proportion = (new_cases_yesterday / tier1_cutoff).round(1)
     
