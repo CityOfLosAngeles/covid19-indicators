@@ -130,7 +130,7 @@ def county_caption(df, county_name):
     new_cases_yesterday = df[df.date == yesterday_date].iloc[0][extract_col]
     tier3_cutoff = df[df.date == yesterday_date].iloc[0]["tier3_case_cutoff"]
     pct_change_new_cases = (((new_cases_yesterday - new_cases_1week) / new_cases_1week) * 100).round(1)
-    new_cases_tier4_proportion = (new_cases_yesterday / tier3_cutoff).round(1)
+    new_cases_tier1_proportion = (new_cases_yesterday / tier1_cutoff).round(1)
     
     extract_col = "deaths"
     cumulative_deaths = df[df.date == yesterday_date][extract_col].iloc[0]
@@ -160,7 +160,7 @@ def county_caption(df, county_name):
                 f"and **{cumulative_deaths:,}** total deaths. "
                 f"<br>In the past week, new cases went from **{new_cases_1week:.1f}** to **{new_cases_yesterday:.1f}**; "
                 f"new deaths grew by **{pct_change_new_deaths}%**. " 
-                f"<br>New cases are **{new_cases_tier4_proportion:.1f}x** higher than the Tier 4 cut-off. <i><span style='color:#797C7C'>(1 = Tier 4 widespread cut-off; 2 = new cases are 2x higher than the Tier 4 cut-off)</span></i>."
+                f"<br>New cases are **{new_cases_tier1_proportion:.1f}x** higher than the Tier 1 cut-off. <i><span style='color:#797C7C'>(1 = Tier 1 widespread cut-off; 2 = new cases are 2x higher than the Tier 1 cut-off)</span></i>."
                 f"<br>In the past week, the doubling time went from **{doubling_time_1week:,} days** to "
                 f"**{doubling_time_yesterday:,} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
             )
@@ -173,7 +173,7 @@ def county_caption(df, county_name):
                 f"and **{cumulative_deaths:,}** total deaths. "
                 f"<br>In the past week, new cases grew by **{pct_change_new_cases}%**; "
                 f"new deaths went from **{new_deaths_1week:.1f}** to **{new_deaths_yesterday:.1f}**. " 
-                f"<br>New cases are **{new_cases_tier4_proportion:.1f}x** higher than the Tier 4 cut-off. <i><span style='color:#797C7C'>(1 = Tier 4 widespread cut-off; 2 = new cases are 2x higher than the Tier 4 cut-off)</span></i>."
+                f"<br>New cases are **{new_cases_tier1_proportion:.1f}x** higher than the Tier 1 cut-off. <i><span style='color:#797C7C'>(1 = Tier 1 widespread cut-off; 2 = new cases are 2x higher than the Tier 1 cut-off)</span></i>."
                 f"<br>In the past week, the doubling time went from **{doubling_time_1week:,} days** to "
                 f"**{doubling_time_yesterday:,} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
             )
@@ -186,7 +186,7 @@ def county_caption(df, county_name):
                 f"and **{cumulative_deaths:,}** total deaths. "
                 f"<br>In the past week, new cases went from **{new_cases_1week:,.1f}**  to **{new_cases_yesterday:,.0f}**; "
                 f"new deaths went from **{new_deaths_1week:.1f}** to **{new_deaths_yesterday:.1f}**. " 
-                f"<br>New cases are **{new_cases_tier4_proportion:.1f}x** higher than the Tier 4 cut-off. <i><span style='color:#797C7C'>(1 = Tier 4 widespread cut-off; 2 = new cases are 2x higher than the Tier 4 cut-off)</span></i>."
+                f"<br>New cases are **{new_cases_tier1_proportion:.1f}x** higher than the Tier 1 cut-off. <i><span style='color:#797C7C'>(1 = Tier 1 widespread cut-off; 2 = new cases are 2x higher than the Tier 1 cut-off)</span></i>."
                 f"<br>In the past week, the doubling time went from **{doubling_time_1week:,} days** to "
                 f"**{doubling_time_yesterday:,} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
             )
@@ -199,7 +199,7 @@ def county_caption(df, county_name):
                 f"and **{cumulative_deaths:,}** total deaths. "
                 f"<br>In the past week, new cases grew by **{pct_change_new_cases}%**; "
                 f"new deaths grew by **{pct_change_new_deaths}%**. " 
-                f"<br>New cases are **{new_cases_tier4_proportion:.1f}x** higher than the Tier 4 cut-off. <i><span style='color:#797C7C'>(1 = Tier 4 widespread cut-off; 2 = new cases are 2x higher than the Tier 4 cut-off)</span></i>."
+                f"<br>New cases are **{new_cases_tier1_proportion:.1f}x** higher than the Tier 1 cut-off. <i><span style='color:#797C7C'>(1 = Tier 1 widespread cut-off; 2 = new cases are 2x higher than the Tier 1 cut-off)</span></i>."
                 f"<br>In the past week, the doubling time went from **{doubling_time_1week:,} days** to "
                 f"**{doubling_time_yesterday:,} days** <i><span style='color:#797C7C'>(longer doubling time is better)</span></i>. "
             )
