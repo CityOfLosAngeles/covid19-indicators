@@ -57,6 +57,169 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding: 0 5px
 .highlight .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */
 .highlight .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */
   </style>
+<style type="text/css">
+    #header-container, #menubar-container {
+  width: 100%;
+}
+
+#notebook-container {
+  min-width: 95%;
+}
+
+/* Make the notebook interface text look like the rest of the platform. */
+body {
+  font-family: Lato, "Trebuchet MS", Arial, sans-serif;
+}
+
+/* Don't show a border around input cells for a slightly cleaner look. */
+div.input_area { border: 0px; }
+div.cell { border: 0px; }
+
+/* Make a few other UI elements use Civis colors similar to the defaults
+(e.g., use Civis blue instead of the blue used for selected cells.) */
+a { color: #0194D3; }
+div.input_prompt { color: #006082; }
+div.cell.selected:before, div.cell.selected.jupyter-soft-selected:before {background: #0194D3;}
+.edit_mode div.cell.selected:before { background: #49DEA4; }
+div.output_prompt {color:#D8432C;}
+
+/* Customizations for terminal window */
+a.notebook-back-link {
+  cursor: pointer;
+}
+
+a.notebook-back-link:hover {
+  text-decoration: none;
+}
+
+a.notebook-back-link span {
+  padding-left: 5px;
+  font-size: 15px;
+}
+
+.notebook-back-header {
+  height: inherit;
+  background-color: #eee;
+}
+
+.notebook-back-header span {
+  height: inherit;
+  margin-top: 0px;
+}
+
+.notebook-back-header .navbar-brand {
+  height: inherit;
+}
+
+.notebook-back-header .terminal-span {
+  color: #555;
+  padding: 2px;
+}
+
+#uncommitted_changes {
+  border: 1px solid #F77552;
+  color: #F77552;
+}
+
+#no_changes {
+  font-size: 102%;
+  cursor: default;
+}
+
+@font-face {
+  font-family: 'civicons';
+  src: url(/custom/fonts/civicons.eot);
+  src: url(/custom/fonts/civicons.eot#iefix) format("embedded-opentype"), url(/custom/fonts/civicons.woff) format("woff"), url(/custom/fonts/civicons.ttf) format("truetype"), url(/customfonts/civicons.svg#civicons) format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.civicon {
+  font-family: 'civicons';
+}
+
+/* Override for civicons to anti alias on Mac/Chrome
+   Also increase the size site wide */
+[class^="civicon-"]:before, [class*=" civicon-"]:before {
+  font-size: 120%;
+  margin-right: 0.190em;
+  margin-left: 0.190em;
+}
+
+/* From civicons-codes.scss */
+.civicon-exports:before { content: '\e800'; } /* '' */
+.civicon-activity:before { content: '\e801'; } /* '' */
+.civicon-address:before { content: '\e802'; } /* '' */
+.civicon-analyze:before { content: '\e803'; } /* '' */
+.civicon-archive:before { content: '\e804'; } /* '' */
+.civicon-optimizer:before { content: '\e805'; } /* '' */
+.civicon-binary:before { content: '\e806'; } /* '' */
+.civicon-categorical:before { content: '\e807'; } /* '' */
+.civicon-chevron-open:before { content: '\e808'; } /* '' */
+.civicon-choose-chart:before { content: '\e809'; } /* '' */
+.civicon-clone:before { content: '\e80a'; } /* '' */
+.civicon-close:before { content: '\e80b'; } /* '' */
+.civicon-data:before { content: '\e80c'; } /* '' */
+.civicon-comment:before { content: '\e80d'; } /* '' */
+.civicon-continuous:before { content: '\e80e'; } /* '' */
+.civicon-csv:before { content: '\e80f'; } /* '' */
+.civicon-automate:before { content: '\e810'; } /* '' */
+.civicon-database:before { content: '\e811'; } /* '' */
+.civicon-failure:before { content: '\e812'; } /* '' */
+.civicon-delete:before { content: '\e813'; } /* '' */
+.civicon-download:before { content: '\e814'; } /* '' */
+.civicon-dropdown:before { content: '\e815'; } /* '' */
+.civicon-edit-html:before { content: '\e816'; } /* '' */
+.civicon-edit:before { content: '\e817'; } /* '' */
+.civicon-expand:before { content: '\e818'; } /* '' */
+.civicon-scripts:before { content: '\e819'; } /* '' */
+.civicon-full-screen:before { content: '\e81a'; } /* '' */
+.civicon-geocode:before { content: '\e81b'; } /* '' */
+.civicon-help:before { content: '\e81c'; } /* '' */
+.civicon-home:before { content: '\e81d'; } /* '' */
+.civicon-job:before { content: '\e81e'; } /* '' */
+.civicon-labs:before { content: '\e81f'; } /* '' */
+.civicon-modeling:before { content: '\e820'; } /* '' */
+.civicon-idle:before { content: '\e821'; } /* '' */
+.civicon-ordinal:before { content: '\e822'; } /* '' */
+.civicon-people-matching:before { content: '\e823'; } /* '' */
+.civicon-collapse:before { content: '\e824'; } /* '' */
+.civicon-projects:before { content: '\e825'; } /* '' */
+.civicon-reports:before { content: '\e826'; } /* '' */
+.civicon-rerun:before { content: '\e827'; } /* '' */
+.civicon-run:before { content: '\e828'; } /* '' */
+.civicon-score:before { content: '\e829'; } /* '' */
+.civicon-dashboard:before { content: '\e82a'; } /* '' */
+.civicon-share:before { content: '\e82b'; } /* '' */
+.civicon-imports:before { content: '\e82c'; } /* '' */
+.civicon-bar-chart:before { content: '\e82d'; } /* '' */
+.civicon-survey:before { content: '\e82e'; } /* '' */
+.civicon-categorical-expansion:before { content: '\e82f'; } /* '' */
+.civicon-progress:before { content: '\e830'; } /* '' */
+.civicon-success:before { content: '\e831'; } /* '' */
+.civicon-warning:before { content: '\e832'; } /* '' */
+.civicon-chart-explorer:before { content: '\e833'; } /* '' */
+.civicon-missing-values:before { content: '\e834'; } /* '' */
+.civicon-scatter-plot:before { content: '\e835'; } /* '' */
+.civicon-tableau:before { content: '\e836'; } /* '' */
+.civicon-silverpop:before { content: '\e837'; } /* '' */
+.civicon-salesforce:before { content: '\e838'; } /* '' */
+.civicon-run-history:before { content: '\e839'; } /* '' */
+.civicon-google-docs:before { content: '\e83a'; } /* '' */
+.civicon-alert:before { content: '\e83b'; } /* '' */
+.civicon-enhancements:before { content: '\e83c'; } /* '' */
+.civicon-unarchive:before { content: '\e83d'; } /* '' */
+.civicon-explore:before { content: '\e83e'; } /* '' */
+.civicon-doc:before { content: '\e83f'; } /* '' */
+.civicon-book:before { content: '\e840'; } /* '' */
+.civicon-upload:before { content: '\e841'; } /* '' */
+.civicon-decision-apps:before { content: '\e89a'; } /* '' */
+.civicon-server:before { content: '\e89e'; } /* '' */
+.civicon-server-running:before { content: '\e89f'; } /* '' */
+.civicon-workflows:before { content: '\e8a1'; } /* '' */
+.civicon-packages:before { content: '\e8f3'; } /* '' */
+
+  </style>
 
 
 
