@@ -5874,7 +5874,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-06-20,Los Angeles,06037,266,19168,56,759,74
 2021-06-21,Los Angeles,06037,304,19205,62,791,74
 2021-06-22,Los Angeles,06037,300,19262,64,743,74
-2021-06-23,Los Angeles,06037,295,19375,74,734,
+2021-06-23,Los Angeles,06037,295,19375,74,734,84
 2020-03-29,Madera,06039,7,,2,10,
 2020-03-30,Madera,06039,6,,4,8,
 2020-03-31,Madera,06039,4,,1,6,
@@ -12202,7 +12202,7 @@ date,county,county_fips,hospitalized_covid,all_hospital_beds,icu_covid,all_icu_b
 2021-06-20,San Diego,06073,67,6458,24,304,24
 2021-06-21,San Diego,06073,66,6452,26,319,24
 2021-06-22,San Diego,06073,70,6464,28,309,24
-2021-06-23,San Diego,06073,73,6470,30,310,
+2021-06-23,San Diego,06073,73,6470,30,310,24
 2020-03-29,San Francisco,06075,123,,34,95,
 2020-03-30,San Francisco,06075,150,,25,115,
 2020-03-31,San Francisco,06075,136,,44,121,
