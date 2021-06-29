@@ -27,7 +27,7 @@ output_path = f'./outputs/{str(datetime.datetime.now().date())}-coronavirus-stat
 
 # Try executing the notebook. If it fails due to data being incomplete,
 # try again in an hour, for a maximum of ten hours.
-MAX_TRIES = 10
+MAX_TRIES = 3
 RETRY = 60 * 60
 for i in range(MAX_TRIES):
     try:
