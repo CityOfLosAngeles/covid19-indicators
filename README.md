@@ -18,6 +18,7 @@ Project Organization
     │                               e.g generated with `pip freeze > requirements.txt`
     ├── main.py                  <- Used to send our daily pdf reports by email. 
     ├── report.py                <- Used to automate writing the daily report on GitHub pages. 
+    ├── report_county_trends.py  <- Used to automate writing the daily report on GitHub pages. 
     ├── setup.py                 <- Makes project pip installable (pip install -e .) 
 
 

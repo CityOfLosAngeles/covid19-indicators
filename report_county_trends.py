@@ -30,6 +30,7 @@ notebooks_to_run = {
     "ca-counties.ipynb": "./ca-county-trends.ipynb",
     "us-counties.ipynb": "./us-county-trends.ipynb", 
     "la-neighborhoods.ipynb": "./la-neighborhoods-trends.ipynb",
+    "coronavirus-stats.ipynb": './coronavirus-stats.ipynb',
 }
 
 for key, file_name in notebooks_to_run.items():
