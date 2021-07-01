@@ -8,7 +8,6 @@ import subprocess
 import sys
 import time
 
-import civis
 import pandas as pd
 import papermill as pm 
 
@@ -20,7 +19,6 @@ sys.path.append(os.getcwd())
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "gh-pages"
-COMMIT_MESSAGE = "Update county-trends"
 
 DEFAULT_COMMITTER = {
     "name": "Los Angeles ITA data team",
@@ -32,6 +30,7 @@ notebooks_to_run = {
     "ca-counties.ipynb": "./ca-county-trends.ipynb",
     "us-counties.ipynb": "./us-county-trends.ipynb", 
     "la-neighborhoods.ipynb": "./la-neighborhoods-trends.ipynb",
+    "coronavirus-stats.ipynb": './coronavirus-stats.ipynb',
 }
 
 for key, file_name in notebooks_to_run.items():
@@ -69,7 +68,7 @@ for key, file_name in notebooks_to_run.items():
             BRANCH,
             f"{html_file_name}",
             f"{html_file_name}",
-            f"{COMMIT_MESSAGE}",
+            f"Update {name}",
             DEFAULT_COMMITTER,
         )
 
