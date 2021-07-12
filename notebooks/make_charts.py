@@ -92,14 +92,19 @@ def setup_cases_deaths_chart(df, geog, name):
     )
     
     
-    tier_base = (base.mark_line(strokeDash=[2,3], clip=True))
+    tier_base = (base.mark_line(strokeDash=[2,3], clip=True, tooltip=True))
         
     # Make cases charts    
     cases_line = (
         base
+        .mark_line(tooltip=True)
         .encode(
             y=alt.Y("cases_avg7:Q", title="7-day avg"),
             color=alt.value(navy),
+            tooltip=['county',
+              alt.Tooltip('date:T', format=fulldate_format),
+              alt.Tooltip('cases_avg7:Q', format=',.2f'),
+             ]
         )
     )
     
@@ -121,23 +126,25 @@ def setup_cases_deaths_chart(df, geog, name):
         )
     )
     
-
     tier1_hline = (
         tier_base
         .encode(y=alt.Y("tier1_case_cutoff:Q"),
-               color=alt.value(orange))
+               color=alt.value(orange),
+               tooltip=alt.Tooltip("tier1_case_cutoff", format=',.2f'))
     )
 
     tier2_hline = (
         tier_base
         .encode(y=alt.Y("tier2_case_cutoff:Q"),
-               color=alt.value(maroon))
+               color=alt.value(maroon),
+               tooltip=alt.Tooltip("tier2_case_cutoff", format=',.2f'))
     )
     
     tier3_hline = (
         tier_base
         .encode(y=alt.Y("tier3_case_cutoff:Q"),
-               color=alt.value(purple))
+               color=alt.value(purple), 
+               tooltip=alt.Tooltip("tier3_case_cutoff", format=',.2f'))
     )
 
 
@@ -153,9 +160,13 @@ def setup_cases_deaths_chart(df, geog, name):
     # Make deaths chart
     deaths_line = (
         base
+        .mark_line(tooltip=True)
         .encode(
             y=alt.Y("deaths_avg7:Q", title="7-day avg"),
             color=alt.value(blue),
+            tooltip=['county',
+                alt.Tooltip('date:T', format=fulldate_format),
+                alt.Tooltip('deaths_avg7:Q', format=',.2f')]
         )
     )
 
@@ -561,3 +572,33 @@ def setup_county_vaccinated_category(df, county_name, category="Age Group"):
     )
         
     return chart
+
+
+#---------------------------------------------------------------#
+# Adding a tooltip
+#---------------------------------------------------------------#
+def add_tooltip(chart, chart_type):
+    chart = (chart
+             .mark_line(tooltip=True)
+             .encode(
+                 tooltip = tooltip_args_dict[chart_type]
+             )
+    )
+    
+    return chart
+
+tooltip_args_dict = {
+    "hospitalizations": ['county', 'type',
+                      alt.Tooltip('date2:T', format=fulldate_format),
+                      alt.Tooltip('num:Q', format=',.2f')],
+    "vaccines_type": ['county', 'brand',
+                      alt.Tooltip('date:T', format=fulldate_format),
+                      alt.Tooltip('value:Q', format=',')],
+    "vaccines_pop": ['county', 'legend_value',
+                      alt.Tooltip('date:T', format=fulldate_format),
+                      alt.Tooltip('proportion:Q', format='.2f')], 
+    "vaccines_age": ['county', 'demographic_value',
+                      alt.Tooltip('date:T', format=fulldate_format),
+                      alt.Tooltip('proportion:Q', format='.2f')], 
+    
+}
