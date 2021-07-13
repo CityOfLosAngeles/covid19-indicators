@@ -145,10 +145,12 @@ def setup_chart(df, neighborhood, chart_type):
     
     # Make cases charts
     cases_line = (base
-        .mark_line()
+        .mark_line(tooltip=True)
         .encode(
             y=alt.Y(plot_col, title="7-day avg"),
             color=alt.value(navy),
+            tooltip=[alt.Tooltip('date2:T', format=fulldate_format),
+                     alt.Tooltip(f"{plot_col}:Q", format=',.2f')]
         )
     )
     
@@ -161,18 +163,22 @@ def setup_chart(df, neighborhood, chart_type):
     )
     
     ptile25_line = (base
-        .mark_line()
+        .mark_line(tooltip=True)
         .encode(
             y=alt.Y(p25_col, title="7-day avg"),
             color=alt.value(gray),
+            tooltip=[alt.Tooltip('date2:T', format=fulldate_format),
+                     alt.Tooltip(f"{p25_col}:Q", format=',.2f')]
         )
     )
     
     ptile75_line = (base
-        .mark_line()
+        .mark_line(tooltip=True)
         .encode(
             y=alt.Y(p75_col, title="7-day avg"),
             color=alt.value(gray),
+            tooltip=[alt.Tooltip('date2:T', format=fulldate_format), 
+                     alt.Tooltip(f"{p75_col}:Q", format=',.2f')]
         )
     )
     
@@ -212,7 +218,8 @@ def make_chart(df, neighborhood):
     display(Markdown(f"#### {neighborhood} ({group_name})"))
     summary_sentence(subset_df, neighborhood)
 
-    make_charts.show_svg(combined_chart)
+    #make_charts.show_svg(combined_chart)
+    return combined_chart
     
         
         
