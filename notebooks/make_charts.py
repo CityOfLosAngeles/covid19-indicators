@@ -102,7 +102,7 @@ def setup_cases_deaths_chart(df, geog, name):
             y=alt.Y("cases_avg7:Q", title="7-day avg"),
             color=alt.value(navy),
             tooltip=['county',
-              alt.Tooltip('date:T', format=fulldate_format),
+              alt.Tooltip('date2:T', format=fulldate_format, title="date"),
               alt.Tooltip('cases_avg7:Q', format=',.2f'),
              ]
         )
@@ -114,15 +114,6 @@ def setup_cases_deaths_chart(df, geog, name):
         .encode(
             y=alt.Y("cases_avg7:Q", title="7-day avg"),
             color=alt.value(light_gray)
-        )
-    )
-    
-    cases_extra_outline = (
-        base_2weeks
-        .mark_line()
-        .encode(
-            y=alt.Y("cases_avg7:Q", title="7-day avg"),
-            color=alt.value(navy_outline)
         )
     )
     
@@ -149,7 +140,7 @@ def setup_cases_deaths_chart(df, geog, name):
 
 
     cases_chart = (
-        (cases_line + cases_shaded + cases_extra_outline + 
+        (cases_shaded + cases_line + 
          tier1_hline + tier2_hline + tier3_hline)
         .properties(
               title=f"{chart_title}: New Cases", width=chart_width, height=chart_height
@@ -165,7 +156,7 @@ def setup_cases_deaths_chart(df, geog, name):
             y=alt.Y("deaths_avg7:Q", title="7-day avg"),
             color=alt.value(blue),
             tooltip=['county',
-                alt.Tooltip('date:T', format=fulldate_format),
+                alt.Tooltip('date2:T', format=fulldate_format, title="date"),
                 alt.Tooltip('deaths_avg7:Q', format=',.2f')]
         )
     )
@@ -177,19 +168,10 @@ def setup_cases_deaths_chart(df, geog, name):
             y=alt.Y("deaths_avg7:Q", title="7-day avg"),
             color=alt.value(light_gray)
         )
-    )
-    
-    deaths_extra_outline = (
-        base_2weeks
-        .encode(
-            y=alt.Y("deaths_avg7:Q", title="7-day avg"),
-            color=alt.value(blue_outline)
-        )
-    )    
-    
+    )  
 
     deaths_chart = (
-        (deaths_line + deaths_shaded + deaths_extra_outline)
+        (deaths_shaded + deaths_line)
               .properties(
                   title=f"{chart_title}: New Deaths", width=chart_width, height=chart_height
                 )
@@ -589,7 +571,7 @@ def add_tooltip(chart, chart_type):
 
 tooltip_args_dict = {
     "hospitalizations": ['county', 'type',
-                      alt.Tooltip('date2:T', format=fulldate_format),
+                      alt.Tooltip('date2:T', format=fulldate_format, title="date"),
                       alt.Tooltip('num:Q', format=',.2f')],
     "vaccines_type": ['county', 'brand',
                       alt.Tooltip('date:T', format=fulldate_format),
