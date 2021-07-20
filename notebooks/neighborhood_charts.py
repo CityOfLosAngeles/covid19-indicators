@@ -149,7 +149,7 @@ def setup_chart(df, neighborhood, chart_type):
         .encode(
             y=alt.Y(plot_col, title="7-day avg"),
             color=alt.value(navy),
-            tooltip=[alt.Tooltip('date2:T', format=fulldate_format),
+            tooltip=[alt.Tooltip('date2:T', format=fulldate_format, title="date"),
                      alt.Tooltip(f"{plot_col}:Q", format=',.2f')]
         )
     )
@@ -167,7 +167,7 @@ def setup_chart(df, neighborhood, chart_type):
         .encode(
             y=alt.Y(p25_col, title="7-day avg"),
             color=alt.value(gray),
-            tooltip=[alt.Tooltip('date2:T', format=fulldate_format),
+            tooltip=[alt.Tooltip('date2:T', format=fulldate_format, title="date"),
                      alt.Tooltip(f"{p25_col}:Q", format=',.2f')]
         )
     )
@@ -177,7 +177,7 @@ def setup_chart(df, neighborhood, chart_type):
         .encode(
             y=alt.Y(p75_col, title="7-day avg"),
             color=alt.value(gray),
-            tooltip=[alt.Tooltip('date2:T', format=fulldate_format), 
+            tooltip=[alt.Tooltip('date2:T', format=fulldate_format, title="date"), 
                      alt.Tooltip(f"{p75_col}:Q", format=',.2f')]
         )
     )
