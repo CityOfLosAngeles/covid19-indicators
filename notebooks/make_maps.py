@@ -11,11 +11,14 @@ from branca.element import Figure
 import folium
 from folium.features import GeoJsonPopup, GeoJsonTooltip
 
-def make_choropleth_map(df, plot_col, popup_dict, tooltip_dict, colorscale, fig_width, fig_height):
+def make_choropleth_map(df, plot_col, 
+                        popup_dict, tooltip_dict, colorscale, 
+                        fig_width, fig_height, 
+                        zoom=6, centroid = [36.2, -119.1]):
     fig = Figure(width = fig_width, height = fig_height)
     
-    m = folium.Map(location=[36.2, -119.1], tiles='cartodbpositron', 
-               zoom_start=6, width=fig_width,height=fig_height)
+    m = folium.Map(location=centroid, tiles='cartodbpositron', 
+               zoom_start=zoom, width=fig_width,height=fig_height)
 
 
     popup = GeoJsonPopup(
