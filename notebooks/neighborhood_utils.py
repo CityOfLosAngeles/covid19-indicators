@@ -3,6 +3,7 @@ Functions to clean up neighborhood data
 and feed into interactive charts
 """
 import numpy as np
+import geopandas as gpd
 import pandas as pd
 
 from datetime import date, timedelta
@@ -265,3 +266,31 @@ def clean_testing_data():
     df3.to_parquet(f"{S3_FILE_PATH}la-county-neighborhood-testing-time-series.parquet")
     
     return df3
+
+
+
+def clean_zipcode_vax_data():
+    URL = (
+        "https://raw.githubusercontent.com/datadesk/california-coronavirus-data/master/"
+        "cdph-vaccination-zipcode-totals.csv"
+    )    
+    ZIPCODE_POLYGONS = (
+        "https://github.com/datadesk/california-coronavirus-data/raw/master/"
+        "latimes-zipcode-polygons.geojson"
+    )
+    
+    df = pd.read_csv(URL)
+    polygons = gpd.read_file(ZIPCODE_POLYGONS)
+    
+    gdf = pd.merge(polygons[["id", "geometry"]].astype({"id": "int"}), 
+         df, 
+         on = "id", 
+         how = "inner", validate = "1:m")
+    
+    gdf = gdf.assign(
+        date = pd.to_datetime(gdf.date),
+        zipcode = gdf['id'],
+    )[["date", "county", "zipcode", "population", 
+       "at_least_one_dose_percent", "fully_vaccinated_percent", "geometry"]]
+    
+    return gdf
