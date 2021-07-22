@@ -294,3 +294,35 @@ def clean_zipcode_vax_data():
        "at_least_one_dose_percent", "fully_vaccinated_percent", "geometry"]]
     
     return gdf
+
+
+# Calculate average vaccination rate (weighted avg)
+def calculate_county_avg(df, group_by = "county", output_col = "fully_vaccinated_percent"):
+    group_cols = ["population", "at_least_one_dose_percent", 
+                  "fully_vaccinated_percent"]
+    
+    if group_by == "county": 
+        keep_cols = ["zipcode"] + group_cols
+        
+    elif group_by == "aggregate_region":
+        keep_cols = group_cols
+        
+    df = (df[(df.date == df.date.max()) & 
+            (df.population > 0)]
+          [keep_cols]  
+          .drop_duplicates()
+          .reset_index(drop=True)
+         )
+    
+    colname = f"{output_col.replace('percent', 'num')}"
+    df = df.assign(
+        new_col = df.apply(lambda x: x[output_col] * x.population, axis=1)
+    ).rename(columns = {"new_col": f"{colname}"})
+
+    # Calculate county-level % fully vax
+    denominator = df.population.sum().astype(int)
+    numerator = df[colname].sum().astype(float)
+    
+    vax_rate = round(numerator / denominator, 3)
+    
+    return round(vax_rate * 100, 1)
