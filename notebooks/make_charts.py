@@ -72,6 +72,13 @@ def setup_cases_deaths_chart(df, geog, name):
     if geog == "lacity":
         chart_title = f"{name}"
     
+    # Set y-axis min/max, since sometimes, numbers dip below 0, which would be mistakes
+    # Can't just set min, must set min/max    
+    # Alternatively, can drop the values that fall below 0 or set to 0?
+    df = df[(df.cases_avg7 > 0) & (df.deaths_avg7 > 0)]
+    cases_max = df.cases_avg7.max()
+    deaths_max = df.deaths_avg7.max()
+    
     # Set up base charts
     base = (alt.Chart(
         df.drop(columns = "date"))
@@ -99,7 +106,7 @@ def setup_cases_deaths_chart(df, geog, name):
         base
         .mark_line(tooltip=True)
         .encode(
-            y=alt.Y("cases_avg7:Q", title="7-day avg"),
+            y=alt.Y("cases_avg7:Q", title="7-day avg", scale=alt.Scale(domain=[0, cases_max])),
             color=alt.value(navy),
             tooltip=['county',
               alt.Tooltip('date2:T', format=fulldate_format, title="date"),
@@ -153,7 +160,7 @@ def setup_cases_deaths_chart(df, geog, name):
         base
         .mark_line(tooltip=True)
         .encode(
-            y=alt.Y("deaths_avg7:Q", title="7-day avg"),
+            y=alt.Y("deaths_avg7:Q", title="7-day avg", scale=alt.Scale(domain=[0, deaths_max])),
             color=alt.value(blue),
             tooltip=['county',
                 alt.Tooltip('date2:T', format=fulldate_format, title="date"),
