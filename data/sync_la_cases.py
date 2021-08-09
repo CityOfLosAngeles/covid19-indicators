@@ -21,9 +21,12 @@ sheet_name = "CASE_DATA"
 def get_data(workbook, sheet_name):
     df = pd.read_excel(workbook, sheet_name=sheet_name)
 
-    keep_cols = ["Date", "City of LA Cases", "City of LA New Cases", 
+    keep_cols = ["Unnamed: 0", "City of LA Cases", "City of LA New Cases", 
                 "LA_CITY_DEATHS", "LA_CITY_NEW_DEATHS"]
-    df = df.loc[:, keep_cols]
+    
+    df = df[keep_cols].assign(
+        Date = pd.to_datetime(df["Unnamed: 0"])
+    )
 
     """
     These columns are read in with Excel formulas...

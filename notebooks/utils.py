@@ -358,7 +358,7 @@ def prep_lacity_cases(start_date):
                      "city_deaths": "deaths",
                      "city_new_deaths": "new_deaths",
                      }
-        )
+        ).drop(columns = "Unnamed: 0")
         .sort_values("date")
         .reset_index(drop=True)
     )
@@ -368,7 +368,9 @@ def prep_lacity_cases(start_date):
     
     # Assign City of LA pop, then tier cutoffs will work
     df = df.assign(
-        city_pop = 3_990_000
+        city_pop = 3_990_000,
+        # Once we encoded county as tooltip for charting, we need county as a column
+        county = "Los Angeles",
     )
     
     df = find_tier_cutoffs(df, "city_pop")
