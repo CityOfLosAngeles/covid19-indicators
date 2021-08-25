@@ -4,8 +4,8 @@ Functions to see if indicators are met for yesterday.
 import numpy as np
 import pandas as pd
 
-import default_parameters
-import utils
+from processing_utils import default_parameters
+from processing_utils import utils
 
 fulldate_format = default_parameters.fulldate_format
 time_zone = default_parameters.time_zone

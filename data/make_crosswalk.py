@@ -5,6 +5,8 @@ Aggregate county population to get MSA population.
 import numpy as np
 import pandas as pd
 
+from processing_utils import default_parameters
+
 NBER_CROSSWALK_URL = "https://data.nber.org/cbsa-csa-fips-county-crosswalk/cbsa2fipsxw.csv"
 
 LOOKUP_TABLE_URL = (
@@ -13,8 +15,7 @@ LOOKUP_TABLE_URL = (
     "UID_ISO_FIPS_LookUp_Table.csv"
 )
 
-bucket_name = "public-health-dashboard"
-S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
+S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
 
 # Define functions to clean data before merging

@@ -8,8 +8,8 @@ https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/COVID19CountyMonitoring
 import numpy as np
 import pandas as pd
 
-import default_parameters
-import utils
+from processing_utils import default_parameters
+from processing_utils import utils
 
 fulldate_format = default_parameters.fulldate_format
 time_zone = default_parameters.time_zone
@@ -24,7 +24,7 @@ three_days_ago = default_parameters.three_days_ago
 eight_days_ago = default_parameters.eight_days_ago
 nine_days_ago = default_parameters.nine_days_ago
 
-S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
 # Units for case rates are per 100k
 POP_RATE = 100_000

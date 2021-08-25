@@ -12,8 +12,8 @@ https://github.com/CityOfLosAngeles/covid19-rmarkdown
 import numpy as np
 import pandas as pd
 
-import default_parameters
-import utils
+from processing_utils import default_parameters
+from processing_utils import utils
 
 from IPython.display import Markdown, HTML
 

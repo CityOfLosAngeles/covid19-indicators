@@ -162,12 +162,17 @@ def derive_columns(df, sort_cols, group_cols):
                          .diff(periods=1)
                         ),
             cases_per100k = df.cases / df.population * POP_DENOM,
+            new_deaths = (df.sort_values(sort_cols).groupby(group_cols)["deaths"]
+                          .diff(periods=1)
+                         ),
+            deaths_per100k = df.deaths / df.population * POP_DENOM,
         ).sort_values(sort_cols)
         .reset_index(drop=True)
     )
     
     df = df.assign(
-        new_cases = df.new_cases.fillna(0)
+        new_cases = df.new_cases.fillna(0),
+        new_deaths = df.new_deaths.fillna(0),
     )
     
     # Calculate rolling averages
@@ -175,6 +180,9 @@ def derive_columns(df, sort_cols, group_cols):
             cases_avg7 = df.cases.rolling(window=7).mean(),
             new_cases_avg7 = df.new_cases.rolling(window=7).mean(),
             cases_per100k_avg7 = df.cases_per100k.rolling(window=7).mean(),
+            deaths_avg7 = df.deaths.rolling(window=7).mean(),
+            new_deaths_avg7 = df.new_deaths.rolling(window=7).mean(),
+            deaths_per100k_avg7 = df.deaths_per100k.rolling(window=7).mean(),
         )   
     )
     

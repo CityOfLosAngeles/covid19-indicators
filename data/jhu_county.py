@@ -7,10 +7,11 @@ import numpy as np
 import os
 import pandas as pd
 
+from processing_utils import default_parameters
+
 from datetime import datetime, timedelta
 
-bucket_name = "public-health-dashboard"
-S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
+S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
 # URL to JHU confirmed cases US county time series.
 CASES_URL = (

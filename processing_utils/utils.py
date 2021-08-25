@@ -7,9 +7,9 @@ import numpy as np
 import pandas as pd
 import pytz
 
-import default_parameters
-import make_charts
-import useful_dict
+from processing_utils import default_parameters
+from processing_utils import make_charts
+from processing_utils import useful_dict
 
 from datetime import date, datetime, timedelta
 from IPython.display import display, Markdown

@@ -2,6 +2,9 @@ import pandas as pd
 import pytz
 from datetime import date, datetime, timedelta
 
+bucket_name = "public-health-dashboard"
+S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
+
 county_state_name = "Los Angeles, CA"
 state_name = "California"
 msa_name = "Los Angeles-Long Beach-Anaheim, CA"

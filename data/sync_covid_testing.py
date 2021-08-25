@@ -2,12 +2,11 @@
 Pull data from MOPS COVID Dashboard and upload to S3
 """
 import datetime
-import os
 import pandas as pd
-import pytz
 
-bucket_name = "public-health-dashboard"
-S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
+from processing_utils import default_parameters
+
+S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
         
 """

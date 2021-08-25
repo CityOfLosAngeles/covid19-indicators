@@ -2,6 +2,8 @@ import geopandas as gpd
 import pandas as pd
 import pytz
 
+from processing_utils import default_parameters
+
 from datetime import datetime
 
 COMMIT = "8feed42789d9814152c478a57c6d370167f8df90"
@@ -11,7 +13,8 @@ HISTORICAL_URL = (
     f"lacounty_covid19_data/{COMMIT}/data/Covid-19.csv"
 )
 
-S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+
+S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
 """
 Between 7/14/20 - 1/21/21, used a function to clean ESRI feature layer and 

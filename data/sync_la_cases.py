@@ -5,10 +5,11 @@ Mayor's Office Daily COVID-19 Report and upload to S3
 import pandas as pd
 from datetime import date
 
+from processing_utils import default_parameters
+
 today_date = date.today()
 
-bucket_name = "public-health-dashboard"
-S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
+S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
 workbook = (
     "https://docs.google.com/spreadsheets/d/"

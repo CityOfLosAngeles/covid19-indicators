@@ -3,6 +3,7 @@ Pull data from CA open data related to medical surge facilities
 and hospital data
 """
 import pandas as pd
+from processing_utils import default_parameters
 
 """ 
 The catalog file seems to throw up an error 
@@ -28,8 +29,7 @@ SURGE_CAPACITY_URL = (
     "ef6675e7-cd3a-4762-ba75-2ef78d6dc334/download/bed_surge.csv"
 )
 
-bucket_name = "public-health-dashboard"
-S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
+S3_FILE_PATH = default_parameters.S3_FILE_PATH 
 
 def clean_surge_data(df):
     keep = ["county", "date", "type_of_facility", "available_beds", "occupied_beds"] 

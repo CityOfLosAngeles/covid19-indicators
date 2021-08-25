@@ -5,9 +5,9 @@ and feed into interactive charts
 import altair as alt
 import pandas as pd
 
-import default_parameters
-import make_charts
-import neighborhood_utils
+from processing_utils import default_parameters
+from processing_utils import make_charts
+from processing_utils import neighborhood_utils
 
 from datetime import timedelta
 from IPython.display import display_html, Markdown, HTML, Image

@@ -7,9 +7,9 @@ Functions to create choropleth maps.
 # https://medium.com/analytics-vidhya/create-and-visualize-choropleth-map-with-folium-269d3fd12fa0
 # https://stackoverflow.com/questions/47846744/create-an-asymmetric-colormap
 """
-from branca.element import Figure
 import folium
 from folium.features import GeoJsonPopup, GeoJsonTooltip
+from branca.element import Figure
 
 def make_choropleth_map(df, plot_col, 
                         popup_dict, tooltip_dict, colorscale, 

@@ -5,8 +5,9 @@ import altair as alt
 import altair_saver
 import os
 import pandas as pd
-import utils
-import default_parameters
+
+from processing_utils import default_parameters
+from processing_utils import utils
 
 from IPython.display import display, SVG
 
