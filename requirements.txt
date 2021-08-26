@@ -1,1 +1,2 @@
 gcsfs
+python-dotenv

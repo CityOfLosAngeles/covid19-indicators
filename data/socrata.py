@@ -1,3 +1,4 @@
+import dotenv
 import os
 import pandas as pd
 
@@ -7,6 +8,8 @@ from processing_utils import utils
 from processing_utils import socrata_utils
 
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
+
+dotenv.load_dotenv()
 
 SOCRATA_USER = os.environ["SOCRATA_USERNAME"]
 SOCRATA_PASSWORD = os.environ["SOCRATA_PASSWORD"]
