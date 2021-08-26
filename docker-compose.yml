@@ -15,4 +15,4 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - GITHUB_TOKEN_PASSWORD=${GITHUB_TOKEN_PASSWORD:?Missing GitHub Token}
-    command: "jupyter-lab --no-browser --ip=\"*\" --allow-root --port=8888 --NotebookApp.notebook_dir=/app --NotebookApp.terminado_settings='{\"shell_command\": [\"bash\"]}' --LabApp.token=\"\" --LabApp.password=\"\""
+    command: ["/bin/sh","-c","pip install -e /app && jupyter-lab --no-browser --ip=\"*\" --allow-root --port=8888 --NotebookApp.notebook_dir=/app --NotebookApp.terminado_settings='{\"shell_command\": [\"bash\"]}' --LabApp.token=\"\" --LabApp.password=\"\""]

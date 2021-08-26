@@ -6,12 +6,14 @@ Let's check in CSV for others.
 import os
 
 from civis_aqueduct_utils.github import upload_file_to_github
+from processing_utils import default_parameters
 
 # Constants for loading the file to master branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "master"
-S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+S3_FILE_PATH = default_parameters.S3_FILE_PATH
+
 DEFAULT_COMMITTER = {
     "name": "Los Angeles ITA data team",
     "email": "ITAData@lacity.org",
