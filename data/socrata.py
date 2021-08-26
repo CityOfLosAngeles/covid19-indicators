@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 
 from processing_utils import default_parameters
@@ -5,12 +6,10 @@ from processing_utils import neighborhood_utils
 from processing_utils import utils
 from processing_utils import socrata_utils
 
-import credentials
-
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
-SOCRATA_USER = credentials.SOCRATA_USERNAME
-SOCRATA_PASSWORD = credentials.SOCRATA_PASSWORD
+SOCRATA_USER = os.environ["SOCRATA_USERNAME"]
+SOCRATA_PASSWORD = os.environ["SOCRATA_PASSWORD"]
 
 DATAFRAME_DICT = {
     """
