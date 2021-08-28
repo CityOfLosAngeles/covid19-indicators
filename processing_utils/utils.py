@@ -150,7 +150,7 @@ def prep_county(county_state_name, start_date):
                   on = "fips", how = "inner", validate = "m:1"
     )
     
-    df = find_outliers(df, threshold=10)
+    df = find_outliers(df, threshold=3)
     df = calculate_rolling_average(df, start_date, today_date)
     df = find_tier_cutoffs(df, "county_pop")
     
@@ -203,7 +203,7 @@ def prep_state(state_name, start_date):
                   on = "state", how = "inner", validate = "m:1"
     )
     
-    df = find_outliers(df, threshold=10)
+    df = find_outliers(df, threshold=3)
     df = calculate_rolling_average(df, start_date, today_date)
     df = find_tier_cutoffs(df, "state_pop")
 
@@ -249,7 +249,7 @@ def prep_msa(msa_name, start_date):
         ),
     )
     
-    df = find_outliers(df, threshold=10)
+    df = find_outliers(df, threshold=3)
     df = calculate_rolling_average(df, start_date, today_date)
     df = find_tier_cutoffs(df, "msa_pop")
 
@@ -292,8 +292,8 @@ def find_tier_cutoffs(df, population_col):
     return df
 
 
-def find_outliers(df, threshold=10):
-    # If the new cases is more than 10x the previous day's or the next day's new cases
+def find_outliers(df, threshold=5):
+    # If the new cases is more than 5x the previous day's or the next day's new cases
     # it's probably an outlier
     # Found 1 case of outlier in LA on 5/27/21, where it showed over 4,000 new cases in the raw data
     # But surrounding days are in the 100-200's.
@@ -313,13 +313,14 @@ def find_outliers(df, threshold=10):
     )
     
     # When we get to small numbers of new cases, it's easy for it to oscillate more
-    # Let's only apply outlier rule if previous/post day new cases > 20. 
-    # Definitely when it's single digits, cases can easily jump from 2 new cases to 20 new cases
+    # Let's only apply outlier rule if previous/post day new cases > 100. 
+    # Definitely when it's single digits, cases can easily jump from 10 new cases to 100 new cases
+    SMALL_NUMBERS_CUTOFF = 100
     df = df.assign(
         outlier = (df.dropna()
                    .apply(lambda x: 1 if (x.new_cases >= (x.previous_day*threshold)) and 
                           (x.new_cases >= (x.post_day*threshold)) and 
-                          (x.previous_day > 20) and (x.post_day > 20)
+                          (x.previous_day > SMALL_NUMBERS_CUTOFF) and (x.post_day > SMALL_NUMBERS_CUTOFF)
                            else 0, axis=1)
                   )
     )

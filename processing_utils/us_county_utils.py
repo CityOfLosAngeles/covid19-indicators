@@ -59,7 +59,7 @@ def clean_jhu(start_date):
                   on = "fips", how = "inner", validate = "m:1"
     )
     
-    df = utils.find_outliers(df, threshold=10)
+    df = utils.find_outliers(df, threshold=3)
     df = utils.calculate_rolling_average(df, start_date, today_date)
     df = utils.find_tier_cutoffs(df, "county_pop")
     df = utils.doubling_time(df, window=7)
