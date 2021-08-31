@@ -15,10 +15,8 @@ SOCRATA_USER = os.environ["SOCRATA_USERNAME"]
 SOCRATA_PASSWORD = os.environ["SOCRATA_PASSWORD"]
 
 DATAFRAME_DICT = {
-    """
-    key: str, socrata_dataset_id
-    value: str, csv_file file path
-    """
+    #key: str, socrata_dataset_id
+    #value: str, csv_file file path
     "jsff-uc6b": "us-county-time-series.csv",
     "fvye-93wd": "la-county-neighborhood-time-series.csv",
     "rpp7-mevy": "vaccinations-by-county.csv",
