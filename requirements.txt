@@ -1,2 +1,9 @@
 gcsfs
 python-dotenv
+google-cloud-bigquery
+sqlalchemy<1.4.0  
+ibis>=1.4.0
+ibis-framework>=1.4.0 
+ibis-framework[bigquery] 
+ibis-bigquery>=0.1.1
+sendgrid
