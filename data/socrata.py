@@ -1,5 +1,4 @@
 import dotenv
-import gcsfs
 import os
 import pandas as pd
 
@@ -14,13 +13,6 @@ dotenv.load_dotenv()
 
 SOCRATA_USER = os.environ["SOCRATA_USERNAME"]
 SOCRATA_PASSWORD = os.environ["SOCRATA_PASSWORD"]
-
-CREDENTIAL = "../gcp-credential.json"
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = f'{CREDENTIAL}'
-
-gs = gcsfs.GCSFileSystem(project="ita-datalakepoc")
-GCS_BUCKET_NAME = "electedoffice_vaccines_dashboard"
-
 
 DATAFRAME_DICT = {
     #key: str, socrata_dataset_id
