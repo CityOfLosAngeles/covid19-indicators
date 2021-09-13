@@ -22,7 +22,6 @@ DATAFRAME_DICT = {
     "rpp7-mevy": "vaccinations-by-county.csv",
     "iv7a-6rrq": "vaccinations-by-demographics-county.csv",
     "w9vh-pj9e": "la-county-testing-time-series.csv",
-    "5xru-6ubk": "la-city-vaccines.csv",
 }
 
 def us_county(csv_file, county_list=["Los Angeles"]):
@@ -116,39 +115,6 @@ def la_county_testing(csv_file):
     df = df[df.date <= default_parameters.two_days_ago]
     
     return df
-
-
-def city_of_la_vaccinations(csv_file):
-    file_name = csv_file.replace('-', '_')
-    
-    df = pd.read_csv(f"gcs://{GCS_BUCKET_NAME}/data/{file_name}", 
-                     dtype={"patient_zipcode": "str"})  
-    
-    # Aggregate data for Socrata
-    group_cols = [
-        "appointment_date",
-        "site_type", "agegroup", "race_ethnicity", 
-        "patient_race", "patient_ethnicity", "patient_gender", 
-        "vaccine_site_name", "shot_number", "brand", "appt_status",
-    ]
-
-    '''
-    NOTE: appointment_date and apptdate are both present
-    appointment_date may be when the patient signed up?
-    apptdate is date of physical appt? 
-    Double check. Also, correct the 1972 errors in apptdate, 
-    We know this must be true: appointment_date <= apptdate, but there's hundreds of thousands that fail this condition
-    '''
- 
-    df2 = (df.groupby(group_cols)
-           .agg({"vaccine_id": "count"})
-           .reset_index()
-           .rename(columns = {
-               "appointment_date": "date",
-               "vaccine_id": "num_vaccines"})
-          )
-    
-    return df2
     
 
 def extra_processing(csv_file):
@@ -164,8 +130,6 @@ def extra_processing(csv_file):
         df = ca_vaccinations_demographics(csv_file)
     elif csv_file=="la-county-testing-time-series.csv": 
         df = la_county_testing(csv_file)
-    elif csv_file=="la-city-vaccines.csv":
-        df = city_of_la_vaccinations(csv_file)
     else:
         df = pd.read_csv(f"{S3_FILE_PATH}{csv_file}")
     
