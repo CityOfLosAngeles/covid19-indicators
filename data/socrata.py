@@ -2,6 +2,9 @@ import dotenv
 import os
 import pandas as pd
 
+from arcgis.gis import GIS
+from arcgis.features import FeatureLayerCollection, FeatureLayer
+
 from processing_utils import default_parameters
 from processing_utils import neighborhood_utils
 from processing_utils import utils
@@ -14,6 +17,9 @@ dotenv.load_dotenv()
 SOCRATA_USER = os.environ["SOCRATA_USERNAME"]
 SOCRATA_PASSWORD = os.environ["SOCRATA_PASSWORD"]
 
+LAHUB_USER = os.environ["LAHUB_USER"]
+LAHUB_PASSWORD = os.environ["LAHUB_PASSWORD"]
+
 DATAFRAME_DICT = {
     #key: str, socrata_dataset_id
     #value: str, csv_file file path
@@ -22,6 +28,7 @@ DATAFRAME_DICT = {
     "rpp7-mevy": "vaccinations-by-county.csv",
     "iv7a-6rrq": "vaccinations-by-demographics-county.csv",
     "w9vh-pj9e": "la-county-testing-time-series.csv",
+    "7yet-b6aj": "la-county-neighborhood-vaccination.csv",
 }
 
 def us_county(csv_file, county_list=["Los Angeles"]):
@@ -115,7 +122,42 @@ def la_county_testing(csv_file):
     df = df[df.date <= default_parameters.two_days_ago]
     
     return df
+
+
+def la_neighborhood_vax(csv_file):
+    #ITEM_URL = "https://lahub.maps.arcgis.com/home/item.html?id=10532e9971e647caadfd69ecbffc4c74"
+    #SERVICE_URL "https://services5.arcgis.com/VAb1qw880ksyBtIL/arcgis/rest/services/Los_Angeles_COVID_Cases_and_Vaccinations/FeatureServer/0"
+
+    geohubUrl="https://lahub.maps.arcgis.com"
+    FEATURE_LAYER_ID = "10532e9971e647caadfd69ecbffc4c74"
+    geohub = GIS(geohubUrl, LAHUB_USER, LAHUB_PASSWORD)
     
+    flayer = geohub.content.get(FEATURE_LAYER_ID)
+    
+    # Can't get feature layer collection
+    # Will query and return the spatial df instead
+    # Table is not time-series, it's the most up-to-date info, based on when it was last downloaded
+    sdf = flayer.layers[0].query().sdf
+    
+    keep_cols = [
+        "CITY_TYPE", "LCITY", "COMMUNITY", "LABEL", 
+        "SOURCE", "City_Community", 
+        "Cases", "Case_Rate", "Deaths", "Death_Rate", 
+        'F16__with_1__Dose', 'F16__Pop__Vaccinated____', 'F65__with_1__Dose',
+        'F65__Pop__Vaccinated____',
+    ]
+
+    sdf2 = (sdf[keep_cols]
+            .rename(columns = {
+                'F16__with_1__Dose': 'pop16+_atleast1dose', 
+                'F16__Pop__Vaccinated____': 'pop16+_pct_partialvax',
+                'F65__with_1__Dose': 'pop65+_atleast1dose',
+                'F65__Pop__Vaccinated____': 'pop65+_pct_partialvax',
+            })
+           )
+    
+    return sdf2
+
 
 def extra_processing(csv_file):
     if csv_file=="us-county-time-series.csv":
@@ -130,6 +172,8 @@ def extra_processing(csv_file):
         df = ca_vaccinations_demographics(csv_file)
     elif csv_file=="la-county-testing-time-series.csv": 
         df = la_county_testing(csv_file)
+    elif csv_file=="la-county-neighborhood-vaccination.csv":
+        df = la_neighborhood_vax(csv_file)
     else:
         df = pd.read_csv(f"{S3_FILE_PATH}{csv_file}")
     
@@ -144,8 +188,10 @@ for socrata_id, filename in DATAFRAME_DICT.items():
     df.to_csv(f"{filename}", index=False)
     print(f"{filename} produced")
     
-    #socrata_utils.overwrite_socrata_table(SOCRATA_USER, SOCRATA_PASSWORD, 
-    #                                      filename, socrata_dataset_id = socrata_id)
-    socrata_utils.upsert_socrata_rows(SOCRATA_USER, SOCRATA_PASSWORD, 
-                                      filename, socrata_dataset_id = socrata_id)
+    if filename == "la-county-neighborhood-vaccination.csv":
+        socrata_utils.overwrite_socrata_table(SOCRATA_USER, SOCRATA_PASSWORD, 
+                                              filename, socrata_dataset_id = socrata_id)
+    else:
+        socrata_utils.upsert_socrata_rows(SOCRATA_USER, SOCRATA_PASSWORD, 
+                                          filename, socrata_dataset_id = socrata_id)
     
