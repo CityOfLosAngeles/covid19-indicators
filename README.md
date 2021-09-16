@@ -158,3 +158,7 @@ To setup the report for daily emailing, you'll need to have AWS SES configured a
 
 1. `docker-compose build`
 1. `docker-compose run lab python /app/main.py` 
+
+## Pushing to Socrata Open Data Portal
+
+A set of datasets are also published to `data/socrata.py`.
