@@ -153,6 +153,7 @@ def la_neighborhood_vax(csv_file):
                 'F16__Pop__Vaccinated____': 'pop16+_pct_partialvax',
                 'F65__with_1__Dose': 'pop65+_atleast1dose',
                 'F65__Pop__Vaccinated____': 'pop65+_pct_partialvax',
+                'LCITY': 'CITY',
             })
            )
     
