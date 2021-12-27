@@ -514,6 +514,7 @@ def setup_county_vaccinated_population_chart(df, county_name):
     legend_dict = {
         "cumulative_at_least_one_dose": "At least 1 dose", 
         "cumulative_fully_vaccinated": "Fully vaccinated", 
+        "cumulative_booster_recip_count": "Boosted",
     }
     
     df = (df[(df.county==county_name) &
@@ -530,8 +531,8 @@ def setup_county_vaccinated_population_chart(df, county_name):
                    axis=alt.Axis(format="%")),
             color=alt.Color("legend_value:N", legend=alt.Legend(title=""),
                             scale=alt.Scale(
-                                domain=["At least 1 dose", "Fully vaccinated"],
-                                range=[navy, blue])
+                                domain=["At least 1 dose", "Fully vaccinated", "Boosted"],
+                                range=[navy, blue, green])
                            )
         ).properties(title = f"{county_name} County: Vaccinated Population", 
                      width = chart_width*scaling_factor, height = chart_height)
