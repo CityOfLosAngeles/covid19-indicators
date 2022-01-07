@@ -129,7 +129,7 @@ def la_neighborhood_vax(csv_file):
     #SERVICE_URL "https://services5.arcgis.com/VAb1qw880ksyBtIL/arcgis/rest/services/Los_Angeles_COVID_Cases_and_Vaccinations/FeatureServer/0"
 
     geohubUrl="https://lahub.maps.arcgis.com"
-    FEATURE_LAYER_ID = "10532e9971e647caadfd69ecbffc4c74"
+    FEATURE_LAYER_ID = "61a92eb9d11c43b89ba22a94882a0c09"
     geohub = GIS(geohubUrl, LAHUB_USER, LAHUB_PASSWORD)
     
     flayer = geohub.content.get(FEATURE_LAYER_ID)
@@ -143,20 +143,14 @@ def la_neighborhood_vax(csv_file):
         "CITY_TYPE", "LCITY", "COMMUNITY", "LABEL", 
         "SOURCE", "City_Community", 
         "Cases", "Case_Rate", "Deaths", "Death_Rate", 
-        'F16__with_1__Dose', 'F16__Pop__Vaccinated____', 'F65__with_1__Dose',
-        'F65__Pop__Vaccinated____',
+        'Percent_of_People_with_1__Dose',
+        'Percent_of_People_Fully_Vaccina'
     ]
 
-    sdf2 = (sdf[keep_cols]
-            .rename(columns = {
-                'F16__with_1__Dose': 'pop16+_atleast1dose', 
-                'F16__Pop__Vaccinated____': 'pop16+_pct_partialvax',
-                'F65__with_1__Dose': 'pop65+_atleast1dose',
-                'F65__Pop__Vaccinated____': 'pop65+_pct_partialvax',
-                'LCITY': 'CITY',
-            })
-           )
-    
+    sdf2 = (sdf[keep_cols].rename(columns={
+        'Percent_of_People_Fully_Vaccina':'percent_of_people_fully_vaccina',
+        'LCITY':'CITY'
+        }))
     return sdf2
 
 
