@@ -61,7 +61,9 @@ def parse_columns(df):
     id_vars, dates = [], []
 
     for c in columns:
-        if (c.endswith("20") or (c.endswith("21"))):
+        if (c.endswith("20") or 
+            (c.endswith("21")) or (c.endswith("22"))
+           ):
             dates.append(c)
         else:
             id_vars.append(c)
