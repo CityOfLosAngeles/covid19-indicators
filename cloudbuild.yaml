@@ -10,3 +10,4 @@ steps:
   #           '--region=${_LOCATION}',
   #           '--platform=managed',
   #           '--image=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}']
+timeout: 6000s
