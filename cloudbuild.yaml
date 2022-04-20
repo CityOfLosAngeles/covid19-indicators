@@ -4,18 +4,18 @@ steps:
     args: [ 'build', '-t', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}', '.' ]
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}']
-  # - name: 'gcr.io/cloud-builders/gcloud'
-  #   args: ['run',
-  #           'deploy',
-  #           '${_SERVICE1}',
-  #           '--region=${_LOCATION}',
-  #           '--platform=managed',
-  #           '--image=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}']
-  # - name: 'gcr.io/cloud-builders/gcloud'
-  #   args: ['run',
-  #           'deploy',
-  #           '${_SERVICE2}',
-  #           '--region=${_LOCATION}',
-  #           '--platform=managed',
-  #           '--image=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run',
+            'deploy',
+            '${_SERVICE1}',
+            '--region=${_LOCATION}',
+            '--platform=managed',
+            '--image=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run',
+            'deploy',
+            '${_SERVICE2}',
+            '--region=${_LOCATION}',
+            '--platform=managed',
+            '--image=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}']
 timeout: 6000s
