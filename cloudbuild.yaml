@@ -19,3 +19,10 @@ steps:
   #           '--platform=managed',
   #           '--image=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}']
 timeout: 6000s
+
+# Substitution variables in Cloud Build Trigger
+# _LOCATION=us-west2
+# _REPOSITORY=covid19-indicators
+# _IMAGE=artifact-registry-cloud-build
+# _SERVICE1=tf-covid19-indicators-stage-1
+# _SERVICE2=tf-covid19-indicators-stage-2
