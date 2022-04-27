@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "c.NotebookApp.ip='$JUPYTER_LAB_IP'">/root/.jupyter/jupyter_notebook_config.py
+jupyter-lab --port $JUPYTER_LAB_PORT --allow-root

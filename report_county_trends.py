@@ -38,7 +38,8 @@ for key, file_name in notebooks_to_run.items():
         pm.execute_notebook(
             f'/app/notebooks/{key}',
             file_name,
-            cwd='/app/notebooks'
+            cwd='/app/notebooks',
+            log_output=True
         )
 
         print("Ran notebook")

@@ -8,3 +8,4 @@ ibis-framework>=1.4.0
 ibis-framework[bigquery] 
 ibis-bigquery>=0.1.1
 sendgrid
+s3fs
