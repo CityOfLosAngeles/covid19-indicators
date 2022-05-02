@@ -20,6 +20,14 @@ TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "gh-pages"
 
+CURRENT_BRANCH = os.environ["CURRENT_BRANCH"]
+env_list=dict(os.environ)
+search_str=CURRENT_BRANCH + "_env_PUBLISH_PATH"
+if env_list.has_key(search_str):
+    PUBLISH_PATH=os.environ[search_str]
+else:
+    PUBLISH_PATH="test_branch/"
+
 DEFAULT_COMMITTER = {
     "name": "Los Angeles ITA data team",
     "email": "ITAData@lacity.org",
@@ -27,10 +35,10 @@ DEFAULT_COMMITTER = {
 
 
 notebooks_to_run = {
-    "ca-counties.ipynb": "./ca-county-trends.ipynb",
-    "us-counties.ipynb": "./us-county-trends.ipynb", 
-    "la-neighborhoods.ipynb": "./la-neighborhoods-trends.ipynb",
-    "coronavirus-stats.ipynb": './coronavirus-stats.ipynb',
+    "ca-counties.ipynb": "./test-ca-county-trends.ipynb",
+    "us-counties.ipynb": "./test-us-county-trends.ipynb", 
+    "la-neighborhoods.ipynb": "./test-la-neighborhoods-trends.ipynb",
+    "coronavirus-stats.ipynb": './test-coronavirus-stats.ipynb',
 }
 
 for key, file_name in notebooks_to_run.items():
@@ -68,7 +76,7 @@ for key, file_name in notebooks_to_run.items():
             REPO,
             BRANCH,
             f"{html_file_name}",
-            f"{html_file_name}",
+            f"{PUBLISH_PATH}{html_file_name}",
             f"Update {name}",
             DEFAULT_COMMITTER,
         )
