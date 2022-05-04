@@ -3,7 +3,15 @@ import pytz
 from datetime import date, datetime, timedelta
 
 bucket_name = "public-health-dashboard"
-S3_FILE_PATH = f"s3://{bucket_name}/jhu_covid19/"
+env_list=dict(os.environ)
+if env_list.has_key("CURRENT_BRANCH")
+    CURRENT_BRANCH = os.environ["CURRENT_BRANCH"]
+    search_str=CURRENT_BRANCH + "_env_S3_FILE_PATH"
+    if env_list.has_key(search_str):
+        S3_FILE_PATH = os.environ[search_str]
+    else:
+        S3_FILE_PATH = f"s3://{bucket_name}/Test/jhu_covid19/"
+
 
 county_state_name = "Los Angeles, CA"
 state_name = "California"
