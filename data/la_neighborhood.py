@@ -166,7 +166,7 @@ def grab_today_from_rshiny():
 def update_neighborhood_data():
     fs=s3fs.S3FileSystem(anon=False)
     S3_FILE_PATH_SOURCE=S3_FILE_PATH
-    if !fs.exists(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet"):
+    if not fs.exists(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet"):
         S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
     historical_df = pd.read_parquet(f"{S3_FILE_PATH_SOURCE}la-county-neighborhood-time-series.parquet")
 
