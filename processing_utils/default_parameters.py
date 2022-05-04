@@ -13,6 +13,12 @@ if "CURRENT_BRANCH" in env_list:
     else:
         S3_FILE_PATH = f"s3://{bucket_name}/Test/jhu_covid19/"
 
+    search_str=CURRENT_BRANCH + "_env_S3_FILE_PATH_SOURCE"
+    if search_str in env_list:
+        S3_FILE_PATH_SOURCE = os.environ[search_str]
+    else:
+        S3_FILE_PATH_SOURCE = f"s3://{bucket_name}/jhu_covid19/"
+
 
 county_state_name = "Los Angeles, CA"
 state_name = "California"

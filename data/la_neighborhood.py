@@ -1,6 +1,7 @@
 import geopandas as gpd
 import pandas as pd
 import pytz
+import s3fs
 
 from processing_utils import default_parameters
 
@@ -163,7 +164,12 @@ def grab_today_from_rshiny():
 
 
 def update_neighborhood_data():
-    historical_df = pd.read_parquet(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet")
+    fs=s3fs.S3FileSystem(anon=False)
+    S3_FILE_PATH_SOURCE=S3_FILE_PATH
+    if !fs.exists(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet"):
+        S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
+    historical_df = pd.read_parquet(f"{S3_FILE_PATH_SOURCE}la-county-neighborhood-time-series.parquet")
+
     today_df = grab_today_from_rshiny()    
     
     replacement_names = {
