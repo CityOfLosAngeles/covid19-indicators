@@ -21,7 +21,7 @@ REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "gh-pages"
 
 env_list=dict(os.environ)
-if env_list.has_key("CURRENT_BRANCH")
+if env_list.has_key("CURRENT_BRANCH"):
     CURRENT_BRANCH = os.environ["CURRENT_BRANCH"]
     search_str=CURRENT_BRANCH + "_env_PUBLISH_PATH"
     if env_list.has_key(search_str):
