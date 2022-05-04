@@ -5,10 +5,10 @@ import os
 
 bucket_name = "public-health-dashboard"
 env_list=dict(os.environ)
-if env_list.has_key("CURRENT_BRANCH"):
+if "CURRENT_BRANCH" in env_list:
     CURRENT_BRANCH = os.environ["CURRENT_BRANCH"]
     search_str=CURRENT_BRANCH + "_env_S3_FILE_PATH"
-    if env_list.has_key(search_str):
+    if search_str in env_list:
         S3_FILE_PATH = os.environ[search_str]
     else:
         S3_FILE_PATH = f"s3://{bucket_name}/Test/jhu_covid19/"
