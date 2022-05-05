@@ -125,8 +125,12 @@ def grab_data_from_layer():
 df = clean_data()   
 today_df = grab_data_from_layer()
 """
+fs=s3fs.S3FileSystem(anon=False)
+S3_FILE_PATH_SOURCE=S3_FILE_PATH
+if not fs.exists(f"{S3_FILE_PATH}la-county-neighborhood-rshiny.csv"):
+    S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
 
-RSHINY_CASES = f"{S3_FILE_PATH}la-county-neighborhood-rshiny.csv"
+RSHINY_CASES = f"{S3_FILE_PATH_SOURCE}la-county-neighborhood-rshiny.csv"
 
 # Function to clean data since 2/1/21
 def grab_today_from_rshiny():
