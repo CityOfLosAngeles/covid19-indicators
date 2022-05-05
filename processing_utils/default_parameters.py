@@ -2,6 +2,14 @@ import pandas as pd
 import pytz
 from datetime import date, datetime, timedelta
 import os
+import s3fs
+
+def remap_missing_file (PATH1,PATH2,Filename):
+    fs=s3fs.S3FileSystem(anon=False)
+    tmp_path=PATH1
+    if not fs.exists(tmp_path+Filename):
+        tmp_path=PATH2
+    return tmp_path+Filename
 
 bucket_name = "public-health-dashboard"
 env_list=dict(os.environ)
