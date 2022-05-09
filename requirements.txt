@@ -6,6 +6,8 @@ sqlalchemy<1.4.0
 ibis>=1.4.0
 ibis-framework>=1.4.0 
 ibis-framework[bigquery] 
-ibis-bigquery>=0.1.1
+ibis-bigquery==2.0.0
 sendgrid
 s3fs
+pyarrow==1.0.1
+

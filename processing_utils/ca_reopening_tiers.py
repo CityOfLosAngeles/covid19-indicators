@@ -25,6 +25,7 @@ eight_days_ago = default_parameters.eight_days_ago
 nine_days_ago = default_parameters.nine_days_ago
 
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
+S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
 
 # Units for case rates are per 100k
 POP_RATE = 100_000

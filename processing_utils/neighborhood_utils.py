@@ -8,7 +8,9 @@ import pandas as pd
 
 from datetime import date, timedelta
 
-S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+#S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+S3_FILE_PATH = default_parameters.S3_FILE_PATH
+S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
 
 NEIGHBORHOOD_URL = f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet"
 
