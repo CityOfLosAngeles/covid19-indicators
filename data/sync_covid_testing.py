@@ -5,6 +5,7 @@ import datetime
 import pandas as pd
 
 from processing_utils import default_parameters
+from processing_utils.default_parameters import remap_missing_file
 
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
 S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
