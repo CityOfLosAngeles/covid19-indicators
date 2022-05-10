@@ -51,6 +51,7 @@ cligj==0.5.0
 cloudpickle @ file:///home/conda/feedstock_root/build_artifacts/cloudpickle_1598400192773/work
 colorama==0.4.3
 colour==0.1.5
+conda==4.11.0
 conda-package-handling @ file:///home/conda/feedstock_root/build_artifacts/conda-package-handling_1602876795648/work
 contextily==1.0.1
 cookiecutter==1.7.2
@@ -188,6 +189,7 @@ polyline==1.4.0
 portpicker==1.3.1
 poyo==0.5.0
 probableparsing==0.0.1
+processing-utils==0.1.0
 prometheus-client==0.8.0
 prompt-toolkit==1.0.18
 proto-plus==1.20.3
