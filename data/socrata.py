@@ -11,6 +11,9 @@ from processing_utils import utils
 from processing_utils import socrata_utils
 
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
+S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
+
+
 
 dotenv.load_dotenv()
 
@@ -81,7 +84,7 @@ def la_county_neighborhood(csv_file):
 def ca_vaccinations(csv_file):
     df = pd.read_csv(utils.COUNTY_VACCINE_URL)
 
-    population = pd.read_parquet(f"{S3_FILE_PATH}ca_county_pop_crosswalk.parquet")    
+    population = pd.read_parquet(f"{S3_FILE_PATH_SOURCE}ca_county_pop_crosswalk.parquet")    
 
     df = pd.merge(df, population, 
                   on = "county",

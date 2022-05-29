@@ -5,6 +5,7 @@ and feed into interactive charts
 import numpy as np
 import geopandas as gpd
 import pandas as pd
+from processing_utils import default_parameters
 
 from datetime import date, timedelta
 
@@ -14,9 +15,9 @@ S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
 
 NEIGHBORHOOD_URL = f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet"
 
-CROSSWALK_URL = f"{S3_FILE_PATH}la_neighborhoods_population_crosswalk.parquet"
+CROSSWALK_URL = f"{S3_FILE_PATH_SOURCE}la_neighborhoods_population_crosswalk.parquet"
 
-NEIGHBORHOOD_APPENDED_URL = f"{S3_FILE_PATH}la-county-neighborhood-testing-appended.parquet"
+NEIGHBORHOOD_APPENDED_URL = f"{S3_FILE_PATH_SOURCE}la-county-neighborhood-testing-appended.parquet"
 
 def clean_data():
     df = pd.read_parquet(NEIGHBORHOOD_URL)

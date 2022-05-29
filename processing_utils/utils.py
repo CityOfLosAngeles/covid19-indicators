@@ -472,25 +472,43 @@ def aggregate_to_week(df, start_date, today_date):
     # Subset to particular start and end date
     df = (df[(df.date >= start_date) & (df.date < today_date)]
         .assign(
+            year = pd.to_datetime(df.date).dt.strftime("%Y"),
             week = pd.to_datetime(df.date).dt.strftime("%U"),
+            # using lambda to calc beginning of week, period("W-Sun").start_time gives wrong start day, gives Monday instead
+            week_start=pd.to_datetime(df.date).apply(lambda x: x - pd.Timedelta(pd.to_numeric(pd.Timestamp(x).strftime("%w")),"day"))
+
         ).sort_values("date")
     )
+    #Aggregate to day, covers multiple rows per day
+    agg_day=(df.groupby("date")
+            .agg({
+                "County_Positive":"sum", 
+                "County_Performed":"sum",
+                "date": "min",
+                "year":"min",
+                "week":"min",
+                "week_start":"min"
+                })).assign(days=1)
     
     # Aggregate to the week
-    weekly_total = (df.groupby("week")
-                .agg({"County_Positive":"sum", 
-                      "County_Performed":"sum",
-                      "date": "min",
-                      "County_Person_Performed":"count",
-                     })
-                .reset_index()
-                .rename(columns = {"County_Positive":"weekly_cases", 
-                                   "County_Performed":"weekly_tests", 
-                                   "date": "start_of_week", 
-                                   "County_Person_Performed":"days_counted"})
-               )
+    weekly_total = (agg_day.groupby(["year","week"])
+            .agg({
+                "County_Positive":"sum", 
+                "County_Performed":"sum",
+                "date": "min",
+                "days": "sum",
+                "week_start": "min"
+                })
+            .reset_index()
+            .rename(columns = {
+                "County_Positive":"weekly_cases", 
+                "County_Performed":"weekly_tests", 
+                "week_start": "start_of_week", 
+                "days":"days_counted"
+                })
+            )
 
-    df = pd.merge(df, weekly_total, on = "week", how = "inner")
+    df = pd.merge(agg_day, weekly_total, on = ["year","week"], how = "inner")
     
     keep_col = [
         "week", 
@@ -758,7 +776,7 @@ def doubling_time(df, window=7):
 def clean_vaccines_by_county():
     df = pd.read_csv(COUNTY_VACCINE_URL)
     
-    population = pd.read_parquet(f"{S3_FILE_PATH}ca_county_pop_crosswalk.parquet")    
+    population = pd.read_parquet(f"{S3_FILE_PATH_SOURCE}ca_county_pop_crosswalk.parquet")    
     
     df = pd.merge(df, population, 
                   on = "county",

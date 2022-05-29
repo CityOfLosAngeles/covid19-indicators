@@ -10,10 +10,16 @@ import time
 
 import pandas as pd
 import papermill as pm 
-
-from civis_aqueduct_utils.github import upload_file_to_github
+from processing_utils import github_utils as gh
 
 sys.path.append(os.getcwd())
+
+#Turn off warning messages
+import warnings
+warnings.simplefilter('ignore')
+#Only see the first warning
+#warnings.filterwarnings(action='once')
+
 
 # Constants for loading the file to GH Pages branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
@@ -36,14 +42,15 @@ DEFAULT_COMMITTER = {
 
 
 notebooks_to_run = {
-    "ca-counties.ipynb": "./test-ca-county-trends.ipynb",
-    "us-counties.ipynb": "./test-us-county-trends.ipynb", 
-    "la-neighborhoods.ipynb": "./test-la-neighborhoods-trends.ipynb",
-    "coronavirus-stats.ipynb": './test-coronavirus-stats.ipynb',
+    "ca-counties.ipynb": "./ca-county-trends.ipynb",
+    "us-counties.ipynb": "./us-county-trends.ipynb", 
+    "la-neighborhoods.ipynb": "./la-neighborhoods-trends.ipynb",
+    "coronavirus-stats.ipynb": './coronavirus-stats.ipynb',
 }
 
 for key, file_name in notebooks_to_run.items():
     try:
+        print(f"Running notebook {key}")
         pm.execute_notebook(
             f'/app/notebooks/{key}',
             file_name,
@@ -51,7 +58,7 @@ for key, file_name in notebooks_to_run.items():
             log_output=True
         )
 
-        print("Ran notebook")
+        print(f"Ran notebook {key}")
 
         # shell out, run NB Convert 
         output_format = 'html'
@@ -70,17 +77,15 @@ for key, file_name in notebooks_to_run.items():
         name = file_name.replace(".ipynb", "").replace("./", "")
         html_file_name = f"{name}.html" 
         print(f"name: {name}")
-        print(f"html name: {html_file_name}")
+        print(f"html name: {PUBLISH_PATH}{html_file_name}")
 
-        upload_file_to_github(
-            TOKEN,
-            REPO,
-            BRANCH,
-            f"{html_file_name}",
-            f"{PUBLISH_PATH}{html_file_name}",
-            f"Update {name}",
-            DEFAULT_COMMITTER,
-        )
+        gh.upload_file(
+                TOKEN,
+                REPO,BRANCH,
+                f"{html_file_name}",
+                f"{PUBLISH_PATH}{html_file_name}",
+                f"Update {name}",
+                DEFAULT_COMMITTER)
 
         print("Successful upload to GitHub")
     except: 
