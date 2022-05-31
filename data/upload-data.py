@@ -12,7 +12,11 @@ from processing_utils import github_utils as gh
 # Constants for loading the file to master branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
-BRANCH = "master"
+env_list=dict(os.environ)
+if "CURRENT_BRANCH" in env_list:
+    BRANCH = os.environ["CURRENT_BRANCH"]
+else:
+    BRANCH = "master"
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
 DEFAULT_COMMITTER = {
