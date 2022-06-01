@@ -5,18 +5,13 @@ Let's check in CSV for others.
 """
 import os
 
-from civis_aqueduct_utils.github import upload_file_to_github
 from processing_utils import default_parameters
 from processing_utils import github_utils as gh
 
 # Constants for loading the file to master branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
-env_list=dict(os.environ)
-if "CURRENT_BRANCH" in env_list:
-    BRANCH = os.environ["CURRENT_BRANCH"]
-else:
-    BRANCH = "master"
+BRANCH=default_parameters.CURRENT_BRANCH
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
 DEFAULT_COMMITTER = {

@@ -11,6 +11,8 @@ import time
 import pandas as pd
 import papermill as pm 
 from processing_utils import github_utils as gh
+from processing_utils import default_parameters
+
 
 sys.path.append(os.getcwd())
 
@@ -25,15 +27,14 @@ warnings.simplefilter('ignore')
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
 BRANCH = "gh-pages"
+CURRENT_BRANCH=default_parameters.CURRENT_BRANCH
 
 env_list=dict(os.environ)
-if "CURRENT_BRANCH" in env_list:
-    CURRENT_BRANCH = os.environ["CURRENT_BRANCH"]
-    search_str=CURRENT_BRANCH + "_env_PUBLISH_PATH"
-    if search_str in env_list:
-        PUBLISH_PATH=os.environ[search_str]
-    else:
-        PUBLISH_PATH="test_branch/"
+search_str=CURRENT_BRANCH + "_env_PUBLISH_PATH"
+if search_str in env_list:
+    PUBLISH_PATH=os.environ[search_str]
+else:
+    PUBLISH_PATH="test_branch/"
 
 DEFAULT_COMMITTER = {
     "name": "Los Angeles ITA data team",
