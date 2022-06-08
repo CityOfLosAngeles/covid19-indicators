@@ -92,7 +92,7 @@ def ca_vaccinations(csv_file):
 
     df = df.assign(
         date = pd.to_datetime(df.administered_date),
-    ).drop(columns = ["administered_date"])
+    ).drop(columns = ["administered_date","booster_eligible_population"])
         
     return df
 
@@ -101,7 +101,7 @@ def ca_vaccinations_demographics(csv_file):
     
     df = df.assign(
         date = pd.to_datetime(df.administered_date),
-    ).drop(columns = ["administered_date"])
+    ).drop(columns = ["administered_date","booster_eligible_population"])
     
     string_cols = ["county", "county_type", 
                    "demographic_category", "demographic_value",
@@ -166,8 +166,6 @@ def extra_processing(csv_file):
         df = ca_vaccinations(csv_file)
     elif csv_file=="vaccinations-by-demographics-county.csv": 
         df = ca_vaccinations_demographics(csv_file) 
-    elif csv_file=="vaccinations-by-demographics-county.csv": 
-        df = ca_vaccinations_demographics(csv_file)
     elif csv_file=="la-county-testing-time-series.csv": 
         df = la_county_testing(csv_file)
     elif csv_file=="la-county-neighborhood-vaccination.csv":
