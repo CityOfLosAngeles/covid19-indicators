@@ -17,6 +17,6 @@ substitutions:
   _LOCATION: us-west2
   _PROJECT_ID: ita-datalakepoc
   _REPOSITORY: covid19-indicators
-  _IMAGE: TestImg
+  _IMAGE: testimg
 
 
