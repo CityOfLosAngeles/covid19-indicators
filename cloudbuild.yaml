@@ -11,6 +11,7 @@ steps:
     id: Build
 images:
       - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}'
+timeout: 6000s
 options:
   substitutionOption: ALLOW_LOOSE
 substitutions:
