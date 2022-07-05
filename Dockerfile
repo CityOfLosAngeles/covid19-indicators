@@ -11,6 +11,9 @@ COPY conda-requirements.txt /tmp/
 RUN conda install --yes -c conda-forge --file /tmp/conda-requirements.txt
 COPY requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
+COPY --from=apache/beam_python3.7_sdk:2.40.0 /opt/apache/beam /opt/apache/beam
 RUN python setup.py install
 #CMD to start Google Cloud Run server for web trigger
-CMD ["/app/server"]
+#CMD ["/app/server"]
+# Set the entrypoint to Apache Beam SDK launcher.
+ENTRYPOINT ["/opt/apache/beam/boot"]
