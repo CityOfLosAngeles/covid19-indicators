@@ -1,0 +1,23 @@
+{
+  "name": "covid19-indicators beam Python flex template",
+  "description": "covid19-indicators python flex template.",
+  "parameters": [
+    {
+      "name": "input_subscription",
+      "label": "Input PubSub subscription.",
+      "helpText": "Name of the input PubSub subscription to consume from.",
+      "regexes": [
+        "projects/[^/]+/subscriptions/[a-zA-Z][-_.~+%a-zA-Z0-9]{2,}"
+      ]
+    },
+    {
+      "name": "output_table",
+      "label": "BigQuery output table name.",
+      "helpText": "Name of the BigQuery output table name.",
+      "isOptional": true,
+      "regexes": [
+        "([^:]+:)?[^.]+[.].+"
+      ]
+    }
+  ]
+}
