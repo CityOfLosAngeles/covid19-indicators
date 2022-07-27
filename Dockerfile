@@ -1,8 +1,9 @@
 FROM cityofla/ita-data-civis-lab:sha-4888c7e  
 RUN curl -sSL https://sdk.cloud.google.com |bash
 ENV PATH="/root/google-cloud-sdk/bin:${PATH}"
+
 ENV FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE="/app/requirements.txt"
-ENV FLEX_TEMPLATE_PYTHON_PY_FILE="/app/streaming_beam.py"
+ENV FLEX_TEMPLATE_PYTHON_PY_FILE="/app/x.py"
 
 RUN apt-get update --allow-releaseinfo-change && apt-get install -y \
   golang
