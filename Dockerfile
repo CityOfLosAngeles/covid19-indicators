@@ -1,4 +1,6 @@
+FROM gcr.io/dataflow-templates-base/IMAGE_NAME:TAG as template_launcher
 FROM cityofla/ita-data-civis-lab:sha-4888c7e  
+
 RUN curl -sSL https://sdk.cloud.google.com |bash
 ENV PATH="/root/google-cloud-sdk/bin:${PATH}"
 
@@ -9,6 +11,7 @@ RUN apt-get update --allow-releaseinfo-change && apt-get install -y \
   golang
 WORKDIR /app
 COPY ./ ./
+COPY --from=template_launcher /opt/google/dataflow/python_template_launcher /opt/google/dataflow/python_template_launcher
 #RUN go build for Google Cloud Run web trigger
 RUN go build -v -o server
 COPY conda-requirements.txt /tmp/
@@ -20,4 +23,4 @@ RUN python setup.py install
 #CMD to start Google Cloud Run server for web trigger
 #CMD ["/app/server"]
 # Set the entrypoint to Apache Beam SDK launcher.
-ENTRYPOINT ["/opt/apache/beam/boot"]
+ENTRYPOINT ["/opt/google/dataflow/python_template_launcher"]
