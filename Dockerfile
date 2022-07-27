@@ -1,4 +1,4 @@
-FROM gcr.io/dataflow-templates-base/IMAGE_NAME:TAG as template_launcher
+From gcr.io/dataflow-templates-base/python3-template-launcher-base:latest as template_launcher
 FROM cityofla/ita-data-civis-lab:sha-4888c7e  
 
 RUN curl -sSL https://sdk.cloud.google.com |bash
