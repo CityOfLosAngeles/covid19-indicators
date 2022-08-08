@@ -37,15 +37,13 @@ def run(
     """Build and run the pipeline."""
     options = PipelineOptions(beam_args, save_main_session=True, streaming=True)
     
-    args_str=json.dumps(args)
 
     with beam.Pipeline(options=options) as pipeline:
         init= (
             pipeline
             | "Read Parameters"
-            >> beam.Create(args_str)
+            >> beam.Create(args)
             | "Generate run script">>beam.ParDo(GenRunScript()
-
             )
 
 
@@ -57,7 +55,6 @@ if __name__ == "__main__":
     parser.add_argument(
         "--env",
         dest="env",
-        action="append",
         help="Define environment variable. Can be specified multiple times."
     )
     args, unknown_beam_args = parser.parse_known_args()
