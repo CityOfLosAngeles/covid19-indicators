@@ -5,7 +5,7 @@ RUN curl -sSL https://sdk.cloud.google.com |bash
 ENV PATH="/root/google-cloud-sdk/bin:${PATH}"
 
 ENV FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE="/app/requirements.txt"
-ENV FLEX_TEMPLATE_PYTHON_PY_FILE="/app/x.py"
+ENV FLEX_TEMPLATE_PYTHON_PY_FILE="/app/dataflow_start.py"
 
 RUN apt-get update --allow-releaseinfo-change && apt-get install -y \
   golang
