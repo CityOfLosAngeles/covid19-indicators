@@ -33,8 +33,7 @@ class GenRunScript(beam.DoFn):
 
 
 def run(
-    args,beam_args: List[str] = None,
-) -> None:
+    args,beam_args: List[str] = None) -> None:
     """Build and run the pipeline."""
     options = PipelineOptions(beam_args, save_main_session=True, streaming=True)
     logging.info('args =')
@@ -47,7 +46,7 @@ def run(
             pipeline
             | "Read Parameters"
             >> beam.Create(args)
-            | "Generate run script">>beam.ParDo(GenRunScript()
+            | "Generate run script">>beam.ParDo(GenRunScript())
             )
 
 
