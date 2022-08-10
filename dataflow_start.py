@@ -4,6 +4,7 @@
 Implements stage 1
 """
 
+import json_to_hex
 import argparse
 import json
 import logging
@@ -36,6 +37,9 @@ def run(
 ) -> None:
     """Build and run the pipeline."""
     options = PipelineOptions(beam_args, save_main_session=True, streaming=True)
+    logging.info('args =')
+    for x in args:
+        logging.info(x)
     
 
     with beam.Pipeline(options=options) as pipeline:
@@ -57,7 +61,9 @@ if __name__ == "__main__":
         dest="env",
         help="Define environment variable. Can be specified multiple times."
     )
-    args, unknown_beam_args = parser.parse_known_args()
+    args_in, unknown_beam_args = parser.parse_known_args()
+    hexstr=args_in['env']
+    args=json.loads(json_to_hex.hex_to_json(hextr))
 
     run(
         args,beam_args=unknown_beam_args
