@@ -15,7 +15,7 @@ import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 import apache_beam.transforms.window as window
 
-Class GenRunScript(beam.DoFn):
+class GenRunScript(beam.DoFn):
     def process(
             self,
             args_str_element):
