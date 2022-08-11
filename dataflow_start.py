@@ -61,9 +61,9 @@ if __name__ == "__main__":
         help="Define environment variable. Can be specified multiple times."
     )
     args_in, unknown_beam_args = parser.parse_known_args()
-    logging.info(args_in)
-    print(args_in)
-    hexstr=args_in['env']
+    logging.info(args_in.env)
+    print(args_in.env)
+    hexstr=args_in.env
     args=json.loads(json_to_hex.hex_to_json(hextr))
 
     run(
