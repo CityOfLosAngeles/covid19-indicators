@@ -6,6 +6,7 @@ ENV PATH="/root/google-cloud-sdk/bin:${PATH}"
 
 ENV FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE="/app/requirements.txt"
 ENV FLEX_TEMPLATE_PYTHON_PY_FILE="/app/dataflow_start.py"
+ENV PIP_NO_DEPS=True
 
 RUN apt-get update --allow-releaseinfo-change && apt-get install -y \
   golang
