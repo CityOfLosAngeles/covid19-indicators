@@ -19,6 +19,8 @@ COPY conda-requirements.txt /tmp/
 RUN conda install --yes -c conda-forge --file /tmp/conda-requirements.txt
 COPY requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
+RUN pip download --no-cache-dir --dest /tmp/dataflow-requirements-cache apache-beam[gcp]==2.40.0
+
 COPY --from=apache/beam_python3.7_sdk:2.40.0 /opt/apache/beam /opt/apache/beam
 RUN python setup.py install
 #CMD to start Google Cloud Run server for web trigger
