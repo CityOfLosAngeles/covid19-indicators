@@ -27,6 +27,7 @@ class GenRunScript(beam.DoFn):
         for x in env_list:
             print("export "+x,file=f)
             print('eval "$RUN_SCRIPT"',file=f)
+        f.close()
         import os
         output_stream=os.popen("bash temp_shell.sh")
         logging.info(output_stream.read())
