@@ -1,3 +1,4 @@
+apache-beam==2.40.0
 apache-beam[gcp]==2.40.0
 dill
 affine==2.3.0
