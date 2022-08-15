@@ -17,8 +17,9 @@ COPY --from=template_launcher /opt/google/dataflow/python_template_launcher /opt
 RUN go build -v -o server
 COPY conda-requirements.txt /tmp/
 RUN conda install --yes -c conda-forge --file /tmp/conda-requirements.txt
-COPY requirements.txt /tmp/
+COPY *requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
+RUN pip install -r /tmp/apache_beam_requirements.txt
 RUN pip download --no-cache-dir --dest /tmp/dataflow-requirements-cache apache-beam[gcp]==2.40.0
 
 COPY --from=apache/beam_python3.7_sdk:2.40.0 /opt/apache/beam /opt/apache/beam
