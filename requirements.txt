@@ -160,7 +160,7 @@ nbformat==5.0.8
 nest-asyncio==1.4.1
 networkx @ file:///home/conda/feedstock_root/build_artifacts/networkx_1598210780226/work
 nltk==3.4.4
-notebook==6.0.0
+notebook==6.4.12
 notebook-as-pdf==0.3.1
 ntlm-auth==1.5.0
 numba @ file:///home/conda/feedstock_root/build_artifacts/numba_1599084798687/work
