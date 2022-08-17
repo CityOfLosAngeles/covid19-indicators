@@ -3,6 +3,7 @@ import pandas as pd
 import pytz
 
 from processing_utils import default_parameters
+from processing_utils.default_parameters import remap_missing_file
 
 from datetime import datetime
 
@@ -15,6 +16,7 @@ HISTORICAL_URL = (
 
 
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
+S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
 
 """
 Between 7/14/20 - 1/21/21, used a function to clean ESRI feature layer and 
@@ -124,8 +126,7 @@ def grab_data_from_layer():
 df = clean_data()   
 today_df = grab_data_from_layer()
 """
-
-RSHINY_CASES = f"{S3_FILE_PATH}la-county-neighborhood-rshiny.csv"
+RSHINY_CASES = remap_missing_file(S3_FILE_PATH,S3_FILE_PATH_SOURCE,"la-county-neighborhood-rshiny.csv")
 
 # Function to clean data since 2/1/21
 def grab_today_from_rshiny():
@@ -163,7 +164,9 @@ def grab_today_from_rshiny():
 
 
 def update_neighborhood_data():
-    historical_df = pd.read_parquet(f"{S3_FILE_PATH}la-county-neighborhood-time-series.parquet")
+    historical_df = pd.read_parquet(remap_missing_file(S3_FILE_PATH,S3_FILE_PATH_SOURCE,"la-county-neighborhood-time-series.parquet"))
+
+
     today_df = grab_today_from_rshiny()    
     
     replacement_names = {

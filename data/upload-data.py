@@ -5,13 +5,13 @@ Let's check in CSV for others.
 """
 import os
 
-from civis_aqueduct_utils.github import upload_file_to_github
 from processing_utils import default_parameters
+from processing_utils import github_utils as gh
 
 # Constants for loading the file to master branch
 TOKEN = os.environ["GITHUB_TOKEN_PASSWORD"]
 REPO = "CityOfLosAngeles/covid19-indicators"
-BRANCH = "master"
+BRANCH=default_parameters.CURRENT_BRANCH
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
 
 DEFAULT_COMMITTER = {
@@ -26,17 +26,18 @@ datasets = [
     "la-county-neighborhood-time-series.csv", 
     "ca-hospital-and-surge-capacity.csv",
     "us-county-time-series.parquet",
-    "global-time-series.csv",
+    "global-time-series.parquet",
 ]
 
 
 for file_name in datasets:
-    upload_file_to_github(
+    print(f"Uploading {S3_FILE_PATH}{file_name} to {BRANCH}/data/{file_name}")
+    gh.upload_file(
         TOKEN,
         REPO,
         BRANCH,
-        f"data/{file_name}",
         f"{S3_FILE_PATH}{file_name}",
+        f"data/{file_name}",
         f"Update {file_name}",
         DEFAULT_COMMITTER,
     )

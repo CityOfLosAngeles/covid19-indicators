@@ -5,9 +5,10 @@ import datetime
 import pandas as pd
 
 from processing_utils import default_parameters
+from processing_utils.default_parameters import remap_missing_file
 
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
-
+S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
         
 """
 Mayor's office no longer updating county test totals.
@@ -21,8 +22,9 @@ facilities within City boundaries.
 """
 # LA County Persons Tested RShiny table
 def update_persons_tested_rshiny():
-    df = pd.read_csv(f"{S3_FILE_PATH}county-persons-tested-rshiny.csv")
-    
+
+    df = pd.read_csv(remap_missing_file( S3_FILE_PATH,S3_FILE_PATH_SOURCE,"county-persons-tested-rshiny.csv"))
+
     keep = ["date", "persons_tested", "persons_pos"]
 
     df = (df.assign(
@@ -40,7 +42,7 @@ def update_persons_tested_rshiny():
 
 # LA County Tests Performed RShiny table
 def update_tests_performed_rshiny():
-    df = pd.read_csv(f"{S3_FILE_PATH}county-tests-performed-rshiny.csv")
+    df = pd.read_csv(remap_missing_file( S3_FILE_PATH,S3_FILE_PATH_SOURCE,"county-tests-performed-rshiny.csv"))
     
     keep = ["date", "tests", "tests_pos"]
 

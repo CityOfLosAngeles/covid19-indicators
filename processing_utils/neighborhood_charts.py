@@ -12,9 +12,11 @@ from processing_utils import neighborhood_utils
 from datetime import timedelta
 from IPython.display import display_html, Markdown, HTML, Image
 
-S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+#S3_FILE_PATH = "s3://public-health-dashboard/jhu_covid19/"
+S3_FILE_PATH = default_parameters.S3_FILE_PATH
+S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
 
-CROSSWALK_URL = f"{S3_FILE_PATH}la_neighborhoods_population_crosswalk.parquet"
+CROSSWALK_URL = f"{S3_FILE_PATH_SOURCE}la_neighborhoods_population_crosswalk.parquet"
 
 yesterday_date = default_parameters.yesterday_date
 two_days_ago = default_parameters.two_days_ago

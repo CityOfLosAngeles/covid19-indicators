@@ -25,6 +25,7 @@ eight_days_ago = default_parameters.eight_days_ago
 nine_days_ago = default_parameters.nine_days_ago
 
 S3_FILE_PATH = default_parameters.S3_FILE_PATH
+S3_FILE_PATH_SOURCE = default_parameters.S3_FILE_PATH_SOURCE
 
 # Units for case rates are per 100k
 POP_RATE = 100_000
@@ -40,7 +41,7 @@ LA_POP = 10_257_557
 def case_rate(county_state_name, start_date, time_period):
     df = prep_case_rate(county_state_name, start_date, time_period)
     
-    pop = (pd.read_parquet(f'{S3_FILE_PATH}ca_county_pop_crosswalk.parquet')
+    pop = (pd.read_parquet(f'{S3_FILE_PATH_SOURCE}ca_county_pop_crosswalk.parquet')
        .rename(columns = {"county_fips": "fips"})
         [["fips", "county_pop2020"]]
       )
