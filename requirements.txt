@@ -53,7 +53,7 @@ colorama==0.4.3
 colour==0.1.5
 conda-package-handling @ file:///home/conda/feedstock_root/build_artifacts/conda-package-handling_1602876795648/work
 contextily==1.0.1
-cookiecutter==1.7.2
+cookiecutter==2.1.1
 cryptography @ file:///home/conda/feedstock_root/build_artifacts/cryptography_1602614063317/work
 cx-Oracle==8.0.1
 cycler==0.10.0
