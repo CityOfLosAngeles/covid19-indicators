@@ -140,7 +140,7 @@ kmodes==0.10.2
 lerc==0.1.0
 llvmlite==0.34.0
 locket==0.2.0
-lxml==4.5.2
+lxml==4.9.1
 mapboxgl==0.10.2
 markov-clustering==0.0.6.dev0
 MarkupSafe @ file:///home/conda/feedstock_root/build_artifacts/markupsafe_1602267316845/work
