@@ -212,7 +212,7 @@ Pygments==2.7.1
 pyodbc @ file:///home/conda/feedstock_root/build_artifacts/pyodbc_1602326574169/work
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 pyppeteer==0.2.2
 pyproj @ file:///home/conda/feedstock_root/build_artifacts/pyproj_1602664259410/work
 PyQt5==5.12.3
