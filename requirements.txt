@@ -147,7 +147,7 @@ MarkupSafe @ file:///home/conda/feedstock_root/build_artifacts/markupsafe_160226
 matplotlib @ file:///home/conda/feedstock_root/build_artifacts/matplotlib-suite_1602600750896/work
 mccabe==0.6.1
 mercantile==1.1.6
-mistune==0.8.4
+mistune==2.0.3
 msgpack @ file:///home/conda/feedstock_root/build_artifacts/msgpack-python_1602380760823/work
 multidict==6.0.2
 multipledispatch==0.6.0
