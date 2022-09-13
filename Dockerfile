@@ -32,4 +32,5 @@ RUN python setup.py install
 #CMD to start Google Cloud Run server for web trigger
 #CMD ["/bin/bash"]
 # Set the entrypoint to Apache Beam SDK launcher.
-ENTRYPOINT ["bash","-l","-c"]
+#ENTRYPOINT ["bash","-l","-c"]
+ENTRYPOINT ["/opt/google/dataflow/python_template_launcher"]
