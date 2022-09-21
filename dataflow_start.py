@@ -40,6 +40,8 @@ def run(
     logging.info('args =')
     for x in args:
         logging.info(x)
+    for x,y in options.get_all_options().items():
+        logging.info(x+'='+y);
     
 
     with beam.Pipeline(options=options) as pipeline:
