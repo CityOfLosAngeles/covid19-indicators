@@ -191,7 +191,7 @@ probableparsing==0.0.1
 prometheus-client==0.8.0
 prompt-toolkit==1.0.18
 proto-plus==1.20.3
-protobuf==3.19.4
+protobuf==3.19.5
 psutil @ file:///home/conda/feedstock_root/build_artifacts/psutil_1602264040045/work
 psycopg2==2.8.6
 ptyprocess==0.6.0
