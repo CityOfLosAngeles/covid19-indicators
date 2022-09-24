@@ -23,9 +23,10 @@ RUN pip install GDAL==3.2.2
 #COPY conda-requirements.txt /tmp/
 #RUN conda install --yes -c conda-forge --file /tmp/conda-requirements.txt
 COPY *requirements.txt /tmp/
-RUN pip install --no-cache-dir -r /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/docker_build_requirements.txt
 #RUN pip install -r /tmp/apache_beam_requirements.txt
-#RUN pip download --no-cache-dir --dest /tmp/dataflow-requirements-cache apache-beam[gcp]==2.40.0
+RUN pip download --no-cache-dir --dest /tmp/dataflow-requirements-cache apache-beam[gcp]==2.40.0
+RUN pip install --no-cache-dir apache-beam[gcp]==2.40.0
 
 #COPY --from=apache/beam_python3.7_sdk:2.40.0 /opt/apache/beam /opt/apache/beam
 RUN python setup.py install
