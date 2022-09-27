@@ -4,7 +4,6 @@
 Implements stage 1
 """
 
-#import json_to_hex
 import binascii
 import argparse
 import json
@@ -82,7 +81,7 @@ if __name__ == "__main__":
     logging.info(args_in.env)
     print(args_in.env)
     hexstr=args_in.env
-    args=json.loads(json_to_hex.hex_to_json(hexstr))
+    args=json.loads(hex_to_json(hexstr))
 
     run(
         args,beam_args=unknown_beam_args
