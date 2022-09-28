@@ -84,7 +84,8 @@ if __name__ == "__main__":
     logging.info(args_in.env)
     print(args_in.env)
     hexstr=args_in.env
-    args=json.loads(hex_to_json(hexstr))
+    #args=json.loads(hex_to_json(hexstr))
+    args=args_in
 
     run(
         args,beam_args=unknown_beam_args
