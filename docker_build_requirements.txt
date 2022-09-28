@@ -20,7 +20,6 @@ atpublic
 awscli
 backcall
 binaryornot
-binascii
 black
 bleach
 bokeh
