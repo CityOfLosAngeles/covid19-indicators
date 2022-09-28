@@ -33,6 +33,8 @@ class GenRunScript(beam.DoFn):
     def process(
             self,
             args_str_element):
+        logging.info("in GenRunscdrit")
+        logging.info(str(type(args_str_element)))
         env_dict=json.load(args_str_element)
         env=json.loads(args_str_element)
         env_list=env[env]
