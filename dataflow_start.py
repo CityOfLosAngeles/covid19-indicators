@@ -42,6 +42,8 @@ class GenRunScript(beam.DoFn):
         print("#!/bin/bash",file=f)
         for x in env_list:
             print("export "+x,file=f)
+        print('ls -la /',file=f)
+        print('ls -la /tmp/',file=f)
         print('eval "$RUN_SCRIPT"',file=f)
         f.close()
         import os
