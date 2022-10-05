@@ -38,7 +38,7 @@ class GenRunScript(beam.DoFn):
         logging.info("args_str_element="+str(args_str_element))
         logging.info("args_str_element[1]="+str(args_str_element[1]))
         env_list=json.loads(hex_to_json(str(args_str_element[1])))
-        print(str(env_list))
+        logging.info(str(env_list))
         f=open('temp_shell.sh','w')
         print("#!/bin/bash",file=f)
         for x in env_list:
