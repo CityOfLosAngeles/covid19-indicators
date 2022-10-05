@@ -12,8 +12,9 @@ ENV C_INCLUDE_PATH="/usr/include/gdal"
 
 RUN apt-get update --allow-releaseinfo-change && apt-get install -y \
  gdal-bin libgdal-dev 
+RUN mkdir -p /app
 WORKDIR /app
-COPY ./ ./
+COPY ./ /app/
 #RUN "ogrinfo --version"
 RUN pip install GDAL==3.2.2
 
