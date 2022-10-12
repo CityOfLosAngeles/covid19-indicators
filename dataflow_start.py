@@ -58,7 +58,7 @@ def run(
     options = PipelineOptions(beam_args, save_main_session=True, streaming=False)
     logging.info("args type="+str(type(args)))
     logging.info('args =')
-    for x in args:
+  #  for x in args:
   #      logging.info(x)
   #  for x,y in options.get_all_options().items():
   #      logging.info(x+'='+str(y));
