@@ -35,16 +35,16 @@ class GenRunScript(beam.DoFn):
             args_str_element):
         logging.info("in GenRunscdrit")
         logging.info(str(type(args_str_element)))
-        logging.info("args_str_element="+str(args_str_element))
-        logging.info("args_str_element[1]="+str(args_str_element[1]))
-        env_list=json.loads(hex_to_json(str(args_str_element[1])))
+#        logging.info("args_str_element="+str(args_str_element))
+#        logging.info("args_str_element[1]="+str(args_str_element[1]))
+#        env_list=json.loads(hex_to_json(str(args_str_element[1])))
         logging.info(str(env_list))
         f=open('temp_shell.sh','w')
         print("#!/bin/bash",file=f)
         for x in env_list:
             print("export "+x,file=f)
-        print('ls -la /',file=f)
-        print('ls -la /tmp/',file=f)
+#        print('ls -la /',file=f)
+#        print('ls -la /tmp/',file=f)
         print('eval "$RUN_SCRIPT"',file=f)
         f.close()
         import os
@@ -59,7 +59,7 @@ def run(
     logging.info("args type="+str(type(args)))
     logging.info('args =')
     for x in args:
-        logging.info(x)
+  #      logging.info(x)
   #  for x,y in options.get_all_options().items():
   #      logging.info(x+'='+str(y));
     
@@ -84,8 +84,8 @@ if __name__ == "__main__":
         help="Define environment variable. Can be specified multiple times."
     )
     args_in, unknown_beam_args = parser.parse_known_args()
-    logging.info(args_in.env)
-    print(args_in.env)
+    #logging.info(args_in.env)
+    #print(args_in.env)
     hexstr=args_in.env
     #args=json.loads(hex_to_json(hexstr))
     args=vars(args_in)

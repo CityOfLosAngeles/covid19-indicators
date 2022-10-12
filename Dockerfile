@@ -27,7 +27,7 @@ COPY *requirements.txt /tmp/
 RUN pip install --no-cache-dir -r /tmp/docker_build_requirements.txt
 #RUN pip install -r /tmp/apache_beam_requirements.txt
 RUN pip download --no-cache-dir --dest /tmp/dataflow-requirements-cache apache-beam[gcp]==2.40.0
-RUN pip install --no-cache-dir apache-beam[gcp]==2.40.0
+RUN pip install --no-cache-dir apache-beam[gcp]==2.41.0
 
 #COPY --from=apache/beam_python3.7_sdk:2.40.0 /opt/apache/beam /opt/apache/beam
 RUN python setup.py install
