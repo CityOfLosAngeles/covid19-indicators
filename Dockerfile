@@ -1,5 +1,5 @@
 #FROM cityofla/ita-data-civis-lab:sha-4888c7e  
-FROM us.gcr.io/ita-datalakepoc/covid19-indicators/covid19-indicators-base
+FROM us.gcr.io/ita-datalakepoc/covid19-indicators/covid19-indicators-base@sha256:dca99116c051cad2a8fbb16a2e55247cb6a09d0c0810d8a08c7ae45561097092
 #RUN curl -sSL https://sdk.cloud.google.com |bash
 #ENV PATH="/root/google-cloud-sdk/bin:${PATH}"
 #RUN apt-get update --allow-releaseinfo-change && apt-get install -y \
