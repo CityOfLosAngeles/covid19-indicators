@@ -36,7 +36,7 @@ census==0.8.15
 census-data-aggregator==0.0.6
 census-data-downloader==0.0.26
 CensusData==1.9
-certifi==2021.10.8
+certifi==2022.12.7
 cffi @ file:///home/conda/feedstock_root/build_artifacts/cffi_1602537219008/work
 chardet @ file:///home/conda/feedstock_root/build_artifacts/chardet_1602255309768/work
 charset-normalizer==2.0.12
