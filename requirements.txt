@@ -82,7 +82,7 @@ geojson==2.5.0
 geopandas @ file:///home/conda/feedstock_root/build_artifacts/geopandas_1594925563431/work
 geopy==2.0.0
 gitdb2==2.0.6
-GitPython==2.1.15
+GitPython==3.1.30
 google-api-core==2.5.0
 google-auth==2.6.0
 google-auth-oauthlib==0.5.0
