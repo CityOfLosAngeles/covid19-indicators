@@ -72,7 +72,7 @@ flake8==3.8.4
 folium @ file:///home/conda/feedstock_root/build_artifacts/folium_1588861378954/work
 frozenlist==1.3.0
 fsspec==2022.2.0
-future==0.18.2
+future==0.18.3
 gcsfs==2022.2.0
 GDAL==3.1.3
 GeoAlchemy2==0.8.4
