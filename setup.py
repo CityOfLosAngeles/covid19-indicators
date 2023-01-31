@@ -9,5 +9,5 @@ setup(
     license='Apache',
     include_package_data=True,
     package_dir={"processing_utils": "processing_utils"},
-    install_requires=["altair", "geopandas", "numpy", "pandas"],
+    install_requires=["altair", "geopandas", "numpy", "pandas","s3fs","toolz","altair_saver","folium","Cython","shapely","fiona","pyproj"],
 )
