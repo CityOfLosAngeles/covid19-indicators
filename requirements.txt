@@ -196,7 +196,7 @@ psutil @ file:///home/conda/feedstock_root/build_artifacts/psutil_1602264040045/
 psycopg2==2.8.6
 ptyprocess==0.6.0
 pubnub==4.5.4
-py==1.9.0
+py==1.11.0
 pyarrow==1.0.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
