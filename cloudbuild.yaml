@@ -5,6 +5,7 @@ steps:
       '--no-cache',
       '--build-arg','PROJECT_ID=${PROJECT_ID}',
       '--build-arg','_DEPLOY_REGION=${_DEPLOY_REGION}',
+      '--build-arg','REPO_NAME=${REPO_NAME}',
       '-t','${_DEPLOY_REGION}-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/${_SERVICE_NAME}:$COMMIT_SHA','.',
       '-f', 'Dockerfile']
     id: Build
