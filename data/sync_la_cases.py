@@ -33,8 +33,8 @@ def get_data():
     table_collection=pd.read_html(data_source_1)
     i=0
     found=False
-    while i< len(table1):
-        if table1[i].keys()[0]=='CITY/COMMUNITY**':
+    while i< len(table_collection):
+        if table_collection[i].keys()[0]=='CITY/COMMUNITY**':
             found=True
             break
         i=i+1
@@ -43,7 +43,7 @@ def get_data():
         print("CITY/COMMUNITY table not found")
         sys.exit(f"CITY/COMMUNITY table not found in {data_source_1}")
 
-    mytab=table1[i]
+    mytab=table_collection[i]
     mydata=mytab.loc[mytab['CITY/COMMUNITY**']=='Los Angeles']
 
     new_row = pd.DataFrame(
