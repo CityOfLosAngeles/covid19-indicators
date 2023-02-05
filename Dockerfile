@@ -4,10 +4,11 @@
 #Allows for no new package install for minor mods of code/data
 ARG _DEPLOY_REGION
 ARG PROJECT_ID
-FROM ${_DEPLOY_REGION}-docker.pkg.dev/${PROJECT_ID}/covid19-indicators/covid19-indicators-base
+ARG REPO_NAME
+FROM ${_DEPLOY_REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${REPO_NAME}-base
 
 
-#cloud sdk pre-installed on ${_DEPLOY_REGION}-docker.pkg.dev/${PROJECT_ID}/covid19-indicators/covid19-indicators-base
+#cloud sdk pre-installed on ${_DEPLOY_REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${REPO_NAME}-base
 #RUN curl -sSL https://sdk.cloud.google.com |bash
 ENV PATH="/root/google-cloud-sdk/bin:${PATH}"
 
