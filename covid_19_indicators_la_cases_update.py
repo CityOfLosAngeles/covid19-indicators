@@ -76,6 +76,6 @@ df = (df[df.date <= today_date]
             .reset_index(drop=True)
     )
 
-print(f'writing {data_source_2}')
-df.to_csv(data_source_2,index=False)
+#print(f'writing {data_source_2}')
+#df.to_csv(data_source_2,index=False)
 df.to_csv('test.csv',index=False)
